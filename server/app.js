@@ -21,16 +21,31 @@ app.get('/news', function(req, res){
 	mongoClient.connect(url, {}, (error, client)=>{
 		if (error){ console.log("can't connect to the DB") }
 		else{
-			client.db(dbName).collection('users').find({
-				name: 'bz'
+			client.db(dbName).collection('bz_news').find({
+
 			}).toArray( (error, result)=>{
-				console.log(result)
 				res.send( result )
 			})
 		}
 	})
 	
 })
+
+app.get('/start', function(req, res){
+
+	mongoClient.connect(url, {}, (error, client)=>{
+		if (error){ console.log("can't connect to the DB") }
+		else{
+			client.db(dbName).collection('startData').find({
+
+			}).toArray( (error, result)=>{
+				res.send( result )
+			})
+		}
+	})
+	
+})
+
 
 
 app.listen(5000, function(){
