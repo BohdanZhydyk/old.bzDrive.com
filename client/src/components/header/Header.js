@@ -1,38 +1,27 @@
 import React from 'react'
-import { HeaderMenu } from './HeaderMenu'
-import './Header.css'
+import { createUseStyles } from 'react-jss'
+
+import { Logo } from './logo/Logo'
+import { Menu } from './menu/Menu'
 
 
-export const Header = ({project, menu})=>{	
+const useStyles = createUseStyles({
+	header:{
+		padding:'0 2vw',
+		borderTop:'2px solid #999',
+		borderBottom:'2px solid #999',
+		backgroundImage:'linear-gradient(#111e,#000e,#3339)'
+	}
+})
+
+export const Header = ({project, auth, fn})=>{
+
+	const styles = useStyles()
+
 	return(
-		<header className="header flex">
-		{
-			project
-			?
-			<div className="headerL flex start">
-				<img className="imgBtn" src={ project.img } alt="logo" />
-				<span>{ project.link[0] }</span><span className="txtOrg">{ project.link[1] }</span>
-	 			<span>{ project.link[2] }</span><span className="txtOrg">{ project.link[3] }</span>
-			</div>
-			:
-			<div className="headerL flex start">
-				<div className="imgBtn noData"></div>
-				<span className="noData">-----------------</span>
-			</div>
-		}
-		{
-			menu
-			?
-			<div className="headerR flex end">
-				<img className="imgBtn" alt="menu"
-				src={ menu.img.act === "Off" ? menu.img.linkOff : menu.img.linkOn } />
-					{ menu.img.act === "Off" && <HeaderMenu menu={ menu } /> }
-			</div>
-			:
-			<div className="headerR flex end">
-				<div className="imgBtn noData"></div>
-			</div>
-		}
+		<header className={styles.header + " flex"} >
+			<Logo project={project} />
+			<Menu btns={project.btns} auth={auth} fn={fn} />
 		</header>
 	)
 }

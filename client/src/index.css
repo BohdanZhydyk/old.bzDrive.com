@@ -1,20 +1,20 @@
 body {
-	width:100%; height:100%; margin:0; padding:0; font-size:1vw;
-	color:#fff; background-image:url('https://files.bzdrive.com/img/patterns/API.png');
+	width:100%;
+	height:100%;
+	margin:0;
+	padding:0;
+	font-size:1vw;
+	color:#fff;
+	background-image:url('https://files.bzdrive.com/img/patterns/API.png');
 }
 
 a {text-decoration:none; color:#fff;}
-a:hover {color:#fd0;}
-
-header 	{padding:0; border-top:0.1vw solid #999; border-bottom:0.1vw solid #999;}
-main 	{min-height:50vh; margin:1vw 1vw 2vw 1vw; padding:1vw; background-color:#333; border-radius:0.5vw;}
-footer 	{padding:0; border-top:0.1vw solid #999; border-bottom:0.1vw solid #999;}
 
 .flex 		{display:flex; justify-content:center; align-items:center;}
 .wrap 		{flex-wrap:wrap;}
 .stretch 	{align-items:stretch;}
 .start		{justify-content:flex-start;}
-.end		{justify-content:flex-end;}
+.end			{justify-content:flex-end;}
 
 .noData {background-color:#6669; color:#6660; border-radius:0.2vw;}
 
@@ -22,7 +22,10 @@ footer 	{padding:0; border-top:0.1vw solid #999; border-bottom:0.1vw solid #999;
 .txtOrg {color:#f60;}
 .txtYlw {color:#fd0;}
 
-.imgBtn	{width:3vw; height:3vw; margin:0.5vw 1vw;}
-.imgBtn:hover {width:4vw; height:4vw; margin:0 0.5vw;}
+.imgBtn	{width:2vw; height:2vw; margin:0.5vw 1vw;}
+.imgBtn:hover {width:3vw; height:3vw; margin:0 0.5vw;}
 
-.container {}
+.colorGET 		{background-color:#f603; border:0.1vw solid #f60;}
+.colorPOST 		{background-color:#3763; border:0.1vw solid #376;}
+.colorUPDATE 	{background-color:#fd03; border:0.1vw solid #fd0;}
+.colorDELETE 	{background-color:#f003; border:0.1vw solid #f00;}
