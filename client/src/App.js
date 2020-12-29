@@ -72,18 +72,20 @@ function App(){
 				break
 
 			case "SEND_FORM":
-				let obj
 
-				// state.auth.forms.map( (form)=>{
-				// 	if(form.txt === action.payload){
-				// 		obj = form.inputs.map( (input)=>{ return {input:input.name, value:input.val} })
-				// 	}
-				// 	return false
-				// })
+				function getVal(form, name){
+					for(let i=0; i<state.auth.forms.length; i++){
+						if(state.auth.forms[i].txt === form){
+							for(let n=0; n<state.auth.forms[i].inputs.length; n++){
+								if(state.auth.forms[i].inputs[n].name === name){
+									return state.auth.forms[i].inputs[n].val
+								}
+							}
+						}
+					}
+				}
 
-				// $.post('http://localhost:5000/auth', {form:action.payload, obj}, function(data){
-				$.post('http://localhost:5000/login', {login: "", email: "Bитьz83@gmail.com", pass: " Mes"}, function(data){
-					
+				function setErrors(errors){
 					setState(
 						{
 							...state,
@@ -95,11 +97,11 @@ function App(){
 										? {
 												...form,
 												inputs: form.inputs.map( (input)=>{
-													if(input.name === "login"){ return {...input, error:data.errors.login} }
-													if(input.name === "email"){ return {...input, error:data.errors.email} }
-													if(input.name === "pass")	{ return {...input, error:data.errors.pass} 	}
-													if(input.name === "pass1"){ return {...input, error:data.errors.pass1} }
-													if(input.name === "pass2"){ return {...input, error:data.errors.pass2} }
+													if(input.name === "login"){ return {...input, error:errors.login} }
+													if(input.name === "email"){ return {...input, error:errors.email} }
+													if(input.name === "pass")	{ return {...input, error:errors.pass} 	}
+													if(input.name === "pass1"){ return {...input, error:errors.pass1} }
+													if(input.name === "pass2"){ return {...input, error:errors.pass2} }
 												})
 											}
 										: {...form}
@@ -108,8 +110,57 @@ function App(){
 							}
 						}
 					)
+				}
 
+				$.post(
+					'http://localhost:5000/login',
+					{
+						login:getVal(action.payload, 'login'),
+						email:getVal(action.payload, 'email'),
+						pass:getVal	(action.payload, 'pass'	),
+						pass1:getVal(action.payload, 'pass1'),
+						pass2:getVal(action.payload, 'pass2')
+					},
+					function(data){
+						
+						setErrors(data)
+						
 				})
+
+				// switch(action.payload){
+
+				// 	case "login":
+
+						
+				// 		break
+
+				// 	case "signin":
+
+				// 		break
+
+				// 	case "forgot":
+
+				// 		break
+
+				// 	default:
+				// 		break
+				// }
+
+				// let obj
+
+				// state.auth.forms.map( (form)=>{
+				// 	if(form.txt === action.payload){
+				// 		obj = form.inputs.map( (input)=>{ return {input:input.name, value:input.val} })
+				// 	}
+				// 	return false
+				// })
+
+				// // $.post('http://localhost:5000/auth', {form:action.payload, obj}, function(data){
+				// $.post('http://localhost:5000/login', {login: "", email: "Bитьz83@gmail.com", pass: " Mes"}, function(data){
+					
+
+
+				// })
 				break
 
 			default:
@@ -124,7 +175,7 @@ function App(){
 		})
 	}
 
-	// console.log('state', state)
+	console.log('state', state)
 
 	return(
 		<div className={styles.container}>

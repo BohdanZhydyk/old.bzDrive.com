@@ -45,13 +45,14 @@ export const Inputs = ({auth, fn})=>{
                   <label className={styles.inputName} >
                     { input.name }<span className={classNames({ [styles.inputErr]:true, 'txtOrg':true })}>{input.error && input.error}</span>
                   </label>
-                  <input className={styles.input} type={ input.type } placeholder={ `enter ${input.name} here...` } value={input.val}
+                  <input className={styles.input} type={ input.type } placeholder={ `enter ${input.name} here...` }
+                        value={ input.val }
                         onChange={ (event)=>fn({
                             type:"CHG_INPUT_VALUE",
                             payload: {
                               form: form.txt,
                               name: input.name,
-                              value: event.target.value
+                              value: input.name === "email" ? event.target.value.toLowerCase() : event.target.value.trim()
                             }
                           })
                         }

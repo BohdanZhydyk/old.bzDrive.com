@@ -3,7 +3,6 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 const mongoClient = require('mongodb').MongoClient
 const { check, validationResult } = require('express-validator/check');
-const { sanitizeBody } = require('express-validator/filter');
 const { url, dbName } = require('./safe/safe')
 
 
@@ -42,44 +41,32 @@ mongoClient.connect(url, {}, (error, client)=>{
 
 		app.post('/login',
 			[
-
-				check('login').isAlphanumeric().withMessage(' - musi zawierac symboli (a-z A-Z 0-9)!')
-											.isLength({ min:8, max:16 }).withMessage(' - musi zawierac od 8 do 16 symboli!')
-											.isLength({ min:1 }).withMessage(' - nie moze byc puste!'),
-
-				// check('email').isEmail().withMessage(' - nieprawidlowy!')
-				// 							.isLength({ min:1 }).withMessage(' - nie moze byc puste!'),
-
-				check('pass')	.isAlphanumeric().withMessage(' - musi zawierac symboli (a-z A-Z 0-9)!')
-											.isLength({ min:8, max:16 }).withMessage(' - musi zawierac od 8 do 16 symboli!')
-											.isLength({ min:1 }).withMessage(' - nie moze byc puste!'),
-
+				check('login').isLength({ min:8, max:16 }).withMessage(' - musi zawierać od 8 do 16 znaków!'),
+				check('login').isAlphanumeric().withMessage(' - może zawierać cyfry 0-9 i litery A-Z a-z!'),
+				check('email').isEmail().withMessage(' - wprowadzono nieprawidłowy e-mail!'),
+				check('email').isLength({ min:1 }).withMessage(' - wypełnij dane pole!'),
+				check('login').isLength({ min:1 }).withMessage(' - wypełnij dane pole!'),
+				check('pass')	.isLength({ min:8, max:16 }).withMessage(' - musi zawierać od 8 do 16 znaków!'),
+				check('pass')	.isAlphanumeric().withMessage(' - może zawierać cyfry 0-9 i litery A-Z a-z!'),
+				check('pass')	.isLength({ min:1 }).withMessage(' - wypełnij dane pole!'),
+				check('pass1').isLength({ min:8, max:16 }).withMessage(' - musi zawierać od 8 do 16 znaków!'),
+				check('pass1').isAlphanumeric().withMessage(' - może zawierać cyfry 0-9 i litery A-Z a-z!'),
+				check('pass1').isLength({ min:1 }).withMessage(' - wypełnij dane pole!'),
+				check('pass2').isLength({ min:8, max:16 }).withMessage(' - musi zawierać od 8 do 16 znaków!'),
+				check('pass2').isAlphanumeric().withMessage(' - może zawierać cyfry 0-9 i litery A-Z a-z!'),
+				check('pass2').isLength({ min:1 }).withMessage(' - wypełnij dane pole!'),
 			],
 			(req, res) => {
-
-				const errors = validationResult(req)
-				
-				console.log(errors.errors)
-
-				// login .trim()
-				// email .normalizeEmail().toLowerCase()
-			
-				console.log( {login:req.body.login, email:req.body.email, pass:req.body.pass} )
-
-				// (req, res, next) => {
-				// 		// Extract the validation errors from a request.
-				// 		const errors = validationResult(req);
-				
-				// 		if (!errors.isEmpty()) {
-				// 				// There are errors. Render form again with sanitized values/errors messages.
-				// 				// Error messages can be returned in an array using `errors.array()`.
-				// 				}
-				// 		else {
-				// 				// Data from form is valid.
-				// 		}
-				// }
-				
-
+				const errValid = validationResult(req)
+				let err = {}
+				for(let i=0; i<errValid.errors.length; i++){
+					if( errValid.errors[i].param === "login" 	){ err.login 	= errValid.errors[i].msg }
+					if( errValid.errors[i].param === "email" 	){ err.email 	= errValid.errors[i].msg }
+					if( errValid.errors[i].param === "pass" 	){ err.pass 	= errValid.errors[i].msg }
+					if( errValid.errors[i].param === "pass1" 	){ err.pass1 	= errValid.errors[i].msg }
+					if( errValid.errors[i].param === "pass2" 	){ err.pass2 	= errValid.errors[i].msg }
+				}
+				res.send( err )
 		})
 
 	}
