@@ -48,7 +48,7 @@ export const Inputs = ({auth, fn})=>{
                   <input className={styles.input} type={ input.type } placeholder={ `enter ${input.name} here...` }
                         value={ input.val }
                         onChange={ (event)=>fn({
-                            type:"CHG_INPUT_VALUE",
+                            type:"CHANGE_INPUT_VALUE",
                             payload: {
                               form: form.txt,
                               name: input.name,

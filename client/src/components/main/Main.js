@@ -27,7 +27,7 @@ export const Main = ({state, fn})=>{
 	const styles = useStyles()
 
 	return(
-		<main className={styles.main} onClick={ ()=>fn({ type:"AUTH_CLICK", payload:true }) } >
+		<main className={styles.main} onClick={ ()=>fn({ type:"TOGGLE_AUTH_PANNEL", payload:true }) } >
 		{
 			state !== "" &&
 			

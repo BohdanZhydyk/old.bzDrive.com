@@ -22,7 +22,7 @@ export const Auth = ({auth, fn})=>{
       
       <img className={classNames({ [styles.ava]:true, 'imgBtn':true })} alt="user"
 					src="https://files.bzdrive.com/img/users/ava/man.png"
-					onClick={ ()=>fn({ type:"AUTH_CLICK", payload:auth.active }) }
+					onClick={ ()=>fn({ type:"TOGGLE_AUTH_PANNEL", payload:auth.active }) }
       />
 
       <AuthPannel auth={auth} fn={fn} />

@@ -24,12 +24,19 @@ export const AuthPannel = ({auth, fn})=>{
 
 	const styles = useStyles()
 
+	function enterBtn(){
+		for(let i=0; i<auth.forms.length; i++){
+			if(auth.forms[i].act === "y"){ return auth.forms[i].txt }
+		}
+	}
+
 	return(
 		<>
 		{
 			auth.active &&
 			
-			<form className={classNames({ [styles.pannel]:true, 'flex':true, 'wrap':true })} >
+			<form className={classNames({ [styles.pannel]:true, 'flex':true, 'wrap':true })}
+						onKeyDown={ (e)=> (e.key === "Enter") && fn({ type:"SEND_FORM", payload:enterBtn() }) } >
 				<Inputs auth={auth} fn={fn} />
 				<Buttons auth={auth} fn={fn} />
 			</form>

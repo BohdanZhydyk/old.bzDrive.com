@@ -44,7 +44,7 @@ export const Buttons = ({auth, fn})=>{
         auth.forms.map( (btn, index)=>{
           return( btn.act === "n" &&
             <span className={styles.btn} key={ btn.txt + index }
-                onClick={ ()=>fn({type:"CHG_FORM", payload:btn.txt}) } >
+                onClick={ ()=>fn({type:"TOGGLE_FORM", payload:btn.txt}) } >
               { btn.txt }
             </span>
           )

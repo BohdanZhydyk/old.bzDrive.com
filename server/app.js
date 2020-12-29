@@ -39,7 +39,7 @@ mongoClient.connect(url, {}, (error, client)=>{
 			})
 		})
 
-		app.post('/login',
+		app.post('/auth',
 			[
 				check('login').isLength({ min:8, max:16 }).withMessage(' - musi zawierać od 8 do 16 znaków!'),
 				check('login').isAlphanumeric().withMessage(' - może zawierać cyfry 0-9 i litery A-Z a-z!'),
@@ -66,14 +66,35 @@ mongoClient.connect(url, {}, (error, client)=>{
 					if( errValid.errors[i].param === "pass1" 	){ err.pass1 	= errValid.errors[i].msg }
 					if( errValid.errors[i].param === "pass2" 	){ err.pass2 	= errValid.errors[i].msg }
 				}
+				
+				console.log('body', req.body)
+				console.log('err', err)
+
+				if(req.body.form === "login" && !err.login && !err.pass){
+					err.form = req.body.form
+					err.ok = true
+					err.msg = "login OK"
+				}
+
+				if(req.body.form === "signin" && !err.login && !err.email && !err.pass1 && !err.pass2){
+					err.form = req.body.form
+					err.ok = true
+					err.msg = "signin OK"
+				}
+
+				if(req.body.form === "forgot" && !err.email && !err.pass1 && !err.pass2){
+					err.form = req.body.form
+					err.ok = true
+					err.msg = "forgot OK"
+				}
+
+
 				res.send( err )
+
 		})
 
 	}
 })
-
-
-
 
 
 // app.route('/book')
