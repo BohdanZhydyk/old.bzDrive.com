@@ -1,5 +1,6 @@
 import React from 'react'
 import { createUseStyles } from 'react-jss'
+import classNames from 'classnames'
 
 import { NavLink } from 'react-router-dom'
 
@@ -22,7 +23,7 @@ export const MenuBtn = ({btn})=>{
   const styles = useStyles()
   
 	return(
-    <NavLink to={ btn.to } className={styles.headerMenuItem + " flex"} >
+    <NavLink to={ btn.to } className={classNames({ [styles.headerMenuItem]:true, 'flex':true })} >
       <span>{ btn.name }</span>
     </NavLink>
 	)

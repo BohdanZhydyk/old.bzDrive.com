@@ -1,5 +1,6 @@
 import React from 'react'
 import { createUseStyles } from 'react-jss'
+import classNames from 'classnames'
 
 
 const useStyles = createUseStyles({
@@ -14,7 +15,7 @@ export const ContactsPannel = ({contacts})=>{
   const styles = useStyles()
 
   return (
-    <div className={styles.left + " flex start"}>
+    <div className={classNames({ [styles.left]:true, 'flex':true, 'start':true })} >
     { contacts.map( (contact, index)=>{
         return (
           <a href={contact.val} target="_blank" rel="noreferrer" key={contact.key + index} >

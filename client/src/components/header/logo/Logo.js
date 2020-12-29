@@ -1,5 +1,6 @@
 import React from 'react'
 import { createUseStyles } from 'react-jss'
+import classNames from 'classnames'
 
 
 const useStyles = createUseStyles({
@@ -19,7 +20,7 @@ export const Logo = ({project})=>{
     {
 			project
 			?
-			<a className={styles.headerL + " flex start"} target="_blank" rel="noreferrer"
+			<a className={classNames({ [styles.headerL]:true, 'flex':true, 'start':true })} target="_blank" rel="noreferrer"
 				href={`https://${project.link[0]}${project.link[1]}${project.link[2]}${project.link[3]}`}
 			>
 				<img className="imgBtn" alt="logo"
@@ -28,7 +29,7 @@ export const Logo = ({project})=>{
 	 			<span>{ project.link[2] }</span><span className="txtOrg">{ project.link[3] }</span>
 			</a>
 			:
-			<div className={styles.headerL + " flex start"} >
+			<div className={classNames({ [styles.headerL]:true, 'flex':true, 'start':true })} >
 				<div className="imgBtn noData"></div>
 				<span className="noData">-----------------</span>
 			</div>

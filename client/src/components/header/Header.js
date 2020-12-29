@@ -1,5 +1,6 @@
 import React from 'react'
 import { createUseStyles } from 'react-jss'
+import classNames from 'classnames'
 
 import { Logo } from './logo/Logo'
 import { Menu } from './menu/Menu'
@@ -19,7 +20,7 @@ export const Header = ({project, auth, fn})=>{
 	const styles = useStyles()
 
 	return(
-		<header className={styles.header + " flex"} >
+		<header className={classNames({ [styles.header]:true, 'flex':true })} >
 			<Logo project={project} />
 			<Menu btns={project.btns} auth={auth} fn={fn} />
 		</header>

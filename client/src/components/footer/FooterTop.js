@@ -1,5 +1,6 @@
 import React from 'react'
 import { createUseStyles } from 'react-jss'
+import classNames from 'classnames'
 
 
 const useStyles = createUseStyles({
@@ -28,19 +29,19 @@ export const FooterTop = ({projects})=>{
 	const styles = useStyles()
 
   return (
-    <div className={styles.footerTop + " flex"}>
+    <div className={classNames({ [styles.footerTop]:true, 'flex':true })}>
     {
       projects
       ?
       projects.map( (project, index)=>{
         return(
-          <a className={styles.projectBtn + " flex"} target="_blank" rel="noreferrer" key={ project.name + index }
+          <a className={classNames({ [styles.projectBtn]:true, 'flex':true })} target="_blank" rel="noreferrer" key={ project.name + index }
             href={ "https://"+project.link[0]+project.link[1]+project.link[2]+project.link[3] } >
 
             <img className="imgBtn" alt={ project.name }
                 src={`https://files.bzdrive.com/img/${project.name}/logo/logo${project.name}.gif`} />
 
-            <span className={styles.projectName + " flex"} >
+            <span className={classNames({ [styles.projectName]:true, 'flex':true })} >
               <span>{ project.link[0] }</span><span className="txtOrg">{ project.link[1] }</span>
               <span>{ project.link[2] }</span><span className="txtOrg">{ project.link[3] }</span>
             </span>
@@ -53,9 +54,9 @@ export const FooterTop = ({projects})=>{
       {
         [1,2,3].map( (item, index)=>{
           return (
-            <div className={styles.projectBtn + " flex"} key={`projBtn${index}`}>
+            <div className={classNames({ [styles.projectBtn]:true, 'flex':true })} key={`projBtn${index}`}>
               <div className="imgBtn noData"></div>
-              <span className={styles.projectName + " flex noData"} >--------</span>
+              <span className={classNames({ [styles.projectName]:true, 'flex':true, 'noData':true })} >--------</span>
             </div>
           )
         })

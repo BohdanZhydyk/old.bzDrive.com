@@ -1,5 +1,6 @@
 import React from 'react'
 import { createUseStyles } from 'react-jss'
+import classNames from 'classnames'
 
 
 const useStyles = createUseStyles({
@@ -17,7 +18,7 @@ export const Copyright = ({data})=>{
   const styles = useStyles()
 
   return (
-    <div className={styles.right + " flex end"}>
+    <div className={classNames({ [styles.right]:true, 'flex':true, 'end':true })}>
       <span className={styles.footerSpan}>{data.copy}</span>
       <span className={styles.footerSpan}>
         <span className="txtOrg">{data.author[0]}</span>

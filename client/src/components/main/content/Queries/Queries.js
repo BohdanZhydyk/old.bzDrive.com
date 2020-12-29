@@ -1,5 +1,6 @@
 import React from 'react'
 import { createUseStyles } from 'react-jss'
+import classNames from 'classnames'
 
 import { Project } from './Project'
 
@@ -45,7 +46,7 @@ export const Queries = ({state})=>{
 			{
 				state.queryHtml &&
 				<div>
-					<div className={styles.queryProject + " flex start"}>{ state.queryHtml.query }</div>
+					<div className={classNames({ [styles.queryProject]:true, 'flex':true, 'start':true })}>{ state.queryHtml.query }</div>
 					<div dangerouslySetInnerHTML={{__html:state.queryHtml.html}}></div>
 				</div>
 			}

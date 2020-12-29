@@ -1,5 +1,6 @@
 import React from 'react'
 import { createUseStyles } from 'react-jss'
+import classNames from 'classnames'
 
 
 const useStyles = createUseStyles({
@@ -47,13 +48,13 @@ export const Project = ({project})=>{
 
 	return(
 		<div>
-			<div className={styles.queryProject + " flex start"} >{ link }</div>
+			<div className={classNames({ [styles.queryProject]:true, 'flex':true, 'start':true })} >{ link }</div>
 			<div className={styles.queryQueries} >
 				{
 					queries.map( (query, index)=>{
 						return(
-							<div className={styles.queryLine + ` color${ query.method } flex start` } key={ link+query.method+query.link + index } >
-								<div className={styles.queryMethod + ` color${ query.method }`} >{ query.method }</div>
+							<div className={classNames({ [styles.queryLine]:true, [`color${ query.method }`]:true, 'flex':true, 'start':true })} key={ link+query.method+query.link + index } >
+								<div className={classNames({ [styles.queryMethod]:true, [`color${ query.method }`]:true })} >{ query.method }</div>
 								<div className={styles.queryLink} >
 									{ query.link }
 								</div>

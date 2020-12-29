@@ -1,10 +1,8 @@
 import React from 'react'
 import { createUseStyles } from 'react-jss'
+import classNames from 'classnames'
 
-import { Switch, Route } from 'react-router-dom'
-import { Queries } from './content/Queries/Queries'
-import { Contacts } from './content/Contacts'
-import { About } from './content/About'
+import { Routes } from './Routes'
 
 
 const useStyles = createUseStyles({
@@ -24,21 +22,19 @@ const useStyles = createUseStyles({
 	}
 })
 
-export const Main = ({state})=>{
+export const Main = ({state, fn})=>{
   
-  const styles = useStyles()
+	const styles = useStyles()
 
 	return(
-		// <main className={} >
-		<main className={styles.main} >
+		<main className={styles.main} onClick={ ()=>fn({ type:"AUTH_CLICK", payload:true }) } >
 		{
 			state !== "" &&
-			<div className={state.auth.active ? styles.filter +" "+ styles.blur : styles.filter} >
-				<Switch>
-						<Route exact path="/"><Queries state={ state } /></Route>				
-						<Route path="/contacts"	><Contacts /></Route>
-						<Route path="/about"	><About /></Route>
-				</Switch>
+			
+			<div className={classNames({ [styles.filter]: true, [styles.blur]: state.auth.active })} >
+				
+				<Routes state={state} />
+
 			</div>
 		}
 		</main>

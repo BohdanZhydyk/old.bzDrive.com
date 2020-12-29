@@ -1,5 +1,6 @@
 import React from 'react'
 import { createUseStyles } from 'react-jss'
+import classNames from 'classnames'
 
 import { ContactsPannel } from './ContactsPannel'
 import { Copyright } from './Copyright'
@@ -23,7 +24,7 @@ export const FooterBottom = ({copyright})=>{
   const styles = useStyles()
 
   return (
-    <div className={styles.footerBottom + " flex"} >
+    <div className={classNames({ [styles.footerBottom]:true, 'flex':true })} >
         { copyright &&
           <>
             <ContactsPannel contacts={copyright.contacts} />
