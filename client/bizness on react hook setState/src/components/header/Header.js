@@ -15,14 +15,14 @@ const useStyles = createUseStyles({
 	}
 })
 
-export const Header = ({project, auth, user, fn})=>{
+export const Header = ({project, auth, fn})=>{
 
 	const styles = useStyles()
 
 	return(
 		<header className={classNames({ [styles.header]:true, 'flex':true })} >
 			<Logo project={project} />
-			<Menu btns={project.btns} auth={auth} user={user} fn={fn} />
+			<Menu btns={project.btns} auth={auth} fn={fn} />
 		</header>
 	)
 }

@@ -1,37 +1,33 @@
+import axios from 'axios'
+import { api } from './variables'
 
-export const getInputValue= (state, form, name)=>{
-  for(let i=0; i<state.auth.forms.length; i++){
-    if(state.auth.forms[i].txt === form){
-      for(let n=0; n<state.auth.forms[i].inputs.length; n++){
-        if(state.auth.forms[i].inputs[n].name === name){
-          return state.auth.forms[i].inputs[n].val
-        }
-      }
-    }
+
+export const bzPost = ( { method, link, object = {} }, callback )=>{
+  
+  const bzToken = localStorage.getItem("bzToken")
+
+  if(method === "GET"){
+    // CODE HERE
   }
-}
-
-export const setInputError = (state, action, errors)=>{
-  return {
-    ...state,
-    auth: {
-      ...state.auth,
-      forms: state.auth.forms.map( (form)=>{
-        return (
-          form.txt === action.payload
-          ? {
-              ...form,
-              inputs: form.inputs.map( (input)=>{
-                if(input.name === "login"){ return {...input, error:errors.login} }
-                if(input.name === "email"){ return {...input, error:errors.email} }
-                if(input.name === "pass")	{ return {...input, error:errors.pass} 	}
-                if(input.name === "pass1"){ return {...input, error:errors.pass1} }
-                if(input.name === "pass2"){ return {...input, error:errors.pass2} }
-              })
-            }
-          : {...form}
-        )
+  if(method === "POST"){
+    let IP
+    axios.get('http://ip-api.com/json').then( res => {
+      IP = {
+        ip: res.data.query,
+        zip: res.data.zip,
+        code: res.data.countryCode,
+        country: res.data.country,
+        region: res.data.regionName,
+        city: res.data.city,
+        name: res.data.as,
+        // status: "success", isp: "", lat: "", lon: "", org: "", region: "", timezone: ""
+      }
+    })
+    .then(function(){
+      axios.post( api+link, {...object, bzToken, from: "cv.bzdrive.com"+link, IP} ).then( res => {
+        localStorage.setItem("bzToken", res.data.bzToken)
+        callback(res.data)
       })
-    }
+    })
   }
 }

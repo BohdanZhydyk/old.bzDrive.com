@@ -13,7 +13,7 @@ const useStyles = createUseStyles({
 	}
 })
 
-export const Auth = ({auth, user, fn})=>{
+export const Auth = ({auth, fn})=>{
 
 	const styles = useStyles()
 
@@ -21,7 +21,7 @@ export const Auth = ({auth, user, fn})=>{
     <div className={classNames({ [styles.auth]:true, 'flex':true })}>
       
       <img className={classNames({ [styles.ava]:true, 'imgBtn':true })} alt="user"
-					src={user.login && `https://files.bzdrive.com/img/users/${user.login}.png`}
+					src="https://files.bzdrive.com/img/users/ava/man.png"
 					onClick={ ()=>fn({ type:"TOGGLE_AUTH_PANNEL", payload:auth.active }) }
       />
 

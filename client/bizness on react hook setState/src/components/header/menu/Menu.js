@@ -27,7 +27,7 @@ const useStyles = createUseStyles({
 	}
 })
 
-export const Menu = ({btns, auth, user, fn})=>{
+export const Menu = ({btns, auth, fn})=>{
 
 	const styles = useStyles()
 
@@ -40,7 +40,7 @@ export const Menu = ({btns, auth, user, fn})=>{
 
 				{ btns.map( (btn, index)=> <MenuBtn btn={btn} key={ btn.to + index } /> ) }
 
-				<Auth auth={auth} user={user} fn={fn} />
+				<Auth auth={auth} fn={fn} />
 				
 			</div>
 			:

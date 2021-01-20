@@ -6,14 +6,15 @@ import { Contacts } from './content/Contacts'
 import { About } from './content/About'
 
 
-export const Routes = ({state, fn})=>{
+
+export const Routes = ({state, handShake, fn})=>{
 	return(
 
     <Switch>
 
         <Route exact path="/" component={ ()=> <Queries state={ state } /> } />
-        <Route path="/contacts" component={ ()=> <Contacts /> } />
-        <Route path="/about" component={ ()=> <About handShake={state.auth.handShake} /> }	/>
+        <Route path="/contacts" component={ ()=> <Contacts /> }	/>
+        <Route path="/about" component={ ()=> <About handShake={handShake} /> }	/>
 
     </Switch>
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { createUseStyles } from 'react-jss'
 
 
@@ -12,9 +12,9 @@ export const About = ({handShake})=>{
 
 	const styles = useStyles()
 
+	const [data, setData] = useState()
+
 	return(
-		handShake
-		?
 		<div>
 			<div className={styles.margin}>{`ID: ${handShake.ID}`}</div>
 			<div className={styles.margin}>
@@ -37,8 +37,6 @@ export const About = ({handShake})=>{
 
 			<button>start</button>
 		</div>
-		:
-		<div></div>
 	)
 }
 
