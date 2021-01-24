@@ -1,0 +1,45 @@
+
+footer {
+  padding:0;
+  border-top:2px solid #999;
+  border-bottom:2px solid #999;
+}
+
+.footerTop {
+  justify-content:space-evenly;
+  padding:1vw 0;
+  border-bottom:2px solid #999;
+  background-image:linear-gradient(#3339,#000e,#111e);
+
+  .projectBtn {
+    width:18%;
+    font-size:1.2vw;
+    border:1px solid #999;
+    border-radius:0.5vw;
+    &:hover {
+      font-size:1.5vw;
+    }
+  }
+
+  .projectName {
+    width:70%;
+  }
+}
+
+.footerBottom {
+  background-image:linear-gradient(#0002,#000e,#0002);
+
+  .left {
+    width:50%;
+    margin:0.5vw 2vw;
+  }
+
+  .right{
+    width:50%;
+    margin:0.5vw 2vw;
+    
+    .footerSpan {
+      margin:0.5vw 1vw;
+    }
+  }
+}

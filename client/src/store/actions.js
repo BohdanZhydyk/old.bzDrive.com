@@ -1,5 +1,3 @@
-import axios from 'axios'
-import { api } from './variables'
 import { state, setState } from './store'
 import { bzPost } from './functions'
 
