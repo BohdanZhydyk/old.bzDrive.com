@@ -88,8 +88,6 @@ export const SEND_FORM = (action)=>{
       }
     }, (data)=>{
 
-      console.log('formdata', data)
-
       let err = data.err
 
       if(!err){
@@ -112,11 +110,20 @@ export const SEND_FORM = (action)=>{
                 {
                   ...form,
                   inputs: form.inputs.map( (input)=>{
-                    if(input.name === "login"){ return {...input, error: err.login} }
-                    if(input.name === "email"){ return {...input, error: err.email} }
-                    if(input.name === "pass")	{ return {...input, error: err.pass} 	}
-                    if(input.name === "pass1"){ return {...input, error: err.pass1} }
-                    if(input.name === "pass2"){ return {...input, error: err.pass2} }
+                    switch(input.name){
+                      case "login":
+                        return {...input, error: err.login}
+                      case "email":
+                        return {...input, error: err.email}
+                      case "pass":
+                        return {...input, error: err.pass}
+                      case "pass1":
+                        return {...input, error: err.pass1}
+                      case "pass2":
+                        return {...input, error: err.pass2}
+                      default:
+                        return {}
+                    }
                   })
                 }
                 :
