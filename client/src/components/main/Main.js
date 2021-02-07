@@ -5,16 +5,21 @@ import './Main.scss'
 
 export const Main = ({state, fn})=>{
 	return(
-		<main onClick={ ()=>fn({ type:"TOGGLE_AUTH_PANNEL", payload:true }) } >
+		<>
 		{
-			state !== "" &&
-			
-			<div className={ state.auth.active ? "filter-blur" : "filter" } >
-				
-				<Routes state={state} />
-
-			</div>
+			state.auth
+			?
+			<main onClick={ ()=>fn({ type:"TOGGLE_AUTH_PANNEL", payload:true }) } >
+				<div className={ state.auth.active ? "filter-blur" : "filter" } >
+					<Routes state={state} />
+				</div>
+			</main>
+			:
+			<main className="flex">
+				<img className="preload" src="https://files.bzdrive.com/img/API/logo/logoAPI.gif" alt="APIimg" />
+			</main>
 		}
-		</main>
+		</>
+		
 	)
 }

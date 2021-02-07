@@ -29,8 +29,8 @@ export const FooterTop = ({projects})=>{
         [1,2,3].map( (item, index)=>{
           return (
             <div className="projectBtn flex" key={`projBtn${index}`}>
-              <div className="imgBtn noData"></div>
-              <span className="projectName flex noData" >--------</span>
+              <div className="noData noDataImg"></div>
+              <span className="noData noDataTxt"></span>
             </div>
           )
         })

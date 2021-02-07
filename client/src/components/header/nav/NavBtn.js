@@ -2,9 +2,9 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 
 
-export const MenuBtn = ({btn})=>{  
+export const NavBtn = ({btn})=>{  
 	return(
-    <NavLink to={ btn.to } className="menuItem flex" >
+    <NavLink to={ btn.to } className="navItem flex" >
       <span>{ btn.name }</span>
     </NavLink>
 	)

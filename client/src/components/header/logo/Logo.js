@@ -17,8 +17,8 @@ export const Logo = ({project})=>{
 			</a>
 			:
 			<div className="headerL flex start" >
-				<div className="imgBtn noData"></div>
-				<span className="noData">-----------------</span>
+				<div className="noData noDataImg"></div>
+				<span className="noData noDataTxt"></span>
 			</div>
 		}
 		</>

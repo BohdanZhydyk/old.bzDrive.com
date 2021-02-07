@@ -10,20 +10,26 @@ import {
 import { bzPost } from './functions'
 
 
-export let state = ""
+export let state = {
+  auth: false,
+  copyright: false,
+  projects: false,
+  user: false
+}
 
 export const setState = (data)=>{
   state = {...state, ...data}
   renderAll(state)
 }
 
-bzPost( {method:"POST", link:"/start"}, (data)=>{
-  setState({
-    auth: data.result.auth,
-    copyright: data.result.copyright,
-    projects: data.result.projects,
-    USER: data.USER
-  })
+bzPost( {link:"/start"}, (data)=>{
+  console.log('callback', data)
+  // setState({
+  //   auth: data.result.auth,
+  //   copyright: data.result.copyright,
+  //   projects: data.result.projects,
+  //   USER: data.USER
+  // })
 })
 
 

@@ -14,7 +14,7 @@ function App({state, fn}){
 		<>
 		<BrowserRouter>
 			
-			<Header project={state === "" ? false : state.projects[0]} auth={state.auth} user={state.USER} fn={fn} />
+			<Header project={state.projects ? state.projects[0] : false} auth={state.auth} user={state.user} fn={fn} />
 		
 			<Main state={state} fn={fn} />
 		
