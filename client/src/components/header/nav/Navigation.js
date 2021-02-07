@@ -3,14 +3,14 @@ import { NavBtn } from './NavBtn'
 import { Auth } from './../auth/Auth'
 
 
-export const Navigation = ({btns, auth, user, fn})=>{
+export const Navigation = ({auth, user, nav, fn})=>{
 	return(
 		<>
 		{
-			btns
+			nav
 			?
 			<nav className="headerR flex end" >
-				{ btns.map( (btn, index)=> <NavBtn btn={btn} key={ btn.to + index } /> ) }
+				{ nav.map( (btn, index)=> <NavBtn btn={btn} key={ btn.to + index } /> ) }
 				<Auth auth={auth} user={user} fn={fn} />
 			</nav>
 			:

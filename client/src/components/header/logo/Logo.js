@@ -1,19 +1,21 @@
 import React from 'react'
 
 
-export const Logo = ({project})=>{
+export const Logo = ({projects})=>{
 	return (
 		<>
     {
-			project
+			projects
 			?
 			<a className="headerL flex start" target="_blank" rel="noreferrer"
-				href={`https://${project.link[0]}${project.link[1]}${project.link[2]}${project.link[3]}`}
+				href={`https://${projects[0].link[0]}${projects[0].link[1]}${projects[0].link[2]}${projects[0].link[3]}`}
 			>
 				<img className="imgBtn" alt="logo"
-						src={`https://files.bzdrive.com/img/${project.name}/logo/logo${project.name}.gif`} />
-				<span>{ project.link[0] }</span><span className="txtOrg">{ project.link[1] }</span>
-	 			<span>{ project.link[2] }</span><span className="txtOrg">{ project.link[3] }</span>
+						src={`https://files.bzdrive.com/img/${projects[0].name}/logo/logo${projects[0].name}.gif`} />
+				<div className="logo">
+					<span>{ projects[0].link[0] }</span><span className="txtOrg">{ projects[0].link[1] }</span>
+					<span>{ projects[0].link[2] }</span><span className="txtOrg">{ projects[0].link[3] }</span>
+				</div>
 			</a>
 			:
 			<div className="headerL flex start" >

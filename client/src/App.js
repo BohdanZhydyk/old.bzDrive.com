@@ -14,11 +14,11 @@ function App({state, fn}){
 		<>
 		<BrowserRouter>
 			
-			<Header project={state.projects ? state.projects[0] : false} auth={state.auth} user={state.user} fn={fn} />
+			<Header projects={state.projects} auth={state.auth} user={state.user} nav={state.nav} fn={fn} />
 		
 			<Main state={state} fn={fn} />
 		
-			<Footer projects={state.projects ? state.projects : false} copyright={state.copyright ? state.copyright : false} />
+			<Footer projects={state.projects} copyright={state.copyright} />
 			
 		</BrowserRouter>
 		</>

@@ -14,7 +14,8 @@ export let state = {
   auth: false,
   copyright: false,
   projects: false,
-  user: false
+  user: false,
+  nav: false
 }
 
 export const setState = (data)=>{
@@ -27,7 +28,12 @@ bzPost( {link:"/start"}, (data)=>{
     auth: data.auth,
     copyright: data.copyright,
     projects: data.projects,
-    user: JSON.parse( localStorage.getItem('user') )
+    user: JSON.parse( localStorage.getItem('user') ),
+    nav: [
+      {to:"/", name:'documentation'},
+      {to:"/contacts", name:'contacts'},
+      {to:"/about", name:'about'}
+    ]
   })
 })
 
