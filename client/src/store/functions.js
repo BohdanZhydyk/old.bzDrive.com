@@ -24,11 +24,21 @@ export const bzPost = async ( { link, object = {} }, callback )=>{
     }
   })
 
-  await axios.post( api+'/chkToken', {bzToken, user, from, IP} ).then( (res)=>{
+  await axios.post( api+'/chkToken', {bzToken, user} ).then( (res)=>{
+    bzToken = res.data.bzToken
+    user = res.data.user
+  })
+
+  let response = await axios.post( api+link, object ).then( (res)=>{
+    if(res.data.user){ user = res.data.user }
+    return(res.data)
+  })
+
+  await axios.post( api+'/statistic', {bzToken, user, from, IP} ).then( (res)=>{
     localStorage.setItem( 'bzToken', res.data.bzToken )
     localStorage.setItem( 'user', JSON.stringify(res.data.user) )
   })
 
-  await axios.post( api+link, object ).then( (res)=> callback(res.data) )
+  callback(response)
   
 }

@@ -63,12 +63,12 @@ export const CHANGE_INPUT_VALUE = (action)=>{
 export const SEND_FORM = (action)=>{
 
   const getInputValue= (state, form, name)=>{
-    for(let i=0; i<state.auth.forms.length; i++){
-      if(state.auth.forms[i].txt === form){
-        for(let n=0; n<state.auth.forms[i].inputs.length; n++){
-          if(state.auth.forms[i].inputs[n].name === name){
-            return state.auth.forms[i].inputs[n].val
-          }
+    let forms = state.auth.forms
+    for(let i=0; i<forms.length; i++){
+      if(forms[i].txt === form){
+        let inputs = forms[i].inputs
+        for(let n=0; n<inputs.length; n++){
+          if(inputs[n].name === name) return inputs[n].val
         }
       }
     }
@@ -76,7 +76,6 @@ export const SEND_FORM = (action)=>{
 
   bzPost(
     {
-      method:"POST",
       link:"/auth",
       object: {
         login:getInputValue(state, action.payload, 'login'),
@@ -88,15 +87,15 @@ export const SEND_FORM = (action)=>{
       }
     }, (data)=>{
 
+      console.log('auth', data)
+
       let err = data.err
+      let user = data.user
 
       if(!err){
         TOGGLE_AUTH_PANNEL({payload: true})
         TOGGLE_FORM({payload:"login"})
-        setState({
-          ...state,
-          USER: data.USER
-        })
+        setState({...state, user})
       }
       else{
         setState({

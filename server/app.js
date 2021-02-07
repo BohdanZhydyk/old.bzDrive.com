@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')
 const { check, validationResult } = require('express-validator')
 
 const { chkToken } = require('./functions/chkToken')
+const { statistic } = require('./functions/statistic')
 
 const { news }	= require('./routes/news')
 const { start } = require('./routes/start')
@@ -17,9 +18,13 @@ app.use( cors() )
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
 
+
 app.get('/', (req, res)=>{ res.send('error! no file index.html') })
 
 app.post('/chkToken', (req, res)=>{ chkToken(req, res) })
+
+app.post('/statistic', (req, res)=>{ statistic(req, res) })
+
 
 app.get('/news', (req, res)=>{ news(req, res) })
 
