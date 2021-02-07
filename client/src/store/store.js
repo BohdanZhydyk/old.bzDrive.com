@@ -23,13 +23,12 @@ export const setState = (data)=>{
 }
 
 bzPost( {link:"/start"}, (data)=>{
-  console.log('callback', data)
-  // setState({
-  //   auth: data.result.auth,
-  //   copyright: data.result.copyright,
-  //   projects: data.result.projects,
-  //   USER: data.USER
-  // })
+  setState({
+    auth: data.auth,
+    copyright: data.copyright,
+    projects: data.projects,
+    user: JSON.parse( localStorage.getItem('user') )
+  })
 })
 
 
