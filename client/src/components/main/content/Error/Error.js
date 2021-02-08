@@ -4,6 +4,6 @@ import './Error.scss'
 
 export const Error = ()=>{
 	return(
-		<div className="flex">Error</div>
+		<div className="flex txtOrg">Error</div>
 	)
 }
