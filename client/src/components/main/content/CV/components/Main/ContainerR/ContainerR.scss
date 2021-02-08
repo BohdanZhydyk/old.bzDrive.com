@@ -1,0 +1,91 @@
+
+.containerR {
+  margin: 1vw 0;
+  padding: 0.5vw 0;
+  border: 1px solid #999;
+  border-radius: 0.5vw;
+  box-shadow: 0 0 0.5vw 0.2vw #999;
+  &:hover {box-shadow: 0 0 0.2vw 0.1vw #999;}
+
+  .name {
+    color:#f60;
+    width: 90%;
+    margin: 0.5vw 0;
+    padding: 0 0.5vw;
+    font-weight: bold;
+    border-bottom: 2px dashed #f60;
+  }
+
+  .paragraph {
+    width: 100%;
+    padding: 0.2vw 1vw;
+    text-indent: 2vw;
+    text-align: justify;
+  }
+
+  .siteItem {
+    width: 95%;
+    margin: 1vw 0 0 0;
+    padding: 0.5vw;
+    background-color: #333;
+    border-radius: 1vw 1vw 0 0;
+    @media print {
+      background-color: #fff0;
+      flex-direction: column;
+    }
+
+    .siteLink {
+      width: 30%;
+      color: #fff;
+      &:hover {color: #fd0;}
+      @media print {
+        width: 95%;
+        color: #000;
+        font-weight: bold;
+        text-decoration: none;
+      }
+    }
+
+    .githubLink {
+      width: 65%;
+      color: #fff;
+      &:hover {color: #fd0;}
+      @media print {
+        width: 95%;
+        color: #000;
+        font-weight: bold;
+        text-decoration: none;
+      }
+    }
+
+    .img {
+      width: 2vw;
+      margin: 0 0.5vw 0 0;
+      @media print {display: none;}
+    }
+  }
+
+  .line {
+    width: 100%;
+    padding: 0 1vw;
+
+    .imgContainer {
+      width: 4vw;
+      min-width: 50px;
+      margin: 0.2vw;
+      padding: 0.2vw 0;
+      font-size: 70%;
+      border: 1px solid #999;
+      border-radius: 0.5vw;
+    }
+
+    .img {
+      width: 1.5vw;
+      min-width: 30px;
+      padding: 0.5vw;
+      border-radius: 50%;
+      background-color: #333;
+      @media print {display: none;}
+    }
+  }
+}

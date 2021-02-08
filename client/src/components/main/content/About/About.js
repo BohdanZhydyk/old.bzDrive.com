@@ -4,6 +4,6 @@ import './About.scss'
 
 export const About = ()=>{
 	return(
-		<div>About</div>
+		<div className="flex">About</div>
 	)
 }

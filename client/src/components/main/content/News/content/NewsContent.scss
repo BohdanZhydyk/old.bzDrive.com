@@ -1,0 +1,32 @@
+
+.newsContent {
+  width:95%;
+  margin:0.5em auto;
+  padding:0.5em 0 1em 0;
+  border-top:1px solid #f60;
+  border-bottom:1px solid #f60;
+
+  .tagWraper {
+    width:100%;
+  }
+
+  .pEdit {
+    width:100%;
+    background-color:#111;
+    text-indent:3em;
+    text-align:justify;
+  }
+
+  .p {
+    text-indent:3em;
+    text-align:justify;
+  }
+
+  .h4 {
+    text-align:center;
+  }
+
+  .img {
+    width:70%;
+  }
+}

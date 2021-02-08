@@ -4,6 +4,6 @@ import './Contacts.scss'
 
 export const Contacts = ()=>{
 	return(
-		<div>Contacts</div>
+		<div className="flex">Contacts</div>
 	)
 }

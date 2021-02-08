@@ -7,6 +7,11 @@ body {
 	font-size:1vw;
 	color:#fff;
 	background-image:url('https://files.bzdrive.com/img/patterns/API.png');
+
+  @media (min-width: 768px) and (max-width: 1024px) {font-size: 1.3vw;}
+  @media (min-width: 481px) and (max-width: 767px) {font-size: 1.5vw;}
+  @media (max-width: 481px) {font-size: 3vw;}
+  @media print {font-size: 10px;}
 }
 
 a {text-decoration:none; color:#fff;}
@@ -14,6 +19,7 @@ a {text-decoration:none; color:#fff;}
 .flex 		{display:flex; justify-content:center; align-items:center;}
 .wrap 		{flex-wrap:wrap;}
 .stretch 	{align-items:stretch;}
+.column		{flex-direction:column;}
 .start		{justify-content:flex-start;}
 .end			{justify-content:flex-end;}
 
@@ -26,6 +32,7 @@ a {text-decoration:none; color:#fff;}
 .txtWht {color:#fff;}
 .txtOrg {color:#f60;}
 .txtYlw {color:#fd0;}
+.txtGrn {color:#1a1;}
 
 .imgBtn	{width:2vw; height:2vw; margin:0.5vw 1vw;}
 .imgBtn:hover {width:3vw; height:3vw; margin:0 0.5vw;}

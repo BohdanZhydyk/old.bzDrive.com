@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { Switch, Route } from 'react-router-dom'
-import { Home } from './content/Home/Home'
+import { News } from './content/News/News'
 import { Api } from './content/Api/Api'
 import { CV } from './content/CV/CV'
 import { Contacts } from './content/Contacts/Contacts'
@@ -13,7 +13,7 @@ export const Routes = ({state, fn})=>{
 	return(
     <Switch>
 
-			<Route exact path="/" component={ ()=> <Home state={ state } /> } />
+			<Route exact path="/" component={ ()=> <News state={ state } /> } />
 			<Route path="/api" component={ ()=> <Api state={ state } /> } />
 			<Route path="/cv" component={ ()=> <CV state={ state } /> } />
 			<Route path="/contacts" component={ ()=> <Contacts state={ state } /> } />
