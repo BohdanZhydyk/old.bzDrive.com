@@ -33,8 +33,9 @@ bzPost( {link:"/start"}, (data)=>{
     nav: [
       {id:1, to:"/", name:'Home'},
       {id:2, to:"/api", name:'API'},
-      {id:3, to:"/contacts", name:'Contacts'},
-      {id:4, to:"/about", name:'About'}
+      {id:3, to:"/cv", name:'CV'},
+      {id:4, to:"/contacts", name:'Contacts'},
+      {id:5, to:"/about", name:'About'}
     ]
   })
 })
