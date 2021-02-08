@@ -1,11 +1,9 @@
 import React from 'react'
-import './Contact.scss'
+import './Contacts.scss'
 
 
 export const Contacts = ()=>{
 	return(
-		<div>contacts</div>
+		<div>Contacts</div>
 	)
 }
-
-export default Contacts

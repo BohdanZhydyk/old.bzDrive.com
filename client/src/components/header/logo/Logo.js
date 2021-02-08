@@ -8,13 +8,13 @@ export const Logo = ({projects})=>{
 			projects
 			?
 			<a className="headerL flex start" target="_blank" rel="noreferrer"
-				href={`https://${projects[0].link[0]}${projects[0].link[1]}${projects[0].link[2]}${projects[0].link[3]}`}
+				href={`https://${projects[1].link[0]}${projects[1].link[1]}${projects[1].link[2]}${projects[1].link[3]}`}
 			>
 				<img className="imgBtn" alt="logo"
-						src={`https://files.bzdrive.com/img/${projects[0].name}/logo/logo${projects[0].name}.gif`} />
+						src={`https://files.bzdrive.com/img/${projects[1].name}/logo/logo${projects[1].name}.gif`} />
 				<div className="logo">
-					<span>{ projects[0].link[0] }</span><span className="txtOrg">{ projects[0].link[1] }</span>
-					<span>{ projects[0].link[2] }</span><span className="txtOrg">{ projects[0].link[3] }</span>
+					<span>{ projects[1].link[0] }</span><span className="txtOrg">{ projects[1].link[1] }</span>
+					<span>{ projects[1].link[2] }</span><span className="txtOrg">{ projects[1].link[3] }</span>
 				</div>
 			</a>
 			:

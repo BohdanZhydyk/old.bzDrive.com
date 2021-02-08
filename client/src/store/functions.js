@@ -4,11 +4,11 @@ import axios from 'axios'
 export const bzPost = async ( { link, object = {} }, callback )=>{
 
   const api = 'http://localhost:5000'
-  // const api = 'https://api.bzdrive.com'
+  // const api = 'https://bzdrive.com'
   
   let bzToken = localStorage.getItem('bzToken')
   let user = JSON.parse( localStorage.getItem('user') )
-  let from = "api.bzdrive.com" + link
+  let from = link
 
   let IP = await axios.get('https://json.geoiplookup.io').then( (res)=>{
     return {

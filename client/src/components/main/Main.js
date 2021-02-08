@@ -16,7 +16,7 @@ export const Main = ({state, fn})=>{
 			</main>
 			:
 			<main className="flex">
-				<img className="preload" src="https://files.bzdrive.com/img/API/logo/logoAPI.gif" alt="APIimg" />
+				<img className="preload" src="https://files.bzdrive.com/img/Drive/logo/logoDrive.gif" alt="DriveImg" />
 			</main>
 		}
 		</>

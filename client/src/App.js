@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter } from 'react-router-dom'
+import { HashRouter } from 'react-router-dom'
 
 import { Header } from './components/header/Header'
 import { Main } from './components/main/Main'
@@ -11,8 +11,7 @@ function App({state, fn}){
 	console.log('state', state)
 
 	return(
-		<>
-		<BrowserRouter>
+		<HashRouter>
 			
 			<Header projects={state.projects} auth={state.auth} user={state.user} nav={state.nav} fn={fn} />
 		
@@ -20,8 +19,7 @@ function App({state, fn}){
 		
 			<Footer projects={state.projects} copyright={state.copyright} />
 			
-		</BrowserRouter>
-		</>
+		</HashRouter>
 	)
 }
 

@@ -1,9 +1,9 @@
 import React from 'react'
-import './Documentation.scss'
+import './Api.scss'
 import { Project } from './Project'
 
 
-export const Documentation = ({state})=>{
+export const Api = ({state})=>{
 	return(
 		<div className="flex stretch">
 			<div className="queryL" >
