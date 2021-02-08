@@ -21,16 +21,16 @@ app.use(bodyParser.urlencoded({extended:true}))
 
 app.get('/', (req, res)=>{ res.send('error! no file index.html') })
 
-app.post('/chkToken', (req, res)=>{ chkToken(req, res) })
+app.post('/chkToken/', (req, res)=>{ chkToken(req, res) })
 
-app.post('/statistic', (req, res)=>{ statistic(req, res) })
+app.post('/statistic/', (req, res)=>{ statistic(req, res) })
 
 
-app.get('/news', (req, res)=>{ news(req, res) })
+app.get('/news/', (req, res)=>{ news(req, res) })
 
-app.post('/start', (req, res)=>{ start(req, res) })
+app.post('/start/', (req, res)=>{ start(req, res) })
 
-app.post('/auth',
+app.post('/auth/',
 	[
 		check('login').isLength({ min:4, max:16 }).withMessage(' - musi zawierać od 4 do 16 znaków!'),
 		check('login').isAlphanumeric().withMessage(' - może zawierać cyfry 0-9 i litery A-Z a-z!'),
@@ -51,6 +51,9 @@ app.post('/auth',
 		auth(req, res)
 })
 
-app.listen(5000, function(){
-	console.log('API app started on port 5000')
+
+const port = 5000
+
+app.listen(port, ()=>{
+	console.log(`API app started on port ${port}`)
 })

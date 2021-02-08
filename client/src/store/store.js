@@ -31,9 +31,9 @@ bzPost( {link:"/start"}, (data)=>{
     projects: data.projects,
     user: JSON.parse( localStorage.getItem('user') ),
     nav: [
-      {to:"/", name:'documentation'},
-      {to:"/contacts", name:'contacts'},
-      {to:"/about", name:'about'}
+      {id:1, to:"/", name:'documentation'},
+      {id:2, to:"/contacts", name:'contacts'},
+      {id:3, to:"/about", name:'about'}
     ]
   })
 })

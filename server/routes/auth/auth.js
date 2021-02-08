@@ -5,8 +5,6 @@ const { login } = require('./login')
 
 exports.auth = (req, res)=>{
 
-  console.log('auth', req.body)
-
   let form = req.body.form
   const errValid = validationResult(req)
   let err = {}

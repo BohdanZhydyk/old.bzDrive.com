@@ -4,7 +4,7 @@ import axios from 'axios'
 export const bzPost = async ( { link, object = {} }, callback )=>{
 
   const api = 'http://localhost:5000'
-  //const api = 'https://api.bzdrive.com'
+  // const api = 'https://api.bzdrive.com'
   
   let bzToken = localStorage.getItem('bzToken')
   let user = JSON.parse( localStorage.getItem('user') )
