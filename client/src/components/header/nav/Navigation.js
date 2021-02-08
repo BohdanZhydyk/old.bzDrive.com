@@ -1,6 +1,6 @@
 import React from 'react'
 import { NavBtn } from './NavBtn'
-import { Auth } from './../auth/Auth'
+import { Menu } from './../menu/Menu'
 
 
 export const Navigation = ({auth, user, nav, fn})=>{
@@ -11,7 +11,7 @@ export const Navigation = ({auth, user, nav, fn})=>{
 			?
 			<nav className="headerR flex end" >
 				{ nav.map( (btn, index)=> <NavBtn btn={btn} key={ btn.to + index } /> ) }
-				<Auth auth={auth} user={user} fn={fn} />
+				<Menu auth={auth} user={user} fn={fn} />
 			</nav>
 			:
 			<nav className="headerR flex end" >

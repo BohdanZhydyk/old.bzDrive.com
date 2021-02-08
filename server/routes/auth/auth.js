@@ -8,7 +8,6 @@ exports.auth = (req, res)=>{
   console.log('auth', req.body)
 
   let form = req.body.form
-  let user = req.body.user
   const errValid = validationResult(req)
   let err = {}
 

@@ -1,4 +1,5 @@
 import React from 'react'
+import './AuthPannel.scss'
 import { Inputs } from './Inputs'
 import { Buttons } from './Buttons'
 
@@ -12,16 +13,10 @@ export const AuthPannel = ({auth, fn})=>{
 	}
 
 	return(
-		<>
-		{
-			auth.active &&
-			
-			<form className="pannel flex wrap"
-						onKeyDown={ (e)=> (e.key === "Enter") && fn({ type:"SEND_FORM", payload:enterBtn() }) } >
-				<Inputs auth={auth} fn={fn} />
-				<Buttons auth={auth} fn={fn} />
-			</form>
-		}
-		</>
+    <form className="authPannel flex wrap"
+          onKeyDown={ (e)=> (e.key === "Enter") && fn({ type:"SEND_FORM", payload:enterBtn() }) } >
+      <Inputs auth={auth} fn={fn} />
+      <Buttons auth={auth} fn={fn} />
+    </form>
 	)
 }

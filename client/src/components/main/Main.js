@@ -9,7 +9,7 @@ export const Main = ({state, fn})=>{
 		{
 			state.auth
 			?
-			<main onClick={ ()=>fn({ type:"TOGGLE_AUTH_PANNEL", payload:true }) } >
+			<main onClick={ ()=>fn({ type:"TOGGLE_MENU", payload:true }) } >
 				<div className={ state.auth.active ? "filter-blur" : "filter" } >
 					<Routes state={state} />
 				</div>
