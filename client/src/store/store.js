@@ -34,7 +34,7 @@ bzPost( {link:"/start"}, (data)=>{
       {id:1, to:"/", name:'Home'},
       {id:2, to:"/api", name:'API'},
       {id:3, to:"/cv", name:'CV'},
-      {id:4, to:"/contacts", name:'Contacts'},
+      {id:4, to:"/apps", name:'Apps'},
       {id:5, to:"/about", name:'About'}
     ]
   })
