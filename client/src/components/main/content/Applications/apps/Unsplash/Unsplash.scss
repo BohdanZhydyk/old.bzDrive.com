@@ -1,0 +1,17 @@
+
+.Unsplash {
+  position:relative;
+  width:100%;
+  box-shadow: 0 0 0.5vw 0.2vw #999;
+  &:hover {
+    box-shadow: 0 0 0.2vw 0.1vw #999;
+  }
+
+  a {
+    color:#ccc;
+    text-decoration:none;
+    &:hover {
+      color:#fff;
+    }
+  }
+}

@@ -1,0 +1,42 @@
+
+.search {
+  position:relative;
+
+  .backGround {
+    position:relative;
+    width:100%;
+
+    img {
+      width:100%;
+      border-radius:0.5vw;
+    }
+  }
+
+  .mainPannel {
+    position:absolute;
+    top:0;
+    width:100%;
+    z-index:100;
+    min-height:50vw;
+  }
+
+  .searchPannel {
+    position:relative;
+    width:60%;
+    min-height:25vw;
+    padding:2vw;
+    color:#fff;
+    background-color:#222a;
+    border-radius:0.5vw;
+
+    .logo {
+      font-size:300%;
+      margin:0 0 1vw 0;
+    }
+
+    .trending {
+      position:absolute;
+    }
+  }
+
+}
