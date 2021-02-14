@@ -1,9 +1,9 @@
 import React from 'react'
-import './Api.scss'
+import './index.scss'
 import { Project } from './Project'
 
 
-export const Api = ({state})=>{
+function ApiApp({state}){
 	return(
 		<div className="flex stretch">
 			<div className="queryL" >
@@ -27,3 +27,5 @@ export const Api = ({state})=>{
 		</div>
 	)
 }
+
+export default ApiApp

@@ -1,22 +1,22 @@
 import React from 'react'
-import './Applications.scss'
+import './index.scss'
 
 import { AddrLine } from './AddrLine'
 
 import { Switch, Route } from 'react-router-dom'
 import { AppBtns } from './AppBtns'
-import { Restaurant } from './apps/Restaurant/Restaurant'
-import { Unsplash } from './apps/Unsplash/Unsplash'
-import { Error } from './../Error/Error'
+import Bistro from './apps/Bistro'
+import Unsplash from './apps/Unsplash'
+import Error from './../Error'
 
 
-export const Applications = ()=>{
+function ApplicationsApp(){
 
 	const apps = [
 		{
-			link:"restaurant",
-			txt:"bzRestaurant",
-			component:<Restaurant />
+			link:"bistro",
+			txt:"Bistro",
+			component:<Bistro />
 		},
 		{
 			link:"unsplash",
@@ -49,3 +49,5 @@ export const Applications = ()=>{
 		</div>
 	)
 }
+
+export default ApplicationsApp

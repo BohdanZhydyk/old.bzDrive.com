@@ -1,9 +1,11 @@
 import React from 'react'
-import './Error.scss'
+import './index.scss'
 
 
-export const Error = ()=>{
+function ErrorApp(){
 	return(
 		<div className="flex txtOrg">Error</div>
 	)
 }
+
+export default ErrorApp

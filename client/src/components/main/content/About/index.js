@@ -1,9 +1,11 @@
 import React from 'react'
-import './About.scss'
+import './index.scss'
 
 
-export const About = ()=>{
+function AboutApp(){
 	return(
 		<div className="flex">About</div>
 	)
 }
+
+export default AboutApp

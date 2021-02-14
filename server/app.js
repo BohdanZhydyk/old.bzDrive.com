@@ -7,6 +7,8 @@ const { chkToken } = require('./functions/chkToken')
 const { statistic } = require('./functions/statistic')
 
 const { news }	= require('./routes/news')
+const { cv }	= require('./routes/cv')
+
 const { start } = require('./routes/start')
 const { auth }	= require('./routes/auth/auth')
 
@@ -26,7 +28,8 @@ app.post('/chkToken/', (req, res)=>{ chkToken(req, res) })
 app.post('/statistic/', (req, res)=>{ statistic(req, res) })
 
 
-app.get('/news/', (req, res)=>{ news(req, res) })
+app.post('/news/', (req, res)=>{ news(req, res) })
+app.post('/cv/', (req, res)=>{ cv(req, res) })
 
 app.post('/start/', (req, res)=>{ start(req, res) })
 

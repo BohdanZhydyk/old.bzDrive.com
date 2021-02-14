@@ -1,0 +1,46 @@
+
+.newsTop {
+  padding:0.5vw;
+
+  .ava {
+    width:3vw;
+    height:3vw;
+    margin:0 1vw;
+    position:relative;
+
+    .imgAva {
+      width:3vw;
+      position:absolute;
+      border-radius:50%;
+    }
+
+    .imgOnline {
+      width:3vw;
+      position:absolute;
+    }
+  }
+
+  .newsInfo {
+    font-size:120%;
+
+    .dateTime {
+      font-size:60%;
+    }
+  }
+
+  .theme {
+    width:80%;
+    margin:0 2vw;
+    text-indent:2vw;
+    min-height:2.5vw;
+    align-items:flex-end;
+
+    input {
+      width:100%;
+      padding:0.5vw;
+      color:#fff;
+      background-color:#0000;
+      border:1px solid #f60;
+    }
+  }
+}

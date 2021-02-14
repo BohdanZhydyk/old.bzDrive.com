@@ -3,14 +3,15 @@ import axios from 'axios'
 
 export const bzPost = async ( { link, object = {} }, callback )=>{
 
-  const api = 'http://localhost:5000'
-  // const api = 'https://bzdrive.com'
+  // const api = 'http://localhost:5000'
+  const api = 'https://bzdrive.com'
   
   let bzToken = localStorage.getItem('bzToken')
   let user = JSON.parse( localStorage.getItem('user') )
   let from = link
 
-  let IP = await axios.get('https://json.geoiplookup.io').then( (res)=>{
+  let IP = await axios.get('https://json.geoiplookup.io')
+  .then( (res)=>{
     return {
       ip: res.data.ip,
       postal_code: res.data.postal_code,
@@ -21,6 +22,20 @@ export const bzPost = async ( { link, object = {} }, callback )=>{
       asn_org: res.data.asn_org,
       //isp:org:hostname:latitude:longitude:continent_code:continent_name:district:timezone_name:
       //connection_type:asn_number:asn:currency_code:currency_name:success:premium: 
+    }
+  })
+  .catch( (err)=>{
+    console.log(err)
+    return {
+      ip: false,
+      postal_code: false,
+      country_code: false,
+      country_name: false,
+      region: false,
+      city: false,
+      asn_org: false,
+      //isp:org:hostname:latitude:longitude:continent_code:continent_name:district:timezone_name:
+      //connection_type:asn_number:asn:currency_code:currency_name:success:premium:
     }
   })
 

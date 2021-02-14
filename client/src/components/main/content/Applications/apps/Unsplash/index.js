@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import './Unsplash.scss'
+import './index.scss'
 
 import {
 	CHANGE_INPUT,
@@ -15,7 +15,7 @@ import { Search } from './components/search/Search'
 import { Photos } from './components/photos/Photos'
 
 
-export const Unsplash = ()=>{
+function UnsplashApp(){
 
 	const [state, setState] = useState(unsplashState)
 
@@ -43,3 +43,5 @@ export const Unsplash = ()=>{
     </div>
 	)
 }
+
+export default UnsplashApp
