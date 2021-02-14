@@ -24,9 +24,7 @@ app.use(bodyParser.urlencoded({extended:true}))
 app.get('/', (req, res)=>{ res.send('error! no file index.html') })
 
 app.post('/chkToken/', (req, res)=>{ chkToken(req, res) })
-
 app.post('/statistic/', (req, res)=>{ statistic(req, res) })
-
 
 app.post('/news/', (req, res)=>{ news(req, res) })
 app.post('/cv/', (req, res)=>{ cv(req, res) })

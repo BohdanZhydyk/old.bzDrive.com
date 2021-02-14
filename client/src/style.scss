@@ -22,6 +22,7 @@ a {text-decoration:none; color:#fff;}
 .column		{flex-direction:column;}
 .start		{justify-content:flex-start;}
 .end			{justify-content:flex-end;}
+.between	{justify-content:space-between;}
 
 .noData {background-color:#6669; border-radius:0.2vw;}
 .noDataTxt {width:10vw; height:2vw; margin:0.5vw;}
@@ -33,6 +34,7 @@ a {text-decoration:none; color:#fff;}
 .txtOrg {color:#f60;}
 .txtYlw {color:#fd0;}
 .txtGrn {color:#1a1;}
+.txtRed {color:#f00;}
 
 .imgBtn	{width:2vw; height:2vw; margin:0.5vw 1vw;}
 .imgBtn:hover {width:3vw; height:3vw; margin:0 0.5vw;}

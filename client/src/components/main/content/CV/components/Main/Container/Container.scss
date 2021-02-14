@@ -1,0 +1,94 @@
+
+.container {
+  width:100%;
+  margin:1vw 0;
+  padding:0.5vw 0;
+  border:1px solid #999;
+  border-radius:0.5vw;
+  box-shadow:0 0 0.5vw 0.2vw #999;
+  &:hover {box-shadow:0 0 0.2vw 0.1vw #999;}
+
+  .name {
+    color:#f60;
+    width:90%;
+    margin:0.5vw 0;
+    padding:0 0.5vw;
+    font-weight:bold;
+    border-bottom:2px dashed #f60;
+  }
+
+  .line {
+    width:95%;
+
+    img {
+      width:1.5vw;
+      min-width:20px;
+      margin:0.2vw 1vw;
+      padding:0.5vw;
+      @media print {display: none;}
+    }
+
+    span {
+      width:20%;
+    }
+  
+    a {
+      width:60%;
+      @media print {text-decoration: none;}
+    }
+  }
+
+  .paragraph {
+    width:100%;
+    padding:0.2vw 1vw;
+    text-indent:2vw;
+    text-align:justify;
+  }
+
+  .project {
+    width:100%;
+    margin:0.5vw;
+    padding:1vw;
+    border:1px solid #999;
+    border-radius:0.5vw;
+    @media print {color:#000;}
+    &:hover {
+      border-color:#fd0;
+      background-color:#111;
+    }
+
+    .projName {
+      padding:0 1vw;
+      font-weight:bold;
+
+      span {
+        font-size:150%;
+      }
+    }
+
+    .description {
+      text-indent:2vw;
+    }
+
+    .technologies {
+      width:100%;
+
+      .tech {
+        width:7vw;
+        margin:0.5vw;
+        padding:0.5vw 0;
+        border:1px solid #999;
+        border-radius:0.5vw;
+  
+        img {
+          width: 3vw;
+          min-width: 20px;
+          @media print {display: none;}
+        }
+      }
+    }
+
+
+  }
+
+}

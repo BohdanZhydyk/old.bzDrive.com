@@ -3,6 +3,7 @@ footer {
   padding:0;
   border-top:2px solid #999;
   border-bottom:2px solid #999;
+  @media print {display: none;}
 }
 
 .footerTop {
