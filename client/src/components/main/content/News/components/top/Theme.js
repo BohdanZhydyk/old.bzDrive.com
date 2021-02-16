@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-export const Theme = ({data, act})=>{
+export const Theme = ({data, fn})=>{
   return(
     <div className="theme flex start">
     {
@@ -11,7 +11,13 @@ export const Theme = ({data, act})=>{
         className="txtYlw"
         type="text"
         value={data.top.theme}
-        onChange={ (e)=> act({ type:"CHANGE_INPUT", payload:{id:data._id, nr:"theme", value:e.target.value} }) }
+        onChange={
+          (e)=> fn({
+            app:"news",
+            type:"CHANGE_INPUT",
+            payload:{id:data._id, nr:"theme", value:e.target.value} 
+          })
+        }
       />
       :
       <div className="txtYlw">{data.top.theme}</div>

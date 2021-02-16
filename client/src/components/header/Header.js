@@ -4,11 +4,11 @@ import { Logo } from './logo/Logo'
 import { Navigation } from './nav/Navigation'
 
 
-export const Header = ({projects, auth, user, nav, fn})=>{
+export const Header = ({drive, user, fn})=>{
 	return(
 		<header className="flex" >
-			<Logo projects={projects} />
-			<Navigation auth={auth} user={user} nav={nav} fn={fn} />
+			<Logo project={drive.copy.project} />
+			<Navigation drive={drive} user={user} fn={fn} />
 		</header>
 	)
 }

@@ -14,7 +14,7 @@ export const AuthPannel = ({auth, fn})=>{
 
 	return(
     <form className="authPannel flex wrap"
-          onKeyDown={ (e)=> (e.key === "Enter") && fn({ type:"SEND_FORM", payload:enterBtn() }) } >
+          onKeyDown={ (e)=> (e.key === "Enter") && fn({ app:"drive", type:"SEND_FORM", payload:enterBtn() }) } >
       <Inputs auth={auth} fn={fn} />
       <Buttons auth={auth} fn={fn} />
     </form>

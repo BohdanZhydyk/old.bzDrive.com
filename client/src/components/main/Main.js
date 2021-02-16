@@ -7,11 +7,15 @@ export const Main = ({state, fn})=>{
 	return(
 		<>
 		{
-			state.auth
+			!state.initialState
 			?
-			<main onClick={ state.auth.active ? ()=>fn({ type:"TOGGLE_MENU", payload:true }) : ()=>{return} } >
-				<div className={ state.auth.active ? "filter-blur" : "filter" } >
-					<Routes state={state} />
+			<main onClick={
+				state.drive.auth.active
+				? ()=>fn({ app:"drive", type:"TOGGLE_MENU", payload:true })
+				: ()=>{return}
+			} >
+				<div className={ state.drive.auth.active ? "filter-blur" : "filter" } >
+					<Routes state={state} fn={fn} />
 				</div>
 			</main>
 			:

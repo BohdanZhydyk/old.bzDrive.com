@@ -1,14 +1,15 @@
 import React from 'react'
 import './Footer.scss'
-import { FooterTop } from './FooterTop/FooterTop'
-import { FooterBottom } from './FooterBottom/FooterBottom'
+
+import { ContactsPannel } from './ContactsPannel'
+import { Copyright } from './Copyright'
 
 
-export const Footer = ({projects, copyright})=>{
+export const Footer = ({copy})=>{
 	return(
-		<footer>
-			<FooterTop projects={projects} />
-			<FooterBottom copyright={copyright} />
+		<footer className="flex">
+			<ContactsPannel contacts={copy.contacts} />
+			<Copyright data={copy} />
 		</footer>
 	)
 }

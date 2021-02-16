@@ -4,16 +4,13 @@ import './NewsBottom.scss'
 import { EditPannel } from './EditPannel'
 
 
-export const NewsBottom = ({data, act})=>{
-
-  const user = JSON.parse( localStorage.getItem('user') )
-
+export const NewsBottom = ({data, user, fn})=>{
   return (
     <div className="newsBottom flex end">
 
       {
         user.role === "admin" &&
-        <EditPannel data={data} act={act}/>
+        <EditPannel data={data} fn={fn}/>
       }
   
       <span>{data.bottom.unix}</span>

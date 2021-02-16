@@ -12,22 +12,18 @@ exports.chkToken = (req, res)=>{
     if (error){ console.log("can't connect to the DB") }
     else{
     
-      client.db(dbName).collection('bzAuth').find({bzToken}).sort({_id:-1}).limit(1).toArray( (error, result)=>{
+      client.db(dbName).collection('statistic').find({bzToken}).sort({_id:-1}).limit(1).toArray( (error, result)=>{
         
-        if(error){ if(error){ console.log(error) } }
-        else{
-
-          if(!result[0]){
-            bzToken = generateToken(64)
-            user = {login: "man", role: "guest", lang: false, sex: false, ava: false}
-          }
-          else{
-            bzToken = result[0].bzToken
-            user = result[0].user
-          }
+        if(error){
+          console.log(error)
         }
-    
-        res.send( {bzToken, user} )
+        else{
+          if(result[0])
+            res.send( {bzToken:result[0].bzToken, user:result[0].user} )
+          else
+            res.send( {bzToken:generateToken(64), user} )
+        }
+
       })
 
     }

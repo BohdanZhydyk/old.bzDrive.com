@@ -13,11 +13,11 @@ export const Routes = ({state, fn})=>{
 	return(
     <Switch>
 
-			<Route exact path="/" component={ ()=> <News /> } />
-			<Route path="/api" component={ ()=> <Api state={ state } /> } />
-			<Route path="/cv" component={ ()=> <CV state={ state } /> } />
-			<Route path="/apps" component={ ()=> <Applications state={ state } /> } />
-			<Route path="/about" component={ ()=> <About handShake={state.auth.handShake} /> }	/>
+			<Route exact path="/" component={ ()=> <News state={state.news} user={state.user} fn={fn} /> } />
+			<Route path="/api" component={ ()=> <Api state={ state.api } fn={fn} /> } />
+			<Route path="/cv" component={ ()=> <CV state={ state.cv } fn={fn} /> } />
+			<Route path="/apps" component={ ()=> <Applications state={ state.app } fn={fn} /> } />
+			<Route path="/about" component={ ()=> <About state={state.about} fn={fn} /> }	/>
 			<Route component={ ()=> <Error /> }	/>
 
     </Switch>

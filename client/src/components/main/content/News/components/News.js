@@ -5,12 +5,12 @@ import { NewsContent } from './content/NewsContent'
 import { NewsBottom } from './bottom/NewsBottom'
 
 
-export const News = ({data, act})=>{
+export const News = ({data, user, fn})=>{
   return (
     <div className="container">
-      <NewsTop data={data} act={act} />
+      <NewsTop data={data} fn={fn} />
       <NewsContent content={data.content} />
-      <NewsBottom data={data} act={act} />
+      <NewsBottom data={data} user={user} fn={fn} />
     </div>
   )
 }

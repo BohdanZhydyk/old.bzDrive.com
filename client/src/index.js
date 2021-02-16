@@ -1,5 +1,12 @@
-import { renderAll } from './store/renderAll'
-import { state } from './store/store'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import './style.scss'
+import App from './App'
 
 
-renderAll(state)
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+)

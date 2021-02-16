@@ -3,15 +3,15 @@ import { NavBtn } from './NavBtn'
 import { Menu } from './../menu/Menu'
 
 
-export const Navigation = ({auth, user, nav, fn})=>{
+export const Navigation = ({drive, user, fn})=>{
 	return(
 		<>
 		{
-			nav
+			drive.nav
 			?
 			<nav className="headerR flex end" >
-				{ nav.map( (btn, index)=> <NavBtn btn={btn} key={ btn.to + index } /> ) }
-				<Menu auth={auth} user={user} fn={fn} />
+				{ drive.nav.map( (btn, index)=> <NavBtn btn={btn} key={`navBtn${btn.to}${index}`} /> ) }
+				<Menu auth={drive.auth} user={user} fn={fn} />
 			</nav>
 			:
 			<nav className="headerR flex end" >

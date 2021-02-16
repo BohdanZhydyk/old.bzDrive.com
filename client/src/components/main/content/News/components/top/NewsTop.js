@@ -6,7 +6,7 @@ import { NewsInfo } from './NewsInfo'
 import { Theme } from './Theme'
 
 
-export const NewsTop = ({data, act})=>{
+export const NewsTop = ({data, fn})=>{
   return(
     <div className="newsTop flex start">
 
@@ -14,7 +14,7 @@ export const NewsTop = ({data, act})=>{
 
       <NewsInfo data={data.top} />
 
-      <Theme data={data} act={act}/>
+      <Theme data={data} fn={fn}/>
 
     </div>
   )

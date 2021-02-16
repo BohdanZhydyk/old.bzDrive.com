@@ -21,7 +21,7 @@ export const MenuPannel = ({auth, user, fn})=>{
 					<div className="menuBtn">menuBtnAdmin</div>
 					<div className="menuBtn">menuBtnAdmin</div>
 					<div className="menuBtn">menuBtnAdmin</div>
-					<div className="menuBtn menuBtnExit" onClick={ ()=>fn({ type:"EXIT_MENU" }) }>logout</div>
+					<div className="menuBtn menuBtnExit" onClick={ ()=>fn({ app:"drive", type:"EXIT_MENU" }) }>logout</div>
 				</div>
 			)
 
@@ -31,7 +31,7 @@ export const MenuPannel = ({auth, user, fn})=>{
 						<div className="menuBtn">menuBtnUser</div>
 						<div className="menuBtn">menuBtnUser</div>
 						<div className="menuBtn">menuBtnUser</div>
-						<div className="menuBtn menuBtnExit" onClick={ ()=>fn({ type:"EXIT_MENU" }) }>logout</div>
+						<div className="menuBtn menuBtnExit" onClick={ ()=>fn({ app:"drive", type:"EXIT_MENU" }) }>logout</div>
 					</div>
 				)
 		

@@ -17,7 +17,8 @@ export const Inputs = ({auth, fn})=>{
                   <input type={ input.type } placeholder={ `enter ${input.name} here...` }
                         value={ input.val }
                         onChange={ (event)=>fn({
-                            type:"CHANGE_INPUT_VALUE",
+                            app:"drive",
+                            type:"CHANGE_INPUT",
                             payload: {
                               form: form.txt,
                               name: input.name,

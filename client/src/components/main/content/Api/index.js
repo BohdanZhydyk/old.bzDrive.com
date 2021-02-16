@@ -6,7 +6,8 @@ import { Project } from './Project'
 function ApiApp({state}){
 	return(
 		<div className="flex stretch">
-			<div className="queryL" >
+			bzAPI
+			{/* <div className="queryL" >
 			{
 				state.projects.map( (project, index)=>{
 					return(
@@ -23,7 +24,7 @@ function ApiApp({state}){
 					<div dangerouslySetInnerHTML={{__html:state.queryHtml.html}}></div>
 				</div>
 			}
-			</div>
+			</div> */}
 		</div>
 	)
 }
