@@ -4,15 +4,15 @@ const mongoClient = mongo.MongoClient
 const { url, dbName } = require('./../safe/safe')
 
 
-exports.news = (req, res)=>{
+exports.news = (req, res, callback)=>{
 
   mongoClient.connect(url, { useUnifiedTopology: true }, (error, client)=>{
-    if (error){ console.log("can't connect to the DB") }
+    if (error){ callback({ err:error, res:false }) }
     else{
 
       client.db(dbName).collection('bz_news').find({}).toArray( (error, result)=>{
-        if(error){ console.log(error) }
-        else{ res.send( result ) }
+        if(error){ callback({ err:error, res:false }) }
+        else{ callback({ err:false, res:result }) }
       })
 
     }

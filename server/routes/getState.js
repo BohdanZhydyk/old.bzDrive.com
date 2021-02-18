@@ -5,7 +5,7 @@ const ObjectID = mongo.ObjectID
 const { url, dbName } = require('./../safe/safe')
 
 
-exports.getState = (link, req, res)=>{
+exports.getState = (link, req, res, callback)=>{
 
   let id
 
@@ -17,16 +17,14 @@ exports.getState = (link, req, res)=>{
 
   mongoClient.connect(url, { useUnifiedTopology: true }, (error, client)=>{
 
-    if (error){ res.send({err:error, res:false}) }
-
+    if (error){ callback({ err:error, res:false }) }
     else{
       client.db(dbName).collection('state').findOne( { _id: new ObjectID(id)}, (error, result)=>{
 
-        if(error){ res.send({err:error, res:false}) }
-
+        if(error){ callback({ err:error, res:false }) }
         else{
-          if(result === null){ res.send({err:"no data in DB!", res:false}) }
-          else{ res.send({err:false, res:result}) }
+          if(result === null){ callback({ err:"getState: result === null", res:false }) }
+          else{ callback({ err:false, res:result }) }
         }
 
       })

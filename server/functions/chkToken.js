@@ -3,25 +3,49 @@ const mongoClient = mongo.MongoClient
 
 const { url, dbName, generateToken } = require('./../safe/safe')
 
-exports.chkToken = (req, res)=>{
 
-  let bzToken = req.body.bzToken
-  let user = req.body.user
+exports.chkToken = (InData, callback)=>{
 
   mongoClient.connect(url, { useUnifiedTopology: true }, (error, client)=>{
-    if (error){ console.log("can't connect to the DB") }
+    if (error){
+      InData.err.push( error )
+      callback(InData)
+    }
     else{
-    
-      client.db(dbName).collection('statistic').find({bzToken}).sort({_id:-1}).limit(1).toArray( (error, result)=>{
-        
+
+      let bzToken = InData.bzToken
+
+      client.db(dbName)
+        .collection('statistic')
+        .find({bzToken})
+        .sort({_id:-1})
+        .limit(1)
+        .toArray( (error, result)=>{
+      
         if(error){
-          console.log(error)
+          InData.err.push( error )
+          callback(InData)
         }
         else{
-          if(result[0])
-            res.send( {bzToken:result[0].bzToken, user:result[0].user} )
-          else
-            res.send( {bzToken:generateToken(64), user} )
+          
+          if(result[0]){
+            InData = {
+              ...InData,
+              bzToken: result[0].bzToken,
+              user: result[0].user
+            }
+          }
+
+          if(!InData.bzToken || InData.bzToken === undefined || InData.bzToken === 'undefined'){
+            InData = {
+              ...InData,
+              bzToken: generateToken(64),
+              user: {role:"guest", login: false, lang: false, sex: false, ava: false}
+            }
+          }
+          
+          callback(InData)
+
         }
 
       })

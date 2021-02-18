@@ -3,7 +3,7 @@ const { check, validationResult } = require('express-validator');
 const { login } = require('./login')
 
 
-exports.auth = (req, res)=>{
+exports.auth = (req, res, callback)=>{
 
   let form = req.body.form
   const errValid = validationResult(req)

@@ -22,15 +22,28 @@ exports.login = (req, res)=>{
                 res.send( { err: {pass: " - wprowadzone nieprawidlowe haslo!"} } )
               }
               else{
-                res.send({
-                  user: {
-                    login: result.login,
-                    role: result.role,
-                    lang: result.lang,
-                    sex: result.sex,
-                    ava: result.ava
-                  }
-                })
+
+                let user = {
+                  role: result.role,
+                  login: result.login,
+                  lang: result.lang,
+                  sex: result.sex,
+                  ava: result.ava
+                }
+
+                let nav = [
+                  {to: "/profile", name: "Profile"}
+                ]
+
+                if( result.role === "admin" ){
+                  nav = [
+                    ...nav,
+                    {to: "/statistic", name: "Statistic"}
+                  ]
+                }
+
+                res.send({user, nav})
+                
               }
             })
           }

@@ -5,6 +5,7 @@ import { initialState } from './store/initialState'
 import { drive } from './store/actions/drive'
 import { news } from './store/actions/news'
 import { cv } from './store/actions/cv'
+import { statistic } from './store/actions/statistic'
 
 import { Header } from './components/header/Header'
 import { Main } from './components/main/Main'
@@ -17,9 +18,10 @@ function App(){
 
 	const fn = (action)=>{
 		switch(action.app){
-			case "drive":		drive(action, state, setState);	break
-			case "news":		news(action, state, setState);	break
-			case "cv":			cv(action, state, setState);		break
+			case "drive":				drive(action, state, setState);				break
+			case "news":				news(action, state, setState);				break
+			case "cv":					cv(action, state, setState);					break
+			case "statistic":		statistic(action, state, setState);		break
 			default: break
 		}
 	}

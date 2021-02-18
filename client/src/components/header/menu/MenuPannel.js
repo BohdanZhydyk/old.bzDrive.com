@@ -1,40 +1,26 @@
 import React from 'react'
 import { AuthPannel } from './auth/AuthPannel'
+import { UserNavigation } from './UserNavigation'
 
 
 export const MenuPannel = ({auth, user, fn})=>{
-	switch(user.role){
-		case "guest":
-			return(
-				<div className="menuPannel">
-					<AuthPannel auth={auth} fn={fn} />
-					<div className="menuBtn">menuBtnGuest</div>
-					<div className="menuBtn">menuBtnGuest</div>
-				</div>
-			)
-		
-		case "admin":
-			return(
-				<div className="menuPannel">
-					<div className="menuBtn">menuBtnAdmin</div>
-					<div className="menuBtn">menuBtnAdmin</div>
-					<div className="menuBtn">menuBtnAdmin</div>
-					<div className="menuBtn">menuBtnAdmin</div>
-					<div className="menuBtn">menuBtnAdmin</div>
-					<div className="menuBtn menuBtnExit" onClick={ ()=>fn({ app:"drive", type:"EXIT_MENU" }) }>logout</div>
-				</div>
-			)
-
-			case "user":
-				return(
-					<div className="menuPannel">
-						<div className="menuBtn">menuBtnUser</div>
-						<div className="menuBtn">menuBtnUser</div>
-						<div className="menuBtn">menuBtnUser</div>
-						<div className="menuBtn menuBtnExit" onClick={ ()=>fn({ app:"drive", type:"EXIT_MENU" }) }>logout</div>
-					</div>
-				)
-		
-		default: return(<></>)
-	}
+	return(
+		<div className="menuPannel">
+			{ 
+				user.role === "guest"
+				?
+					<>
+						<AuthPannel auth={auth} fn={fn} />
+						<UserNavigation menu={auth.usermenu} fn={fn} />
+					</>
+				:
+					<>
+						<div className="menuBtn menuBtnExit flex end"
+								onClick={ ()=>fn({ app:"drive", type:"EXIT_MENU" }) }
+						>logout</div>
+						<UserNavigation menu={auth.usermenu} fn={fn} />
+					</>
+			}
+		</div>
+	)
 }

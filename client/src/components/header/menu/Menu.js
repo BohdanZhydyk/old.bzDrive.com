@@ -13,6 +13,13 @@ export const Menu = ({auth, user, fn})=>{
             ? `https://files.bzdrive.com/img/users/${user.login}.png`
             : `https://files.bzdrive.com/img/users/man.png`
           }
+      />
+      <img className="imgBtn" alt="menu"
+					src={
+            auth.active
+            ? `https://files.bzdrive.com/img/Drive/ico/mainMenuOn.png`
+            : `https://files.bzdrive.com/img/Drive/ico/mainMenuOff.png`
+          }
 					onClick={ ()=>fn({ app:"drive", type:"TOGGLE_MENU", payload:auth.active }) }
       />
 

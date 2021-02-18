@@ -13,14 +13,12 @@ const GET_STATE = (action, state, setState)=>{
 
   bzPost("/news", {}, (data)=>{
     
-    if(data.err){ console.log('err', data.err) }
-    else{
-      setState({
-        ...state,
-        news: data
-      })
-    }
-
+    setState({
+      ...state,
+      news: data.object,
+      user: data.user
+    })
+    
   })
 
 }

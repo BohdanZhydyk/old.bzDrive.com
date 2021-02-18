@@ -1,8 +1,6 @@
 import React from 'react'
 import './index.scss'
 
-import { bzPost } from '../../../../store/functions'
-
 import { Header } from './components/Header/Header'
 import { Main } from './components/Main/Main'
 import { Footer } from './components/Footer/Footer'

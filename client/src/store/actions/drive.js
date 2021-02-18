@@ -1,5 +1,4 @@
-import { bzPost, remUser, remToken } from './../functions'
-import { initialState } from './../initialState'
+import { bzPost, getUser, remUser, remToken } from './../functions'
 
 export const drive = (action, state, setState)=>{
   switch(action.type){
@@ -17,18 +16,16 @@ const GET_STATE = (action, state, setState)=>{
 
     bzPost("/drive", {}, (data)=>{
       
-      if(data.err){ console.log('err', data.err) }
-      else{
-        setState({
-          ...state,
-          initialState: false,
-          drive:{
-            nav:data.res.nav,
-            auth:data.res.auth,
-            copy:data.res.copy
-          }
-        })
-      }
+      setState({
+        ...state,
+        initialState: false,
+        drive:{
+          nav:data.object.nav,
+          auth:data.object.auth,
+          copy:data.object.copy
+        },
+        user: data.user
+      })
 
     })
 
@@ -119,13 +116,26 @@ export const SEND_FORM = (action, state, setState)=>{
 
       console.log('auth', data)
 
-      let err = data.err
-      let user = data.user
-
-      if(!err){
-        TOGGLE_MENU({payload: true}, state, setState)
-        TOGGLE_FORM({payload:"login"}, state, setState)
-        setState({...state, user})
+      if(!data.err){
+        setState({
+          ...state,
+          drive:{
+            ...state.drive,
+            auth:{
+              ...state.drive.auth,
+              active: !true,
+              usermenu: data.nav,
+              forms: state.drive.auth.forms.map( (form)=>{
+                return (
+                  form.txt === action.payload
+                  ?	{...form, act:"y", inputs:form.inputs.map( (input)=>{ return {...input, val:"", error:""}  }) }
+                  :	{...form, act:"n", inputs:form.inputs}
+                )
+              })
+            }
+          },
+          user: data.user
+        })
       }
       else{
         setState({
@@ -138,11 +148,11 @@ export const SEND_FORM = (action, state, setState)=>{
                   {
                     ...form, inputs: form.inputs.map( (input)=>{
                       switch(input.name){
-                        case "login": return {...input, error: err.login}
-                        case "email": return {...input, error: err.email}
-                        case "pass":  return {...input, error: err.pass }
-                        case "pass1": return {...input, error: err.pass1}
-                        case "pass2": return {...input, error: err.pass2}
+                        case "login": return {...input, error: data.err.login}
+                        case "email": return {...input, error: data.err.email}
+                        case "pass":  return {...input, error: data.err.pass }
+                        case "pass1": return {...input, error: data.err.pass1}
+                        case "pass2": return {...input, error: data.err.pass2}
                         default: return {}
                       }
                     })
@@ -163,5 +173,23 @@ export const SEND_FORM = (action, state, setState)=>{
 export const EXIT_MENU = (action, state, setState)=>{
   remUser()
   remToken()
-  setState(initialState)
+  setState({
+    ...state,
+    drive:{
+      ...state.drive,
+      auth:{
+        ...state.drive.auth,
+        active:!true,
+        usermenu: [],
+        forms: state.drive.auth.forms.map( (form)=>{
+          return (
+            form.txt === "login"
+            ?	{...form, act:"y", inputs:form.inputs.map( (input)=>{ return {...input, val:"", error:""}  }) }
+            :	{...form, act:"n", inputs:form.inputs}
+          )
+        })
+      }
+    },
+    user: getUser()
+  })
 }
