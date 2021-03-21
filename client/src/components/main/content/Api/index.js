@@ -3,7 +3,7 @@ import './index.scss'
 import { Project } from './Project'
 
 
-function ApiApp({state}){
+const ApiApp = ({state})=>{
 	return(
 		<div className="flex stretch">
 			bzAPI

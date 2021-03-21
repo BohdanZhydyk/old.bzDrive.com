@@ -10,12 +10,18 @@ export const news = (action, state, setState)=>{
 }
 
 const GET_STATE = (action, state, setState)=>{
-
+  
   bzPost("/news", {}, (data)=>{
-    
+
     setState({
       ...state,
-      news: data.object,
+      drive: {
+        ...state.drive,
+        nav: state.drive.nav.map( (item, index)=>{
+          if(item.name === "News"){ return {...item, content:data.object} }
+          else{ return item }
+        })
+      },
       user: data.user
     })
     

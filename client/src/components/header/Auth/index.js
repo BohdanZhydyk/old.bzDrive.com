@@ -1,11 +1,11 @@
 import React from 'react'
-import './Menu.scss'
+import './Auth.scss'
 import { MenuPannel } from './MenuPannel'
 
 
-export const Menu = ({auth, user, fn})=>{
+const Auth = ({auth, user, fn})=>{
 	return(
-    <div className="menu flex" >
+    <div className="auth flex" >
       
       <img className="ava imgBtn" alt="user"
 					src={
@@ -29,3 +29,5 @@ export const Menu = ({auth, user, fn})=>{
     </div>
 	)
 }
+
+export default Auth

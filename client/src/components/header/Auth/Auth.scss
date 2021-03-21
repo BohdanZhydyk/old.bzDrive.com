@@ -1,0 +1,34 @@
+
+.ava {
+  border:1px solid #999;
+  border-radius:50%;
+}
+
+.menuPannel {
+  position:absolute;
+  top:4vw;
+  right:0.5vw;
+  width:30%;
+  padding:1vw;
+  background-color:#222;
+  border:1px solid #999;
+  border-radius:0.5vw;
+  z-index:999;
+}
+
+.menuBtn {
+  margin:0.5vw 0;
+  padding:0.5vw;
+  border-top:1px solid #999;
+  border-bottom:1px solid #999;
+  &:hover {
+    border-color:#f60;
+    background-color:#111;
+  }
+}
+
+.menuBtnExit {
+  &:hover {
+    background-color:#f001;
+  }
+} 

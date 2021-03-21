@@ -4,24 +4,28 @@ import './index.scss'
 import { Header } from './components/Header/Header'
 import { Main } from './components/Main/Main'
 import { Footer } from './components/Footer/Footer'
+import Loader from './../Loader'
 
 
-function CvApp({state, fn}){
+const CvApp = ({content, user, fn})=>{
 
-  if( !state ){ fn({ app:"cv", type:"GET_STATE" }) }
+  if( !content ){ fn({ app:"cv", type:"GET_STATE" }) }
 
-	return(
-		<div className="CV">
+  return (
+    <div className="CV">
       {
-        state &&
+        content
+        ?
         <>
-          <Header data={state.header} />
-          <Main data={state.main} />
-          <Footer data={state.footer} />
+          <Header data={content.header} />
+          <Main data={content.main} />
+          <Footer data={content.footer} />
         </>
+        :
+        <Loader />
       }
     </div>
-	)
+  )
 }
 
 export default CvApp

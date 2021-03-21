@@ -1,13 +1,13 @@
 import React from 'react'
 
 
-export const ContactsPannel = ({contacts})=>{
+export const ContactsPannel = ({info})=>{
   return (
     <div className="left flex start" >
     {
-      contacts
+      info
       ?
-      contacts.map( (contact, index)=>{
+      info.contacts.map( (contact, index)=>{
         return (
           <a href={contact.val} target="_blank" rel="noreferrer" key={`contact${contact.key+index}`} >
             <img className="imgBtn" alt="contact"
@@ -16,7 +16,7 @@ export const ContactsPannel = ({contacts})=>{
         )
       })
       :
-      [1,2,3,4].map( (item, index)=> <div className="noData noDataImg" key={`contact${index}`} ></div> )
+      [1,2,3,4].map( (i)=> <div className="noData noDataImg" key={`contact${i}`} ></div> )
     }
     </div>
   )

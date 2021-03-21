@@ -69,7 +69,6 @@ exports.InOut = async (path, req, res)=>{
             break
 
           case "/auth":
-            console.log('auth', req.body)
             auth(req, res, (data)=>{
 
             })

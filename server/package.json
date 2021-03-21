@@ -2,13 +2,13 @@
   "name": "public_nodejs",
   "version": "1.0.0",
   "description": "bzDrive API",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "nodemon app.js",
     "start": "node app.js"
   },
-  "author": "Bohdan Zhydyk",
+  "author": "Bohdan Zhydyk bzua83@gmail.com bzdrive.com",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.0",

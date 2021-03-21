@@ -17,8 +17,6 @@ const GET_STATE = (action, state, setState)=>{
     bzPost("/drive", {}, (data)=>{
       
       setState({
-        ...state,
-        initialState: false,
         drive:{
           nav:data.object.nav,
           auth:data.object.auth,

@@ -13,10 +13,12 @@ const GET_STATE = (action, state, setState)=>{
 
     setState({
       ...state,
-      cv: {
-        header: data.object.header,
-        main: data.object.main,
-        footer: data.object.footer
+      drive: {
+        ...state.drive,
+        nav: state.drive.nav.map( (item, index)=>{
+          if(item.name === "CV"){ return {...item, content:data.object} }
+          else{ return item }
+        })
       },
       user: data.user
     })

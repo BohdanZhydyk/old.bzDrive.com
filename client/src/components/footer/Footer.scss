@@ -16,7 +16,11 @@ footer {
     margin:0.5vw 2vw;
     
     .footerSpan {
-      margin:0.5vw 1vw;
+      margin:0.5vw;
+
+      .margin {
+        margin:0 0 0 0.5rem;
+      }
     }
   }
 }

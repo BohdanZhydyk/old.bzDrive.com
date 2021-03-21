@@ -5,11 +5,16 @@ import { ContactsPannel } from './ContactsPannel'
 import { Copyright } from './Copyright'
 
 
-export const Footer = ({copy})=>{
+const Footer = ({state})=>{
+
+	let info = state.drive.info
+
 	return(
 		<footer className="flex">
-			<ContactsPannel contacts={copy.contacts} />
-			<Copyright data={copy} />
+			<ContactsPannel info={info} />
+			<Copyright info={info} />
 		</footer>
 	)
 }
+
+export default Footer
