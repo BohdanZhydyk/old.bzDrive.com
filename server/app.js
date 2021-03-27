@@ -5,11 +5,6 @@ var bodyParser = require('body-parser')
 
 const { InOut } = require('./InOut')
 
-const { statistic }	= require('./routes/statistic')
-
-const { auth }	= require('./routes/auth/auth')
-
-
 
 const app = express()
 
@@ -19,8 +14,6 @@ app.use(bodyParser.json())
 
 
 app.all('/', (req, res)=>{ InOut(req.route.path, req, res) })
-
-app.post('/statistic', (req, res)=>{ statistic(req, res) })
 
 
 const port = 5000

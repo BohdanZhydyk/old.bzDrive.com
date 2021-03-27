@@ -7,26 +7,30 @@
 
     .inputWrapper {
       margin:0.5vw 0;
-      padding:0.5vw 0 1vw 0;
+      padding:0.25vw;
+      border:1px solid #999;
+      border-radius:0.5vw;
+      &:hover {
+        border-color:#191;
+      }
     }
 
     .inputName {
+      margin:0 0.5vw;
+      padding:0 0.5vw;
       color:#999;
     }
 
     .inputErr {}
 
     input {
-      width:95%;
-      padding:0.5vw;
+      width:94%;
+      padding:0.25vw 3%;
       color:#fff;
       background-color:#0000;
       border:none;
       letter-spacing:0.2vw;
-      border-bottom:0.1vw solid #999;
-      &:hover {
-        border-color:#191;
-      }
+      border-radius:0.25vw;
     }
   }
 

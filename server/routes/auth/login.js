@@ -5,21 +5,22 @@ const { url, dbName } = require('./../../safe/safe')
 const { bzPassHash, bzPassCompare } = require('./../../safe/bcrypt')
 
 
-exports.login = (req, res)=>{
+exports.login = (login, pass, msg, callback)=>{
   
   mongoClient.connect(url, { useUnifiedTopology: true }, (error, client)=>{
-    if (error){ console.log("can't connect to the DB") }
+    if (error){ callback({ err:error, res:false }) }
     else{
-      client.db(dbName).collection('bzUsers').findOne({ login: req.body.login }, (error, result)=>{
-        if(error){ console.log(error) }
+      console.log('db',login )
+      client.db(dbName).collection('bzUsers').findOne({ login }, (error, result)=>{
+        if(error){ callback({ err:error, res:false }) }
         else{
           if(!result){
-            res.send( { err: {login: " - niema takiego usera w bazie danych!"} } )
+            callback({ err:false, res:{...msg, login: ` - niema takiego usera w bazie danych!`} })
           }
           else{
-            bzPassCompare(req.body.pass, result.pass, (data)=>{ 
+            bzPassCompare(pass, result.pass, (data)=>{ 
               if( !data ){
-                res.send( { err: {pass: " - wprowadzone nieprawidlowe haslo!"} } )
+                callback({ err:false, res:{...msg, pass: ` - wprowadzone nieprawidlowe haslo!`} })
               }
               else{
 
@@ -42,7 +43,7 @@ exports.login = (req, res)=>{
                   ]
                 }
 
-                res.send({user, nav})
+                callback({err:false, user, nav})
                 
               }
             })

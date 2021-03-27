@@ -18,7 +18,7 @@ const GET_STATE = (action, state, setState)=>{
       drive: {
         ...state.drive,
         nav: state.drive.nav.map( (item, index)=>{
-          if(item.name === "News"){ return {...item, content:data.object} }
+          if(item.name === "News"){ return {...item, content:data.serverData} }
           else{ return item }
         })
       },

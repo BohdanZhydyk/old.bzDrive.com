@@ -4,11 +4,11 @@ import { Inputs } from './Inputs'
 import { Buttons } from './Buttons'
 
 
-export const AuthPannel = ({auth, fn})=>{
+const AuthPannel = ({auth, fn})=>{
 
 	function enterBtn(){
 		for(let i=0; i<auth.forms.length; i++){
-			if(auth.forms[i].act === "y"){ return auth.forms[i].txt }
+			if(auth.forms[i].active){ return auth.forms[i].txt }
 		}
 	}
 
@@ -20,3 +20,5 @@ export const AuthPannel = ({auth, fn})=>{
     </form>
 	)
 }
+
+export default AuthPannel

@@ -5,6 +5,8 @@ const { getState } = require('./routes/getState')
 const { news }	= require('./routes/news')
 const { auth }	= require('./routes/auth/auth')
 
+const { driveState } = require('./db/driveState.json')
+
 
 exports.InOut = async (path, req, res)=>{
 
@@ -13,7 +15,7 @@ exports.InOut = async (path, req, res)=>{
   // req.query
   // req.method
 
-  let InData
+  // let InData
 
   if(req.method){
 
@@ -33,7 +35,7 @@ exports.InOut = async (path, req, res)=>{
 
     if(req.method === "POST"){
 
-      InData = {
+      let InData = {
         err: [],
         link: req.body.link,
         bzToken: req.body.bzToken,
@@ -46,12 +48,33 @@ exports.InOut = async (path, req, res)=>{
         
         InData = {
           err: data.err,
-          // err: [{bz:"bz"}],
           link: data.link,
           bzToken: data.bzToken,
           user: data.user,
           IP: data.IP,
           object: data.object
+        }
+
+        function send(serverData){
+
+          if(serverData.err){ InData.err.push( serverData.err ) }
+
+          res.send({
+            err:InData.err,
+            link: InData.link,
+            bzToken: InData.bzToken,
+            user: InData.user,
+            IP: InData.IP,
+            serverData:serverData.result
+          })
+
+          putStatistic({
+            link: InData.link,
+            bzToken: InData.bzToken,
+            user: InData.user,
+            IP: InData.IP
+          })
+
         }
         
         switch(InData.link){
@@ -69,24 +92,11 @@ exports.InOut = async (path, req, res)=>{
             break
 
           case "/auth":
-            auth(req, res, (data)=>{
-
-            })
+            auth(req, res, (data)=> send(data) )
             break
           
           default: break
       
-        }
-
-        function send(data){
-          if(data.err){ InData.err.push( data.err ) }
-          res.send({...InData, object:data.res})
-          putStatistic({
-            link: InData.link,
-            bzToken: InData.bzToken,
-            user: InData.user,
-            IP: InData.IP
-          })
         }
         
       })

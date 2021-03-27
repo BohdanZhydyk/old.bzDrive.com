@@ -12,16 +12,22 @@ export const drive = (action, state, setState)=>{
   }
 }
 
+function funcForms(forms, payload){
+  return(
+    forms.map( (form)=>
+      form.txt === payload
+      ?	{...form, active:true, inputs:form.inputs.map( (input)=>{ return {...input, val:"", error:""}  }) }
+      :	{...form, active:false, inputs:form.inputs}
+    )
+  )
+}
+
 const GET_STATE = (action, state, setState)=>{
 
     bzPost("/drive", {}, (data)=>{
       
       setState({
-        drive:{
-          nav:data.object.nav,
-          auth:data.object.auth,
-          copy:data.object.copy
-        },
+        drive: data.serverData.drive,
         user: data.user
       })
 
@@ -32,53 +38,51 @@ const GET_STATE = (action, state, setState)=>{
 const TOGGLE_MENU = (action, state, setState)=>{
 
   setState({
-    ...state, drive:{
-      ...state.drive, auth:{
-        ...state.drive.auth, active:!action.payload
+    ...state,
+    drive:{
+      ...state.drive,
+      auth:{
+        ...state.drive.auth,
+        active:!action.payload
       }
     }
   })
   
 }
 
-export const TOGGLE_FORM = (action, state, setState)=>{
+const TOGGLE_FORM = (action, state, setState)=>{
 
   setState({
-    ...state, drive:{
-      ...state.drive, auth:{
-        ...state.drive.auth, forms: state.drive.auth.forms.map( (form)=>{
-          return (
-            form.txt === action.payload
-            ?	{...form, act:"y", inputs:form.inputs.map( (input)=>{ return {...input, val:"", error:""}  }) }
-            :	{...form, act:"n", inputs:form.inputs}
-          )
-        })
+    ...state,
+    drive:{
+      ...state.drive,
+      auth:{
+        ...state.drive.auth,
+        forms: funcForms(state.drive.auth.forms, action.payload)
       }
     }
   })
 
 }
 
-export const CHANGE_INPUT = (action, state, setState)=>{
+const CHANGE_INPUT = (action, state, setState)=>{
 
   setState({
-    ...state, drive:{
-      ...state.drive, auth:{
-        ...state.drive.auth, forms: state.drive.auth.forms.map( (form)=>{
-          return (
-            form.txt === action.payload.form
-            ?{
-                ...form, inputs: form.inputs.map( (input)=>{
-                  return (
-                    input.name === action.payload.name
-                    ? {...input, val:action.payload.value}
-                    : {...input}
-                  )
-                })
-              }
-            : {...form}
-          )
-        })
+    ...state,
+    drive:{
+      ...state.drive,
+      auth:{
+        ...state.drive.auth,
+        forms: state.drive.auth.forms.map( (form)=>
+          form.txt === action.payload.form
+          ? {
+              ...form,
+              inputs: form.inputs.map( (input)=>
+                input.name === action.payload.name ? {...input, val:action.payload.value} : {...input}
+              )
+            }
+          : {...form}
+        )
       }
     }
   })
@@ -86,7 +90,7 @@ export const CHANGE_INPUT = (action, state, setState)=>{
 }
 
 
-export const SEND_FORM = (action, state, setState)=>{
+const SEND_FORM = (action, state, setState)=>{
 
   const getInputValue= (state, form, name)=>{
     let forms = state.drive.auth.forms
@@ -114,61 +118,54 @@ export const SEND_FORM = (action, state, setState)=>{
 
       console.log('auth', data)
 
-      if(!data.err){
-        setState({
-          ...state,
-          drive:{
-            ...state.drive,
-            auth:{
-              ...state.drive.auth,
-              active: !true,
-              usermenu: data.nav,
-              forms: state.drive.auth.forms.map( (form)=>{
-                return (
-                  form.txt === action.payload
-                  ?	{...form, act:"y", inputs:form.inputs.map( (input)=>{ return {...input, val:"", error:""}  }) }
-                  :	{...form, act:"n", inputs:form.inputs}
-                )
-              })
-            }
-          },
-          user: data.user
-        })
-      }
-      else{
-        setState({
-          ...state, drive:{
-            ...state.drive, auth:{
-              ...state.drive.auth, forms: state.drive.auth.forms.map( (form)=>{
-                return (
-                  form.txt === action.payload
-                  ?
-                  {
-                    ...form, inputs: form.inputs.map( (input)=>{
-                      switch(input.name){
-                        case "login": return {...input, error: data.err.login}
-                        case "email": return {...input, error: data.err.email}
-                        case "pass":  return {...input, error: data.err.pass }
-                        case "pass1": return {...input, error: data.err.pass1}
-                        case "pass2": return {...input, error: data.err.pass2}
-                        default: return {}
-                      }
-                    })
-                  }
-                  :
-                  {...form}
-                )
-              })
-            }
+      // !data.object
+      // ?
+      // setState({
+      //   ...state,
+      //   drive:{
+      //     ...state.drive,
+      //     auth:{
+      //       ...state.drive.auth,
+      //       active: !true,
+      //       usermenu: data.nav,
+      //       forms: funcForms(state.drive.auth.forms, action.payload)
+      //     }
+      //   },
+      //   user: data.user
+      // })
+      // :
+      setState({
+        ...state,
+        drive:{
+          ...state.drive,
+          auth:{
+            ...state.drive.auth,
+            forms: state.drive.auth.forms.map( (form)=>
+              form.txt === action.payload
+              ? {
+                  ...form, inputs: form.inputs.map( (input)=>{
+                    switch(input.name){
+                      case "login": return {...input, error: data.object.login}
+                      case "email": return {...input, error: data.object.email}
+                      case "pass":  return {...input, error: data.object.pass }
+                      case "pass1": return {...input, error: data.object.pass1}
+                      case "pass2": return {...input, error: data.object.pass2}
+                      default: return {}
+                    }
+                  })
+                }
+              : {...form}
+            )
           }
-        })
-      }
+        },
+        user: data.user
+      })
     
   })
 
 }
 
-export const EXIT_MENU = (action, state, setState)=>{
+const EXIT_MENU = (action, state, setState)=>{
   remUser()
   remToken()
   setState({
@@ -179,13 +176,7 @@ export const EXIT_MENU = (action, state, setState)=>{
         ...state.drive.auth,
         active:!true,
         usermenu: [],
-        forms: state.drive.auth.forms.map( (form)=>{
-          return (
-            form.txt === "login"
-            ?	{...form, act:"y", inputs:form.inputs.map( (input)=>{ return {...input, val:"", error:""}  }) }
-            :	{...form, act:"n", inputs:form.inputs}
-          )
-        })
+        forms: funcForms(state.drive.auth.forms, "login")
       }
     },
     user: getUser()

@@ -1,5 +1,5 @@
 import React from 'react'
-import { AuthPannel } from './auth/AuthPannel'
+import AuthPannel from './AuthPannel'
 import { UserNavigation } from './UserNavigation'
 
 

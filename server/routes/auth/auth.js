@@ -1,112 +1,101 @@
-const { check, validationResult } = require('express-validator');
-
 const { login } = require('./login')
 
 
 exports.auth = (req, res, callback)=>{
 
-  const errValid = validationResult(req)
-
-  let form  = req.body.form
+  let form  = req.body.object.form
   let object = req.body.object
 
   let Validator = async (object)=>{
 
-    let err = {
+    let msg = {
+      form: form,
       login: false,
-      pass: false
+      email: false,
+      pass: false,
+      pass1: false,
+      pass2: false
     }
 
-    let isAlphanumeric = (variable, value, callback)=>{
-      (!value.match(/^[0-9A-Za-z]+$/))
-      ? callback(` - może zawierać cyfry 0-9 i litery A-Z a-z!`)
-      : callback(false)
+    let isEmail = (err, value)=>{
+      const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      return !re.test(value)
+      ? ` - wprowadzono nieprawidłowy e-mail!`
+      : err
     }
 
-    let isLength = (variable, value, min, max, callback)=>{
-      (value.length < min || value.Length > max)
-      ? callback(` - musi zawierać od ${min} do ${max} znaków!`)
-      : callback(false)
+    let isAlphanumeric = (err, value)=>{
+      return !value.match(/^[0-9A-Za-z]+$/)
+      ? ` - musi zawierać cyfry 0-9 i litery A-Z a-z!`
+      : err
     }
 
-    let isEmpty = (variable, value, callback)=>{
-      (value === "")
-      ? callback(` - wypełnij dane pole!`)
-      : callback(false)
+    let isLength = (err, value, min, max)=>{
+      return value.length < min || value.length > max
+      ? ` - musi zawierać od ${min} do ${max} znaków!`
+      : err
     }
 
-    
-    let login  = object.login
-    let pass  = object.pass
-    let pass1  = object.pass1
-    let pass2  = object.pass2
-
-    console.log("login", "|"+login+"|")
-    
-    if(object.login !== false){
-      // isEmpty("login", object.login, (data)=>{
-      //   console.log(data)
-        // if(!data){
-        //   isLength("login", object.login, 4, 8, (data)=>{
-        //     if(!data) isAlphanumeric("login", object.login, (data)=>{
-        //       console.log(data)
-        //     })
-        //   })
-        // }
-        // else{ console.log(data) }
-      // })
+    let isEmpty = (err, value)=>{
+      return value.length < 1
+      ? ` - wypełnij dane pole!`
+      : err
     }
 
+    if(object.login !== undefined){
+      let step1 = await isAlphanumeric(msg.login, object.login)
+      let step2 = await isLength(step1, object.login, 4, 8)
+      msg.login = await isEmpty(step2, object.login)
+    }
 
+    if(object.email !== undefined){
+      let step1 = await isEmail(msg.email, object.email)
+      msg.email = await isEmpty(step1, object.email)
+    }
 
-    // if(object.pass) isPass(object.pass)
-    // if(object.pass1) isPass(object.pass1)
-    // if(object.pass2) isPass(object.pass2)
-    
-    console.log(err)
+    if(object.pass !== undefined){
+      let step1 = await isAlphanumeric(msg.pass, object.pass)
+      let step2 = await isLength(step1, object.pass, 8, 16)
+      msg.pass = await isEmpty(step2, object.pass)
+    }
 
+    if(object.pass1 !== undefined){
+      let step1 = await isAlphanumeric(msg.pass1, object.pass1)
+      let step2 = await isLength(step1, object.pass1, 8, 16)
+      msg.pass1 = await isEmpty(step2, object.pass1)
+    }
+
+    if(object.pass2 !== undefined){
+      let step1 = await isAlphanumeric(msg.pass2, object.pass2)
+      let step2 = await isLength(step1, object.pass2, 8, 16)
+      msg.pass2 = await isEmpty(step2, object.pass2)
+    }
+
+    setTimeout(function(){
+      if(form === "login" && !msg.login && !msg.pass){
+        login(object.login, object.pass, msg, (data)=>{
+          callback({ err:data.err, result:data })
+          console.log(data)
+        })
+      }
+      else if(form === "signin" && !msg.login && !msg.email && !msg.pass1 && !msg.pass2){
+        msg.form = form
+        msg.ok = true
+        msg.msg = "signin OK"
+      }
+      else if(form === "forgot" && !msg.email && !msg.pass1 && !msg.pass2){
+        msg.form = form
+        msg.ok = true
+        msg.msg = "forgot OK"
+      }
+      else{
+        callback({ err:false, result:{msg} })
+      }
+      
+    }, 500)
     
   }
 
   Validator(object)
-
-  
-// 		check('email').isEmail().withMessage(' - wprowadzono nieprawidłowy e-mail!'),
-// 		check('email').isLength({ min:1 }).withMessage(' - wypełnij dane pole!'),
-// 		check('pass')	.isLength({ min:8, max:16 }).withMessage(' - musi zawierać od 8 do 16 znaków!'),
-// 		check('pass')	.isAlphanumeric().withMessage(' - może zawierać cyfry 0-9 i litery A-Z a-z!'),
-// 		check('pass')	.isLength({ min:1 }).withMessage(' - wypełnij dane pole!'),
-// 		check('pass1').isLength({ min:8, max:16 }).withMessage(' - musi zawierać od 8 do 16 znaków!'),
-// 		check('pass1').isAlphanumeric().withMessage(' - może zawierać cyfry 0-9 i litery A-Z a-z!'),
-// 		check('pass1').isLength({ min:1 }).withMessage(' - wypełnij dane pole!'),
-// 		check('pass2').isLength({ min:8, max:16 }).withMessage(' - musi zawierać od 8 do 16 znaków!'),
-// 		check('pass2').isAlphanumeric().withMessage(' - może zawierać cyfry 0-9 i litery A-Z a-z!'),
-// 		check('pass2').isLength({ min:1 }).withMessage(' - wypełnij dane pole!'),
-
-
-  // for(let i=0; i<errValid.errors.length; i++){
-  //   if( errValid.errors[i].param === "login" 	){ err.login 	= errValid.errors[i].msg }
-  //   if( errValid.errors[i].param === "email" 	){ err.email 	= errValid.errors[i].msg }
-  //   if( errValid.errors[i].param === "pass" 	){ err.pass 	= errValid.errors[i].msg }
-  //   if( errValid.errors[i].param === "pass1" 	){ err.pass1 	= errValid.errors[i].msg }
-  //   if( errValid.errors[i].param === "pass2" 	){ err.pass2 	= errValid.errors[i].msg }
-  // }
-
-  // if(form === "login" && !err.login && !err.pass){ login(req, res) }
-  // else if(form === "signin" && !err.login && !err.email && !err.pass1 && !err.pass2){
-  //   err.form = form
-  //   err.ok = true
-  //   err.msg = "signin OK"
-  // }
-  // else if(form === "forgot" && !err.email && !err.pass1 && !err.pass2){
-  //   err.form = form
-  //   err.ok = true
-  //   err.msg = "forgot OK"
-  // }
-  // else{
-  //   res.send( {err} )
-  // }
-
-  // console.log(err)
 
 }
