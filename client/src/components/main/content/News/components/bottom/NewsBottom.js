@@ -1,19 +1,26 @@
 import React from 'react'
 import './NewsBottom.scss'
 
-import { EditPannel } from './EditPannel'
-
 
 export const NewsBottom = ({data, user, fn})=>{
+
+  let DELETE_NEWS = ()=> fn({ app: "news", type: "DELETE_NEWS", payload:data._id })
+  
   return (
     <div className="newsBottom flex end">
 
       {
         user.role === "admin" &&
-        <EditPannel data={data} fn={fn}/>
+        <img
+          className="imgBtn"
+          onClick={ ()=> DELETE_NEWS() }
+          src="https://files.bzdrive.com/img/ico/icoDelete.png"
+          alt="delete"
+        />
       }
-  
+
       <span>{data.bottom.unix}</span>
+
     </div>
   )
 }

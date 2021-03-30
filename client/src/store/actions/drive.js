@@ -139,8 +139,8 @@ const SEND_FORM = (action, state, setState)=>{
 
       let NoErr = ()=>
         (!data.login.error && !data.email.error && !data.pass.error && !data.pass1.error && !data.pass2.error)
-        ? false
-        : true
+        ? true
+        : false
 
       setState({
         ...state,
@@ -148,7 +148,7 @@ const SEND_FORM = (action, state, setState)=>{
           ...state.drive,
           auth:{
             ...state.drive.auth,
-            active: NoErr(),
+            active: !NoErr(),
             forms: state.drive.auth.forms.map( (form)=>
               form.txt === action.payload
               ? {

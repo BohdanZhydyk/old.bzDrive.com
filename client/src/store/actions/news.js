@@ -2,9 +2,9 @@ import { bzPost, setUser, getUser, remUser, setToken, getToken, remToken } from 
 
 export const news = (action, state, setState)=>{
   switch(action.type){
-    case "GET_STATE":       GET_STATE(action, state, setState);     break
-    case "EDIT_MODE":       EDIT_MODE(action, state, setState);     break;
-    case "CHANGE_INPUT":    CHANGE_INPUT(action, state, setState);  break;
+    case "GET_STATE":     GET_STATE(action, state, setState);   break;
+    case "ADD_NEWS":      ADD_NEWS(action, state, setState);    break;
+    case "DELETE_NEWS":   DELETE_NEWS(action, state, setState);    break;
     default: break
   }
 }
@@ -12,7 +12,6 @@ export const news = (action, state, setState)=>{
 const GET_STATE = (action, state, setState)=>{
   
   bzPost("/news", {}, (data)=>{
-
     setState({
       ...state,
       drive: {
@@ -25,43 +24,42 @@ const GET_STATE = (action, state, setState)=>{
       },
       user: getUser()
     })
-    
   })
 
 }
 
-const EDIT_MODE = (action, state, setState)=>{
+const ADD_NEWS = (action, state, setState)=>{
 
-  setState({
-    ...state, news:state.news.map( (item)=>{
-      return(
-        item._id === action.payload.id
-        ? {...item, editMode:action.payload.mode}
-        : {...item}
-      )
-    })
-  })
-
-}
-
-const CHANGE_INPUT = (action, state, setState)=>{
-
-  if(action.payload.nr === "theme"){
+  bzPost("/news", {add:true, data:action.payload}, (data)=>{
     setState({
-      ...state, news:state.news.map( (item)=>{
-        return(
-          item.id === action.payload._id
-          ?
-          {
-            ...item, top:{
-              ...item.top, theme:action.payload.value
-            }
-          }
-          :
-          {...item}
+      ...state,
+      drive: {
+        ...state.drive,
+        nav: state.drive.nav.map( (item, index)=>
+          (item.name === "News")
+          ? {...item, content:data}
+          : {...item, content:false}
         )
-      })
+      },
+      user: getUser()
     })
-  }
+  })
+}
 
+const DELETE_NEWS = (action, state, setState)=>{
+
+  bzPost("/news", {delete:true, data:action.payload}, (data)=>{
+    setState({
+      ...state,
+      drive: {
+        ...state.drive,
+        nav: state.drive.nav.map( (item, index)=>
+          (item.name === "News")
+          ? {...item, content:data}
+          : {...item, content:false}
+        )
+      },
+      user: getUser()
+    })
+  })
 }

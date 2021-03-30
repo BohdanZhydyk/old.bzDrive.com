@@ -5,16 +5,16 @@ import { TagP } from './TagP'
 import { TagH4 } from './TagH4'
 
 
-export const NewsContent = ({content, mode})=>{
+export const NewsContent = ({content, user, fn})=>{
   return (
     <div className="newsContent">
       {
         content.map( (item, index)=>{
           switch(item.tag){
             case "p":
-              return <TagP data={item.data} mode={mode} key={`tagp${index}`} />
+              return <TagP data={item.data} fn={fn} key={`tagp${index}`} />
             case "h4":
-              return <TagH4 data={item.data} mode={mode} key={`tagh4${index}`} />
+              return <TagH4 data={item.data} fn={fn} key={`tagh4${index}`} />
             default:
               return <></>
           }

@@ -2,7 +2,8 @@ import React from 'react'
 import './Profile.scss'
 
 
-function ProfileApp({state, fn}){
+function ProfileApp({content, user, fn}){
+  console.log(user)
   return(
     <div className="profile flex">
       Profile

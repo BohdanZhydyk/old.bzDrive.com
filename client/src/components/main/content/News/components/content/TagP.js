@@ -1,17 +1,10 @@
 import React from 'react'
 
 
-export const TagP = ({data, mode})=>{
+export const TagP = ({data, fn})=>{
   return (
     <div className="tagWraper">
-      {
-        mode
-        ?
-        <textarea className="pEdit txtWht" cols="30" rows="5">{data}</textarea>
-        :
-        <p className="p">{data}</p>
-      }
-      
+      <p className="p">{data}</p>
     </div>
   )
 }

@@ -6,11 +6,11 @@ import { NewsInfo } from './NewsInfo'
 import { Theme } from './Theme'
 
 
-export const NewsTop = ({data, fn})=>{
+export const NewsTop = ({data, user, fn})=>{
   return(
     <div className="newsTop flex start">
 
-      <Ava data={data.top.author} />
+      <Ava author={data.top.author} />
 
       <NewsInfo data={data.top} />
 

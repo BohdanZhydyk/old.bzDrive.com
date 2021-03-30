@@ -34,9 +34,16 @@ const Main = ({state, fn})=>{
 							case "/apps": return <Route path={to} component={ ()=> <Applications content={route.content} user={state.user} fn={fn} /> } key={`Route${index}`} />
 							case "/about": return <Route path={to} component={ ()=> <About content={route.content} user={state.user} fn={fn} /> } key={`Route${index}`}	/>
 							
-							case "/profile": return <Route path={to} component={ ()=> <Profile content={route.content} user={state.user} fn={fn} /> } key={`Route${index}`}	/>
-							case "/statistic": return <Route path={to} component={ ()=> <Statistic content={route.content} user={state.user} fn={fn} /> } key={`Route${index}`}	/>
+							case "/profile":
+								return (state.user.role === "admin" || state.user.role === "user")
+									? <Route path={to} component={ ()=> <Profile content={route.content} user={state.user} fn={fn} /> } key={`Route${index}`}	/>
+									: <Route component={ ()=> <Error /> } key={`Route${index}`}	/>
 							
+							case "/statistic":
+								return (state.user.role === "admin")
+									? <Route path={to} component={ ()=> <Statistic content={route.content} user={state.user} fn={fn} /> } key={`Route${index}`}	/>
+									: <Route component={ ()=> <Error /> } key={`Route${index}`}	/>
+
 							case "": return <Loader key={`Route${index}`} />
 							default: return <Route component={ ()=> <Error /> } key={`Route${index}`}	/>
 						}

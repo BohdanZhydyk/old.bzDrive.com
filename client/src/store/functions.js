@@ -2,6 +2,18 @@ import axios from 'axios'
 import cookies from 'js-cookie'
 
 
+export const timeConverter = ( unix = new Date(Date.now()) )=>{
+  // var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+  var year = unix.getFullYear()
+  var month = unix.getMonth() < 10 ? "0"+unix.getMonth() : unix.getMonth()
+  var date = unix.getDate() < 10 ? "0"+unix.getDate() : unix.getDate()
+  var hour = unix.getHours() < 10 ? "0"+unix.getHours() : unix.getHours()
+  var min = unix.getMinutes() < 10 ? "0"+unix.getMinutes() : unix.getMinutes()
+  var sec = unix.getSeconds() < 10 ? "0"+unix.getSeconds() : unix.getSeconds()
+  var dateTime = year+'-'+month+'-'+date+' '+hour+':'+min+':'+sec
+  return dateTime
+}
+
 export const setToken = (bzToken)=> cookies.set('bzToken', bzToken )
 export const remToken = ()=> cookies.remove('bzToken')
 export const getToken = ()=> cookies.get('bzToken')
