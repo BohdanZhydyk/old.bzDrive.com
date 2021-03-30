@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './index.scss'
 
 import { Header } from './components/Header/Header'
@@ -9,7 +9,7 @@ import Loader from './../Loader'
 
 const CvApp = ({content, user, fn})=>{
 
-  if( !content ){ fn({ app:"cv", type:"GET_STATE" }) }
+  useEffect( ()=>{ !content && fn({ app:"cv", type:"GET_STATE" }) },[])
 
   return (
     <div className="CV">

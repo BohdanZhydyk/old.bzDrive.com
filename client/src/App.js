@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { HashRouter } from 'react-router-dom'
 
+import initialState from './store/initialState.json'
 import actions from './store/actions'
 
 import Header from './components/Header'
@@ -10,26 +11,11 @@ import Footer from './components/Footer'
 
 function App() {
 
-	const [state, setState] = useState("")
+	const [state, setState] = useState(initialState)
 
 	const fn = (action) => actions(action, state, setState)
-
-	if(state === ""){
-		setState({
-			drive: {
-				info: false,
-				nav: [
-					{name: "", to: ""},
-					{name: "", to: ""},
-					{name: "", to: ""}
-				],
-				auth: false
-			},
-			user: false
-		})
-
-		fn({ app: "drive", type: "GET_STATE" })
-	}
+	
+	useEffect( ()=>{ fn({ app: "drive", type: "GET_STATE" }) },[]);
 
 	console.log('state', state)
 

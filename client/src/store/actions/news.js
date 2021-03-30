@@ -1,4 +1,4 @@
-import { bzPost } from './../functions'
+import { bzPost, setUser, getUser, remUser, setToken, getToken, remToken } from './../functions'
 
 export const news = (action, state, setState)=>{
   switch(action.type){
@@ -17,12 +17,13 @@ const GET_STATE = (action, state, setState)=>{
       ...state,
       drive: {
         ...state.drive,
-        nav: state.drive.nav.map( (item, index)=>{
-          if(item.name === "News"){ return {...item, content:data.serverData} }
-          else{ return item }
-        })
+        nav: state.drive.nav.map( (item, index)=>
+          (item.name === "News")
+          ? {...item, content:data}
+          : {...item, content:false}
+        )
       },
-      user: data.user
+      user: getUser()
     })
     
   })

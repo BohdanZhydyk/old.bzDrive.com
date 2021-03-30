@@ -2,18 +2,28 @@ import axios from 'axios'
 import cookies from 'js-cookie'
 
 
-export const setToken = (bzToken)=>{ cookies.set('bzToken', bzToken ) }
-export const remToken = ()=>{ cookies.remove('bzToken') }
-export const getToken = ()=>{ return cookies.get('bzToken') }
+export const setToken = (bzToken)=> cookies.set('bzToken', bzToken )
+export const remToken = ()=> cookies.remove('bzToken')
+export const getToken = ()=> cookies.get('bzToken')
 
-export const setUser = (user)=>{ JSON.stringify( cookies.set('user', user) ) }
-export const remUser = ()=>{ cookies.remove('user') }
-export const getUser = ()=>{ return cookies.get('user') }
+export const setUser = (user)=> JSON.stringify( cookies.set('user', user) )
+export const remUser = ()=> cookies.remove('user')
+export const getUser = ()=> cookies.get('user') ? JSON.parse( cookies.get('user') ) : false
+
 
 export const errors = (err)=> console.log("ERRORS", err)
 
 
 export const bzPost = async ( link, object, callback )=>{
+
+  let OutData = {
+    Errors: [],
+    link: link,
+    bzToken: getToken(),
+    IP: false,
+    user: false,
+    object: object
+  }
 
   // let href = window.location.href
   let hostname = window.location.hostname
@@ -24,7 +34,7 @@ export const bzPost = async ( link, object, callback )=>{
   ? api = 'http://localhost:5000'
   : api = 'https://bzdrive.com'
 
-  let getIP = await axios.get('https://json.geoiplookup.io').then( (res)=> {
+  OutData.IP = await axios.get('https://json.geoiplookup.io').then( (res)=> {
 
     return {
       host: hostname,
@@ -41,21 +51,17 @@ export const bzPost = async ( link, object, callback )=>{
     }
 
   }).catch( (err)=>{
-    errors({err:err, host:hostname, from:link})
+    OutData.Errors.push({err:err, host:hostname, from:link})
     return "no IP"
   })
 
-  let clientData = { link:link, bzToken:getToken(), user:getUser(), IP:getIP, object }
-
-  axios.post( api, clientData).then( (res)=>{
+  axios.post( api, OutData).then( (res)=>{
 
     setToken(res.data.bzToken)
     setUser(res.data.user)
+    res.data.Errors.map( (err)=> errors(err) )
 
-    callback({
-      serverData:res.data.serverData,
-      user:res.data.user
-    })
+    callback(res.data.serverData)
 
   }).catch( (err)=> errors(err) )
 

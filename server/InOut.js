@@ -5,8 +5,6 @@ const { getState } = require('./routes/getState')
 const { news }	= require('./routes/news')
 const { auth }	= require('./routes/auth/auth')
 
-const { driveState } = require('./db/driveState.json')
-
 
 exports.InOut = async (path, req, res)=>{
 
@@ -28,7 +26,6 @@ exports.InOut = async (path, req, res)=>{
           res.send( `error! { msg: no file index.html, query: ${ JSON.stringify(query) } }` )
           break
         default: break
-    
       }
 
     }
@@ -36,7 +33,7 @@ exports.InOut = async (path, req, res)=>{
     if(req.method === "POST"){
 
       let InData = {
-        err: [],
+        Errors: [],
         link: req.body.link,
         bzToken: req.body.bzToken,
         user: req.body.user,
@@ -44,59 +41,27 @@ exports.InOut = async (path, req, res)=>{
         object: req.body.object
       }
 
-      chkToken(InData, (data)=>{
-        
-        InData = {
-          err: data.err,
-          link: data.link,
-          bzToken: data.bzToken,
-          user: data.user,
-          IP: data.IP,
-          object: data.object
-        }
+      chkToken(InData, (InData)=>{
 
-        function send(serverData){
-
-          if(serverData.err){ InData.err.push( serverData.err ) }
-
-          res.send({
-            err:InData.err,
-            link: InData.link,
-            bzToken: InData.bzToken,
-            user: InData.user,
-            IP: InData.IP,
-            serverData:serverData.result
-          })
-
-          putStatistic({
-            link: InData.link,
-            bzToken: InData.bzToken,
-            user: InData.user,
-            IP: InData.IP
-          })
-
-        }
-        
         switch(InData.link){
-
-          case "/drive":
-            getState('/drive', req, res, (data)=> send(data) )
-            break
-
-          case "/cv":
-            getState('/cv', req, res, (data)=> send(data) )
-            break
-
-          case "/news":
-            news(req, res, (data)=> send(data) )
-            break
-
-          case "/auth":
-            auth(req, res, (data)=> send(data) )
-            break
-          
+          case "/drive":  getState('/drive', req, res, InData, (data)=> send(data) );   break;
+          case "/cv":     getState('/cv', req, res, InData, (data)=> send(data) );      break;
+          case "/news":   news(req, res, InData, (data)=> send(data) );                 break;
+          case "/auth":   auth(req, res, InData, (data)=> send(data) );                 break;
           default: break
-      
+        }
+  
+        function send(serverData){
+  
+          res.send(serverData)
+  
+          putStatistic({
+            link: serverData.link,
+            bzToken: serverData.bzToken,
+            user: serverData.user,
+            IP: serverData.IP
+          })
+  
         }
         
       })

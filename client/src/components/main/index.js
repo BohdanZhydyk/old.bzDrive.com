@@ -28,17 +28,17 @@ const Main = ({state, fn})=>{
 					state.drive.nav.map( (route, index)=>{
 						let to = route.to
 						switch(to){
-							case "/": return <Route exact path={to} component={ ()=> <News content={route.content} user={state.user} fn={fn} /> } />
-							case "/api": return <Route path={to} component={ ()=> <Api content={route.content} user={state.user} fn={fn} /> } />
-							case "/cv": return <Route path={to} component={ ()=> <CV content={route.content} user={state.user} fn={fn} /> } />
-							case "/apps": return <Route path={to} component={ ()=> <Applications content={route.content} user={state.user} fn={fn} /> } />
-							case "/about": return <Route path={to} component={ ()=> <About content={route.content} user={state.user} fn={fn} /> }	/>
+							case "/": return <Route exact path={to} component={ ()=> <News content={route.content} user={state.user} fn={fn} /> } key={`Route${index}`} />
+							case "/api": return <Route path={to} component={ ()=> <Api content={route.content} user={state.user} fn={fn} /> } key={`Route${index}`} />
+							case "/cv": return <Route path={to} component={ ()=> <CV content={route.content} user={state.user} fn={fn} /> } key={`Route${index}`} />
+							case "/apps": return <Route path={to} component={ ()=> <Applications content={route.content} user={state.user} fn={fn} /> } key={`Route${index}`} />
+							case "/about": return <Route path={to} component={ ()=> <About content={route.content} user={state.user} fn={fn} /> } key={`Route${index}`}	/>
 							
-							case "/profile": return <Route path={to} component={ ()=> <Profile content={route.content} user={state.user} fn={fn} /> }	/>
-							case "/statistic": return <Route path={to} component={ ()=> <Statistic content={route.content} user={state.user} fn={fn} /> }	/>
+							case "/profile": return <Route path={to} component={ ()=> <Profile content={route.content} user={state.user} fn={fn} /> } key={`Route${index}`}	/>
+							case "/statistic": return <Route path={to} component={ ()=> <Statistic content={route.content} user={state.user} fn={fn} /> } key={`Route${index}`}	/>
 							
-							case "": return <Loader />
-							default: return <Route component={ ()=> <Error /> }	/>
+							case "": return <Loader key={`Route${index}`} />
+							default: return <Route component={ ()=> <Error /> } key={`Route${index}`}	/>
 						}
 
 					})

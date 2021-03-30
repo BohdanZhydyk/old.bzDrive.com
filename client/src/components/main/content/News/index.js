@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './index.scss'
 
 import { News } from './components/News'
@@ -7,7 +7,7 @@ import Loader from './../Loader'
 
 const NewsApp = ({content, user, fn})=>{
 
-  if( !content ){ fn({ app:"news", type:"GET_STATE" }) }
+  useEffect( ()=>{ !content && fn({ app:"news", type:"GET_STATE" }) },[])
 
   return (
     <div className="news">
