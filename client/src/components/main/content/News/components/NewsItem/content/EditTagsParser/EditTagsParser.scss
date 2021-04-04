@@ -1,0 +1,21 @@
+
+.tagWrapper {
+  width:100%;
+
+  .EditH4 {
+    width:100%;
+    min-height:2vw;
+    text-align:center;
+    background-color:#0000;
+    border:1px solid #fff;
+  }
+  
+  .EditP {
+    width:calc(100% - 1vw);
+    padding:0.5vw;
+    text-indent:2vw;
+    color:#fff;
+    background-color:#0000;
+    border:1px solid #fff;
+  }
+}

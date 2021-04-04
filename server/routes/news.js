@@ -15,6 +15,20 @@ exports.news = (req, res, InData, callback)=>{
     InData.object.add &&
     client.db(dbName).collection('bz_news').insertOne(InData.object.data)
 
+    // // SAVE
+    InData.object.save &&
+    client.db(dbName).collection('bz_news').updateOne(
+      {_id: new ObjectID(InData.object.data._id)},
+      {
+        $set: {
+          top: InData.object.data.top,
+          content: InData.object.data.content,
+          bottom: InData.object.data.bottom
+        } 
+      },
+      {upsert:true}
+    )
+
     //DELETE
     InData.object.delete &&
     client.db(dbName).collection('bz_news').deleteOne({_id: new ObjectID(InData.object.data)})

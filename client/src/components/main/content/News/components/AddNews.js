@@ -1,37 +1,13 @@
 import React from 'react'
 
-import { timeConverter } from './../../../../../store/functions'
 
+export const AddNews = ({newsFn})=>{
 
-export const AddNews = ({user, fn})=>{
-
-  let newNews = {
-    top: {
-        author: user.login,
-        lng: user.lang,
-        dateTime: timeConverter(),
-        theme: "theme of the news..."
-    },
-    content: [
-        {
-            tag: "h4",
-            data: "write header here..."
-        },
-        {
-            tag: "p",
-            data: "write paragraph here..."
-        }
-    ],
-    bottom: {
-        unix: Date.now()
-    }
-  }
-
-let ADD_NEWS = ()=> fn({ app: "news", type: "ADD_NEWS", payload:newNews })
+let ADD_NEWS = ()=> newsFn({ type: "ADD_NEWS", payload:true })
 
   return (
-    <div className="container flex txtOrg">
-      <span onClick={ ()=> ADD_NEWS() }>Add New</span>
+    <div className="container flex txtOrg" onClick={ ()=> ADD_NEWS() } >
+      <span>Add News</span>
     </div>
   )
 }

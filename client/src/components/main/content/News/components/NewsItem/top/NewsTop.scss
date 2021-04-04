@@ -1,5 +1,6 @@
 
 .newsTop {
+  width:95%;
   padding:0.5vw;
 
   .ava {
@@ -33,14 +34,13 @@
     margin:0 2vw;
     text-indent:2vw;
     min-height:2.5vw;
-    align-items:flex-end;
 
     input {
       width:100%;
       padding:0.5vw;
       color:#fff;
       background-color:#0000;
-      border:1px solid #f60;
+      border:1px solid #0000;
     }
   }
 }

@@ -2,15 +2,14 @@ import axios from 'axios'
 import cookies from 'js-cookie'
 
 
-export const timeConverter = ( unix = new Date(Date.now()) )=>{
-  // var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
-  var year = unix.getFullYear()
-  var month = unix.getMonth() < 10 ? "0"+unix.getMonth() : unix.getMonth()
-  var date = unix.getDate() < 10 ? "0"+unix.getDate() : unix.getDate()
-  var hour = unix.getHours() < 10 ? "0"+unix.getHours() : unix.getHours()
-  var min = unix.getMinutes() < 10 ? "0"+unix.getMinutes() : unix.getMinutes()
-  var sec = unix.getSeconds() < 10 ? "0"+unix.getSeconds() : unix.getSeconds()
-  var dateTime = year+'-'+month+'-'+date+' '+hour+':'+min+':'+sec
+export const unixToDateTimeConverter = ( unix = new Date(Date.now()) )=>{
+  let year = unix.getFullYear()
+  let month = (unix.getMonth()+1) < 10 ? "0"+(unix.getMonth()+1) : unix.getMonth()+1
+  let date = unix.getDate() < 10 ? "0"+unix.getDate() : unix.getDate()
+  let hour = unix.getHours() < 10 ? "0"+unix.getHours() : unix.getHours()
+  let min = unix.getMinutes() < 10 ? "0"+unix.getMinutes() : unix.getMinutes()
+  let sec = unix.getSeconds() < 10 ? "0"+unix.getSeconds() : unix.getSeconds()
+  let dateTime = year+'-'+month+'-'+date+' '+hour+':'+min+':'+sec
   return dateTime
 }
 

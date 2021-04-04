@@ -1,16 +1,24 @@
 import React from 'react'
 
-import { NewsTop } from './top/NewsTop'
-import { NewsContent } from './content/NewsContent'
-import { NewsBottom } from './bottom/NewsBottom'
+import { AddNews } from './AddNews'
+import NewsItem from './NewsItem'
 
 
-export const News = ({data, user, fn})=>{
-  return (
-    <div className="container">
-      <NewsTop data={data} user={user} fn={fn} />
-      <NewsContent content={data.content} user={user} fn={fn} />
-      <NewsBottom data={data} user={user} fn={fn} />
-    </div>
+export const News = ({ props:{news, user, newsFn} })=>{
+
+  let admin = user.role === "admin" ? true : false
+
+  return(
+    <>
+
+    { admin && <AddNews newsFn={newsFn} /> }
+
+    {
+      news.map( (item, index)=>
+        <NewsItem props={{item, admin, newsFn}} key={`news${item.bottom.unix+index}`} />
+      )
+    }
+    
+    </>
   )
 }
