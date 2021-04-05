@@ -16,7 +16,7 @@ function dataToState(data, state, setState){
     drive: {
       ...state.drive,
       nav: state.drive.nav.map( (item, index)=>
-        (item.name === "News")
+        (item.to === "/")
         ? {...item, content:data}
         : {...item, content:false}
       )

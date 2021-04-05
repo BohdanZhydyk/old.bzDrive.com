@@ -16,7 +16,7 @@ const GET_STATE = (action, state, setState)=>{
       drive: {
         ...state.drive,
         nav: state.drive.nav.map( (item, index)=>
-          (item.name === "CV")
+          (item.to === "/cv")
           ? {...item, content:data}
           : {...item, content:false}
         )

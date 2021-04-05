@@ -19,6 +19,15 @@ exports.chkToken = (InData, callback)=>{
       }
     }
 
+    let getLang = ()=>{      
+      switch( InData.IP.country_code ? InData.IP.country_code.toLowerCase() : 'en' ){
+        case "ua": return 'ua'
+        case "pl": return 'pl'
+        case "ru": return 'ru'
+        default: return 'en'
+      }
+    }
+
     client.db(dbName)
       .collection('statistic')
       .find({bzToken:InData.bzToken})
@@ -39,7 +48,7 @@ exports.chkToken = (InData, callback)=>{
       if(!InData.user || InData.user === undefined || InData.user === 'undefined'){
         InData = {
           ...InData,
-          user: {role:"guest", login: false, lang: false, sex: false, ava: false}
+          user: {role:"guest", login:false, lang:getLang(), sex:false, ava:false}
         }
       }
       
