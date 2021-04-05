@@ -8,7 +8,7 @@ import EditTagsParser from './content/EditTagsParser'
 import { NewsBottom } from './bottom/NewsBottom'
 
 
-const NewsItem = ({ props:{item, admin, newsFn} })=>{
+const NewsItem = ({ props:{item, admin, user, newsFn} })=>{
 
   return (
     <div className="container flex column">
@@ -20,7 +20,7 @@ const NewsItem = ({ props:{item, admin, newsFn} })=>{
         : <EditTagsParser props={{item, admin, newsFn}} />
       }
       </div>
-      <NewsBottom props={{item, admin, newsFn}} />
+      <NewsBottom props={{item, admin, user, newsFn}} />
     </div>
   )
 }

@@ -1,46 +1,17 @@
 import React from 'react'
 import './NewsBottom.scss'
 
+import LikesPannel from './LikesPannel'
+import BtnPannel from './BtnPannel'
 
-export const NewsBottom = ({ props:{item, admin, newsFn} })=>{
 
-  let EDIT_NEWS = ()=> newsFn({ type: "EDIT_NEWS", payload:item._id })
-  let SAVE_NEWS = ()=> newsFn({ type: "SAVE_NEWS", payload:item._id })
-  let DELETE_NEWS = ()=> newsFn({ type: "DELETE_NEWS", payload:item._id })
-  
+export const NewsBottom = ({ props:{item, admin, user, newsFn} })=>{  
   return (
-    <div className="newsBottom flex end">
+    <div className="newsBottom flex">
 
-      {
-        admin &&
-        <>
-          {
-            item.edit
-            ?
-            <img
-              className="imgBtn"
-              onClick={ ()=> SAVE_NEWS() }
-              src="https://files.bzdrive.com/img/ico/icoSave.png"
-              alt="save"
-            />
-            :
-            <img
-              className="imgBtn"
-              onClick={ ()=> EDIT_NEWS() }
-              src="https://files.bzdrive.com/img/ico/icoEdit.png"
-              alt="edit"
-            />
-          }
-          <img
-            className="imgBtn"
-            onClick={ ()=> DELETE_NEWS() }
-            src="https://files.bzdrive.com/img/ico/icoDelete.png"
-            alt="delete"
-          />
-        </>
-      }
+      <LikesPannel props={{item, user, newsFn}} />
 
-      <span>{item.bottom.unix}</span>
+      <BtnPannel props={{item, admin, newsFn}} />
 
     </div>
   )

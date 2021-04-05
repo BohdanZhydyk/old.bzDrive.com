@@ -23,7 +23,10 @@ export const ADD_NEWS = (user, fn)=>{
       theme: "theme of the news..."
     },
     content: [ getTag("h4"), getTag("p") ],
-    bottom: { unix: Date.now() }
+    bottom: {
+      likes: [],
+      unix: Date.now()
+    }
   }
   fn({ app: "news", type: "ADD_NEWS", payload:newNews })
 }
@@ -96,4 +99,15 @@ export const ADD_TAG = (action, news, setNews)=>{
     })
   ])
 
+}
+
+export const LIKE_CLICK = (action, news, fn)=>{
+  news.map( (item)=>
+    item._id === action.payload.id &&
+    fn({
+      app: "news",
+      type: "SAVE_NEWS",
+      payload:{ ...item, bottom:{...item.bottom, likes:action.payload.likes} }
+    })
+  )
 }

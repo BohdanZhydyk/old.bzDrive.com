@@ -15,7 +15,7 @@ export const News = ({ props:{news, user, newsFn} })=>{
 
     {
       news.map( (item, index)=>
-        <NewsItem props={{item, admin, newsFn}} key={`news${item.bottom.unix+index}`} />
+        <NewsItem props={{item, admin, user, newsFn}} key={`news${item.bottom.unix+index}`} />
       )
     }
     

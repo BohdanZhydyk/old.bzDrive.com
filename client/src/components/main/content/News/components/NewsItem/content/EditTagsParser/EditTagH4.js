@@ -11,7 +11,7 @@ export const EditTagH4 = ({ props:{element, newsFn} })=>{
     <div className="tagWrapper flex column" >
 
       <input
-        className="EditH4 flex txtOrg"
+        className="EditH4 flex"
         type="text"
         value={element.data}
         onChange={ (e)=> CHANGE_INPUT(e) }

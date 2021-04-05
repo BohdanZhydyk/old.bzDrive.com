@@ -5,7 +5,10 @@
   .EditH4 {
     width:100%;
     min-height:2vw;
+    font-size:110%;
+    font-weight:bold;
     text-align:center;
+    color:#fff;
     background-color:#0000;
     border:1px solid #fff;
   }
@@ -13,6 +16,7 @@
   .EditP {
     width:calc(100% - 1vw);
     padding:0.5vw;
+    font-size:100%;
     text-indent:2vw;
     color:#fff;
     background-color:#0000;

@@ -5,15 +5,16 @@
   .container {
     margin:1vw 0;
     padding:1vw 0;
+    background-color:#222;
     border:1px solid #999;
     border-radius:0.5vw;
 
     .newsContent {
-      width:95%;
+      width:98%;
       margin:0.5em auto;
       padding:0.5em 0 1em 0;
-      border-top:1px solid #f60;
-      border-bottom:1px solid #f60;
+      border-top:1px solid #999;
+      border-bottom:1px solid #999;
     }
   }
 }

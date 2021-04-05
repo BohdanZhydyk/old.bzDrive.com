@@ -15,7 +15,7 @@ exports.news = (req, res, InData, callback)=>{
     InData.object.add &&
     client.db(dbName).collection('bz_news').insertOne(InData.object.data)
 
-    // // SAVE
+    // SAVE
     InData.object.save &&
     client.db(dbName).collection('bz_news').updateOne(
       {_id: new ObjectID(InData.object.data._id)},

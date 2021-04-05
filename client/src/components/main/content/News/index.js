@@ -8,7 +8,8 @@ import {
   SAVE_NEWS,
   DELETE_NEWS,
   CHANGE_INPUT,
-  ADD_TAG
+  ADD_TAG,
+  LIKE_CLICK
 } from './actions'
 import { News } from './components/News'
 import Loader from './../Loader'
@@ -27,6 +28,7 @@ const NewsApp = ({content, user, fn})=>{
       case "DELETE_NEWS":   DELETE_NEWS(action, fn);              break;
       case "CHANGE_INPUT":  CHANGE_INPUT(action, news, setNews);  break;
       case "ADD_TAG":       ADD_TAG(action, news, setNews);       break;
+      case "LIKE_CLICK":    LIKE_CLICK(action, news, fn);    break;
       default: break
     }
   }
