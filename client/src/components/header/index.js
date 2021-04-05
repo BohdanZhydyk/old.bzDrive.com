@@ -27,9 +27,9 @@ const Header = ({state, fn})=>{
 	return(
 		<header className="flex" >
 			<Logo info={info} />
-			<Navigation nav={nav} fn={fn} />
+			<Navigation nav={nav} lang={lang} fn={fn} />
 			<Language lang={lang} />
-			<Auth auth={auth} user={user} fn={fn} />
+			<Auth auth={auth} lang={lang} user={user} fn={fn} />
 		</header>
 	)
 }

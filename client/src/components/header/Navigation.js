@@ -1,8 +1,10 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
+import { translate } from './../../store/translate'
 
-export const Navigation = ({nav, fn})=>{
+
+export const Navigation = ({nav, lang, fn})=>{
 
 	let ACTIVE_NAV_BTN = (to)=> to !== "" && fn({ app: "drive", type: "ACTIVE_NAV_BTN", payload:to })
 
@@ -17,7 +19,7 @@ export const Navigation = ({nav, fn})=>{
 					>
 
 						<span className={btn.to === "" ? `noData noDataImg` : `flex`}>
-							{btn.name}
+							{translate(lang, btn.name)}
 						</span>
 
 					</NavLink>

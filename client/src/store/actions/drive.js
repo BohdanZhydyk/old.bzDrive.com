@@ -17,7 +17,7 @@ export const drive = (action, state, setState)=>{
 function funcForms(forms, payload){
   return(
     forms.map( (form)=>
-      form.txt === payload
+      form.action === payload
       ?	{...form, active:true, inputs:form.inputs.map( (input)=>{ return {...input, val:"", error:""}  }) }
       :	{...form, active:false, inputs:form.inputs}
     )
@@ -93,7 +93,7 @@ const CHANGE_INPUT = (action, state, setState)=>{
       auth:{
         ...state.drive.auth,
         forms: state.drive.auth.forms.map( (form)=>
-          form.txt === action.payload.form
+          form.action === action.payload.form
           ? {
               ...form,
               inputs: form.inputs.map( (input)=>
@@ -114,7 +114,7 @@ const SEND_FORM = (action, state, setState)=>{
   const getInputValue= (state, form, name)=>{
     let forms = state.drive.auth.forms
     for(let i=0; i<forms.length; i++){
-      if(forms[i].txt === form){
+      if(forms[i].action === form){
         let inputs = forms[i].inputs
         for(let n=0; n<inputs.length; n++){
           if(inputs[n].name === name) return inputs[n].val
@@ -150,7 +150,7 @@ const SEND_FORM = (action, state, setState)=>{
             ...state.drive.auth,
             active: !NoErr(),
             forms: state.drive.auth.forms.map( (form)=>
-              form.txt === action.payload
+              form.action === action.payload
               ? {
                   ...form, inputs: form.inputs.map( (input)=>{
                     switch(input.name){

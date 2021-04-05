@@ -3,7 +3,7 @@ import './Auth.scss'
 import { MenuPannel } from './MenuPannel'
 
 
-const Auth = ({auth, user, fn})=>{
+const Auth = ({auth, lang, user, fn})=>{
 	return(
     <>
     {
@@ -20,8 +20,7 @@ const Auth = ({auth, user, fn})=>{
             onClick={ ()=>fn({ app:"drive", type:"TOGGLE_MENU", payload:auth.active }) }
         />
 
-        { auth.active && <MenuPannel auth={auth} user={user} fn={fn} /> }
-        
+        { auth.active && <MenuPannel auth={auth} lang={lang} user={user} fn={fn} /> }
 
       </div>
       :

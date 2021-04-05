@@ -21,27 +21,19 @@ exports.auth = async (req, res, InData, callback)=>{
 
   function isEmail(obj){
     const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    return !re.test(obj.val)
-    ? {...obj, error:` - wprowadzono nieprawidłowy e-mail!`}
-    : obj
+    return !re.test(obj.val) ? {...obj, error: {nr:0} } : obj
   }
 
   function isAlphanumeric(obj){
-    return !obj.val.match(/^[0-9A-Za-z]+$/)
-    ? {...obj, error:` - musi zawierać cyfry 0-9 i litery A-Z a-z!`}
-    : obj
+    return !obj.val.match(/^[0-9A-Za-z]+$/) ? {...obj, error: {nr:1} } : obj
   }
 
   function isLength(obj, min, max){
-    return obj.val.length < min || obj.val.length > max
-    ? {...obj, error:` - musi zawierać od ${min} do ${max} znaków!`}
-    : obj
+    return obj.val.length < min || obj.val.length > max ? {...obj, error: {nr:2, min, max} } : obj
   }
 
   function isEmpty(obj){
-    return obj.val.length < 1
-    ? {...obj, error:` - wypełnij dane pole!`}
-    : obj
+    return obj.val.length < 1 ? {...obj, error: {nr:3} } : obj
   }
 
   if(InData.authData.login.val !== undefined){

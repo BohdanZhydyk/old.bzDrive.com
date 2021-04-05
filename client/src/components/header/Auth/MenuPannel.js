@@ -3,14 +3,14 @@ import AuthPannel from './AuthPannel'
 import { UserNavigation } from './UserNavigation'
 
 
-export const MenuPannel = ({auth, user, fn})=>{
+export const MenuPannel = ({auth, lang, user, fn})=>{
 	return(
 		<div className="menuPannel">
 			{ 
 				user.role === "guest"
 				?
 					<>
-						<AuthPannel auth={auth} fn={fn} />
+						<AuthPannel auth={auth} lang={lang} fn={fn} />
 						<UserNavigation menu={auth.usermenu} fn={fn} />
 					</>
 				:

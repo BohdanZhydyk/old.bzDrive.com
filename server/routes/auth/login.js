@@ -22,7 +22,7 @@ exports.login = async (InData, callback)=>{
             ...InData.authData,
             login:{
               ...InData.authData.login,
-              error: ` - niema takiego usera w bazie danych!`
+              error: {nr:4}
             }
           }
         })
@@ -38,7 +38,7 @@ exports.login = async (InData, callback)=>{
               ...InData.authData,
               pass:{
                 ...InData.authData.pass,
-                error: ` - wprowadzone nieprawidlowe haslo!`
+                error: {nr:5}
               }
             }
           })
