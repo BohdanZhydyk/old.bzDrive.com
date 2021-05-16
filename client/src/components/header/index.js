@@ -11,15 +11,15 @@ const Header = ({state, fn})=>{
 	let info = state.drive.info
 	let auth = state.drive.auth
 	let user = state.user
-	let nav = state.drive.nav.map( (item, index)=>{ return {name:item.name, to:item.to, active:item.active} })
+	let nav = state.drive.nav.map( (item, index)=>{ return {name:item.name, to:item.to, role:item.role, active:item.active} })
 	let lang = user.lang
 
 	switch(user.role){
 		case "user":
-			nav = nav.filter( (item)=> item.name !== "Statistic" )
+			nav = nav.filter( (item)=> item.role !== "admin" )
 			break
 		case "guest":
-			nav = nav.filter( (item)=> item.name !== "Statistic" && item.name !== "Profile" )
+			nav = nav.filter( (item)=> item.role !== "user" && item.role !== "admin" )
 			break
 		default: break
 	}

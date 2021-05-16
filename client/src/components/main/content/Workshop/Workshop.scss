@@ -1,0 +1,41 @@
+
+.workshop {
+  margin:1vw;
+
+  .tag {
+    width:100%;
+
+    .TagH {
+      width:100%;
+      padding:0.5vw 0 0.5vw 0;
+      border-top:1px solid #999;
+      border-bottom:1px solid #999;
+    }
+
+    .TagP {
+      width:100%;
+      text-indent:2vw;
+    }
+
+    .TagUl {
+      width:90%;
+      font-size:120%;
+      font-weight:bold;
+
+      .li {
+        width:calc(100% - 2vw - 2px);
+        margin:0 0 0 3vw;
+        font-size:90%;
+        font-weight:normal;
+        // text-indent:-0.5vw;
+      }
+    }
+
+    .TagVideo {
+      width:calc(3vw * 16);
+      height:calc(3vw * 9);
+      margin:1vw;
+      border-radius:0.5vw;
+    }
+  }
+}

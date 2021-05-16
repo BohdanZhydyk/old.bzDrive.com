@@ -43,6 +43,18 @@ export const nrErrToTxt = (lang, nr, min=false, max=false)=>{
 
 export const translate = (lang, txt)=>{
   switch(txt){
+    case "Workshop":
+      if(lang === 'en'){ return `Workshop` }
+      if(lang === 'ua'){ return `Майстерня` }
+      if(lang === 'pl'){ return `Warsztat` }
+      if(lang === 'ru'){ return `Мастерская` }
+      break
+    case "Shop":
+      if(lang === 'en'){ return `Shop` }
+      if(lang === 'ua'){ return `Магазин` }
+      if(lang === 'pl'){ return `Sklep` }
+      if(lang === 'ru'){ return `Магазин` }
+      break
     case "News":
       if(lang === 'en'){ return `News` }
       if(lang === 'ua'){ return `Новини` }
@@ -78,12 +90,6 @@ export const translate = (lang, txt)=>{
       if(lang === 'ua'){ return `Статистика` }
       if(lang === 'pl'){ return `Statystyka` }
       if(lang === 'ru'){ return `Статистика` }
-      break
-    case "About":
-      if(lang === 'en'){ return `About Site` }
-      if(lang === 'ua'){ return `Про Сайт` }
-      if(lang === 'pl'){ return `O Stronie` }
-      if(lang === 'ru'){ return `О Сайте` }
       break
     case "loginInput":
       if(lang === 'en'){ return `login` }
