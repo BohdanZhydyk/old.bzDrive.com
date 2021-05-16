@@ -4,6 +4,7 @@ import { TagH } from './TagH'
 import { TagP } from './TagP'
 import { TagUl } from './TagUl'
 import { TagVideo } from './TagVideo'
+import { TagSlider } from './TagSlider'
 
 
 export const Workshop = ({ props:{workshop, user, workshopFn} })=>{
@@ -19,6 +20,7 @@ export const Workshop = ({ props:{workshop, user, workshopFn} })=>{
           case "p": return <TagP body={element.body} user={user} key={`WorkshopTag${element.tag+index}`} />
           case "ul": return <TagUl body={element.body} user={user} key={`WorkshopTag${element.tag+index}`} />
           case "video": return <TagVideo body={element.body} user={user} key={`WorkshopTag${element.tag+index}`} />
+          case "slider": return <TagSlider body={element.body} user={user} key={`WorkshopTag${element.tag+index}`} />
           default: return <></>
         }
       })
