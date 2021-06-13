@@ -15,11 +15,14 @@ const Header = ({state, fn})=>{
 	let lang = user.lang
 
 	switch(user.role){
-		case "user":
+		case "master":
 			nav = nav.filter( (item)=> item.role !== "admin" )
 			break
+		case "user":
+			nav = nav.filter( (item)=> item.role !== "admin" && item.role !== "master" )
+			break
 		case "guest":
-			nav = nav.filter( (item)=> item.role !== "user" && item.role !== "admin" )
+			nav = nav.filter( (item)=> item.role !== "user" && item.role !== "master" && item.role !== "admin" )
 			break
 		default: break
 	}

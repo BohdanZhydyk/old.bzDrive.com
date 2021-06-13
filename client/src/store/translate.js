@@ -49,29 +49,11 @@ export const translate = (lang, txt)=>{
       if(lang === 'pl'){ return `Warsztat` }
       if(lang === 'ru'){ return `Мастерская` }
       break
-    case "Shop":
-      if(lang === 'en'){ return `Shop` }
-      if(lang === 'ua'){ return `Магазин` }
-      if(lang === 'pl'){ return `Sklep` }
-      if(lang === 'ru'){ return `Магазин` }
-      break
     case "News":
       if(lang === 'en'){ return `News` }
       if(lang === 'ua'){ return `Новини` }
       if(lang === 'pl'){ return `Aktualności` }
       if(lang === 'ru'){ return `Новости` }
-      break
-    case "API":
-      if(lang === 'en'){ return `API` }
-      if(lang === 'ua'){ return `API` }
-      if(lang === 'pl'){ return `API` }
-      if(lang === 'ru'){ return `API` }
-      break
-    case "CV":
-      if(lang === 'en'){ return `CV` }
-      if(lang === 'ua'){ return `CV` }
-      if(lang === 'pl'){ return `CV` }
-      if(lang === 'ru'){ return `CV` }
       break
     case "Apps":
       if(lang === 'en'){ return `Apps` }
@@ -79,17 +61,29 @@ export const translate = (lang, txt)=>{
       if(lang === 'pl'){ return `Aplikacje` }
       if(lang === 'ru'){ return `Приложения` }
       break
-    case "Profile":
-      if(lang === 'en'){ return `Profile` }
-      if(lang === 'ua'){ return `Профіль` }
-      if(lang === 'pl'){ return `Profil` }
-      if(lang === 'ru'){ return `Профиль` }
-      break
     case "Statistic":
       if(lang === 'en'){ return `Statistic` }
       if(lang === 'ua'){ return `Статистика` }
       if(lang === 'pl'){ return `Statystyka` }
       if(lang === 'ru'){ return `Статистика` }
+      break
+    case "CV":
+      if(lang === 'en'){ return `CV` }
+      if(lang === 'ua'){ return `Резюме` }
+      if(lang === 'pl'){ return `CV` }
+      if(lang === 'ru'){ return `Резюме` }
+      break
+    case "Office":
+      if(lang === 'en'){ return `Office` }
+      if(lang === 'ua'){ return `Офіс` }
+      if(lang === 'pl'){ return `Biuro` }
+      if(lang === 'ru'){ return `Офис` }
+      break
+    case "Profile":
+      if(lang === 'en'){ return `Profile` }
+      if(lang === 'ua'){ return `Профіль` }
+      if(lang === 'pl'){ return `Profil` }
+      if(lang === 'ru'){ return `Профиль` }
       break
     case "loginInput":
       if(lang === 'en'){ return `login` }
