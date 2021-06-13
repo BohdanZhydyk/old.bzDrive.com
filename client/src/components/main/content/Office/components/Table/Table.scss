@@ -1,0 +1,32 @@
+
+.table {
+
+  .plus {
+    width:90vw;
+    min-height:2vw;
+    margin:2vw 0 0 0;
+    background-color:#f605;
+    border:1px solid #999;
+    border-radius:0.5vw;
+  }
+
+  .line{
+    width:100%;
+
+    .black{
+      background-color:#111;
+    }
+
+    .cell{
+      padding:0.25vw;
+      border:1px solid #999;
+      border-radius:0.25vw;
+    }
+    
+    .invoice {width:10vw;}
+    .dealer {width:10vw;}
+    .buyer {width:10vw;}
+    .netto {width:5vw;}
+    .brutto {width:5vw;}
+  }
+}

@@ -5,23 +5,16 @@ const ObjectID = mongo.ObjectID
 const { url, dbName } = require('./../safe/safe')
 
 
-exports.getState = (link, req, res, InData, callback)=>{
-
-  let id
-
-  switch(link){
-    case "/drive":    id = '605918e6ec292437d800834d'; break;
-    case "/cv":       id = '602a8ad3ec29245f3000834d'; break;
-    case "/office":   id = '60c6294fec2924b23c00834d'; break;
-    default: break;
-  }
+exports.office = (req, res, InData, callback)=>{
 
   mongoClient.connect(url, { useUnifiedTopology: true }, (error, client)=>{
-
+    
     if(error){ InData.Errors.push( error ); callback(InData); return; }
 
-    client.db(dbName).collection('state').findOne( { _id: new ObjectID(id)}, (error, result)=>{
+    let name = req.body.object.action
 
+    client.db(dbName).collection(`base${name}`).find({}).sort({_id:-1}).toArray( (error, result)=>{
+      
       if(error){ InData.Errors.push( error ); callback(InData); return; }
 
       callback({

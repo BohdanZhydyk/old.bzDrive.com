@@ -3,6 +3,7 @@ const { putStatistic } = require('./../functions/putStatistic')
 
 const { getState } = require('./../routes/getState')
 const { auth }	= require('./../routes/auth/auth')
+const { office }	= require('./../routes/office')
 const { workshop }	= require('./../routes/workshop')
 const { news }	= require('./../routes/news')
 
@@ -20,16 +21,17 @@ exports.POST = (req, res)=>{
   chkToken(InData, (InData)=>{
 
     switch(InData.link){
-
       case "/drive":      getState('/drive', req, res, InData, (data)=> send(data) );   break;
       case "/auth":       auth(req, res, InData, (data)=> send(data) );                 break;
 
       case "/cv":         getState('/cv', req, res, InData, (data)=> send(data) );      break;
+
+      case "/office":     getState('/office', req, res, InData, (data)=> send(data) );  break;
+      case "/officeAct":  office(req, res, InData, (data)=> send(data) );               break;
+
       case "/workshop":   workshop(req, res, InData, (data)=> send(data) );             break;
       case "/news":       news(req, res, InData, (data)=> send(data) );                 break;
-
       default: break
-      
     }
 
     function send(serverData){
