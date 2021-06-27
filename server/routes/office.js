@@ -11,9 +11,26 @@ exports.office = (req, res, InData, callback)=>{
     
     if(error){ InData.Errors.push( error ); callback(InData); return; }
 
-    let name = req.body.object.action
+    //GET DEALER
+    InData.object.getDealer &&
+    client.db(dbName).collection(`baseSP`).find({dealer:InData.object.user}).sort({_id:-1}).toArray( (error, result)=>{
+      
+      if(error){ InData.Errors.push( error ); callback(InData); return; }
 
-    client.db(dbName).collection(`base${name}`).find({}).sort({_id:-1}).toArray( (error, result)=>{
+      callback({
+        Errors: InData.Errors,
+        link: InData.link,
+        bzToken: InData.bzToken,
+        user: InData.user,
+        IP: InData.IP,
+        serverData: result
+      })
+
+    })
+
+    //GET ALL
+    InData.object.get &&
+    client.db(dbName).collection(`base${InData.object.get}`).find({}).sort({_id:-1}).toArray( (error, result)=>{
       
       if(error){ InData.Errors.push( error ); callback(InData); return; }
 

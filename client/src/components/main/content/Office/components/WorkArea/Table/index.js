@@ -4,7 +4,9 @@ import './Table.scss'
 import { Line } from './Line'
 
 
-const Table = ({ props:{btnsMode, table, officeFn} })=>{
+const Table = ({ props:{table, officeFn} })=>{
+
+  let line = table.lines[0]
 
   return (
     <div className="table flex column">
@@ -12,12 +14,9 @@ const Table = ({ props:{btnsMode, table, officeFn} })=>{
       table &&
       <>
 
-        {/* <span className="plus flex">Dodać</span> */}
+        <Line props={{line, nr:"top", officeFn}} key={`TableLineTop`} />
 
-        <Line btnsMode={btnsMode} line={table.lines[0]} nr="top" officeFn={officeFn} />
-
-        { table.lines.map( (line, nr)=> <Line btnsMode={btnsMode} line={line} nr={nr} officeFn={officeFn} /> ) }
-
+        { table.lines.map( (line, nr)=> <Line props={{line, nr, officeFn}} key={`TableLine${nr}`} /> ) }
 
       </>
     }

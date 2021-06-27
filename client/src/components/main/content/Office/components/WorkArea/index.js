@@ -4,13 +4,13 @@ import Table from './Table'
 import Invoice from './Invoice'
 
 
-const WorkArea = ({ props:{btns, table, officeFn} })=>{
+const WorkArea = ({ props:{table, invoice, officeFn} })=>{
   return(
     <>
     {
-      table.tableMode
-      ? <Invoice />
-      : <Table props={{btnsMode:btns.btnsMode, table, officeFn}} />
+      !table.tableMode
+      ? <Table props={{table, officeFn}} />
+      : <Invoice props={{invoice}}/>
     }
     </>
   )

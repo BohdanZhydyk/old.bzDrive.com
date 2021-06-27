@@ -14,7 +14,7 @@ const Section6 = ({}) => {
   return(
     <div className="section6 flex">
 
-      { signatures.map( (sig, index)=> <Signature sig={sig} index={index} /> ) }
+      { signatures.map( (sig, index)=> <Signature sig={sig} index={index} key={`Signature${index}`} /> ) }
       
     </div>
   )

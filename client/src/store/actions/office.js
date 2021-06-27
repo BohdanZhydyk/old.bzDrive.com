@@ -2,9 +2,9 @@ import { bzPost, setUser, getUser, remUser, setToken, getToken, remToken } from 
 
 export const office = (action, state, setState)=>{
   switch(action.type){
-    case "GET_STATE":	    GET_STATE(action, state, setState); 	break;
-    case "GET_MODE":	    GET_MODE(action, state, setState); 	  break;
-    case "ADD_NEW":	    ADD_NEW(action, state, setState); 	  break;
+    case "GET_STATE":	      GET_STATE(action, state, setState); 	break;
+    case "GET_MODE":	      GET_MODE(action, state, setState); 	  break;
+    case "ADD_INVOICE":	    ADD_INVOICE(action, state, setState); 	  break;
     default: break
   }
 }
@@ -32,7 +32,7 @@ const GET_STATE = (action, state, setState)=>{
 
 const GET_MODE = (action, state, setState)=>{
     
-  bzPost("/officeAct", {action:action.payload}, (data)=>{
+  bzPost("/officeAct", { get:action.payload }, (data)=>{
 
     setState({
       ...state,
@@ -43,7 +43,7 @@ const GET_MODE = (action, state, setState)=>{
           ?
           {...item,
             content: {
-            ...item.content,
+              ...item.content,
               btns:{
                 ...item.content.btns,
                 btnsMode:action.payload
@@ -51,6 +51,42 @@ const GET_MODE = (action, state, setState)=>{
               table:{
                 tableMode: false,
                 lines:data
+              },
+              invoice: false
+            }
+          }
+          :
+          {...item, content:false}
+        )
+      },
+      user: getUser()
+    })
+
+  })
+
+}
+
+const ADD_INVOICE = (action, state, setState)=>{
+
+  bzPost("/officeAct", { getDealer:true, user: getUser().login }, (data)=>{
+
+    setState({
+      ...state,
+      drive: {
+        ...state.drive,
+        nav: state.drive.nav.map( (item, index)=>
+          (item.to === "/office")
+          ?
+          {...item,
+            content: {
+              ...item.content,
+              table:{
+                tableMode: "FA",
+              },
+              invoice: {
+                status: "new",
+                dealer: data[0],
+                buyer: false
               }
             }
           }
@@ -65,29 +101,6 @@ const GET_MODE = (action, state, setState)=>{
 
 }
 
-const ADD_NEW = (action, state, setState)=>{
-
-    setState({
-      ...state,
-      drive: {
-        ...state.drive,
-        nav: state.drive.nav.map( (item, index)=>
-          (item.to === "/office")
-          ?
-          {...item,
-            content: {
-            ...item.content,
-              table:{
-                ...item.content.table,
-                tableMode: action.payload
-              }
-            }
-          }
-          :
-          {...item, content:false}
-        )
-      },
-      user: getUser()
-    })
-
-}
+// const ADD_NEWS = (action, state, setState)=>{
+//   bzPost("/news", {add:true, data:action.payload}, (data)=> dataToState(data, state, setState) )
+// }

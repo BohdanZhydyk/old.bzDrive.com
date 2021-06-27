@@ -23,13 +23,23 @@
       padding:0.25vw;
       border:1px solid #999;
       border-radius:0.25vw;
+      text-align:center;
     }
     
     .invoice {width:10vw;}
-    .dealer {width:10vw;}
-    .buyer {width:10vw;}
-    .netto {width:5vw;}
-    .brutto {width:5vw;}
-    .lineBtns {width:5vw;}
+    .dealer {width:20vw;}
+    .buyer {width:20vw;}
+    .netto {width:4vw;}
+    .vat {width:4vw;}
+    .priceVAT {width:4vw;}
+    .brutto {width:4vw;}
+    .nip {width:7vw;}
+    .addr {width:20vw;}
+    .contacts {width:10vw;}
+    .number {width:4vw;}
+    .article {width:30vw;}
+    .quantity {width:4vw;}
+
+    .lineBtns {width:0vw;}
   }
 }

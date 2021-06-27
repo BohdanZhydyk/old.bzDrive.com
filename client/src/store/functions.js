@@ -9,7 +9,27 @@ export const unixToDateTimeConverter = ( unix = new Date(Date.now()) )=>{
   let hour = unix.getHours() < 10 ? "0"+unix.getHours() : unix.getHours()
   let min = unix.getMinutes() < 10 ? "0"+unix.getMinutes() : unix.getMinutes()
   let sec = unix.getSeconds() < 10 ? "0"+unix.getSeconds() : unix.getSeconds()
-  let dateTime = year+'-'+month+'-'+date+' '+hour+':'+min+':'+sec
+  let dateTime = `${year}-${month}-${date} ${hour}:${min}:${sec}`
+  return dateTime
+}
+export const unixToDateConverter = ( unix = new Date(Date.now()) )=>{
+  let year = unix.getFullYear()
+  let month = (unix.getMonth()+1) < 10 ? "0"+(unix.getMonth()+1) : unix.getMonth()+1
+  let date = unix.getDate() < 10 ? "0"+unix.getDate() : unix.getDate()
+  let dateTime = `${year}-${month}-${date}`
+  return dateTime
+}
+export const unixToTimeConverter = ( unix = new Date(Date.now()) )=>{
+  let hour = unix.getHours() < 10 ? "0"+unix.getHours() : unix.getHours()
+  let min = unix.getMinutes() < 10 ? "0"+unix.getMinutes() : unix.getMinutes()
+  let sec = unix.getSeconds() < 10 ? "0"+unix.getSeconds() : unix.getSeconds()
+  let dateTime = `${hour}:${min}:${sec}`
+  return dateTime
+}
+export const unixToMonthYearConverter = ( unix = new Date(Date.now()) )=>{
+  let year = unix.getFullYear()
+  let month = (unix.getMonth()+1) < 10 ? "0"+(unix.getMonth()+1) : unix.getMonth()+1
+  let dateTime = `${month}/${year}`
   return dateTime
 }
 

@@ -9,15 +9,19 @@ import Section5 from './Section5'
 import Section6 from './Section6'
 
 
-const BlankInvoice = ({})=>{
+const Invoice = ({ props:{invoice} })=>{
+
+  let dealer = invoice.dealer
+  let buyer = invoice.buyer
+
   return(
-    <div className="blankInvoice flex column">
+    <div className="Invoice flex column">
       
-      <Section1 />
+      <Section1 dealer={dealer} />
 
       <Section2 />
 
-      <Section3 />
+      <Section3 dealer={dealer} buyer={buyer} />
 
       <Section4 />
 
@@ -29,4 +33,4 @@ const BlankInvoice = ({})=>{
   )
 }
 
-export default BlankInvoice
+export default Invoice

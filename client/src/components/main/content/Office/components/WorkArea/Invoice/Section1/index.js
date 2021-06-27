@@ -5,13 +5,13 @@ import { Logo } from './Logo'
 import { PlaceDate } from './PlaceDate'
 
 
-const Section1 = ({}) => {
+const Section1 = ({dealer}) => {
   return(
     <div className="section1 flex">
 
-      <Logo />
+      <Logo dealer={dealer} />
 
-      <PlaceDate />
+      <PlaceDate dealer={dealer} />
 
     </div>
   )

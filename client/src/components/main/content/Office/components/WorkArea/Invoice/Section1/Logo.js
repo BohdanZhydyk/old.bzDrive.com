@@ -1,15 +1,15 @@
 import React from 'react'
+import { Dealer } from '../../Table/Cells/Dealer'
 
 
-export const Logo = ({}) => {
+export const Logo = ({dealer}) => {
   return(
     <div className="logo flex start bold">
-      <img src="https://files.bzdrive.com/img/Drive/logo/logoDrive.gif" alt="bzDrive" />
-      <span className="txtOrg">
-        <span>bz</span>
-        <span className="txtBlk">Drive</span>
-        <span>.com</span>
-      </span>
+
+      <img src={dealer.img} alt={`Logo-${dealer.id}`} />
+
+      <span className="txtBlk">{dealer.name}</span>
+      
     </div>
   )
 }

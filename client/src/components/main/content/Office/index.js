@@ -4,11 +4,11 @@ import './Office.scss'
 import {
   GET_STATE,
   GET_MODE,
-  ADD_NEW
+  ADD_INVOICE
 } from './actions'
 
 import Loader from './../Loader'
-import { ModeBtns } from './components/ModeBtns'
+import ModeBtns from './components/ModeBtns'
 import WorkArea from './components/WorkArea'
 
 
@@ -18,9 +18,9 @@ const OfficeApp = ({content, user, fn})=>{
 
   let officeFn = (action)=>{
     switch(action.type){
-      case "GET_STATE":   GET_STATE(fn);                  break;
-      case "GET_MODE":    GET_MODE(fn, action.payload);   break;
-      case "ADD_NEW":     ADD_NEW(fn, action.payload);   break;
+      case "GET_STATE":       GET_STATE(fn);                  break;
+      case "GET_MODE":        GET_MODE(fn, action.payload);   break;
+      case "ADD_INVOICE":     ADD_INVOICE(fn);   break;
       default: break
     }
   }
@@ -29,18 +29,28 @@ const OfficeApp = ({content, user, fn})=>{
 
   console.log('office', office)
 
+  let btns, btnsMode, names, table, invoice
+
+  if(content){
+    btns = office.btns
+    btnsMode = btns.btnsMode
+    names = btns.names
+    table = office.table
+    invoice = office.invoice
+  }
+
+
   return (
     <div className="office">
     {
       !content
-      ?
-      <Loader />
+      ? <Loader />
       :
       <>
 
-        <ModeBtns props={{btnsMode:office.btns.btnsMode, names:office.btns.names, officeFn}} />
+        <ModeBtns props={{btnsMode, names, officeFn}} />
 
-        { office.table && <WorkArea props={{ btns:office.btns, table:office.table, officeFn }} /> }
+        { table && <WorkArea props={{table, invoice, officeFn}} /> }
 
       </>
     }

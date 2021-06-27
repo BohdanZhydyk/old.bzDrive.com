@@ -59,7 +59,7 @@ const Table = ({}) => {
 
       <HeaderLine />
 
-      { table.map( (line, nr)=> <Line line={line} nr={nr}/> ) }
+      { table.map( (line, nr)=> <Line line={line} nr={nr} key={`InvoiceLine${nr}`} /> ) }
 
     </div>
   )
