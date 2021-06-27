@@ -5,9 +5,10 @@ import { Dealer } from './Cells/Dealer'
 import { Buyer } from './Cells/Buyer'
 import { Netto } from './Cells/Netto'
 import { Brutto } from './Cells/Brutto'
+import { LineBtns } from './Cells/LineBtns'
 
 
-export const Line = ({line, nr})=>{
+export const Line = ({btnsMode, line, nr, officeFn})=>{
   return(
     <div className="line flex" key={`TableLine${nr}`}>
     {
@@ -19,6 +20,8 @@ export const Line = ({line, nr})=>{
         { line.buyer && <Buyer data={line.buyer} nr={nr}/> }
         { line.netto && <Netto data={line.netto} nr={nr}/> }
         { line.brutto && <Brutto data={line.brutto} nr={nr}/> }
+
+        <LineBtns btnsMode={btnsMode} nr={nr} officeFn={officeFn}/>
 
       </>
     }

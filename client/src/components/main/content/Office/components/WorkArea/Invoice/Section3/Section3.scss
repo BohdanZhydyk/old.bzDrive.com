@@ -1,0 +1,22 @@
+
+  .section3{
+
+    .rectangle{
+      width:40vw;
+      margin:1vw 1vw 2vw 1vw;
+      padding:0.5vw 1vw;
+      border:1px solid #999;
+
+      .bold{font-size:120%;}
+
+      .line{
+        width:95%;
+        min-height:1.5vw;
+        border-bottom:1px solid #ccc;
+      }
+
+      .nip{
+        margin:0.5vw 0 0 0;
+      }
+    }
+  }

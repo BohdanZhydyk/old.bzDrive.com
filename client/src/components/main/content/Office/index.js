@@ -3,12 +3,13 @@ import './Office.scss'
 
 import {
   GET_STATE,
-  GET_MODE
+  GET_MODE,
+  ADD_NEW
 } from './actions'
 
-import { ModeBtns } from './components/ModeBtns'
-import Table from './components/Table'
 import Loader from './../Loader'
+import { ModeBtns } from './components/ModeBtns'
+import WorkArea from './components/WorkArea'
 
 
 const OfficeApp = ({content, user, fn})=>{
@@ -19,6 +20,7 @@ const OfficeApp = ({content, user, fn})=>{
     switch(action.type){
       case "GET_STATE":   GET_STATE(fn);                  break;
       case "GET_MODE":    GET_MODE(fn, action.payload);   break;
+      case "ADD_NEW":     ADD_NEW(fn, action.payload);   break;
       default: break
     }
   }
@@ -35,8 +37,11 @@ const OfficeApp = ({content, user, fn})=>{
       <Loader />
       :
       <>
-        <ModeBtns props={{mode:office.mode, btns:office.btns, officeFn}} />
-        <Table props={{mode:office.mode, table:office.table, officeFn}} />
+
+        <ModeBtns props={{btnsMode:office.btns.btnsMode, names:office.btns.names, officeFn}} />
+
+        { office.table && <WorkArea props={{ btns:office.btns, table:office.table, officeFn }} /> }
+
       </>
     }
     </div>

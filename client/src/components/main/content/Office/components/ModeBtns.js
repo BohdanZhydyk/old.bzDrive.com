@@ -1,21 +1,19 @@
 import React from 'react'
 
 
-export const ModeBtns = ({ props:{mode, btns, officeFn} })=>{
+export const ModeBtns = ({ props:{btnsMode, names, officeFn} })=>{
   return(
     <div className="flex wrap">
-    {
-      btns.map( btn=> <ModeBtn mode={mode} btn={btn} officeFn={officeFn} /> )
-    }
+      { names.map( (btn, index)=> <ModeBtn props={{btnsMode, btn, officeFn}} key={`ModeBtn${index}`} /> ) }
     </div>
   )
 }
 
-const ModeBtn = ({mode, btn, officeFn})=>{
+const ModeBtn = ({ props: {btnsMode, btn, officeFn} })=>{
 
   let GET_MODE = ()=> officeFn({type:"GET_MODE", payload:btn.id})
 
-  let classes = `funcBtn ${ !mode ? `big` : `small` } ${mode === btn.id && `active`} flex`
+  let classes = `funcBtn ${ !btnsMode ? `big` : `small` } ${btnsMode === btn.id && `active`} flex`
 
   return(
     <div className={classes} onClick={ ()=> GET_MODE() }>
