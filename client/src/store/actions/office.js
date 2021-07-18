@@ -1,17 +1,27 @@
-import { bzPost, setUser, getUser, remUser, setToken, getToken, remToken } from './../functions'
+import {
+  bzPost,
+  setUser,
+  getUser,
+  remUser,
+  setToken,
+  getToken,
+  remToken,
+  unixToDateConverter,
+  unixToYearMonthConverter
+} from './../functions'
 
 export const office = (action, state, setState)=>{
   switch(action.type){
-    case "GET_STATE":	      GET_STATE(action, state, setState); 	break;
-    case "GET_MODE":	      GET_MODE(action, state, setState); 	  break;
-    case "ADD_INVOICE":	    ADD_INVOICE(action, state, setState); 	  break;
+    case "GET_STATE":	      GET_STATE(action, state, setState); 	  break;
+    case "GET_MODE":	      GET_MODE(action, state, setState); 	    break;
+    case "ADD_INVOICE":	    ADD_INVOICE(action, state, setState);   break;
     default: break
   }
 }
 
 const GET_STATE = (action, state, setState)=>{
     
-  bzPost("/office", {}, (data)=>{
+  bzPost("/office", { getState:true }, (data)=>{
 
     setState({
       ...state,
@@ -32,7 +42,7 @@ const GET_STATE = (action, state, setState)=>{
 
 const GET_MODE = (action, state, setState)=>{
     
-  bzPost("/officeAct", { get:action.payload }, (data)=>{
+  bzPost("/office", { getMode:action.payload }, (data)=>{
 
     setState({
       ...state,
@@ -41,7 +51,8 @@ const GET_MODE = (action, state, setState)=>{
         nav: state.drive.nav.map( (item, index)=>
           (item.to === "/office")
           ?
-          {...item,
+          {
+            ...item,
             content: {
               ...item.content,
               btns:{
@@ -49,10 +60,8 @@ const GET_MODE = (action, state, setState)=>{
                 btnsMode:action.payload
               },
               table:{
-                tableMode: false,
                 lines:data
-              },
-              invoice: false
+              }
             }
           }
           :
@@ -68,7 +77,56 @@ const GET_MODE = (action, state, setState)=>{
 
 const ADD_INVOICE = (action, state, setState)=>{
 
-  bzPost("/officeAct", { getDealer:true, user: getUser().login }, (data)=>{
+  bzPost("/office", { addInvoice:getUser().login }, (data)=>{
+
+    let newLines = (lines)=>{
+
+      let array = []
+
+      let newObj = {
+        status: "editing",
+        place: data[0].place,
+        date: unixToDateConverter(),
+        dealer: data[0],
+        buyer: {
+          name: false,
+          addr: {zip:false, town:false, street:false},
+          img: false,
+          contacts: {www: false, email: false, tel: false},
+          account: false,
+          nip: "",
+          place: false,
+          shortName: true,
+          user: false
+        },
+        articles: [
+          {
+            number: "000001",
+            article: "Usługa remontowa 1",
+            quantity: "1",
+            VAT: "23",
+            price: "100.00"
+          }
+        ],
+        comments: [
+          `Dostawa towarów lub świadczenie usług zwolnionych od podatku VAT na podstawie art. 113 ust. 1 i 9 ustawy o VAT.`
+        ],
+        netto: true,
+        brutto: true,
+        invoiceNr: `${unixToYearMonthConverter()}/------`,
+        priceVAT: true,
+      }
+
+      for(let i=0; i<lines.length; i++){
+        if(i===0){
+          array.push(newObj);
+          array.push(lines[0]);
+        }
+        else{array.push(lines[i]);}
+      }
+
+      return(array)
+    }
 
     setState({
       ...state,
@@ -77,16 +135,13 @@ const ADD_INVOICE = (action, state, setState)=>{
         nav: state.drive.nav.map( (item, index)=>
           (item.to === "/office")
           ?
-          {...item,
+          {
+            ...item,
             content: {
               ...item.content,
               table:{
-                tableMode: "FA",
-              },
-              invoice: {
-                status: "new",
-                dealer: data[0],
-                buyer: false
+                ...item.content.table,
+                lines: newLines(item.content.table.lines)
               }
             }
           }
@@ -100,7 +155,3 @@ const ADD_INVOICE = (action, state, setState)=>{
   })
 
 }
-
-// const ADD_NEWS = (action, state, setState)=>{
-//   bzPost("/news", {add:true, data:action.payload}, (data)=> dataToState(data, state, setState) )
-// }

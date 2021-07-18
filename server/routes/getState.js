@@ -12,7 +12,6 @@ exports.getState = (link, req, res, InData, callback)=>{
   switch(link){
     case "/drive":    id = '605918e6ec292437d800834d'; break;
     case "/cv":       id = '602a8ad3ec29245f3000834d'; break;
-    case "/office":   id = '60c6294fec2924b23c00834d'; break;
     default: break;
   }
 

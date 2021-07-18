@@ -4,12 +4,15 @@ import './Office.scss'
 import {
   GET_STATE,
   GET_MODE,
-  ADD_INVOICE
+  ADD_INVOICE,
+  CHANGE_INPUT
 } from './actions'
 
 import Loader from './../Loader'
 import ModeBtns from './components/ModeBtns'
-import WorkArea from './components/WorkArea'
+import Table from './components/Table'
+
+import {bzCalculator} from './../../../../store/functions'
 
 
 const OfficeApp = ({content, user, fn})=>{
@@ -18,9 +21,10 @@ const OfficeApp = ({content, user, fn})=>{
 
   let officeFn = (action)=>{
     switch(action.type){
-      case "GET_STATE":       GET_STATE(fn);                  break;
-      case "GET_MODE":        GET_MODE(fn, action.payload);   break;
-      case "ADD_INVOICE":     ADD_INVOICE(fn);   break;
+      case "GET_STATE":       GET_STATE(fn);                      break;
+      case "GET_MODE":        GET_MODE(fn, action.payload);       break;
+      case "ADD_INVOICE":     ADD_INVOICE(fn);                    break;
+      case "CHANGE_INPUT":    CHANGE_INPUT(office, setOffice, action.payload);   break;
       default: break
     }
   }
@@ -50,7 +54,7 @@ const OfficeApp = ({content, user, fn})=>{
 
         <ModeBtns props={{btnsMode, names, officeFn}} />
 
-        { table && <WorkArea props={{table, invoice, officeFn}} /> }
+        { table && <Table props={{table, invoice, officeFn}} /> }
 
       </>
     }

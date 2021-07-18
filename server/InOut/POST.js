@@ -21,16 +21,14 @@ exports.POST = (req, res)=>{
   chkToken(InData, (InData)=>{
 
     switch(InData.link){
-      case "/drive":      getState('/drive', req, res, InData, (data)=> send(data) );   break;
       case "/auth":       auth(req, res, InData, (data)=> send(data) );                 break;
 
+      case "/drive":      getState('/drive', req, res, InData, (data)=> send(data) );   break;
       case "/cv":         getState('/cv', req, res, InData, (data)=> send(data) );      break;
 
-      case "/office":     getState('/office', req, res, InData, (data)=> send(data) );  break;
-      case "/officeAct":  office(req, res, InData, (data)=> send(data) );               break;
-
-      case "/workshop":   workshop(req, res, InData, (data)=> send(data) );             break;
       case "/news":       news(req, res, InData, (data)=> send(data) );                 break;
+      case "/office":     office(req, res, InData, (data)=> send(data) );               break;
+      case "/workshop":   workshop(req, res, InData, (data)=> send(data) );             break;
       default: break
     }
 

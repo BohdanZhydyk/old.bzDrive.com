@@ -1,0 +1,45 @@
+
+.section5{
+  width:100%;
+  margin:3vw 0;
+
+  .nothing{
+    width:20%;
+  }
+
+  .payments{
+    width:70%;
+    
+    .amount1{
+      width:100%;
+      margin:1vw 0;
+      font-size:150%;
+      background-color:#111;
+
+      .name{
+        width:20%;
+        padding:1vw;
+      }
+
+      .data{
+        width:80%;
+        padding:1vw;
+      }
+    }
+
+    .amount2{
+      width:100%;
+
+      .name{
+        width:20%;
+        padding:1vw;
+      }
+
+      .data{
+        width:80%;
+        padding:0 1vw;
+        border-bottom:1px solid #ccc;
+      }
+    }
+  } 
+}

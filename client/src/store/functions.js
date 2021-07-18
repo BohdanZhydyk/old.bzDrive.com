@@ -16,7 +16,7 @@ export const unixToDateConverter = ( unix = new Date(Date.now()) )=>{
   let year = unix.getFullYear()
   let month = (unix.getMonth()+1) < 10 ? "0"+(unix.getMonth()+1) : unix.getMonth()+1
   let date = unix.getDate() < 10 ? "0"+unix.getDate() : unix.getDate()
-  let dateTime = `${year}-${month}-${date}`
+  let dateTime = `${date}.${month}.${year}`
   return dateTime
 }
 export const unixToTimeConverter = ( unix = new Date(Date.now()) )=>{
@@ -26,11 +26,70 @@ export const unixToTimeConverter = ( unix = new Date(Date.now()) )=>{
   let dateTime = `${hour}:${min}:${sec}`
   return dateTime
 }
-export const unixToMonthYearConverter = ( unix = new Date(Date.now()) )=>{
+export const unixToYearMonthConverter = ( unix = new Date(Date.now()) )=>{
   let year = unix.getFullYear()
   let month = (unix.getMonth()+1) < 10 ? "0"+(unix.getMonth()+1) : unix.getMonth()+1
-  let dateTime = `${month}/${year}`
+  let dateTime = `${year}/${month}`
   return dateTime
+}
+
+export const bzCalc = (operation, a, b)=>{
+  switch(operation){
+    case "+": return( (parseFloat(a) + parseFloat(b)).toFixed(2) )
+    case "-": return( (parseFloat(a) - parseFloat(b)).toFixed(2) )
+    case "*": return( (parseFloat(a) * parseFloat(b)).toFixed(2) )
+    case "/": return( (parseFloat(a) / parseFloat(b)).toFixed(2) )
+    case "VAT":
+      let one = (parseFloat(a) * parseFloat(b)).toFixed(2)
+      let two = (parseFloat(one) / parseFloat(100)).toFixed(2)
+      let three = (parseFloat(a) - parseFloat(two)).toFixed(2)
+      return three
+    default: break
+  }
+}
+
+export const bzIntToWord = (int)=>{ 
+  let liczba = parseInt( int.split('.')[0] )
+  let grosze = int.split('.')[1]
+
+  let jednosci = ["","jeden","dwa","trzy","cztery","pięć","sześć","siedem","osiem","dziewięć"]
+  let nascie = ["","jedenaście","dwanaście","trzynaście","czternaście","piętnaście","szesnaście","siedemnaście","osiemnaście","dziewietnaście"]
+  let dziesiatki = ["","dziesięć","dwadzieścia","trzydzieści","czterdzieści","pięćdziesiąt","sześćdziesiąt","siedemdziesiąt","osiemdziesiąt","dziewięćdziesiąt"]
+  let setki = ["","sto","dwieście","trzysta","czterysta","pięćset","sześćset","siedemset","osiemset","dziewięćset"]
+  let grupy = [
+    ["" ,"" ,""],
+    ["tysiąc" ,"tysiące" ,"tysięcy"],
+    ["milion" ,"miliony" ,"milionów"],
+    ["miliard","miliardy","miliardów"],
+    ["bilion" ,"biliony" ,"bilionów"],
+    ["biliard","biliardy","biliardów"],
+    ["trylion","tryliony","trylionów"]
+  ]
+    
+  let wynik = '', znak = ''
+
+  if( liczba === 0 ){ wynik = "zero" }
+  if( liczba < 0 ){ znak = "minus"; liczba = -liczba; }
+          
+  let g = 0
+  while( liczba > 0 ){
+    let s = Math.floor((liczba % 1000)/100)
+    let n = 0
+    let d = Math.floor((liczba % 100)/10)
+    let j = Math.floor(liczba % 10)
+          
+    if( d === 1 && j>0 ){ n = j; d = 0; j = 0; }
+
+    let k = 2
+    if( j === 1 && s+d+n === 0 ){ k = 0 }
+    if( j === 2 || j === 3 || j === 4 ){ k = 1 }
+    if( s+d+n+j > 0 ){ wynik = `${setki[s]} ${dziesiatki[d]} ${nascie[n]} ${jednosci[j]} ${grupy[g][k]} ${wynik}` }
+
+    g++
+    liczba = Math.floor(liczba/1000)
+  }
+
+  return(`${znak} ${wynik} ${`zł`} ${grosze}/100`);
 }
 
 export const setToken = (bzToken)=> cookies.set('bzToken', bzToken )

@@ -1,0 +1,60 @@
+
+.table {
+  width:100%;
+  margin:2vw 0;
+
+  .plus {
+    width:90vw;
+    min-height:2vw;
+    margin:2vw 0 0 0;
+    background-color:#f605;
+    border:1px solid #999;
+    border-radius:0.5vw;
+  }
+
+  .line{
+    width:100%;
+
+    .lineData{
+
+      .black{
+        background-color:#111;
+      }
+
+      .cell{
+        padding:0.25vw;
+        border:1px solid #999;
+        border-radius:0.25vw;
+        text-align:center;
+      }
+      
+      .invoice {width:10vw;}
+      .dealer {width:20vw;}
+      .buyer {width:20vw;}
+      .netto {width:4vw;}
+      .vat {width:4vw;}
+      .priceVAT {width:4vw;}
+      .brutto {width:4vw;}
+      .nip {width:7vw;}
+      .addr {width:20vw;}
+      .contacts {width:10vw;}
+      .number {width:4vw;}
+      .article {width:30vw;}
+      .quantity {width:4vw;}
+
+      .lineBtns {
+        width:0vw;
+        border:1px solid #0000;
+
+        img{
+          width:2vw;
+          margin:0.25vw;
+          &:hover{
+            width:calc(2.5vw - 2px);
+            margin:0 1px;
+          }
+        }
+      }
+    }
+  }
+}
