@@ -48,7 +48,10 @@ export const bzCalc = (operation, a, b)=>{
   }
 }
 
-export const bzIntToWord = (int)=>{ 
+export const bzIntToWord = (int)=>{
+
+  if(!int) return ""
+
   let liczba = parseInt( int.split('.')[0] )
   let grosze = int.split('.')[1]
 

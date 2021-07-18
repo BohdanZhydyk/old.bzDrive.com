@@ -3,11 +3,23 @@ import './Section5.scss'
 
 import { bzCalc, bzIntToWord } from '../../../../../../../../../store/functions'
 
+import { Amount } from './Amount'
+import { Buttons } from './Buttons'
 
-const Section5 = ({ props:{articles} }) => {
+
+const Section5 = ({ props:{articles, officeFn} }) => {
 
   let sum = 0
-  articles.map( (el, nr)=> sum = bzCalc("+", sum, bzCalc("*", el.price, el.quantity)) )
+
+  articles.map( (el, nr)=>{
+    let articleSum = bzCalc("*", el.price, el.quantity)
+    sum = bzCalc( "+", sum, articleSum )
+    return nr
+  })
+
+  if( isNaN(sum) ) sum = (0).toFixed(2)
+
+
 
   return(
     <div className="section5 flex">
@@ -15,22 +27,17 @@ const Section5 = ({ props:{articles} }) => {
       <div className="nothing"></div>
 
       <div className="payments">
-        <div className="amount1 flex bold">
-          <div className="name flex start">Do zapłaty:</div>
-          <div className="data flex start">{`${sum} zł`}</div>
-        </div>
-        <div className="amount2 flex">
-          <div className="name flex start bold">Kwota słownie:</div>
-          <div className="data flex start">{ bzIntToWord(sum) }</div>
-        </div>
-        <div className="amount2 flex">
-          <span className="name flex start bold">Sposób płatności:</span>
-          <span className="data flex start">gotówka / przelew</span>
-        </div>
-        <div className="amount2 flex">
-          <span className="name flex start bold">Termin płatności:</span>
-          <span className="data flex start">zapłacono / data</span>
-        </div>
+
+        <Amount props={{ cl:"amount1 flex bold", name:"Do zapłaty", data:`${sum} zł` }} />
+
+        <Amount props={{ cl:"amount2 flex", name:"Kwota słownie", data:bzIntToWord(sum) }} />
+
+        <Amount props={{ cl:"amount2 flex", name:"Sposób płatności", data:"method" }} />
+
+        <Amount props={{ cl:"amount2 flex", name:"Termin płatności", data:"payed" }} />
+
+        <Buttons props={{officeFn}} />
+
       </div>
 
     </div>

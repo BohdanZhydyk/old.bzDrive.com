@@ -30,7 +30,7 @@ const Invoice = ({ props:{line, nr, officeFn} })=>{
 
       <Section4 props={{articles, comments, nr, officeFn}} />
 
-      <Section5 props={{articles}} />
+      <Section5 props={{articles, officeFn}} />
 
       <Section6 />
 

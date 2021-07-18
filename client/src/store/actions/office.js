@@ -12,9 +12,9 @@ import {
 
 export const office = (action, state, setState)=>{
   switch(action.type){
-    case "GET_STATE":	      GET_STATE(action, state, setState); 	  break;
-    case "GET_MODE":	      GET_MODE(action, state, setState); 	    break;
-    case "ADD_INVOICE":	    ADD_INVOICE(action, state, setState);   break;
+    case "GET_STATE":	    GET_STATE(action, state, setState); 	  break;
+    case "GET_MODE":	    GET_MODE(action, state, setState); 	    break;
+    case "ADD_INVOICE":	  ADD_INVOICE(action, state, setState);   break;
     default: break
   }
 }
@@ -92,29 +92,18 @@ const ADD_INVOICE = (action, state, setState)=>{
           name: false,
           addr: {zip:false, town:false, street:false},
           img: false,
-          contacts: {www: false, email: false, tel: false},
+          contacts: {www:false, email:false, tel:false},
           account: false,
           nip: "",
           place: false,
           shortName: true,
           user: false
         },
-        articles: [
-          {
-            number: "000001",
-            article: "Usługa remontowa 1",
-            quantity: "1",
-            VAT: "23",
-            price: "100.00"
-          }
-        ],
+        articles: [ {number:false, article:false, price:false, quantity:false, VAT:false} ],
         comments: [
           `Dostawa towarów lub świadczenie usług zwolnionych od podatku VAT na podstawie art. 113 ust. 1 i 9 ustawy o VAT.`
         ],
-        netto: true,
-        brutto: true,
-        invoiceNr: `${unixToYearMonthConverter()}/------`,
-        priceVAT: true,
+        invoiceNr: `${unixToYearMonthConverter()}/------`
       }
 
       for(let i=0; i<lines.length; i++){

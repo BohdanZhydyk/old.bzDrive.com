@@ -1,38 +1,60 @@
 import React from 'react'
 
 import { bzCalc} from './../../../../../../../../../../store/functions'
+import { Input } from './Input'
 
 
 export const Article = ({ props:{el = "top", index = "top", officeFn} }) => {
+  
+  let LINE_CLICK = ()=>
+    officeFn({ type:"LINE_CLICK", payload: {act: top ? "plus" : "delete", nr:index} })
 
   let top = (el === "top" ? true : false)
 
-  let n = el.quantity
-  let brutto = bzCalc( '*', el.price, n )
-  let netto = bzCalc( 'VAT', brutto, el.VAT )
-  let vat = bzCalc( '-', brutto, netto )
+  let number = el.number ? el.number : ""
+  let article = el.article ? el.article : ""
+  
+  let price = el.price ? el.price : (0).toFixed(2)
+  let quantity = el.quantity ? el.quantity : (0)
+  let VAT = `${el.VAT ? el.VAT : 23}`
+  let sum = bzCalc( '*', price, quantity )
+  let netto = bzCalc( 'VAT', sum, VAT )
+  let vat = bzCalc( '-', sum, netto )
+  
+  let InputNumber = <Input props={{ nr:index, el:"number", val:number, officeFn }} />
+  let InputArticle = <Input props={{ nr:index, el:"article", cl:true, val:article, officeFn }} />
+  let InputPrice = <Input props={{ nr:index, el:"price", val:price, officeFn }} />
+  let InputQuantity = <Input props={{ nr:index, el:"quantity", val:quantity, officeFn }} />
+  let InputVAT = <Input props={{ nr:index, el:"VAT", val:VAT, officeFn }} />
 
-  let NOR = (top ? `Lp.` : `${index + 1}.`)
-  let ART = (top ? `Artykul towaru` : el.number)
-  let SER = (top ? `Nazwa towaru / usługi` : el.article)
-  let QUA = (top ? `Ilość` : n)
-  let PRN = (top ? `Kwota netto` : netto)
-  let VAT = (top ? `VAT` : `${el.VAT} %`)
-  let PRV = (top ? `Kwota VAT` : vat)
-  let PRG = (top ? `Kwota brutto` : brutto)
+  let txtNOR = top ? `Lp.` : `${index + 1}.`
+  let txtART = top ? `Artykul towaru` : InputNumber
+  let txtSER = top ? `Nazwa towaru / usługi` : InputArticle
+  let txtPRG = top ? `Cena, zł` : InputPrice
+  let txtQUA = top ? `Ilość` : InputQuantity
+  let txtVAT = top ? `VAT, %` : InputVAT
+  let txtPRN = top ? `Kwota netto, zł` : netto
+  let txtPRV = top ? `Kwota VAT, zł` : vat
+  let txtSUM = top ? `Kwota brutto, zł` : sum
+
+  let classes = {
+    NOR:`NOR cell flex`, ART:`ART cell flex`, SER:`SER cell flex ${!top && `start`}`, PRG:`PRG cell flex`,
+    QUA:`QUA cell flex`, PRN:`PRN cell flex`, VAT:`VAT cell flex`, PRV:`PRV cell flex`, SUM:`SUM cell flex`
+  }
+  let src = `https://files.bzdrive.com/img/ico/ico${top ? `Plus` : `Delete`}.png`
 
   return(
     <div className={`tr flex ${top && `headerTr bold`}`}>
-
-      <div className="NOR cell flex">{NOR}</div>
-      <div className="ART cell flex">{ART}</div>
-      <div className={`SER cell flex ${!top && `start`}`}>{SER}</div>
-      <div className="QUA cell flex">{QUA}</div>
-      <div className="PRN cell flex">{PRN}</div>
-      <div className="VAT cell flex">{VAT}</div>
-      <div className="PRV cell flex">{PRV}</div>
-      <div className="PRG cell flex">{PRG}</div>
-
+      <div className={classes.NOR}>{txtNOR}</div>
+      <div className={classes.ART}>{txtART}</div>
+      <div className={classes.SER}>{txtSER}</div>
+      <div className={classes.PRG}>{txtPRG}</div>
+      <div className={classes.QUA}>{txtQUA}</div>
+      <div className={classes.VAT}>{txtVAT}</div>
+      <div className={classes.PRN}>{txtPRN}</div>
+      <div className={classes.PRV}>{txtPRV}</div>
+      <div className={classes.SUM}>{txtSUM}</div>
+      <img src={src} onClick={ ()=> LINE_CLICK() } alt={top ? `Plus` : `Delete`} />
     </div>
   )
 }

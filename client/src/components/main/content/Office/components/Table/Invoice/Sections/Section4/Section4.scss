@@ -25,12 +25,33 @@
 
       .NOR{width:3%;}
       .ART{width:5%;}
-      .SER{width:53%; padding:0.25vw 1%;}
-      .QUA{width:4%;}
-      .PRN{width:7%;}
-      .VAT{width:4%;}
-      .PRV{width:7%;}
-      .PRG{width:7%;}
+      .SER{width:50%; padding:0.25vw 1%;}
+      .PRG{width:5%;}
+      .QUA{width:5%;}
+      .VAT{width:3%;}
+      .PRN{width:5%;}
+      .PRV{width:5%;}
+      .SUM{width:5%;}
+
+      input {
+        width:100%;
+        min-height:1vw;
+        color:#fff;
+        background-color:#0000;
+        border:1px solid #0000;
+        &:hover {border:1px solid #171;}
+      }
+
+      img {
+        width:1.3vw;
+        margin:0.3vw;
+        &:hover {
+          width:1.5vw;
+          margin:0.2vw;
+        }
+      }
+
+      .center {text-align:center;}
     }
   }
 

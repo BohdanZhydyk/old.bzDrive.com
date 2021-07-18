@@ -5,14 +5,15 @@ import {
   GET_STATE,
   GET_MODE,
   ADD_INVOICE,
-  CHANGE_INPUT
+  CHANGE_INPUT,
+  CHANGE_ARTICLE,
+  LINE_CLICK,
+  CONFIRM_BTNS
 } from './actions'
 
 import Loader from './../Loader'
 import ModeBtns from './components/ModeBtns'
 import Table from './components/Table'
-
-import {bzCalculator} from './../../../../store/functions'
 
 
 const OfficeApp = ({content, user, fn})=>{
@@ -21,11 +22,14 @@ const OfficeApp = ({content, user, fn})=>{
 
   let officeFn = (action)=>{
     switch(action.type){
-      case "GET_STATE":       GET_STATE(fn);                      break;
-      case "GET_MODE":        GET_MODE(fn, action.payload);       break;
-      case "ADD_INVOICE":     ADD_INVOICE(fn);                    break;
-      case "CHANGE_INPUT":    CHANGE_INPUT(office, setOffice, action.payload);   break;
-      default: break
+      case "GET_STATE":       GET_STATE(fn);                                      break;
+      case "GET_MODE":        GET_MODE(fn, action.payload);                       break;
+      case "ADD_INVOICE":     ADD_INVOICE(fn);                                    break;
+      case "CHANGE_INPUT":    CHANGE_INPUT(office, setOffice, action.payload);    break;
+      case "CHANGE_ARTICLE":  CHANGE_ARTICLE(office, setOffice, action.payload);  break;
+      case "LINE_CLICK":      LINE_CLICK(office, setOffice, action.payload);      break;
+      case "CONFIRM_BTNS":    CONFIRM_BTNS(office, setOffice, action.payload);    break;
+      default: break;
     }
   }
 
