@@ -12,8 +12,7 @@ const Section5 = ({ props:{printMode, line, articles, officeFn} }) => {
   let sum = 0
 
   articles.map( (el, nr)=>{
-    let articleSum = bzCalc("*", el.price, el.quantity)
-    sum = bzCalc( "+", sum, articleSum )
+    sum = bzCalc( "+", sum, el.sum )
     return nr
   })
 

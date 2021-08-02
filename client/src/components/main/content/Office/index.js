@@ -8,6 +8,7 @@ import {
   DELETE_INVOICE,
   PRINT_INVOICE,
   EXIT_PRINT_MODE,
+  EXIT_EDIT_MODE,
   SAVE_INVOICE,
   EDIT_INVOICE,
   CHANGE_INPUT,
@@ -35,6 +36,7 @@ const OfficeApp = ({content, user, fn})=>{
       case "PRINT_INVOICE":   PRINT_INVOICE(fn, action.payload);                  break;
       case "DELETE_INVOICE":  DELETE_INVOICE(fn, action.payload);                 break;
       case "EXIT_PRINT_MODE": EXIT_PRINT_MODE(office, setOffice);                 break;
+      case "EXIT_EDIT_MODE":  EXIT_EDIT_MODE(office, setOffice);                  break;
       case "CHANGE_INPUT":    CHANGE_INPUT(office, setOffice, action.payload);    break;
       case "CHANGE_ARTICLE":  CHANGE_ARTICLE(office, setOffice, action.payload);  break;
       case "LINE_CLICK":      LINE_CLICK(office, setOffice, action.payload);      break;

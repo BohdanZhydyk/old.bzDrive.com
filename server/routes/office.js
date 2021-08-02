@@ -72,35 +72,79 @@ exports.office = (req, res, InData, callback)=>{
 
     //SAVE INVOICE
     InData.object.saveInvoice &&
-    client.db(dbName).collection(`baseFA`).find({}).sort({_id:-1}).toArray( (error, result)=>{
-      
-      if(error){ InData.Errors.push( error ); callback(InData); return; }
+    client.db(dbName).collection('baseFA').findOne( { _id: new ObjectID(InData.object.saveInvoice._id)}, (error, result)=>{
+    
+      if(result){
 
-      let nr = ''
-      for(let i=10; i<result[0].invoiceNr.length; i++){
-        nr = nr + result[0].invoiceNr[i]
-      }
-      let toSix = (dig)=>{
-        dig = ( parseFloat(dig)+1 ).toString()
-        while(dig.length < 6){ dig = "0" + dig }
-        return (dig)
-      }
-      InData.object.saveInvoice.invoiceNr = InData.object.saveInvoice.invoiceNr + toSix(nr)
-
-      client.db(dbName).collection(`baseFA`).insertOne(InData.object.saveInvoice, (error, response)=>{
-
-        if(error){ InData.Errors.push( error ); callback(InData); return; }
-        
-        callback({
-          Errors: InData.Errors,
-          link: InData.link,
-          bzToken: InData.bzToken,
-          user: InData.user,
-          IP: InData.IP,
-          serverData: response
+        client.db(dbName).collection('baseFA').updateOne(
+          {_id: new ObjectID(InData.object.saveInvoice._id)},
+          {
+            $set:{
+              status:"edited",
+              date:InData.object.saveInvoice.date,
+              invoiceNr:InData.object.saveInvoice.invoiceNr,
+              place:InData.object.saveInvoice.place,
+              dealer:InData.object.saveInvoice.dealer,
+              buyer:InData.object.saveInvoice.buyer,
+              articles:InData.object.saveInvoice.articles,
+              comments:InData.object.saveInvoice.comments,
+              netto:InData.object.saveInvoice.netto,
+              priceVAT:InData.object.saveInvoice.priceVAT,
+              brutto:InData.object.saveInvoice.brutto
+            }
+          },
+          {upsert:true}, (error, response)=>{
+          
+            if(error){ InData.Errors.push( error ); callback(InData); return; }
+            
+            callback({
+              Errors: InData.Errors,
+              link: InData.link,
+              bzToken: InData.bzToken,
+              user: InData.user,
+              IP: InData.IP,
+              serverData: response
+            })
+    
         })
-        
-      })
+
+      }
+      else{
+
+        client.db(dbName).collection(`baseFA`).find({}).sort({_id:-1}).toArray( (error, result)=>{
+
+          if(error){ InData.Errors.push( error ); callback(InData); return; }
+
+          let nr = ''
+          for(let i=10; i<result[0].invoiceNr.length; i++){
+            nr = nr + result[0].invoiceNr[i]
+          }
+          let toSix = (dig)=>{
+            dig = ( parseFloat(dig)+1 ).toString()
+            while(dig.length < 6){ dig = "0" + dig }
+            return (dig)
+          }
+          InData.object.saveInvoice.status = "saved"
+          InData.object.saveInvoice.invoiceNr = InData.object.saveInvoice.invoiceNr + toSix(nr)
+
+          client.db(dbName).collection(`baseFA`).insertOne(InData.object.saveInvoice, (error, response)=>{
+  
+            if(error){ InData.Errors.push( error ); callback(InData); return; }
+            
+            callback({
+              Errors: InData.Errors,
+              link: InData.link,
+              bzToken: InData.bzToken,
+              user: InData.user,
+              IP: InData.IP,
+              serverData: response
+            })
+            
+          })
+
+        }
+
+      )}
 
     })
 

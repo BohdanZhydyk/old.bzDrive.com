@@ -1,3 +1,4 @@
+import { bzCalc} from './../../../../store/functions'
 
 export const GET_STATE = (fn)=> fn({ app:"office", type:"GET_STATE" })
 
@@ -15,6 +16,10 @@ export const DELETE_INVOICE = (fn, payload)=> fn({ app:"office", type:"DELETE_IN
 
 export const EXIT_PRINT_MODE = (office, setOffice)=> {
   setOffice({ ...office, printing:false })
+}
+
+export const EXIT_EDIT_MODE = (office, setOffice)=> {
+  setOffice({ ...office, editing:false })
 }
 
 export const CHANGE_INPUT = (office, setOffice, action)=>{
@@ -60,30 +65,35 @@ export const CHANGE_INPUT = (office, setOffice, action)=>{
     }
   }
 
-  setOffice({
-    ...office,
-    table: {
-      ...office.table,
-      lines: office.table.lines.map( (line, nr)=>
-        nr === action.nr
-        ? setLine(line)
-        : line
-      )
-    }
-  })
+  setOffice({ ...office, editing: setLine(office.editing) })
 
 }
 
 export const CHANGE_ARTICLE = (office, setOffice, action)=>{
 
+  let calc = (article, price, quantity, VAT, netto, vat, sum)=>{
+    price = price ? price : article.price
+    quantity = quantity ? quantity : article.quantity
+    VAT = VAT ? VAT : article.VAT
+    netto = bzCalc( '*', price, quantity )
+    vat = bzCalc( 'VAT', VAT, netto )
+    sum = bzCalc( '+', vat, netto )
+    return {...article, price, quantity, VAT, netto, vat, sum}
+  }
+
   let setData = (el, n, article)=>{
     switch(el){
-
-      case "number":    return( n === action.nr ? {...article, number:action.val} : article )
-      case "article":   return( n === action.nr ? {...article, article:action.val} : article )
-      case "quantity":  return( n === action.nr ? {...article, quantity:action.val} : article )
-      case "VAT":       return( n === action.nr ? {...article, VAT:action.val} : article )
-      case "price":     return( n === action.nr ? {...article, price:action.val} : article )
+      
+      case "number":
+        return( n === action.nr ? {...article, number:action.val} : article )
+      case "article":
+        return( n === action.nr ? {...article, article:action.val} : article )
+      case "price":
+        return( n === action.nr ? calc(article, action.val, false, false, false, false, false) : article )
+      case "quantity":
+        return( n === action.nr ? calc(article, false, action.val, false, false, false, false) : article )
+      case "VAT":
+        return( n === action.nr ? calc(article, false, false, action.val, false, false, false) : article )
 
       default: return(article)
     }
@@ -107,17 +117,7 @@ export const CHANGE_ARTICLE = (office, setOffice, action)=>{
     }
   }
 
-  setOffice({
-    ...office,
-    table: {
-      ...office.table,
-      lines: office.table.lines.map( (line, nr)=>
-        line.status === "editing"
-        ? setArticle(line)
-        : line
-      )
-    }
-  })
+  setOffice({ ...office, editing: setArticle(office.editing) })
 
 }
 

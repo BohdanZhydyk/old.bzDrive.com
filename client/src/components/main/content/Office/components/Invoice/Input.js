@@ -6,7 +6,7 @@ export const Input =({ props:{printMode, nr, input, officeFn} })=>{
   let CHANGE_INPUT = (e)=>
     officeFn({
       type:"CHANGE_INPUT",
-      payload: { nr, input: {...input, val:e.target.value.trim()} }
+      payload: { nr, input: {...input, val:e.target.value} }
     })
 
   return(

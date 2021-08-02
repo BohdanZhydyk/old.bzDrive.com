@@ -78,7 +78,7 @@ const GET_MODE = (action, state, setState)=>{
 
 const ADD_INVOICE = (action, state, setState)=>{
 
-  let marker = ()=>{
+  let letter = ()=>{
     switch(getUser().login){
       case "bz83": return "B"
       case "Vitalii": return "V"
@@ -88,25 +88,23 @@ const ADD_INVOICE = (action, state, setState)=>{
 
   bzPost("/office", { newInvoice:getUser().login }, (data)=>{
 
+    let buyer = {
+      name: false, addr: {zip:false, town:false, street:false},
+      img: false, contacts: {www:false, email:false, tel:false},
+      account: false, nip: false, place: false, user: false
+    }
+
     let newObj = {
       place: data[0].place,
       date: unixToDateConverter(),
       dealer: data[0],
-      buyer: {
-        name: false,
-        addr: {zip:false, town:false, street:false},
-        img: false,
-        contacts: {www:false, email:false, tel:false},
-        account: false,
-        nip: false,
-        place: false,
-        user: false
-      },
-      articles: [ {number:false, article:false, price:false, quantity:false, VAT:false} ],
-      comments: [
-        `Dostawa towarów lub świadczenie usług zwolnionych od podatku VAT na podstawie art. 113 ust. 1 i 9 ustawy o VAT.`
-      ],
-      invoiceNr: `${marker()}/${unixToYearMonthConverter()}/`
+      buyer,
+      articles: [ {number:false, article:false, price:0, quantity:0, VAT:0, netto:0, vat:0, sum:0} ],
+      comments: [`
+        Dostawa towarów lub świadczenie usług zwolnionych od podatku
+        VAT na podstawie art. 113 ust. 1 i 9 ustawy o VAT.
+      `],
+      invoiceNr: `${letter()}/${unixToYearMonthConverter()}/`
     }
 
     setState({
@@ -128,21 +126,7 @@ const ADD_INVOICE = (action, state, setState)=>{
 
 const SAVE_INVOICE = (action, state, setState)=>{
 
-  let saveInvoice = {
-    status: "created",
-    date: action.payload.date,
-    invoiceNr: action.payload.invoiceNr,
-    place: action.payload.place,
-    dealer: action.payload.dealer,
-    buyer: action.payload.buyer,
-    articles: action.payload.articles,
-    comments: action.payload.comments,
-    netto: action.payload.netto,
-    brutto: action.payload.brutto,
-    priceVAT: action.payload.priceVAT
-  }
-
-  bzPost("/office", { saveInvoice }, (data)=>{ GET_MODE({payload:"FA"}, state, setState) })
+  bzPost("/office", { saveInvoice:action.payload }, (data)=>{ GET_MODE({payload:"FA"}, state, setState) })
 
 }
 
@@ -154,7 +138,15 @@ const EDIT_INVOICE = (action, state, setState)=>{
       ...state.drive,
       nav: state.drive.nav.map( (item, index)=>
         (item.to === "/office")
-        ? { ...item, content: { ...item.content, printing:false, editing:action.payload } }
+        ?
+        {
+          ...item,
+          content: {
+            ...item.content,
+            printing:false,
+            editing:action.payload
+          }
+        }
         : {...item, content:false}
       )
     },

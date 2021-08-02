@@ -16,10 +16,10 @@ export const Article = ({ props:{printMode, el = "top", index = "top", officeFn}
   
   let price = el.price ? el.price : (0).toFixed(2)
   let quantity = el.quantity ? el.quantity : (0)
-  let VAT = `${el.VAT ? el.VAT : 23}`
-  let sum = bzCalc( '*', price, quantity )
-  let netto = bzCalc( 'VAT', sum, VAT )
-  let vat = bzCalc( '-', sum, netto )
+  let VAT = `${el.VAT ? el.VAT : (0)}`
+  let netto = el.netto ? el.netto : (0)
+  let vat = el.vat ? el.vat : (0)
+  let sum = el.sum ? el.sum : (0)
   
   let InputNumber = <Input props={{ printMode, nr:index, el:"number", val:number, officeFn }} />
   let InputArticle = <Input props={{ printMode, nr:index, el:"article", cl:true, val:article, officeFn }} />

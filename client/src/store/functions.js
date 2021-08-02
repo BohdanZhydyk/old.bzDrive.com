@@ -37,13 +37,12 @@ export const bzCalc = (operation, a, b)=>{
   switch(operation){
     case "+": return( (parseFloat(a) + parseFloat(b)).toFixed(2) )
     case "-": return( (parseFloat(a) - parseFloat(b)).toFixed(2) )
-    case "*": return( (parseFloat(a) * parseFloat(b)).toFixed(2) )
+    case "*": return( (parseFloat(a) * parseFloat(b).toFixed(2)).toFixed(2) )
     case "/": return( (parseFloat(a) / parseFloat(b)).toFixed(2) )
     case "VAT":
       let one = (parseFloat(a) * parseFloat(b)).toFixed(2)
       let two = (parseFloat(one) / parseFloat(100)).toFixed(2)
-      let three = (parseFloat(a) - parseFloat(two)).toFixed(2)
-      return three
+      return two
     default: break
   }
 }
