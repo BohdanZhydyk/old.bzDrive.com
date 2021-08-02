@@ -1,0 +1,81 @@
+
+.section4{
+  width:100%;
+
+  .table, .table-Print {
+    width:100%;
+    
+    .cell {
+      border:1px solid #999;
+      padding:0.25vw;
+    }
+
+    .cell-Print {
+      border:1px solid #333;
+      padding:0.25vw;
+    }
+    
+    .headerTr {
+      text-align:center;
+      font-size:80%;
+      
+      .cell{
+        min-height:3vw;
+        background-color:#111;
+      }
+    }
+
+    .headerTr-Print {
+      text-align:center;
+      font-size:80%;
+      
+      .cell-Print {
+        min-height:3vw;
+        background-color:#ddd;
+      }
+    }
+
+    .tr{
+      width:100%;
+
+      .NOR{width:3%;}
+      .ART{width:5%;}
+      .SER{width:46%; padding:0.25vw 1%;}
+      .PRG{width:6%;}
+      .QUA{width:6%;}
+      .VAT{width:3%;}
+      .PRN{width:6%;}
+      .PRV{width:6%;}
+      .SUM{width:6%;}
+
+      input {
+        width:100%;
+        min-height:1vw;
+        color:#fff;
+        background-color:#0000;
+        border:1px solid #0000;
+        &:hover {border:1px solid #171;}
+      }
+
+      img {
+        width:1.3vw;
+        margin:0.3vw;
+        &:hover {
+          width:1.5vw;
+          margin:0.2vw;
+        }
+      }
+
+      .center {text-align:center;}
+    }
+  }
+
+  .comments{
+    width:90%;
+    margin:2vw 0;
+
+    .comL {width:10%;}
+    .comR {width:90%;}
+  }
+
+}

@@ -1,45 +1,67 @@
 import React from 'react'
 
-import { Invoice } from './Cells/Invoice'
-import { Dealer } from './Cells/Dealer'
-import { Buyer } from './Cells/Buyer'
-import { Netto } from './Cells/Netto'
-import { Vat } from './Cells/Vat'
-import { PriceVAT } from './Cells/PriceVAT'
-import { Brutto } from './Cells/Brutto'
-import { Nip } from './Cells/Nip'
-import { Addr } from './Cells/Addr'
-import { Contacts } from './Cells/Contacts'
-import { Number } from './Cells/Number'
-import { Article } from './Cells/Article'
-import { Quantity } from './Cells/Quantity'
-
-import { LineBtns } from './Cells/LineBtns'
+import { Cells } from './Cells'
+import { LineBtns } from './LineBtns'
 
 
-export const Line = ({ props:{line, nr, officeFn} })=>{
+export const Line = ({ props:{mode, line, nr, officeFn} })=>{
+
+  let top = (nr === "top")
+
+  let color = line?.status
+
+  let invoiceNrData = top ? `Faktura Nr.` : line?.invoiceNr
+  let dealerData = top ? `Sprzedawca` : line?.dealer?.name
+  let buyerData = top ? `Nabywca` : line?.buyer?.name
+  let nameData = top ? `Nazwa` : line?.name
+  let nettoData = top ? `Kwota Netto` : line?.netto
+  let priceVATData = top ? `Kwota VAT` : line?.priceVAT
+  let bruttoData = top ? `Kwota Brutto` : line?.brutto
+  let numberData = top ? `Artykul` : line?.number
+  let articleData = top ? `Towar / Material / Usluga` : line?.article
+  let priceData = top ? `Cena Brutto` : line?.price
+  let quantityData = top ? `Iłość` : line?.quantity
+  let nipData = top ? `NIP` : line?.nip
+
+  let contactsData = top
+    ? `Kontakty`
+    : <div>
+        <div>{`tel.: ${line?.contacts?.tel},`}</div>
+        <div>{`e-mail: ${line?.contacts?.email},`}</div>
+        <div>{`www: ${line?.contacts?.www}`}</div>
+      </div>
+
+  let addrData = top
+    ? `Adres`
+    : <div>
+        <span>{`${line?.addr?.zip} `}</span>
+        <span>{`${line?.addr?.town}, `}</span>
+        <span>{`${line?.addr?.street}`}</span>
+      </div>
+
+  let invoiceNr = {cl:`invoice ${color}`, data:invoiceNrData, nr}
+  let dealer = {cl:`dealer ${color} ${!top && "start"}`, data:dealerData, nr}
+  let buyer = {cl:`buyer ${color} ${!top && "start"}`, data:buyerData, nr}
+  let name = {cl:`name ${color} ${!top && "start"}`, data:nameData, nr}
+  let netto = {cl:`netto ${color}`, data:nettoData, nr}
+  let priceVAT = {cl:`priceVAT ${color}`, data:priceVATData, nr}
+  let brutto = {cl:`brutto ${color}`, data:bruttoData, nr}
+  let number = {cl:`number ${color}`, data:numberData, nr}
+  let article = {cl:`article ${color} ${!top && "start"}`, data:articleData, nr}
+  let price = {cl:`price ${color}`, data:priceData, nr}
+  let quantity = {cl:`quantity ${color}`, data:quantityData, nr}
+  let nip = {cl:`nip ${color}`, data:nipData, nr}
+  let contacts = {cl:`contacts ${color}`, data:contactsData, nr}
+  let addr = {cl:`addr ${color}`, data:addrData, nr}
+
   return(
     <div className="line flex wrap">
 
-      <div className="lineData flex stretch">
+      { mode === "FA" && <Cells props={{invoiceNr, dealer, buyer, netto, priceVAT, brutto}} /> }
+      { mode === "TO" && <Cells props={{number, article, price, quantity}} /> }
+      { (mode === "KL" || mode === "SP") && <Cells props={{name, nip, contacts, addr}} /> }
 
-        { line.invoiceNr && <Invoice data={line.invoiceNr} nr={nr} /> }
-        { line.dealer && <Dealer data={line.dealer.shortName} nr={nr} /> }
-        { line.buyer && <Buyer data={line.buyer.shortName} nr={nr} /> }
-        { line.number && <Number data={line.number} nr={nr} /> }
-        { line.article && <Article data={line.article} nr={nr} /> }
-        { line.quantity && <Quantity data={line.quantity} nr={nr} /> }
-        { line.VAT && <Vat data={line.VAT} nr={nr} /> }
-        { line.netto && <Netto data={line.netto} nr={nr} /> }
-        { line.priceVAT && <PriceVAT data={line.priceVAT} nr={nr} /> }
-        { line.brutto && <Brutto data={line.brutto} nr={nr} /> }
-        { line.nip && <Nip data={line.nip} nr={nr} /> }
-        { line.addr && <Addr data={line.addr} nr={nr} /> }
-        { line.contacts && <Contacts data={line.contacts} nr={nr} /> }
-
-        <LineBtns nr={nr} officeFn={officeFn} />
-
-      </div>
+      <LineBtns props={{line, nr, officeFn}} />
 
     </div>
   )

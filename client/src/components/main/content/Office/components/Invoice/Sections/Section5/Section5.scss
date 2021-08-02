@@ -1,0 +1,96 @@
+
+.section5{
+  width:100%;
+  margin:3vw 0;
+
+  .nothing{
+    width:20%;
+  }
+
+  .payments{
+    width:70%;
+    
+    .amount1 {
+      width:100%;
+      margin:1vw 0;
+      font-size:150%;
+      background-color:#111;
+
+      .name {
+        width:20%;
+        padding:1vw;
+      }
+
+      .data {
+        width:80%;
+        padding:1vw;
+      }
+    }
+
+    .amount1-Print {
+      width:100%;
+      margin:1vw 0;
+      font-size:150%;
+      background-color:#ddd;
+
+      .name {
+        width:20%;
+        padding:1vw;
+      }
+
+      .data {
+        width:80%;
+        padding:1vw;
+      }
+    }
+
+    .amount2{
+      width:100%;
+
+      .name{
+        width:20%;
+        padding:1vw;
+      }
+
+      .data{
+        width:80%;
+        padding:0 1vw;
+        border-bottom:1px solid #ccc;
+      }
+    }
+
+    .radio {
+      width:10vw;
+    }
+
+    .buttons {
+      width:100%;
+      margin:2vw 0;
+  
+      button {
+        width:20vw;
+        min-height:3vw;
+        margin:0 2vw;
+        color:#fff;
+        font-size:150%;
+        border:1px solid #0000;
+        border-radius:0.5vw;
+        &:hover{
+          font-size:170%;
+          border:1px solid #fff;
+          box-shadow: 0 0 0.5vw 0.2vw #999;
+        }
+      }
+  
+      .red {
+        background-color:#711;
+        &:hover{background-color:#911;}
+      }
+  
+      .green {
+        background-color:#171;
+        &:hover{background-color:#191;}
+      }
+    }
+  } 
+}

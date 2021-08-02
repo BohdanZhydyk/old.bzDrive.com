@@ -5,15 +5,20 @@ import {
   GET_STATE,
   GET_MODE,
   ADD_INVOICE,
+  DELETE_INVOICE,
+  PRINT_INVOICE,
+  EXIT_PRINT_MODE,
+  SAVE_INVOICE,
+  EDIT_INVOICE,
   CHANGE_INPUT,
   CHANGE_ARTICLE,
-  LINE_CLICK,
-  CONFIRM_BTNS
+  LINE_CLICK
 } from './actions'
 
 import Loader from './../Loader'
 import ModeBtns from './components/ModeBtns'
 import Table from './components/Table'
+import Invoice from './components/Invoice'
 
 
 const OfficeApp = ({content, user, fn})=>{
@@ -25,10 +30,14 @@ const OfficeApp = ({content, user, fn})=>{
       case "GET_STATE":       GET_STATE(fn);                                      break;
       case "GET_MODE":        GET_MODE(fn, action.payload);                       break;
       case "ADD_INVOICE":     ADD_INVOICE(fn);                                    break;
+      case "SAVE_INVOICE":    SAVE_INVOICE(fn, action.payload);                   break;
+      case "EDIT_INVOICE":    EDIT_INVOICE(fn, action.payload);                   break;
+      case "PRINT_INVOICE":   PRINT_INVOICE(fn, action.payload);                  break;
+      case "DELETE_INVOICE":  DELETE_INVOICE(fn, action.payload);                 break;
+      case "EXIT_PRINT_MODE": EXIT_PRINT_MODE(office, setOffice);                 break;
       case "CHANGE_INPUT":    CHANGE_INPUT(office, setOffice, action.payload);    break;
       case "CHANGE_ARTICLE":  CHANGE_ARTICLE(office, setOffice, action.payload);  break;
       case "LINE_CLICK":      LINE_CLICK(office, setOffice, action.payload);      break;
-      case "CONFIRM_BTNS":    CONFIRM_BTNS(office, setOffice, action.payload);    break;
       default: break;
     }
   }
@@ -37,11 +46,13 @@ const OfficeApp = ({content, user, fn})=>{
 
   console.log('office', office)
 
-  let btns, btnsMode, names, table, invoice
+  let printMode, editMode, mode, btns, names, table, invoice
 
   if(content){
+    printMode = office.printing
+    editMode = office.editing
+    mode = office.mode
     btns = office.btns
-    btnsMode = btns.btnsMode
     names = btns.names
     table = office.table
     invoice = office.invoice
@@ -56,9 +67,11 @@ const OfficeApp = ({content, user, fn})=>{
       :
       <>
 
-        <ModeBtns props={{btnsMode, names, officeFn}} />
+        { printMode && <Invoice props={{line:printMode, nr:"print", officeFn}} /> }
 
-        { table && <Table props={{table, invoice, officeFn}} /> }
+        <ModeBtns props={{mode, names, officeFn}} />
+
+        { table && <Table props={{mode, editMode, table, invoice, officeFn}} /> }
 
       </>
     }

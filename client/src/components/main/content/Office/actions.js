@@ -3,7 +3,19 @@ export const GET_STATE = (fn)=> fn({ app:"office", type:"GET_STATE" })
 
 export const GET_MODE = (fn, payload)=> fn({ app:"office", type:"GET_MODE", payload })
 
-export const ADD_INVOICE = (fn, payload)=> fn({ app:"office", type:"ADD_INVOICE"})
+export const ADD_INVOICE = (fn)=> fn({ app:"office", type:"ADD_INVOICE" })
+
+export const SAVE_INVOICE = (fn, payload)=> fn({ app:"office", type:"SAVE_INVOICE", payload })
+
+export const EDIT_INVOICE = (fn, payload)=> fn({ app:"office", type:"EDIT_INVOICE", payload })
+
+export const PRINT_INVOICE = (fn, payload)=> fn({ app:"office", type:"PRINT_INVOICE", payload })
+
+export const DELETE_INVOICE = (fn, payload)=> fn({ app:"office", type:"DELETE_INVOICE", payload })
+
+export const EXIT_PRINT_MODE = (office, setOffice)=> {
+  setOffice({ ...office, printing:false })
+}
 
 export const CHANGE_INPUT = (office, setOffice, action)=>{
 
@@ -112,6 +124,7 @@ export const CHANGE_ARTICLE = (office, setOffice, action)=>{
 export const LINE_CLICK = (office, setOffice, action)=>{
 
   let pushArticle = (articles)=>{
+    console.log('article', articles)
     let newArr = []
     for(let i=0; i<articles.length; i++){ newArr.push( articles[i] ) }
     newArr.push( {number:false, article:false, price:false, quantity:false, VAT:false} )
@@ -124,51 +137,22 @@ export const LINE_CLICK = (office, setOffice, action)=>{
     return newArr
   }
 
-  setOffice({
-    ...office,
-    table: {
-      ...office.table,
-      lines: office.table.lines.map( (line, nr)=>
-        line.status === "editing"
-        ?
-        {
-          ...line,
-          articles: action.act === "delete"
-            ? delArticle(line.articles, action.nr)
-            : pushArticle(line.articles)
-        }
-        : line
-      )
-    }
-  })
-
-}
-
-export const CONFIRM_BTNS = (office, setOffice, action)=>{
-
-  console.log(action)
-
-  let saveArticle = (articles)=>{
-    // let newArr = []
-    // for(let i=0; i<articles.length; i++){ newArr.push( articles[i] ) }
-    // newArr.push( {number:false, article:false, price:false, quantity:false, VAT:false} )
-    // return newArr
-  }
-
-  let delArticle = (articles)=>{
-    let newArr = []
-    for(let i=0; i<articles.length; i++){ articles[i].status !== "editing" && newArr.push( articles[i] ) }
-    return newArr
-  }
-
-  setOffice({
-    ...office,
-    table: {
-      ...office.table,
-      lines: action === "cancel"
-        ? delArticle(office.table.lines)
-        : saveArticle(office.table.lines)
-    }
-  })
+  // setOffice({
+  //   ...office,
+  //   table: {
+  //     ...office.table,
+  //     lines: office.table.lines.map( (line, nr)=>
+  //       line.status === "editing"
+  //       ?
+  //       {
+  //         ...line,
+  //         articles: action.act === "delete"
+  //           ? delArticle(line.articles, action.nr)
+  //           : pushArticle(line.articles)
+  //       }
+  //       : line
+  //     )
+  //   }
+  // })
 
 }

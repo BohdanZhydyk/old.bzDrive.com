@@ -53,9 +53,9 @@ exports.office = (req, res, InData, callback)=>{
 
     })
     
-    //ADD INVOICE
-    InData.object.addInvoice &&
-    client.db(dbName).collection(`baseSP`).find({user:InData.object.addInvoice}).sort({_id:-1}).toArray( (error, result)=>{
+    //NEW INVOICE
+    InData.object.newInvoice &&
+    client.db(dbName).collection(`baseSP`).find({user:InData.object.newInvoice}).sort({_id:-1}).toArray( (error, result)=>{
       
       if(error){ InData.Errors.push( error ); callback(InData); return; }
 
@@ -67,6 +67,59 @@ exports.office = (req, res, InData, callback)=>{
         IP: InData.IP,
         serverData: result
       })
+
+    })
+
+    //SAVE INVOICE
+    InData.object.saveInvoice &&
+    client.db(dbName).collection(`baseFA`).find({}).sort({_id:-1}).toArray( (error, result)=>{
+      
+      if(error){ InData.Errors.push( error ); callback(InData); return; }
+
+      let nr = ''
+      for(let i=10; i<result[0].invoiceNr.length; i++){
+        nr = nr + result[0].invoiceNr[i]
+      }
+      let toSix = (dig)=>{
+        dig = ( parseFloat(dig)+1 ).toString()
+        while(dig.length < 6){ dig = "0" + dig }
+        return (dig)
+      }
+      InData.object.saveInvoice.invoiceNr = InData.object.saveInvoice.invoiceNr + toSix(nr)
+
+      client.db(dbName).collection(`baseFA`).insertOne(InData.object.saveInvoice, (error, response)=>{
+
+        if(error){ InData.Errors.push( error ); callback(InData); return; }
+        
+        callback({
+          Errors: InData.Errors,
+          link: InData.link,
+          bzToken: InData.bzToken,
+          user: InData.user,
+          IP: InData.IP,
+          serverData: response
+        })
+        
+      })
+
+    })
+
+    //DELETE INVOICE
+    InData.object.deleteInvoice &&
+    client.db(dbName).collection('baseFA').updateOne(
+      {_id: new ObjectID(InData.object.deleteInvoice)},
+      { $set:{status:"deleted"} }, {upsert:true}, (error, response)=>{
+      
+        if(error){ InData.Errors.push( error ); callback(InData); return; }
+        
+        callback({
+          Errors: InData.Errors,
+          link: InData.link,
+          bzToken: InData.bzToken,
+          user: InData.user,
+          IP: InData.IP,
+          serverData: response
+        })
 
     })
 

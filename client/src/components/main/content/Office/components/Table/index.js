@@ -1,11 +1,11 @@
 import React from 'react'
 import './Table.scss'
 
-import Invoice from './Invoice'
 import { Line } from './Line'
+import Invoice from './../Invoice'
 
 
-const Table = ({ props:{table, invoice, officeFn} })=>{
+const Table = ({ props:{mode, editMode, table, invoice, officeFn} })=>{
 
   let line = table.lines[0]
 
@@ -15,15 +15,11 @@ const Table = ({ props:{table, invoice, officeFn} })=>{
       table &&
       <>
 
-        <Line props={{line, nr:"top", invoice, officeFn}} key={`TableLineTop`} />
+        <Line props={{mode, line, nr:"top", invoice, officeFn}} key={`TableLineTop`} />
 
-        {
-          table.lines.map( (line, nr)=>
-            line.status === "editing"
-            ? <Invoice props={{line, nr, officeFn}} key={`Invoice${nr}`} />
-            : <Line props={{line, nr, officeFn}} key={`TableLine${nr}`} />
-          )
-        }
+        { editMode && <Invoice props={{line:editMode, nr:"editing", officeFn}} /> }
+
+        { table.lines.map( (line, nr)=> <Line props={{mode, line, nr, officeFn}} key={`TableLine${nr}`} /> ) }
 
       </>
     }
