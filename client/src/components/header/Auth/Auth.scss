@@ -5,15 +5,15 @@
 }
 
 .menuPannel {
-  position:absolute;
-  top:4vw;
-  right:0.5vw;
-  width:30%;
-  padding:1vw;
-  background-color:#222;
-  border:1px solid #999;
-  border-radius:0.5vw;
-  z-index:999;
+  width:90%;
+
+  .langPannel {
+    width:100%;
+  }
+
+  .navItemActive {
+    border-color:#f60;
+  }
 }
 
 .menuBtn {

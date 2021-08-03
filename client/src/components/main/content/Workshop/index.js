@@ -8,7 +8,7 @@ import { Workshop } from './components/Workshop'
 import Loader from './../Loader'
 
 
-function WorkshopApp({content, user, fn}){
+function WorkshopApp({ props:{content, user, fn} }){
 
 	const [workshop, setWorkshop] = useState(content)
 

@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import './Footer.scss'
 
 export const Footer = ({data})=>{
@@ -6,6 +6,7 @@ export const Footer = ({data})=>{
     <div className="footer">
       
       <p>{data.rodo1}</p>
+      
       <p>{data.rodo2}</p>
       
     </div>

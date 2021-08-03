@@ -2,6 +2,9 @@
 .table {
   width:100%;
   margin:2vw 0;
+  @media (min-width: 768px) and (max-width: 1024px) {font-size:90%;}
+  @media (min-width: 481px) and (max-width: 767px) {font-size:75%;}
+  @media (max-width: 481px) {font-size:65%;}
 
   .plus {
     width:90vw;
@@ -16,6 +19,7 @@
     width:100%;
 
     .lineData{
+      margin:0.25vw 0;
 
       .black{
         background-color:#111;
@@ -29,36 +33,52 @@
         text-align:center;
       }
       
-      .invoice {width:10vw;}
-      .dealer {width:20vw;}
-      .buyer {width:20vw;}
-      .name {width:20vw;}
-      .netto {width:4vw;}
-      .vat {width:4vw;}
-      .priceVAT {width:4vw;}
-      .brutto {width:4vw;}
-      .price {width:4vw;}
-      .nip {width:7vw;}
-      .addr {width:15vw;}
-      .contacts {width:15vw;}
-      .number {width:4vw;}
-      .article {width:30vw;}
-      .quantity {width:4vw;}
+      .invoice {
+        width:9vw;
+        @media (min-width: 768px) and (max-width: 1024px) {width:11vw;}
+        @media (min-width: 481px) and (max-width: 767px) {width:15vw;}
+        @media (max-width: 481px) {width:16vw;}
+      }
+      .dealer, .buyer, .name, .addr {
+        width:60vw;
+        @media (min-width: 768px) and (max-width: 1024px) {width:52vw; min-height:calc(2.5vw - 2px);}
+        @media (min-width: 481px) and (max-width: 767px) {width:42vw; min-height:calc(4vw - 2px);}
+        @media (max-width: 481px) {width:36vw; min-height:calc(5vw - 2px);}
+      }
+      .netto, .vat, .priceVAT, .brutto, .price, .number, .quantity, .nip {
+        width:6vw;
+        min-height:3vw;
+        @media (min-width: 768px) and (max-width: 1024px) {width:7vw; min-height:5vw;}
+        @media (min-width: 481px) and (max-width: 767px) {width:7vw; min-height:8vw;}
+        @media (max-width: 481px) {width:7vw; min-height:10vw;}
+      }
+      .nip {
+        width:7vw;
+        min-height:3vw;
+        @media (min-width: 768px) and (max-width: 1024px) {width:8vw; min-height:5vw;}
+        @media (min-width: 481px) and (max-width: 767px) {width:12vw; min-height:8vw;}
+        @media (max-width: 481px) {width:12vw; min-height:10vw;}
+      }
+      .contacts {
+        width:21vw;
+        @media (min-width: 768px) and (max-width: 1024px) {width:24vw;}
+        @media (max-width: 767px) {width:27vw;}
+      }
+      .article {
+        width:76vw;
+        @media (min-width: 768px) and (max-width: 1024px) {width:70vw;}
+        @media (min-width: 481px) and (max-width: 767px) {width:65vw;}
+        @media (max-width: 481px) {width:60vw;}
+      }
     }
     
     .lineBtns {
-      width:0vw;
+      position:absolute;
+      right:1vw;
       border:1px solid #0000;
-
-      img{
-        width:2vw;
-        margin:0.25vw;
-        &:hover{
-          width:calc(2.5vw - 2px);
-          margin:0 1px;
-        }
-      }
     }
+
+    .green {background-image:linear-gradient(#2435, #465, #2435);}
   }
 
   .deleted {background-color:#f002;}

@@ -1,5 +1,4 @@
 import React from 'react'
-import './Section2.scss'
 
 import { Input } from './../../Input'
 

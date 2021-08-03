@@ -10,20 +10,18 @@ import Unsplash from './apps/Unsplash'
 import Error from './../Error'
 
 
-function ApplicationsApp(){
+const ApplicationsApp= ({ props:{content, user, fn} })=>{
 
 	const apps = [
-		{
-			link:"bistro",
-			txt:"Bistro",
-			component:<Bistro />
-		},
-		{
-			link:"unsplash",
-			txt:"Unsplash",
-			component:<Unsplash />
-		}
+		{link:"bistro", txt:"Bistro", component:<Bistro />},
+		{link:"unsplash", txt:"Unsplash", component:<Unsplash />}
 	]
+
+	let ROUTE = (app, index)=>{
+		let path = `/apps/${app.link}`
+		let key = `apps${index}${app.txt}`
+		return <Route exact path={path} key={key} component={ ()=> app.component } />
+	}
 
 	return(
 		<div className="flex wrap">
@@ -34,13 +32,7 @@ function ApplicationsApp(){
 
 				<Route exact path="/apps" component={ ()=> <AppBtns apps={apps} /> } />
 
-				{ apps.map( (app, index)=>
-					<Route
-						exact path={`/apps/${app.link}`}
-						key={`apps${index}${app.txt}`}
-						component={ ()=> app.component }
-					/>
-				)}
+				{ apps.map( (app, index)=> ROUTE(app, index) ) }
 
 				<Route path="/apps/*" component={ ()=> <Error /> }	/>
 

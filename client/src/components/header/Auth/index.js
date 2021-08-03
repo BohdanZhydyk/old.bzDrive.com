@@ -1,9 +1,14 @@
 import React from 'react'
 import './Auth.scss'
-import { MenuPannel } from './MenuPannel'
 
 
-const Auth = ({auth, lang, user, fn})=>{
+const Auth = ({ props:{auth, lang, user, active, TOGGLE_MENU, fn} })=>{
+
+  let ImgClick = ()=> TOGGLE_MENU({active: active ? false : `auth`})
+
+  let usr = user.ava ? user.login : `man`
+  let src = `https://files.bzdrive.com/img/users/${usr}.png`
+
 	return(
     <>
     {
@@ -11,16 +16,7 @@ const Auth = ({auth, lang, user, fn})=>{
       ?
       <div className="auth flex" >
         
-        <img className="ava imgBtn" alt="user"
-            src={
-              user.ava
-              ? `https://files.bzdrive.com/img/users/${user.login}.png`
-              : `https://files.bzdrive.com/img/users/man.png`
-            }
-            onClick={ ()=>fn({ app:"drive", type:"TOGGLE_MENU", payload:auth.active }) }
-        />
-
-        { auth.active && <MenuPannel auth={auth} lang={lang} user={user} fn={fn} /> }
+        <img className="ava imgBtn" src={src} onClick={ ()=> ImgClick() } alt="user" />
 
       </div>
       :

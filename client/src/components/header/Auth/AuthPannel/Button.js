@@ -3,26 +3,19 @@ import React from 'react'
 import { translate } from './../../../../store/translate'
 
 
-export const Button = ({ props:{ forms, lang, active, fn} })=>{
+export const Button = ({ props:{form, nr, lang, fn} })=>{
 
-  let classes = active ? "btn btnActive" : "btn"
+  let active = form.active
+  let action = form.action
 
-  let BTN_CLICK = (action)=>
-    active
-    ? fn({ app:"drive", type:"SEND_FORM", payload:action })
-    : fn({ app:"drive", type:"TOGGLE_FORM", payload:action })
+  let classes = active ? "btnActive flex" : "btn flex"
+
+  let BTN_CLICK = (action)=> fn({ app:"drive", type:(active ? "SEND_FORM" : "TOGGLE_FORM"), payload:action })
 
   return(
-    <>
-    {
-      forms.map( (btn)=>
-        btn.active === active &&
-        <span className={classes} onClick={ ()=> BTN_CLICK(btn.action) } key={`FormBtn${btn.action}`} >
-          {translate(lang, btn.action+"Btn")}
-        </span>
-      )
-    }
-    </>
+    <span className={classes} onClick={ ()=> BTN_CLICK(action) } key={`FormBtn${action}${nr}`} >
+      { translate(lang, action+"Btn") }
+    </span>
   )
 
 }

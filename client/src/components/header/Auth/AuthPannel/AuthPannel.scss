@@ -1,12 +1,11 @@
 
 .authPannel {
-  padding:1vw 0 2vw 0;
+  width:100%;
 
   .inputs {
-    width:90%;
+    width:97%;
 
     .inputWrapper {
-      margin:0.5vw 0;
       padding:0.25vw;
       border:1px solid #999;
       border-radius:0.5vw;
@@ -16,8 +15,8 @@
     }
 
     .inputName {
-      margin:0 0.5vw;
-      padding:0 0.5vw;
+      margin:0 1vw;
+      padding:0 1vw;
       color:#999;
     }
 
@@ -25,6 +24,7 @@
 
     input {
       width:94%;
+      min-height:2vw;
       padding:0.25vw 3%;
       color:#fff;
       background-color:#0000;
@@ -35,23 +35,29 @@
   }
 
   .btns {
-    width:90%;
-    margin:1vw 0 0 0;
+    width:100%;
+    margin:2vw 0 0 0;
 
     .btn {
-      width:40%;
-      background-color:#171;
-      border-radius:0.5vw;
-      padding:0.5vw;
-      margin:0.5vw;
-      color:#fff;
-      text-align:center;
+      width:46%;
+      min-height:3vw;
+      margin:1vw 2%;
+      font-size:90%;
+      &:hover{font-size:110%;}
     }
 
     .btnActive {
-      width:80%;
-      font-size:1.5vw;
-      padding:0.5vw 1.5vw;
+      width:96%;
+      min-height:4vw;
+      font-size:140%;
+      &:hover{font-size:160%;}
+    }
+
+    .btn, .btnActive {
+      color:#fff;
+      background-color:#171;
+      border-radius:0.5vw;
+      &:hover{background-color:#191;}
     }
   }
 }

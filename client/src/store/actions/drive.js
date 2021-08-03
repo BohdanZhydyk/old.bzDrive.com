@@ -48,7 +48,11 @@ const ACTIVE_NAV_BTN = (action, state, setState)=>{
         (item.to === action.payload)
         ? {...item, active:true}
         : {...item, active:false}
-      )
+      ),
+      auth:{
+        ...state.drive.auth,
+        active: false
+      }
     }
   })
 
@@ -62,7 +66,7 @@ const TOGGLE_MENU = (action, state, setState)=>{
       ...state.drive,
       auth:{
         ...state.drive.auth,
-        active:!action.payload
+        active: action.payload.active
       }
     }
   })
@@ -107,7 +111,6 @@ const CHANGE_INPUT = (action, state, setState)=>{
   })
 
 }
-
 
 const SEND_FORM = (action, state, setState)=>{
 

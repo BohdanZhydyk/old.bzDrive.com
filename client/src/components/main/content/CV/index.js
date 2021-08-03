@@ -7,7 +7,7 @@ import { Footer } from './components/Footer/Footer'
 import Loader from './../Loader'
 
 
-const CvApp = ({content, user, fn})=>{
+const CvApp = ({ props:{content, user, fn} })=>{
 
   useEffect( ()=>{ !content && fn({ app:"cv", type:"GET_STATE" }) },[])
 

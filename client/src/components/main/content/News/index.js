@@ -15,7 +15,7 @@ import { News } from './components/News'
 import Loader from './../Loader'
 
 
-const NewsApp = ({content, user, fn})=>{
+const NewsApp = ({ props:{content, user, fn} })=>{
 
   const [news, setNews] = useState(content)
 
@@ -39,11 +39,9 @@ const NewsApp = ({content, user, fn})=>{
 
   return (
     <div className="news">
-      {
-        !content
-        ? <Loader />
-        : <News props={{news, user, newsFn}} />
-      }
+
+      { !content ? <Loader /> : <News props={{news, user, newsFn}} /> }
+      
     </div>
   )
 }

@@ -1,26 +1,29 @@
 import React from 'react'
+
+import { translate } from './../../../store/translate'
 import AuthPannel from './AuthPannel'
-import { UserNavigation } from './UserNavigation'
+import { LangBtn } from './LangBtn'
 
 
-export const MenuPannel = ({auth, lang, user, fn})=>{
+export const MenuPannel = ({ props:{active, auth, lang, user, fn, TOGGLE_MENU} })=>{
+
+	let EXIT_MENU = ()=> fn({ app:"drive", type:"EXIT_MENU" })
+
 	return(
 		<div className="menuPannel">
+
+			<LangBtn props={{lang, active, TOGGLE_MENU}} />
+
 			{ 
 				user.role === "guest"
 				?
-					<>
-						<AuthPannel auth={auth} lang={lang} fn={fn} />
-						<UserNavigation menu={auth.usermenu} fn={fn} />
-					</>
+				<AuthPannel props={{auth, lang, fn}} />
 				:
-					<>
-						<div className="menuBtn menuBtnExit flex end"
-								onClick={ ()=>fn({ app:"drive", type:"EXIT_MENU" }) }
-						>logout</div>
-						<UserNavigation menu={auth.usermenu} fn={fn} />
-					</>
+				<div className="menuBtn menuBtnExit flex" onClick={ ()=> EXIT_MENU() } >
+					{translate(lang, "logoutBtn")}
+				</div>
 			}
+
 		</div>
 	)
 }

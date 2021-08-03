@@ -10,9 +10,12 @@ const Footer = ({state})=>{
 	let info = state.drive.info
 
 	return(
-		<footer className="flex">
+		<footer className="flex wrap">
+
 			<ContactsPannel info={info} />
+
 			<Copyright info={info} />
+			
 		</footer>
 	)
 }

@@ -1,22 +1,32 @@
 import React from 'react'
 import './AuthPannel.scss'
-import { Inputs } from './Inputs'
-import { Buttons } from './Buttons'
+
+import { Input } from './Input'
+import { Button } from './Button'
 
 
-const AuthPannel = ({auth, lang, fn})=>{
+const AuthPannel = ({ props:{auth, lang, fn} })=>{
 
-	function enterBtn(){
-		for(let i=0; i<auth.forms.length; i++){
-			if(auth.forms[i].active){ return auth.forms[i].action }
-		}
-	}
+	let activeForms = auth.forms.filter( el => el.active )
+	let elseForms = auth.forms.filter( el => !el.active )
+	let forms = [...activeForms, ...elseForms]
+
+	let action = activeForms[0].action
+	let inputs = activeForms[0].inputs
+
+	let KeyDwn = (e)=> (e.key === "Enter") && fn({ app:"drive", type:"SEND_FORM", payload:action })
 
 	return(
-    <form className="authPannel flex wrap"
-          onKeyDown={ (e)=> (e.key === "Enter") && fn({ app:"drive", type:"SEND_FORM", payload:enterBtn() }) } >
-      <Inputs auth={auth} lang={lang} fn={fn} />
-      <Buttons auth={auth} lang={lang} fn={fn} />
+    <form className="authPannel flex wrap" onKeyDown={ (e)=> KeyDwn(e) } >
+
+			<div className="inputs" >
+				{ inputs.map( (input, nr)=> <Input props={{action, input, nr, lang, fn}} /> ) }
+			</div>
+
+			<div className="btns flex wrap" >
+				{ forms.map( (form,nr)=> <Button props={{form, nr, lang, fn}} /> ) }
+			</div>
+
     </form>
 	)
 }

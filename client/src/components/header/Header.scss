@@ -3,26 +3,27 @@ header {
   border-top:2px solid #999;
   border-bottom:2px solid #999;
   background-image:linear-gradient(#111e,#000e,#3339);
-  @media print {
-    border-top:0px;
-    border-bottom:0px;
+  @media (max-width: 1024px) {
+    border-top:1px solid #999;
+    border-bottom:1px solid #999;
   }
 
   .logo {
-    width:15%;
-    font-size:2vw;
-    @media print {display: none;}
+    width:10%;
+    font-size:200%;
+    @media (min-width: 768px) and (max-width: 1024px) {width:15%;}
+    @media (max-width: 767px) {width:50%;}
   }
   
   .navigation {
-    width:75%;
-    @media print {display: none;}
+    width:80%;
+    @media (min-width: 768px) and (max-width: 1024px) {width:75%;}
+    @media (max-width: 767px) {width:40%;}
 
     .navItem {
       width:10%;
       min-height:1.5vw;
       margin:0 0.5vw;
-      font-size:1vw;
       background-image:linear-gradient(#333,#111,#333);
       border-top:1px solid #999;
       border-bottom:1px solid #999;
@@ -31,6 +32,14 @@ header {
         box-shadow: 0 0 0.5vw 0.2vw #999;
         border-color:#f60;
       }
+      @media (min-width: 768px) and (max-width: 1024px) {
+        width:12%;
+        min-height:2.5vw;
+        margin:0 0.25vw;
+      }
+      @media  (max-width: 767px) {
+        display:none;
+      }
     }
 
     .navItemActive {
@@ -38,11 +47,17 @@ header {
     }
   }
 
-  .langPannel {
+  .auth, .navBurger {
     width:3%;
+    margin:0 2vw;
+    @media (min-width: 768px) and (max-width: 1024px) {width:5vw;}
+    @media (min-width: 481px) and (max-width: 767px) {width:8vw; z-index:99;}
+    @media (max-width: 481px) {width:10vw; z-index:99;}
   }
 
-  .auth {
-    width:3%;
+  .navBurger {
+    display:none;
+    @media (min-width: 768px) and (max-width: 1024px) {display:none;}
+    @media  (max-width: 767px) {display:flex;}
   }
 }

@@ -1,18 +1,16 @@
 import React from 'react'
 import './Section2.scss'
 
-import { Info } from './Info'
 
-
-const Section2 = ({ props:{printMode, dealer, buyer, nr, officeFn} })=>{
+const Section2 = ({ props:{printMode, invoiceNr} }) => {
   return(
-    <section className="section2 flex wrap">
+    <div className="section2 flex bold">
 
-      <Info props={{printMode, nr, info:dealer, name:"Sprzedawca", officeFn}} />
+      <span className="inv flex">Faktura Nr</span>
 
-      <Info props={{printMode, nr, info:buyer, name:"Nabywca", officeFn}} />
-      
-    </section>
+      <span className={`nr${printMode} flex`}>{invoiceNr}</span>
+
+    </div>
   )
 }
 

@@ -9,8 +9,6 @@ import { TagSlider } from './TagSlider'
 
 export const Workshop = ({ props:{workshop, user, workshopFn} })=>{
 
-  let admin = user.role === "admin" ? true : false
-
   return(
     <div className="flex column">
     {

@@ -16,7 +16,7 @@ export const Line = ({ props:{mode, line, nr, officeFn} })=>{
   let dealerData = top ? `Sprzedawca` : line?.dealer?.name
   let buyerData = top ? `Nabywca` : line?.buyer?.name
   let nettoData = top ? `Kwota Netto` : line?.netto
-  let quantityData = top ? `Iłość` : line?.quantity
+  // let quantityData = top ? `Iłość` : line?.quantity
   let priceVATData = top ? `Kwota VAT` : line?.priceVAT
   let bruttoData = top ? `Kwota Brutto` : line?.brutto
   let nameData = top ? `Nazwa` : line?.name
@@ -44,13 +44,13 @@ export const Line = ({ props:{mode, line, nr, officeFn} })=>{
   let dealer = {cl:`dealer ${color} ${!top && "start"}`, data:dealerData, nr}
   let buyer = {cl:`buyer ${color} ${!top && "start"}`, data:buyerData, nr}
   let netto = {cl:`netto ${color}`, data:nettoData, nr}
-  let quantity = {cl:`quantity ${color}`, data:quantityData, nr}
+  // let quantity = {cl:`quantity ${color}`, data:quantityData, nr}
   let priceVAT = {cl:`priceVAT ${color}`, data:priceVATData, nr}
   let brutto = {cl:`brutto ${color}`, data:bruttoData, nr}
   let name = {cl:`name ${color} ${!top && "start"}`, data:nameData, nr}
+  let addr = {cl:`addr ${color}`, data:addrData, nr}
   let nip = {cl:`nip ${color}`, data:nipData, nr}
   let contacts = {cl:`contacts ${color}`, data:contactsData, nr}
-  let addr = {cl:`addr ${color}`, data:addrData, nr}
 
   return(
     <div className="line flex wrap">

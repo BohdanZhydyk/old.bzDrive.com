@@ -1,9 +1,14 @@
 import React from 'react'
 
 
-export const ExitBtn = ({ props:{officeFn} })=>{
+export const ExitBtn = ({ props:{invoiceNr, officeFn} })=>{
 
-  const EXIT_PRINT_MODE = ()=> officeFn({type:"EXIT_PRINT_MODE"})
+  const EXIT_PRINT_MODE = ()=>{
+    document.title = `bzDrive.com`
+    officeFn({type:"EXIT_PRINT_MODE"})
+  }
+
+  document.title = `bzDrive.com Faktura Nr-${invoiceNr}`
 
   return(
     <div className="closeBtn"  onClick={ ()=> EXIT_PRINT_MODE() }>

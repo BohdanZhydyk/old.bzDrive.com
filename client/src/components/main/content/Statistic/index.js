@@ -2,7 +2,7 @@ import React from 'react'
 import './Statistic.scss'
 
 
-function StatisticApp({state, fn}){
+const StatisticApp = ({ props:{content, user, fn} })=>{
 
   // if( !state ){ fn({ app:"statistic", type:"GET_STATE" }) }
 

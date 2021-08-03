@@ -2,61 +2,35 @@ import React from 'react'
 
 
 export const Copyright = ({info})=>{
+
+  let arr = info && [
+    {data:info.author, txt:"author"},
+    {data:info.link, txt:"link"},
+    {data:[`2018-${ new Date().getFullYear() }`], txt:"year"}
+  ]
+
   return (
     <div className="right flex end">
       {
         info
-        ?
-        <>
-          <Author author={info.author} />
-          <Link link={info.link} />
-          <Year />
-        </>
-        :
-        [1,2].map( (i)=> <div className="noData noDataTxt" key={`copy${i}`} ></div> )
+        ? <>{ arr.map( (el,nr)=> <Line arr={el} nr={nr} key={`FooterSpan${el.txt}${nr}`} /> ) }</>
+        : [1,2].map( (i)=> <div className="noData noDataTxt" key={`copy${i}`} ></div> )
       }
     </div>
   )
 }
 
-const Author = ({author})=>{
+const Line = ({arr, nr})=>{
 
   let color = false
+  let cl = ()=>{
+    color = !color
+    return color ? `txtWht` : `txtOrg`
+  }
 
   return(
-    <span className="footerSpan">
-    {
-      author.map( (item, index)=>{
-        color = !color
-        return(
-          <span className={color ? `txtWht`: `txtOrg margin`} key={`author${index}`}>
-            {item}
-          </span>
-        )
-      })
-    }
+    <span className="footerSpan" >
+    { arr.data.map( (item, index)=> <span className={cl()} key={arr.txt+nr+index}>{item}</span> ) }
     </span>
   )
 }
-
-const Link = ({link})=>{
-
-  let color = false
-  
-  return(
-    <span className="footerSpan">
-    {
-      link.map( (item, index)=>{
-        color = !color
-        return(
-          <span className={color ? `txtOrg`: `txtWht`} key={`link${index}`}>
-            {item}
-          </span>
-        )
-      })
-    }
-    </span>
-  )
-}
-
-const Year = ()=> <span className="footerSpan">{`2018-${ new Date().getFullYear() }`}</span>

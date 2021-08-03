@@ -14,13 +14,9 @@ export const PRINT_INVOICE = (fn, payload)=> fn({ app:"office", type:"PRINT_INVO
 
 export const DELETE_INVOICE = (fn, payload)=> fn({ app:"office", type:"DELETE_INVOICE", payload })
 
-export const EXIT_PRINT_MODE = (office, setOffice)=> {
-  setOffice({ ...office, printing:false })
-}
+export const EXIT_PRINT_MODE = (fn, payload)=> fn({ app:"office", type:"EXIT_PRINT_MODE"})
 
-export const EXIT_EDIT_MODE = (office, setOffice)=> {
-  setOffice({ ...office, editing:false })
-}
+export const EXIT_EDIT_MODE = (fn, payload)=> fn({ app:"office", type:"EXIT_EDIT_MODE"})
 
 export const CHANGE_INPUT = (office, setOffice, action)=>{
 

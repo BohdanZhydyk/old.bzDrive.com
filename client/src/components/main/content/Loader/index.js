@@ -3,9 +3,14 @@ import './index.scss'
 
 
 const Loader = ()=>{
+
+	let src = `https://files.bzdrive.com/img/Drive/logo/logoDrive.gif`
+
 	return(
 		<main className="flex">
-			<img className="preload" src="https://files.bzdrive.com/img/Drive/logo/logoDrive.gif" alt="DriveImg" />
+
+			<img className="preload" src={src} alt="DriveImg" />
+			
 		</main>
 	)
 }

@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import './Main.scss'
 
 import { Photo } from './Photo/Photo'
@@ -10,22 +10,22 @@ export const Main = ({data})=>{
     <div className="main flex stretch" >
       
       <div className="mainL" >
-      <Photo data={data.photo} />
-      {
-        data.containers.group1.map( (container, index) =>
-          <Container data={container} key={container.name + index} />
-        )
-      }
+        <Photo data={data.photo} />
+        <Mapper data={data.containers.group1} />
       </div>
 
       <div className="mainR" >
-      {
-        data.containers.group2.map( (container, index) =>
-          <Container data={container} key={container.name + index} />
-        )
-      }
+        <Mapper data={data.containers.group2} />
       </div>
 
     </div>
+  )
+}
+
+const Mapper = ({data})=>{
+  return(
+    <>
+    { data.map( (container, index) => <Container data={container} key={container.name + index} /> ) }
+    </>
   )
 }

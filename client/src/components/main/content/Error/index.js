@@ -2,10 +2,6 @@ import React from 'react'
 import './index.scss'
 
 
-function ErrorApp(){
-	return(
-		<div className="flex txtOrg">Error</div>
-	)
-}
+const ErrorApp = ({ props:{content, user, fn} })=> <div className="flex txtOrg">Error</div>
 
 export default ErrorApp

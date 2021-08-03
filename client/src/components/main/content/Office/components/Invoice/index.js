@@ -11,7 +11,7 @@ import Section6 from './Sections/Section6'
 
 
 const Invoice = ({ props:{line, nr, officeFn} })=>{
-
+  
   let place = line.place
   let date = line.date
   let dealer = line.dealer
@@ -25,13 +25,13 @@ const Invoice = ({ props:{line, nr, officeFn} })=>{
   return(
     <div className={`Invoice${printMode} flex start column`}>
 
-      { printMode && <ExitBtn props={{officeFn}} /> }
+      { printMode && <ExitBtn props={{invoiceNr, officeFn}} /> }
 
       <Section1 props={{printMode, dealer, place, date, nr, officeFn}} />
 
-      <Section2 props={{printMode, dealer, buyer, nr, officeFn}} />
+      <Section2 props={{printMode, invoiceNr}} />
 
-      <Section3 props={{printMode, invoiceNr}} />
+      <Section3 props={{printMode, dealer, buyer, nr, officeFn}} />
 
       <Section4 props={{printMode, articles, comments, nr, officeFn}} />
 

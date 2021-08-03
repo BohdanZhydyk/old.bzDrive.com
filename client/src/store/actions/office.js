@@ -19,6 +19,8 @@ export const office = (action, state, setState)=>{
     case "EDIT_INVOICE":	  EDIT_INVOICE(action, state, setState);    break;
     case "PRINT_INVOICE":	  PRINT_INVOICE(action, state, setState);   break;
     case "DELETE_INVOICE":	DELETE_INVOICE(action, state, setState);  break;
+    case "EXIT_PRINT_MODE":	EXIT_PRINT_MODE(action, state, setState); break;
+    case "EXIT_EDIT_MODE":	EXIT_EDIT_MODE(action, state, setState);  break;
     default: break
   }
 }
@@ -175,5 +177,39 @@ const PRINT_INVOICE = (action, state, setState)=>{
 const DELETE_INVOICE = (action, state, setState)=>{
 
   bzPost("/office", { deleteInvoice:action.payload._id }, (data)=>{ GET_MODE({payload:"FA"}, state, setState) })
+
+}
+
+const EXIT_PRINT_MODE = (action, state, setState)=>{
+
+  setState({
+    ...state,
+    drive: {
+      ...state.drive,
+      nav: state.drive.nav.map( (item, index)=>
+        (item.to === "/office")
+        ? { ...item, content: { ...item.content, printing:false, editing:false } }
+        : {...item, content:false}
+      )
+    },
+    user: getUser()
+  })
+
+}
+
+const EXIT_EDIT_MODE = (action, state, setState)=>{
+
+  setState({
+    ...state,
+    drive: {
+      ...state.drive,
+      nav: state.drive.nav.map( (item, index)=>
+        (item.to === "/office")
+        ? { ...item, content: { ...item.content, printing:false, editing:false } }
+        : {...item, content:false}
+      )
+    },
+    user: getUser()
+  })
 
 }

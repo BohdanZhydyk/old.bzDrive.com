@@ -6,9 +6,12 @@
     width:50vw;
     font-size:400%;
 
-    img{
+    img {
       width:5vw;
-      margin:1vw 2vw;
+      margin:0.5vw 1vw;
+      @media (min-width: 768px) and (max-width: 1024px) {width:5vw; min-height:5vw;}
+      @media (min-width: 481px) and (max-width: 767px) {width:8vw; min-height:8vw;}
+      @media (max-width: 481px) {width:7vw; min-height:7vw;}
     }
   }
 

@@ -12,16 +12,30 @@ export const Cells = ({ props:{
       { invoiceNr && <Cell props={invoiceNr} /> }
       { number && <Cell props={number} /> }
       { article && <Cell props={article} /> }
-      { dealer && <Cell props={dealer} /> }
-      { buyer && <Cell props={buyer} /> }
+
+      {
+        (dealer || buyer) &&
+        <div>
+          <Cell props={dealer} />
+          <Cell props={buyer} />
+        </div>
+      }
+      
       { netto && <Cell props={netto} /> }
       { quantity && <Cell props={quantity} /> }
       { priceVAT && <Cell props={priceVAT} /> }
       { brutto && <Cell props={brutto} /> }
-      { name && <Cell props={name} /> }
+
+      {
+        (name || addr) &&
+        <div>
+          <Cell props={name} />
+          <Cell props={addr} />
+        </div>
+      }
+
       { nip && <Cell props={nip} /> }
       { contacts && <Cell props={contacts} /> }
-      { addr && <Cell props={addr} /> }
     </div>
   )
 }

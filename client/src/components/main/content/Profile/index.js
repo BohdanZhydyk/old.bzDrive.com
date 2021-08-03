@@ -2,8 +2,7 @@ import React from 'react'
 import './Profile.scss'
 
 
-function ProfileApp({content, user, fn}){
-  console.log(user)
+const ProfileApp = ({ props:{content, user, fn} })=>{
   return(
     <div className="profile flex">
       Profile

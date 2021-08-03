@@ -2,6 +2,9 @@ import React from 'react'
 
 
 export const ContactsPannel = ({info})=>{
+
+  let src = (contact)=> `https://files.bzdrive.com/img/ico/contacts/${contact.key}.png`
+
   return (
     <div className="left flex start" >
     {
@@ -9,9 +12,14 @@ export const ContactsPannel = ({info})=>{
       ?
       info.contacts.map( (contact, index)=>{
         return (
-          <a href={contact.val} target="_blank" rel="noreferrer" key={`contact${contact.key+index}`} >
-            <img className="imgBtn" alt="contact"
-                src={`https://files.bzdrive.com/img/ico/contacts/${contact.key}.png`} />
+          <a className="contactBtn"
+            href={contact.val}
+            target="_blank"
+            rel="noreferrer"
+            key={`contact${contact.key+index}`} >
+
+            <img className="imgBtn" alt="contact" src={ src(contact) } />
+
           </a>
         )
       })

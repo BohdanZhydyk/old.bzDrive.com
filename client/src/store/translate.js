@@ -133,6 +133,12 @@ export const translate = (lang, txt)=>{
       if(lang === 'pl'){ return `Wznowienie` }
       if(lang === 'ru'){ return `Возобновление` }
       break
+    case "logoutBtn":
+      if(lang === 'en'){ return `Logout` }
+      if(lang === 'ua'){ return `Вийти` }
+      if(lang === 'pl'){ return `Wyloguj` }
+      if(lang === 'ru'){ return `Выйти` }
+      break
     default: break
   }
 }

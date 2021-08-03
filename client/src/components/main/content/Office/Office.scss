@@ -5,27 +5,24 @@
     width:20vw;
     border:1px solid #999;
     border-radius:0.5vw;
-    &:hover{
-      border-color:#f60;
-    }
+    &:hover{border-color:#f60;}
   }
   
   .big{
     min-height:10vw;
     margin:1vw;
     font-size:200%;
-    &:hover{
-      font-size:250%;
-    }
+    &:hover{font-size:250%;}
+    @media (max-width: 767px) {width:40vw; padding:4vw 0;}
   }
 
   .small{
     min-height:3vw;
     margin:0.5vw 1vw;
     font-size:120%;
-    &:hover{
-      font-size:250%;
-    }
+    &:hover{font-size:150%;}
+    @media (min-width: 481px) and (max-width: 767px) {min-height:4vw; font-size:110%; &:hover{font-size:120%;}}
+    @media (max-width: 481px) {min-height:6vw; font-size:110%; &:hover{font-size:120%;}}
   }
 
   .active{
