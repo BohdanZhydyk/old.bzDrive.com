@@ -2,11 +2,13 @@
 .section4{
   width:100%;
 
-  .table, .table-Print {
+  .articleTable, .articleTable-Print {
     width:100%;
+    margin:2vw 0;
     
     .cell {
       border:1px solid #999;
+      min-height:1.5vw;
       padding:0.25vw;
     }
 
@@ -20,7 +22,7 @@
       font-size:80%;
       
       .cell{
-        min-height:3vw;
+        min-height:2vw;
         background-color:#111;
       }
     }
@@ -38,15 +40,12 @@
     .tr{
       width:100%;
 
-      .NOR{width:3%;}
-      .ART{width:5%;}
-      .SER{width:46%; padding:0.25vw 1%;}
-      .PRG{width:6%;}
-      .QUA{width:6%;}
-      .VAT{width:3%;}
-      .PRN{width:6%;}
-      .PRV{width:6%;}
-      .SUM{width:6%;}
+      .NOR{width:3vw;}
+      .ART{width:5vw;}
+      .SER{width:42vw; padding:0.25vw 1vw;}
+      .PRG, .QUA{width:6vw;}
+      .VAT{width:4vw;}
+      .PRN, .PRV, .SUM{width:6vw;}
 
       input {
         width:100%;
@@ -68,14 +67,78 @@
 
       .center {text-align:center;}
     }
+
+    .redLine {
+      position:absolute;
+      width:85%;
+      min-height:2vw;
+      padding:0 5vw;
+      background-color:#f609;
+
+      .btn {
+        width:10vw;
+        min-height:1.5vw;
+        margin:0 0.5vw;
+        border:1px solid #fff;
+        border-radius:0.5vw;
+        &:hover {
+          min-height:1.8vw;
+          font-size:110%;
+          font-weight:bold;
+        }
+      }
+
+      .cancel {
+        background-color:#171;
+        &:hover {background-color:#191;}
+      }
+
+      .delete {
+        background-color:#711;
+        &:hover {background-color:#911;}
+      }
+    }
   }
 
-  .comments{
-    width:90%;
-    margin:2vw 0;
+  .summary {
+    width:100%;
 
-    .comL {width:10%;}
-    .comR {width:90%;}
+    .cellTop {
+      min-height:2vw;
+      padding:0.25vw;
+      font-size:80%;
+      background-color:#111;
+      border:1px solid #999;
+    }
+
+    .cellTop-Print {
+      min-height:3vw;
+      padding:0.25vw;
+      font-size:80%;
+      text-align:center;
+      background-color:#ddd;
+      border:1px solid #333;
+    }
+
+    .cell {
+      padding:0.25vw;
+      border:1px solid #999;
+    }
+
+    .TXT {width:calc(10vw + 2px);}
+    .SUM, .PRV, .PRN {width:6vw;}
+  
+    .comments{
+      width:54vw;
+      margin:2vw 2vw;
+  
+      .comL {width:10%;}
+      .comR {
+        width:90%;
+
+        span {margin:0 0 1vw 0;}
+      }
+    }
   }
 
 }

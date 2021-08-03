@@ -1,13 +1,25 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
-import { bzCalc} from './../../../../../../../../../store/functions'
 import { Input } from './Input'
+import { RedLine } from './RedLine'
+import { Btn } from './Btn'
 
 
 export const Article = ({ props:{printMode, el = "top", index = "top", officeFn} }) => {
-  
-  let LINE_CLICK = ()=>
-    officeFn({ type:"LINE_CLICK", payload: {act: top ? "plus" : "delete", nr:index} })
+
+  const [art, setArt] = useState(el)
+
+  let LINE_CLICK = (act)=> officeFn({ type:"LINE_CLICK", payload: {act, nr:index} })
+
+  let artFn = (action)=>{
+    switch(action.type){
+      case "DELETE_LINE":   setArt({...art, del:true});   break;
+      case "CANCEL":        setArt({...art, del:false});  break;
+      case "DELETE":        LINE_CLICK("delete");         break;
+      case "PLUS":          LINE_CLICK("plus");           break;
+      default: break;
+    }
+  }
 
   let top = (el === "top" ? true : false)
 
@@ -17,9 +29,9 @@ export const Article = ({ props:{printMode, el = "top", index = "top", officeFn}
   let price = el.price ? el.price : (0).toFixed(2)
   let quantity = el.quantity ? el.quantity : (0)
   let VAT = `${el.VAT ? el.VAT : (0)}`
-  let netto = el.netto ? el.netto : (0)
-  let vat = el.vat ? el.vat : (0)
-  let sum = el.sum ? el.sum : (0)
+  let netto = el.netto ? el.netto : (0).toFixed(2)
+  let vat = el.vat ? el.vat : (0).toFixed(2)
+  let sum = el.sum ? el.sum : (0).toFixed(2)
   
   let InputNumber = <Input props={{ printMode, nr:index, el:"number", val:number, officeFn }} />
   let InputArticle = <Input props={{ printMode, nr:index, el:"article", cl:true, val:article, officeFn }} />
@@ -35,7 +47,7 @@ export const Article = ({ props:{printMode, el = "top", index = "top", officeFn}
   let txtVAT = top ? `VAT, %` : InputVAT
   let txtPRN = top ? `Kwota netto, zł` : netto
   let txtPRV = top ? `Kwota VAT, zł` : vat
-  let txtSUM = top ? `Kwota brutto, zł` : sum
+  let txtSUM = top ? `Wartość brutto, zł` : sum
 
   let classes = {
     NOR:`NOR cell${printMode} flex`, ART:`ART cell${printMode} flex`,
@@ -47,7 +59,9 @@ export const Article = ({ props:{printMode, el = "top", index = "top", officeFn}
   let src = `https://files.bzdrive.com/img/ico/ico${top ? `Plus` : `Delete`}.png`
 
   return(
-    <div className={`tr flex ${top && `headerTr${printMode} bold`} stretch`}>
+    <div className={`tr ${top && `headerTr${printMode}`} flex stretch`}>
+
+      { art.del && <RedLine artFn={artFn} /> }
 
       <div className={classes.NOR}>{txtNOR}</div>
       <div className={classes.ART}>{txtART}</div>
@@ -59,12 +73,7 @@ export const Article = ({ props:{printMode, el = "top", index = "top", officeFn}
       <div className={classes.PRV}>{txtPRV}</div>
       <div className={classes.SUM}>{txtSUM}</div>
 
-      {
-        !printMode &&
-        <div className="flex">
-          <img src={src} onClick={ ()=> LINE_CLICK() } alt={top ? `Plus` : `Delete`} />
-        </div>
-      }
+      { !printMode && <Btn props={{top, src, artFn}} /> }
       
     </div>
   )

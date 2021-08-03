@@ -10,17 +10,14 @@ export const Cells = ({ props:{
   return(
     <div className="lineData flex stretch">
       { invoiceNr && <Cell props={invoiceNr} /> }
+      { number && <Cell props={number} /> }
+      { article && <Cell props={article} /> }
       { dealer && <Cell props={dealer} /> }
       { buyer && <Cell props={buyer} /> }
       { netto && <Cell props={netto} /> }
+      { quantity && <Cell props={quantity} /> }
       { priceVAT && <Cell props={priceVAT} /> }
       { brutto && <Cell props={brutto} /> }
-
-      { number && <Cell props={number} /> }
-      { article && <Cell props={article} /> }
-      { price && <Cell props={price} /> }
-      { quantity && <Cell props={quantity} /> }
-
       { name && <Cell props={name} /> }
       { nip && <Cell props={nip} /> }
       { contacts && <Cell props={contacts} /> }

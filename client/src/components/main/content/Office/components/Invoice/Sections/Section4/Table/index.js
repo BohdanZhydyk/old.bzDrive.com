@@ -6,7 +6,7 @@ import { Article } from './Article'
 const Table = ({ props:{printMode, articles, nr, officeFn} }) => {
 
   return(
-    <div className={`table${printMode} flex wrap`}>
+    <div className={`articleTable${printMode} flex wrap`}>
 
       <Article props={{printMode, officeFn}} key={`ArticleLineTop`} />
 

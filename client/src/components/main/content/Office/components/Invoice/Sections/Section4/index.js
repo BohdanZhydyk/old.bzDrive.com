@@ -2,7 +2,7 @@ import React from 'react'
 import './Section4.scss'
 
 import Table from './Table'
-import { Comments } from './Comments'
+import { Summary } from './Summary'
 
 
 const Section4 = ({ props:{printMode, articles, comments, nr, officeFn} }) => {
@@ -11,7 +11,7 @@ const Section4 = ({ props:{printMode, articles, comments, nr, officeFn} }) => {
 
       <Table props={{printMode, articles, nr, officeFn}} />
 
-      <Comments comments={comments} />
+      <Summary props={{printMode, articles, comments, officeFn}} />
 
     </div>
   )

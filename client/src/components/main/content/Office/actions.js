@@ -123,11 +123,12 @@ export const CHANGE_ARTICLE = (office, setOffice, action)=>{
 
 export const LINE_CLICK = (office, setOffice, action)=>{
 
+  console.log(action)
+
   let pushArticle = (articles)=>{
-    console.log('article', articles)
     let newArr = []
     for(let i=0; i<articles.length; i++){ newArr.push( articles[i] ) }
-    newArr.push( {number:false, article:false, price:false, quantity:false, VAT:false} )
+    newArr.push( {number:false, article:false, price:0, quantity:0, VAT:0, netto:0, vat:0, sum:0} )
     return newArr
   }
 
@@ -137,22 +138,14 @@ export const LINE_CLICK = (office, setOffice, action)=>{
     return newArr
   }
 
-  // setOffice({
-  //   ...office,
-  //   table: {
-  //     ...office.table,
-  //     lines: office.table.lines.map( (line, nr)=>
-  //       line.status === "editing"
-  //       ?
-  //       {
-  //         ...line,
-  //         articles: action.act === "delete"
-  //           ? delArticle(line.articles, action.nr)
-  //           : pushArticle(line.articles)
-  //       }
-  //       : line
-  //     )
-  //   }
-  // })
+  let articles = office.editing.articles
+
+  setOffice({
+    ...office,
+    editing: {
+      ...office.editing,
+      articles: action.act === "plus" ? pushArticle(articles) : delArticle(articles, action.nr)
+    }
+  })
 
 }
