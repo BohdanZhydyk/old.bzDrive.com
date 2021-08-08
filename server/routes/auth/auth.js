@@ -1,5 +1,7 @@
 const { login } = require('./login')
 
+const { Err, Out } = require('./../../InOut/Out')
+
 
 exports.auth = async (req, res, InData, callback)=>{
 
@@ -49,43 +51,29 @@ exports.auth = async (req, res, InData, callback)=>{
 
   if(InData.authData.pass.val !== undefined){
     InData.authData.pass = await isAlphanumeric(InData.authData.pass)
-    InData.authData.pass = await isLength(InData.authData.pass, 8, 16)
+    InData.authData.pass = await isLength(InData.authData.pass, 7, 16)
     InData.authData.pass = await isEmpty(InData.authData.pass)
   }
 
   if(InData.authData.pass1.val !== undefined){
     InData.authData.pass1 = await isAlphanumeric(InData.authData.pass1)
-    InData.authData.pass1 = await isLength(InData.authData.pass1, 8, 16)
+    InData.authData.pass1 = await isLength(InData.authData.pass1, 7, 16)
     InData.authData.pass1 = await isEmpty(InData.authData.pass1)
   }
 
   if(InData.authData.pass2.val !== undefined){
     InData.authData.pass2 = await isAlphanumeric(InData.authData.pass2)
-    InData.authData.pass2 = await isLength(InData.authData.pass2, 8, 16)
+    InData.authData.pass2 = await isLength(InData.authData.pass2, 7, 16)
     InData.authData.pass2 = await isEmpty(InData.authData.pass2)
   }
 
   if(InData.authData.form === "login" && !InData.authData.login.error && !InData.authData.login.error){
     login(InData, (data)=>{
-      callback({
-        Errors: data.Errors,
-        link: data.link,
-        bzToken: data.bzToken,
-        user: data.user,
-        IP: data.IP,
-        serverData: data.authData
-      })
+      callback( Out(data, data.authData) )
     })
   }
   else{
-    callback({
-      Errors: InData.Errors,
-      link: InData.link,
-      bzToken: InData.bzToken,
-      user: InData.user,
-      IP: InData.IP,
-      serverData: InData.authData
-    })
+    callback( Out(InData, InData.authData) )
   }
 
 }

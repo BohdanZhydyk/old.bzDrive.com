@@ -1,32 +1,30 @@
 import React, { useState, useEffect } from 'react'
 import './Workshop.scss'
 
-import {
-  GET_STATE
-} from './actions'
+import { getUser } from './../../../../store/functions'
+
+import { actions } from './actions'
+
 import { Workshop } from './components/Workshop'
 import Loader from './../Loader'
 
 
-function WorkshopApp({ props:{content, user, fn} }){
+export const WorkshopApp = ()=>{
 
-	const [workshop, setWorkshop] = useState(content)
+	const [workshop, setWorkshop] = useState(false)
 
-	let workshopFn = (action)=>{
-    switch(action.type){
-      case "GET_STATE": GET_STATE(fn);	break;
-      default: break
-    }
-  }
+  const workshopFn = (action)=> actions(action, workshop, setWorkshop)
 
-  useEffect( ()=>{ !content && workshopFn({ type:"GET_STATE" }) },[])
+  useEffect( ()=>{ !workshop && workshopFn({ type:"GET_STATE" }) },[])
 
-  // console.log('workshop', workshop)
+  let user = getUser()
+
+  console.log('workshop', workshop)
 
 	return(
 		<div className="workshop">
       {
-        !content
+        !workshop
         ? <Loader />
         : <Workshop props={{workshop, user, workshopFn}} />
       }

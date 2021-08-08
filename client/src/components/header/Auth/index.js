@@ -1,28 +1,29 @@
 import React from 'react'
 import './Auth.scss'
 
+import { ScreenSaver } from '../../ScreenSaver'
 
-const Auth = ({ props:{auth, lang, user, active, TOGGLE_MENU, fn} })=>{
 
-  let ImgClick = ()=> TOGGLE_MENU({active: active ? false : `auth`})
+const Auth = ({ props:{auth,user,active,TOGGLE_MENU} })=>{
 
-  let usr = user.ava ? user.login : `man`
+  let ImgClick = ()=> TOGGLE_MENU({active: active ? (active === "nav" ? "auth" : false) : `auth`})
+
+  let usr = user?.ava ? user.login : `man`
   let src = `https://files.bzdrive.com/img/users/${usr}.png`
 
 	return(
-    <>
+    <div className="auth flex" >
     {
       auth
       ?
-      <div className="auth flex" >
+      <div className="flex" onClick={ ()=> ImgClick() } >
         
-        <img className="ava imgBtn" src={src} onClick={ ()=> ImgClick() } alt="user" />
+        <img className="ava imgBtn" src={src} alt="user" />
 
       </div>
-      :
-      <div className="noData noDataImg"></div>
+      : <ScreenSaver arr={["Img"]} />
     }
-    </>
+    </div>
 	)
 }
 

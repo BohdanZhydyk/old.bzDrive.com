@@ -1,19 +1,24 @@
 const mongo = require('mongodb')
 const mongoClient = mongo.MongoClient
+const ObjectID = mongo.ObjectID
+
 
 const { url, dbName } = require('./../../safe/safe')
+const { Err, Out } = require('./../../InOut/Out')
 const { bzPassHash, bzPassCompare } = require('./../../safe/bcrypt')
 
 
 exports.login = async (InData, callback)=>{
   
   mongoClient.connect(url, { useUnifiedTopology: true }, (error, client)=>{
-    
-    if(error){ InData.Errors.push( error ); callback(InData); return; }
 
-    client.db(dbName).collection('bzUsers').findOne({ login:InData.authData.login.val }, (error, result)=>{
+    error && callback( Err(InData, error) )
+
+    client.db(dbName)
+      .collection('bzUsers')
+      .findOne({ login:InData.authData.login.val }, (error, result)=>{
       
-      if(error){ InData.Errors.push( error ); callback(InData); return; }
+      error && callback( Err(InData, error) )
 
       if(!result){
         callback({

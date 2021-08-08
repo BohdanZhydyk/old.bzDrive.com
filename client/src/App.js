@@ -1,32 +1,35 @@
 import React, { useState, useEffect } from 'react'
 import { HashRouter } from 'react-router-dom'
 
-import initialState from './store/initialState.json'
-import actions from './store/actions'
+import { actions } from './actions'
 
 import Header from './components/Header'
 import Main from './components/Main'
 import Footer from './components/Footer'
 
 
-function App() {
+const App = ()=>{
 
-	const [state, setState] = useState(initialState)
+	const [state, setState] = useState(false)
 
-	const fn = (action) => actions(action, state, setState)
+	const fn = (action)=> actions(action, state, setState)
 	
-	useEffect( ()=>{ fn({ app: "drive", type: "GET_STATE" }) },[]);
+	useEffect( ()=>{ !state && fn({ type:"GET_STATE" }) },[])
 
 	console.log('state', state)
 
 	return (
-		<HashRouter>
+		<HashRouter
+			// basename={"drive"}
+			// getUserConfirmation={window.confirm("confirm message")}
+			hashType={"noslash"}
+		>
 
 			<Header state={state} fn={fn} />
 
 			<Main state={state} fn={fn} />
 
-			<Footer state={state} />
+			<Footer state={state} fn={fn} />
 
 		</HashRouter>
 	)

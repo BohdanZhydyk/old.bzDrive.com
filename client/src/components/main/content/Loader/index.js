@@ -9,7 +9,7 @@ const Loader = ()=>{
 	return(
 		<main className="flex">
 
-			<img className="preload" src={src} alt="DriveImg" />
+			<img className="preload" src={src} alt="DriveGif" />
 			
 		</main>
 	)

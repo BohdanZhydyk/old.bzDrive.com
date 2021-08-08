@@ -3,6 +3,7 @@ const mongoClient = mongo.MongoClient
 const ObjectID = mongo.ObjectID
 
 const { url, dbName } = require('./../safe/safe')
+const { Err, Out } = require('./../InOut/Out')
 
 
 exports.getState = (link, req, res, InData, callback)=>{
@@ -17,21 +18,14 @@ exports.getState = (link, req, res, InData, callback)=>{
 
   mongoClient.connect(url, { useUnifiedTopology: true }, (error, client)=>{
 
-    if(error){ InData.Errors.push( error ); callback(InData); return; }
+    error && callback( Err(InData, error) )
 
-    client.db(dbName).collection('state').findOne( { _id: new ObjectID(id)}, (error, result)=>{
-
-      if(error){ InData.Errors.push( error ); callback(InData); return; }
-
-      callback({
-        Errors: InData.Errors,
-        link: InData.link,
-        bzToken: InData.bzToken,
-        user: InData.user,
-        IP: InData.IP,
-        serverData: result
-      })
-
+    // GET STATE
+    client.db(dbName)
+      .collection('state')
+      .findOne( { _id: new ObjectID(id)}, (error, result)=>{
+        error && callback( Err(InData, error) )
+        callback( Out(InData, result) )
     })
 
   })

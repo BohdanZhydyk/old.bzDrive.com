@@ -1,5 +1,7 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import './index.scss'
+
+import { actions } from './actions'
 
 import { Header } from './components/Header/Header'
 import { Main } from './components/Main/Main'
@@ -7,19 +9,25 @@ import { Footer } from './components/Footer/Footer'
 import Loader from './../Loader'
 
 
-const CvApp = ({ props:{content, user, fn} })=>{
+const CvApp = ()=>{
 
-  useEffect( ()=>{ !content && fn({ app:"cv", type:"GET_STATE" }) },[])
+  const [cv, setCv] = useState(false)
+
+  const cvFn = (action)=> actions(action, cv, setCv)
+
+  useEffect( ()=>{ !cv && cvFn({ type:"GET_STATE" }) },[])
+
+  console.log('cv', cv)
 
   return (
     <div className="CV">
       {
-        content
+        cv
         ?
         <>
-          <Header data={content.header} />
-          <Main data={content.main} />
-          <Footer data={content.footer} />
+          <Header data={cv.header} />
+          <Main data={cv.main} />
+          <Footer data={cv.footer} />
         </>
         :
         <Loader />

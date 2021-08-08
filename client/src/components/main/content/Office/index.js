@@ -1,20 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import './Office.scss'
 
-import {
-  GET_STATE,
-  GET_MODE,
-  ADD_INVOICE,
-  SAVE_INVOICE,
-  EDIT_INVOICE,
-  PRINT_INVOICE,
-  DELETE_INVOICE,
-  EXIT_PRINT_MODE,
-  EXIT_EDIT_MODE,
-  CHANGE_INPUT,
-  CHANGE_ARTICLE,
-  LINE_CLICK
-} from './actions'
+import { actions } from './actions'
 
 import Loader from './../Loader'
 import ModeBtns from './components/ModeBtns'
@@ -22,35 +9,19 @@ import Table from './components/Table'
 import Invoice from './components/Invoice'
 
 
-const OfficeApp = ({ props:{content, user, fn} })=>{
+const OfficeApp = ()=>{
 
-  const [office, setOffice] = useState(content)
+  const [office, setOffice] = useState(false)
 
-  let officeFn = (action)=>{
-    switch(action.type){
-      case "GET_STATE":       GET_STATE(fn);                                      break;
-      case "GET_MODE":        GET_MODE(fn, action.payload);                       break;
-      case "ADD_INVOICE":     ADD_INVOICE(fn);                                    break;
-      case "SAVE_INVOICE":    SAVE_INVOICE(fn, action.payload);                   break;
-      case "EDIT_INVOICE":    EDIT_INVOICE(fn, action.payload);                   break;
-      case "PRINT_INVOICE":   PRINT_INVOICE(fn, action.payload);                  break;
-      case "DELETE_INVOICE":  DELETE_INVOICE(fn, action.payload);                 break;
-      case "EXIT_PRINT_MODE": EXIT_PRINT_MODE(fn);                                break;
-      case "EXIT_EDIT_MODE":  EXIT_EDIT_MODE(fn);                                 break;
-      case "CHANGE_INPUT":    CHANGE_INPUT(office, setOffice, action.payload);    break;
-      case "CHANGE_ARTICLE":  CHANGE_ARTICLE(office, setOffice, action.payload);  break;
-      case "LINE_CLICK":      LINE_CLICK(office, setOffice, action.payload);      break;
-      default: break;
-    }
-  }
+  const officeFn = (action)=> actions(action, office, setOffice)
 
-  useEffect( ()=>{ !content && officeFn({ type:"GET_STATE" }) },[])
+  useEffect( ()=>{ !office && officeFn({ type:"GET_STATE" }) },[])
 
   console.log('office', office)
 
   let printMode, editMode, mode, btns, names, table, invoice
 
-  if(content){
+  if(office){
     printMode = office.printing
     editMode = office.editing
     mode = office.mode
@@ -64,7 +35,7 @@ const OfficeApp = ({ props:{content, user, fn} })=>{
   return (
     <div className="office">
     {
-      !content
+      !office
       ? <Loader />
       :
       <>

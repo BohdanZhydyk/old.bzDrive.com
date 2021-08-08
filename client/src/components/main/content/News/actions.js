@@ -1,5 +1,30 @@
-import { unixToDateTimeConverter } from './../../../../store/functions'
+import {
+  bzPost,
+  setUser,
+  getUser,
+  remUser,
+  setToken,
+  getToken,
+  remToken,
+  bzCalc,
+  unixToDateConverter,
+  unixToDateTimeConverter,
+  unixToYearMonthConverter
+} from './../../../../store/functions'
 
+export const actions = (action, news, setNews)=>{
+  switch(action.type){
+    case "GET_STATE":     GET_STATE(action, news, setNews);     break;
+    case "ADD_NEWS":      ADD_NEWS(action, news, setNews);      break;
+    case "EDIT_NEWS":     EDIT_NEWS(action, news, setNews);     break;
+    case "SAVE_NEWS":     SAVE_NEWS(action, news, setNews);    break;
+    case "DELETE_NEWS":   DELETE_NEWS(action, news, setNews);   break;
+    case "CHANGE_INPUT":  CHANGE_INPUT(action, news, setNews);  break;
+    case "ADD_TAG":       ADD_TAG(action, news, setNews);       break;
+    case "LIKE_CLICK":    LIKE_CLICK(action, news, setNews);    break;
+    default: break
+  }
+}
 
 function getTag(tag){
   switch(tag){
@@ -11,14 +36,18 @@ function getTag(tag){
   }
 }
 
+let GET_STATE = (action, news, setNews)=>{
 
-export const GET_STATE = (fn)=> fn({ app:"news", type:"GET_STATE" })
+  bzPost("/news", { getState:true }, (data)=> setNews(data) )
 
-export const ADD_NEWS = (user, fn)=>{
+}
+
+let ADD_NEWS = (action, news, setNews)=>{
+
   let newNews = {
     top: {
-      author: user.login,
-      lng: user.lang,
+      author: getUser().login,
+      lng: getUser().lang,
       dateTime: unixToDateTimeConverter(),
       theme: "theme of the news..."
     },
@@ -28,27 +57,29 @@ export const ADD_NEWS = (user, fn)=>{
       unix: Date.now()
     }
   }
-  fn({ app: "news", type: "ADD_NEWS", payload:newNews })
+
+  bzPost("/news", {add:true, data:newNews}, (data)=> setNews(data.ops) )
+
 }
 
-export const EDIT_NEWS = (action, news, setNews)=>{
+let EDIT_NEWS = (action, news, setNews)=>{
   let array = []
   news.map( (item)=> item._id === action.payload && array.push({...item, edit:true}) )
   setNews(array)
 }
 
-export const SAVE_NEWS = (action, news, fn)=>{
+let SAVE_NEWS = (action, news, setNews)=>{
   news.map( (item)=>
     item._id === action.payload &&
-    fn({ app: "news", type: "SAVE_NEWS", payload:item })
+    bzPost("/news", {save:true, data:action.payload}, (data)=> setNews(data) )
   )
 }
 
-export const DELETE_NEWS = (action, fn)=>{
-  fn({ app: "news", type: "DELETE_NEWS", payload:action.payload })
+let DELETE_NEWS = (action, news, setNews)=>{
+  bzPost("/news", {delete:true, data:action.payload}, (data)=> setNews(data) )
 }
 
-export const CHANGE_INPUT = (action, news, setNews)=>{
+let CHANGE_INPUT = (action, news, setNews)=>{
   if(action.payload.nr === "theme"){
     setNews([
       ...news.map( (item)=>{
@@ -78,7 +109,7 @@ export const CHANGE_INPUT = (action, news, setNews)=>{
   }
 }
 
-export const ADD_TAG = (action, news, setNews)=>{
+let ADD_TAG = (action, news, setNews)=>{
 
   let newArray = []
 
@@ -101,13 +132,13 @@ export const ADD_TAG = (action, news, setNews)=>{
 
 }
 
-export const LIKE_CLICK = (action, news, fn)=>{
-  news.map( (item)=>
-    item._id === action.payload.id &&
-    fn({
-      app: "news",
-      type: "SAVE_NEWS",
-      payload:{ ...item, bottom:{...item.bottom, likes:action.payload.likes} }
-    })
-  )
+let LIKE_CLICK = (action, news, setNews)=>{
+  // news.map( (item)=>
+  //   item._id === action.payload.id &&
+  //   fn({
+  //     app: "news",
+  //     type: "SAVE_NEWS",
+  //     payload:{ ...item, bottom:{...item.bottom, likes:action.payload.likes} }
+  //   })
+  // )
 }

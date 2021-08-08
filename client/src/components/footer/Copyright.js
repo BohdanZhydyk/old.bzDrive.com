@@ -1,21 +1,28 @@
 import React from 'react'
 
+import { ScreenSaver } from '../ScreenSaver'
 
-export const Copyright = ({info})=>{
 
-  let arr = info && [
-    {data:info.author, txt:"author"},
-    {data:info.link, txt:"link"},
+export const Copyright = ({ props:{cop} })=>{
+
+  let arr = cop && [
+    {data:cop.author, txt:"author"},
+    {data:cop.link, txt:"link"},
     {data:[`2018-${ new Date().getFullYear() }`], txt:"year"}
   ]
 
   return (
     <div className="right flex end">
+    {
+      cop
+      ?
+      <>
       {
-        info
-        ? <>{ arr.map( (el,nr)=> <Line arr={el} nr={nr} key={`FooterSpan${el.txt}${nr}`} /> ) }</>
-        : [1,2].map( (i)=> <div className="noData noDataTxt" key={`copy${i}`} ></div> )
+        arr.map( (el,nr)=> <Line arr={el} nr={nr} key={`FooterSpan${el.txt}${nr}`} /> )
       }
+      </>
+      : <ScreenSaver arr={["Txt","Txt"]} />
+    }
     </div>
   )
 }

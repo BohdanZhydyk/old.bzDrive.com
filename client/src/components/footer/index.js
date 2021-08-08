@@ -1,20 +1,21 @@
 import React from 'react'
 import './Footer.scss'
 
-import { ContactsPannel } from './ContactsPannel'
+import { Contacts } from './Contacts'
 import { Copyright } from './Copyright'
 
 
-const Footer = ({state})=>{
+const Footer = ({state,fn})=>{
 
-	let info = state.drive.info
+	let cont = state?.drive?.info?.contacts ? state?.drive?.info?.contacts : false
+	let cop = state?.drive?.info ? state?.drive?.info : false
 
 	return(
-		<footer className="flex wrap">
+		<footer className="flex between wrap">
 
-			<ContactsPannel info={info} />
+			<Contacts props={{cont}} />
 
-			<Copyright info={info} />
+			<Copyright props={{cop}} />
 			
 		</footer>
 	)

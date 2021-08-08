@@ -1,24 +1,114 @@
-import { bzCalc} from './../../../../store/functions'
+import {
+  bzPost,
+  setUser,
+  getUser,
+  remUser,
+  setToken,
+  getToken,
+  remToken,
+  bzCalc,
+  unixToDateConverter,
+  unixToYearMonthConverter
+} from './../../../../store/functions'
 
-export const GET_STATE = (fn)=> fn({ app:"office", type:"GET_STATE" })
+export const actions = (action, office, setOffice)=>{
+  switch(action.type){
+    case "GET_STATE":             GET_STATE(office, setOffice, action);               break;
+    case "GET_MODE":              GET_MODE(office, setOffice, action);                break;
+    case "ADD_INVOICE":           ADD_INVOICE(office, setOffice, action);             break;
+    case "SAVE_INVOICE":          SAVE_INVOICE(office, setOffice, action);            break;
+    case "EDIT_INVOICE":          EDIT_INVOICE(office, setOffice, action);            break;
+    case "PRINT_INVOICE":         PRINT_INVOICE(office, setOffice, action);           break;
+    case "DELETE_INVOICE":        DELETE_INVOICE(office, setOffice, action);          break;
+    case "EXIT_PRINT_EDIT_MODE":  EXIT_PRINT_EDIT_MODE(office, setOffice, action);    break;                           break;
+    case "CHANGE_INPUT":          CHANGE_INPUT(office, setOffice, action.payload);    break;
+    case "CHANGE_ARTICLE":        CHANGE_ARTICLE(office, setOffice, action.payload);  break;
+    case "LINE_CLICK":            LINE_CLICK(office, setOffice, action.payload);      break;
+    default: break;
+  }
+}
 
-export const GET_MODE = (fn, payload)=> fn({ app:"office", type:"GET_MODE", payload })
+let GET_STATE = (office, setOffice, action)=>{
 
-export const ADD_INVOICE = (fn)=> fn({ app:"office", type:"ADD_INVOICE" })
+  bzPost("/office", { getState:true }, (data)=>{ setOffice({btns:data.btns}) })
 
-export const SAVE_INVOICE = (fn, payload)=> fn({ app:"office", type:"SAVE_INVOICE", payload })
+}
 
-export const EDIT_INVOICE = (fn, payload)=> fn({ app:"office", type:"EDIT_INVOICE", payload })
+let GET_MODE = (office, setOffice, action)=>{
+  
+  bzPost("/office", { getMode:action.payload }, (data)=>{
 
-export const PRINT_INVOICE = (fn, payload)=> fn({ app:"office", type:"PRINT_INVOICE", payload })
+    setOffice({ ...office, mode:action.payload, editing:false, printing:false, table:{ lines:data } })
 
-export const DELETE_INVOICE = (fn, payload)=> fn({ app:"office", type:"DELETE_INVOICE", payload })
+  })
 
-export const EXIT_PRINT_MODE = (fn, payload)=> fn({ app:"office", type:"EXIT_PRINT_MODE"})
+}
 
-export const EXIT_EDIT_MODE = (fn, payload)=> fn({ app:"office", type:"EXIT_EDIT_MODE"})
+let ADD_INVOICE = (office, setOffice, action)=>{
 
-export const CHANGE_INPUT = (office, setOffice, action)=>{
+  let letter = ()=>{
+    switch(getUser().login){
+      case "bz83": return "B"
+      case "Vitalii": return "V"
+      default: return "X"
+    }
+  }
+
+  bzPost("/office", { newInvoice:getUser().login }, (data)=>{
+
+    let buyer = {
+      name: false, addr: {zip:false, town:false, street:false},
+      img: false, contacts: {www:false, email:false, tel:false},
+      account: false, nip: false, place: false, user: false
+    }
+
+    let newObj = {
+      place: data[0].place,
+      date: unixToDateConverter(),
+      dealer: data[0],
+      buyer,
+      articles: [ {number:false, article:false, price:0, quantity:0, VAT:0, netto:0, vat:0, sum:0} ],
+      comments: [` Dostawa towarów lub świadczenie usług zwolnionych od podatku VAT na podstawie art. 113 ust. 1 i 9 ustawy o VAT.`],
+      invoiceNr: `${letter()}/${unixToYearMonthConverter()}/`
+    }
+
+    setOffice({ ...office, printing:false, editing: newObj })
+
+  })
+
+}
+
+let SAVE_INVOICE = (office, setOffice, action)=>{
+
+  bzPost("/office", { saveInvoice:action.payload }, (data)=>{ GET_MODE(office, setOffice, {payload:"FA"}) })
+
+}
+
+let EDIT_INVOICE = (office, setOffice, action)=>{
+
+  setOffice({ ...office, printing:false, editing:action.payload })
+
+}
+
+let PRINT_INVOICE = (office, setOffice, action)=>{
+
+  setOffice({ ...office, printing:action.payload, editing:false })
+
+}
+
+let DELETE_INVOICE = (office, setOffice, action)=>{
+
+  bzPost("/office", { deleteInvoice:action.payload }, (data)=>{ GET_MODE(office, setOffice, {payload:"FA"}) })
+
+}
+
+let EXIT_PRINT_EDIT_MODE = (office, setOffice, action)=>{
+
+  setOffice({ ...office, printing:false, editing:false })
+
+}
+
+let CHANGE_INPUT = (office, setOffice, action)=>{
 
   let setData = (el, someone)=>{
     switch(el){
@@ -65,7 +155,7 @@ export const CHANGE_INPUT = (office, setOffice, action)=>{
 
 }
 
-export const CHANGE_ARTICLE = (office, setOffice, action)=>{
+let CHANGE_ARTICLE = (office, setOffice, action)=>{
 
   let calc = (article, price, quantity, VAT, netto, vat, sum)=>{
     price = price ? price : article.price
@@ -117,9 +207,7 @@ export const CHANGE_ARTICLE = (office, setOffice, action)=>{
 
 }
 
-export const LINE_CLICK = (office, setOffice, action)=>{
-
-  console.log(action)
+let LINE_CLICK = (office, setOffice, action)=>{
 
   let pushArticle = (articles)=>{
     let newArr = []
@@ -140,7 +228,10 @@ export const LINE_CLICK = (office, setOffice, action)=>{
     ...office,
     editing: {
       ...office.editing,
-      articles: action.act === "plus" ? pushArticle(articles) : delArticle(articles, action.nr)
+      articles:
+        action.act === "plus"
+        ? pushArticle(articles)
+        : delArticle(articles, action.nr)
     }
   })
 

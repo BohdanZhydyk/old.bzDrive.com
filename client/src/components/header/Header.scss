@@ -9,19 +9,14 @@ header {
   }
 
   .logo {
-    width:10%;
     font-size:200%;
-    @media (min-width: 768px) and (max-width: 1024px) {width:15%;}
-    @media (max-width: 767px) {width:50%;}
   }
   
   .navigation {
-    width:80%;
-    @media (min-width: 768px) and (max-width: 1024px) {width:75%;}
-    @media (max-width: 767px) {width:40%;}
+    max-width:80vw;
 
     .navItem {
-      width:10%;
+      width:10vw;
       min-height:1.5vw;
       margin:0 0.5vw;
       background-image:linear-gradient(#333,#111,#333);
@@ -33,7 +28,7 @@ header {
         border-color:#f60;
       }
       @media (min-width: 768px) and (max-width: 1024px) {
-        width:12%;
+        width:9vw;
         min-height:2.5vw;
         margin:0 0.25vw;
       }
@@ -47,15 +42,11 @@ header {
     }
   }
 
-  .auth, .navBurger {
-    width:3%;
-    margin:0 2vw;
-    @media (min-width: 768px) and (max-width: 1024px) {width:5vw;}
-    @media (min-width: 481px) and (max-width: 767px) {width:8vw; z-index:99;}
-    @media (max-width: 481px) {width:10vw; z-index:99;}
+  .auth, .Burger {
+    z-index:99;
   }
 
-  .navBurger {
+  .Burger {
     display:none;
     @media (min-width: 768px) and (max-width: 1024px) {display:none;}
     @media  (max-width: 767px) {display:flex;}

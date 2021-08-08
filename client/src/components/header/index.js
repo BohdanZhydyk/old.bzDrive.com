@@ -2,32 +2,29 @@ import React from 'react'
 import './Header.scss'
 
 import { LogoPannel } from './LogoPannel'
-import { NavTop } from './NavTop'
+import { Navigation } from './Navigation'
 import Auth from './Auth'
-import { NavBurger } from './NavBurger' 
+import { Burger } from './Burger' 
 import SideBar from './SideBar'
 
 
 const Header = ({state, fn})=>{
 
-	let active = state.drive.auth.active ? state.drive.auth.active : false
+	let active = state?.drive?.auth?.active ? state?.drive?.auth?.active : false
 
-	let TOGGLE_MENU = (active)=> fn({ app:"drive", type:"TOGGLE_MENU", payload:active })
+	let logo = state?.drive?.info ? state?.drive?.info : false
+	let nav = state?.drive?.nav ? state?.drive?.nav : false
+	let auth = state?.drive?.auth ? state?.drive?.auth : false
+	let burger = true
+	let user = state?.user
+	let lang = user?.lang
 
-	let info = state.drive.info
-	let auth = state.drive.auth
-	let user = state.user
-	let lang = user.lang
-	let nav = state.drive.nav.map( (item, index)=>{
-		return {name:item.name, to:item.to, role:item.role, active:item.active}
-	})
-
-	switch(user.role){
+	switch(user?.role){
 		case "master":
 			nav = nav.filter( (item)=> item.role !== "admin" )
 			break
 		case "user":
-			nav = nav.filter( (item)=> item.role !== "admin" && item.role !== "master" )
+			nav = nav.filter( (item)=> item.role !== "master" && item.role !== "admin" )
 			break
 		case "guest":
 			nav = nav.filter( (item)=> item.role !== "user" && item.role !== "master" && item.role !== "admin" )
@@ -35,16 +32,22 @@ const Header = ({state, fn})=>{
 		default: break
 	}
 
+	let TOGGLE_MENU = (active)=> fn({ app:"drive", type:"TOGGLE_MENU", payload:active })
+
 	return(
-		<header className="flex" >
+		<header className="flex between" >
 
-			<LogoPannel info={info} />
+			<LogoPannel props={{logo}} />
 
-			<NavTop cl="end" nav={nav} lang={lang} fn={fn} />
+			<div className="flex" >
 
-			<Auth props={{auth, lang, user, active, TOGGLE_MENU, fn}} />
+				<Navigation props={{nav,user,fn}} />
 
-			<NavBurger props={{active, TOGGLE_MENU}} />
+				<Auth props={{auth,user,active,TOGGLE_MENU}} />
+
+				<Burger props={{burger,active,TOGGLE_MENU}} />
+
+			</div>
 
 			{ active && <SideBar props={{active, auth, nav, lang, user, fn, TOGGLE_MENU}} /> }
 

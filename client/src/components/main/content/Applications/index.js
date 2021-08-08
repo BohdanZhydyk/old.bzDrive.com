@@ -10,7 +10,7 @@ import Unsplash from './apps/Unsplash'
 import Error from './../Error'
 
 
-const ApplicationsApp= ({ props:{content, user, fn} })=>{
+const ApplicationsApp= ()=>{
 
 	const apps = [
 		{link:"bistro", txt:"Bistro", component:<Bistro />},

@@ -29,9 +29,6 @@ a {text-decoration:none; color:#fff;}
 .end			{justify-content:flex-end;}
 .between	{justify-content:space-between;}
 
-.noData {background-color:#6669; border-radius:0.2vw;}
-.noDataTxt {width:10vw; height:2vw; margin:0.5vw;}
-.noDataImg {width:2vw; height:2vw; margin:0.5vw 1vw;}
 
 .preload {width:15vw;}
 
@@ -44,7 +41,12 @@ a {text-decoration:none; color:#fff;}
 
 .bold	{font-weight:bold;}
 
-.imgBtn	{
+.noData {background-color:#6669; border-radius:0.2vw;}
+.noDataTxt {
+	width:10vw; height:2vw; margin:0.5vw;
+	@media (min-width: 768px) and (max-width: 1024px) {width:13vw; height:4vw;}
+}
+.imgBtn, .noDataImg	{
 	width:2vw; height:2vw; margin:0.5vw 1vw;
 	&:hover {width:3vw; height:3vw; margin:0 0.5vw;}
 	@media (min-width: 768px) and (max-width: 1024px) {

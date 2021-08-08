@@ -11,14 +11,17 @@
     top:6vw; width:40vw; padding:1vw 0 0 0;
   }
   @media (min-width: 481px) and (max-width: 767px) {
-    top:0; width:60vw; min-height:calc(100vh - 9vw); padding:9vw 0 0 0;
+    display:flex; top:0; width:60vw; min-height:calc(100vh - 9vw); padding:9vw 0 0 0;
   }
   @media (max-width: 481px) {
-    top:0; width:80vw; min-height:calc(100vh - 12vw); padding:12vw 0 0 0;
+    display:flex; top:0; width:80vw; min-height:calc(100vh - 12vw); padding:12vw 0 0 0;
   }
 
   .navigation {
     width:90%;
+    @media  (max-width: 767px) {
+      display:block;
+    }
 
     .navItem {
       width:100%;

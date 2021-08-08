@@ -1,7 +1,15 @@
-import { bzPost, setUser, getUser, remUser, setToken, getToken, remToken } from './../functions'
-import initialState from './../../store/initialState.json'
+import {
+  bzPost,
+  setUser,
+  getUser,
+  remUser,
+  setToken,
+  getToken,
+  remToken
+} from './store/functions'
 
-export const drive = (action, state, setState)=>{
+
+export const actions = (action, state, setState)=>{
   switch(action.type){
     case "GET_STATE":	      GET_STATE(action, state, setState); 			break
     case "ACTIVE_NAV_BTN":	ACTIVE_NAV_BTN(action, state, setState); 	break
@@ -14,6 +22,7 @@ export const drive = (action, state, setState)=>{
   }
 }
 
+
 function funcForms(forms, payload){
   return(
     forms.map( (form)=>
@@ -24,21 +33,17 @@ function funcForms(forms, payload){
   )
 }
 
-const GET_STATE = (action, state, setState)=>{
+let GET_STATE = (action, state, setState)=>{
 
   bzPost("/drive", {}, (data)=>{
     
-    setState({
-      ...state,
-      drive: data.drive,
-      user: getUser()
-    })
+    setState({ ...state, drive: data.drive, user: getUser() })
 
   })
 
 }
 
-const ACTIVE_NAV_BTN = (action, state, setState)=>{
+let ACTIVE_NAV_BTN = (action, state, setState)=>{
 
   setState({
     ...state,
@@ -58,7 +63,7 @@ const ACTIVE_NAV_BTN = (action, state, setState)=>{
 
 }
 
-const TOGGLE_MENU = (action, state, setState)=>{
+let TOGGLE_MENU = (action, state, setState)=>{
 
   setState({
     ...state,
@@ -73,7 +78,7 @@ const TOGGLE_MENU = (action, state, setState)=>{
   
 }
 
-const TOGGLE_FORM = (action, state, setState)=>{
+let TOGGLE_FORM = (action, state, setState)=>{
 
   setState({
     ...state,
@@ -88,7 +93,7 @@ const TOGGLE_FORM = (action, state, setState)=>{
 
 }
 
-const CHANGE_INPUT = (action, state, setState)=>{
+let CHANGE_INPUT = (action, state, setState)=>{
 
   setState({
     ...state,
@@ -112,7 +117,7 @@ const CHANGE_INPUT = (action, state, setState)=>{
 
 }
 
-const SEND_FORM = (action, state, setState)=>{
+let SEND_FORM = (action, state, setState)=>{
 
   const getInputValue= (state, form, name)=>{
     let forms = state.drive.auth.forms
@@ -177,9 +182,9 @@ const SEND_FORM = (action, state, setState)=>{
 
 }
 
-const EXIT_MENU = (action, state, setState)=>{
+let EXIT_MENU = (action, state, setState)=>{
   remUser()
   remToken()
-  setState(initialState)
+  setState(false)
   GET_STATE(action, state, setState)
 }

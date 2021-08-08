@@ -147,7 +147,7 @@ export const bzPost = async ( link, object, callback )=>{
     return "no IP"
   })
 
-  axios.post( api, OutData).then( (res)=>{
+  axios.post( api+link, OutData).then( (res)=>{
 
     setToken(res.data.bzToken)
     setUser(res.data.user)
@@ -156,6 +156,5 @@ export const bzPost = async ( link, object, callback )=>{
     callback(res.data.serverData)
 
   }).catch( (err)=> errors(err) )
-
 
 }

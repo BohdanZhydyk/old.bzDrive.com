@@ -1,31 +1,29 @@
 import React from 'react'
 
+import { ScreenSaver } from '../ScreenSaver'
 
-export const LogoPannel = ({info})=>{
 
-	let href = info && `https://${info.link[0]}${info.link[1]}${info.link[2]}${info.link[3]}`
+export const LogoPannel = ({ props:{logo} })=>{
+
+	let href = logo && `https://${logo.link[0]}${logo.link[1]}${logo.link[2]}${logo.link[3]}`
 
 	return (
-		<>
+		<div className={`logo flex start`}>
     {
-			info
+			logo
 			?
-			<a className="logo flex start" href={href} target="_blank" rel="noreferrer" >
+			<a className="flex" href={href} target="_blank" rel="noreferrer" >
 
-				<img className="imgBtn" src={info.img} alt="logo" />
+				<img className="imgBtn" src={logo.img} alt="logo" />
 
-				<div className="flex">
-					<span>{ info.link[0] }</span><span className="txtOrg">{ info.link[1] }</span>
-					<span>{ info.link[2] }</span><span className="txtOrg">{ info.link[3] }</span>
-				</div>
+				<span className="flex">
+					<span>{ logo.link[0] }</span><span className="txtOrg">{ logo.link[1] }</span>
+					<span>{ logo.link[2] }</span><span className="txtOrg">{ logo.link[3] }</span>
+				</span>
 
 			</a>
-			:
-			<div className="logo imgBtn flex start" >
-				<div className="noData noDataImg"></div>
-				<span className="noData noDataTxt"></span>
-			</div>
+			: <ScreenSaver arr={["Img","Txt"]} />
 		}
-		</>
+		</div>
 	)
 }
