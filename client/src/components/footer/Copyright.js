@@ -3,22 +3,22 @@ import React from 'react'
 import { ScreenSaver } from '../ScreenSaver'
 
 
-export const Copyright = ({ props:{cop} })=>{
+export const Copyright = ({ props:{author, link} })=>{
 
-  let arr = cop && [
-    {data:cop.author, txt:"author"},
-    {data:cop.link, txt:"link"},
+  let arr = [
+    {data:author ? author : [], txt:"author"},
+    {data:link ? link : [], txt:"link"},
     {data:[`2018-${ new Date().getFullYear() }`], txt:"year"}
   ]
 
   return (
     <div className="right flex end">
     {
-      cop
+      author
       ?
       <>
       {
-        arr.map( (el,nr)=> <Line arr={el} nr={nr} key={`FooterSpan${el.txt}${nr}`} /> )
+        arr.map( (el,nr)=> <Line el={el} nr={nr} key={`FooterSpan${el.txt}${nr}`} /> )
       }
       </>
       : <ScreenSaver arr={["Txt","Txt"]} />
@@ -27,7 +27,7 @@ export const Copyright = ({ props:{cop} })=>{
   )
 }
 
-const Line = ({arr, nr})=>{
+const Line = ({el, nr})=>{
 
   let color = false
   let cl = ()=>{
@@ -37,7 +37,7 @@ const Line = ({arr, nr})=>{
 
   return(
     <span className="footerSpan" >
-    { arr.data.map( (item, index)=> <span className={cl()} key={arr.txt+nr+index}>{item}</span> ) }
+    { el.data.map( (item, index)=> <span className={cl()} key={el.txt+nr+index}>{item}</span> ) }
     </span>
   )
 }

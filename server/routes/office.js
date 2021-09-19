@@ -44,14 +44,14 @@ exports.office = (req, res, InData, callback)=>{
     //SAVE INVOICE
     InData.object.saveInvoice &&
     client.db(dbName)
-      .collection('baseFA')
+      .collection('baseFS')
       .findOne( { _id: new ObjectID(InData.object.saveInvoice._id)}, (error, result)=>{
     
         error && callback( Err(InData, error) )
 
         if(result){
           client.db(dbName)
-            .collection('baseFA').updateOne(
+            .collection('baseFS').updateOne(
               {_id: new ObjectID(InData.object.saveInvoice._id)},
               {
                 $set:{
@@ -65,7 +65,8 @@ exports.office = (req, res, InData, callback)=>{
                   comments:InData.object.saveInvoice.comments,
                   netto:InData.object.saveInvoice.netto,
                   priceVAT:InData.object.saveInvoice.priceVAT,
-                  brutto:InData.object.saveInvoice.brutto
+                  brutto:InData.object.saveInvoice.brutto,
+                  pay:InData.object.saveInvoice.pay
                 }
               },
               {upsert:true}, (error, result)=>{
@@ -75,15 +76,16 @@ exports.office = (req, res, InData, callback)=>{
         }
         else{
           client.db(dbName)
-            .collection(`baseFA`)
+            .collection(`baseFS`)
             .find({}).sort({_id:-1})
             .toArray( (error, result)=>{
 
               error && callback( Err(InData, error) )
 
+              let RES = result[0] ? result[0] : {invoiceNr:`-/----/--/000000`}
               let nr = ''
-              for(let i=10; i<result[0].invoiceNr.length; i++){
-                nr = nr + result[0].invoiceNr[i]
+              for(let i=10; i<RES.invoiceNr.length; i++){
+                nr = nr + RES.invoiceNr[i]
               }
               let toSix = (dig)=>{
                 dig = ( parseFloat(dig)+1 ).toString()
@@ -94,7 +96,7 @@ exports.office = (req, res, InData, callback)=>{
               InData.object.saveInvoice.invoiceNr = InData.object.saveInvoice.invoiceNr + toSix(nr)
 
               client.db(dbName)
-                .collection(`baseFA`)
+                .collection(`baseFS`)
                 .insertOne(InData.object.saveInvoice, (error, result)=>{
                   error && callback( Err(InData, error) )
                   callback( Out(InData, result) )
@@ -107,7 +109,7 @@ exports.office = (req, res, InData, callback)=>{
     //DELETE INVOICE
     InData.object.deleteInvoice &&
     client.db(dbName)
-      .collection('baseFA')
+      .collection('baseFS')
       .updateOne(
         {_id: new ObjectID(InData.object.deleteInvoice._id)},
         { $set:{status:"deleted"} },

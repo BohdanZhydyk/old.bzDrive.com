@@ -7,7 +7,7 @@ export const Logo = ({ props:{printMode, dealer} }) => {
 
       <img src={dealer.img} alt={`Logo-${dealer.id}`} />
 
-      <span>{dealer.name}</span>
+      <span>{dealer.shortname}</span>
       
     </div>
   )

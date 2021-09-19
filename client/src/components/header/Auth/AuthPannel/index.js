@@ -5,7 +5,7 @@ import { Input } from './Input'
 import { Button } from './Button'
 
 
-const AuthPannel = ({ props:{auth, lang, fn} })=>{
+const AuthPannel = ({ props:{auth, lang, headerFn} })=>{
 
 	let activeForms = auth.forms.filter( el => el.active )
 	let elseForms = auth.forms.filter( el => !el.active )
@@ -14,20 +14,20 @@ const AuthPannel = ({ props:{auth, lang, fn} })=>{
 	let action = activeForms[0].action
 	let inputs = activeForms[0].inputs
 
-	let KeyDwn = (e)=> (e.key === "Enter") && fn({ app:"drive", type:"SEND_FORM", payload:action })
+	let KeyDwn = (e)=> (e.key === "Enter") && headerFn({type:"SEND_FORM", payload:action })
 
 	return(
-    <form className="authPannel flex wrap" onKeyDown={ (e)=> KeyDwn(e) } >
+		<form className="authPannel flex wrap" onKeyDown={ (e)=> KeyDwn(e) } >
 
 			<div className="inputs" >
-				{ inputs.map( (input, nr)=> <Input props={{action, input, nr, lang, fn}} /> ) }
+				{ inputs.map( (input, nr)=> <Input props={{action, input, nr, lang, headerFn}} /> ) }
 			</div>
 
 			<div className="btns flex wrap" >
-				{ forms.map( (form,nr)=> <Button props={{form, nr, lang, fn}} /> ) }
+				{ forms.map( (form,nr)=> <Button props={{form, nr, lang, headerFn}} /> ) }
 			</div>
 
-    </form>
+		</form>
 	)
 }
 

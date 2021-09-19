@@ -7,8 +7,8 @@ import { Signature } from './Signature'
 const Section6 = ({ props:{printMode} }) => {
 
   const signatures = [
-    "Osoba upoważniona do odbioru",
-    "Osoba upoważniona do wystawienia"
+    "Osoba upoważniona do wystawienia",
+    "Osoba upoważniona do odbioru"
   ]
 
   return(

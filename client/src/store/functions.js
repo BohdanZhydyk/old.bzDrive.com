@@ -5,32 +5,28 @@ import cookies from 'js-cookie'
 export const unixToDateTimeConverter = ( unix = new Date(Date.now()) )=>{
   let year = unix.getFullYear()
   let month = (unix.getMonth()+1) < 10 ? "0"+(unix.getMonth()+1) : unix.getMonth()+1
-  let date = unix.getDate() < 10 ? "0"+unix.getDate() : unix.getDate()
+  let day = unix.getDate() < 10 ? "0"+unix.getDate() : unix.getDate()
   let hour = unix.getHours() < 10 ? "0"+unix.getHours() : unix.getHours()
   let min = unix.getMinutes() < 10 ? "0"+unix.getMinutes() : unix.getMinutes()
   let sec = unix.getSeconds() < 10 ? "0"+unix.getSeconds() : unix.getSeconds()
-  let dateTime = `${year}-${month}-${date} ${hour}:${min}:${sec}`
+  let dateTime = {
+    year:   year.toString(),
+    month:  month.toString(),
+    day:    day.toString(),
+    hour:   hour.toString(),
+    min:    min.toString(),
+    sec:    sec.toString()
+  }
   return dateTime
 }
-export const unixToDateConverter = ( unix = new Date(Date.now()) )=>{
-  let year = unix.getFullYear()
-  let month = (unix.getMonth()+1) < 10 ? "0"+(unix.getMonth()+1) : unix.getMonth()+1
-  let date = unix.getDate() < 10 ? "0"+unix.getDate() : unix.getDate()
-  let dateTime = `${date}.${month}.${year}`
-  return dateTime
-}
-export const unixToTimeConverter = ( unix = new Date(Date.now()) )=>{
-  let hour = unix.getHours() < 10 ? "0"+unix.getHours() : unix.getHours()
-  let min = unix.getMinutes() < 10 ? "0"+unix.getMinutes() : unix.getMinutes()
-  let sec = unix.getSeconds() < 10 ? "0"+unix.getSeconds() : unix.getSeconds()
-  let dateTime = `${hour}:${min}:${sec}`
-  return dateTime
-}
-export const unixToYearMonthConverter = ( unix = new Date(Date.now()) )=>{
-  let year = unix.getFullYear()
-  let month = (unix.getMonth()+1) < 10 ? "0"+(unix.getMonth()+1) : unix.getMonth()+1
-  let dateTime = `${year}/${month}`
-  return dateTime
+
+export const inputDateToStandart = ( date )=>{
+  let newDate = {
+    year:   date[0]+date[1]+date[2]+date[3],
+    month:  date[5]+date[6],
+    day:    date[8]+date[9]
+  }
+  return newDate
 }
 
 export const bzCalc = (operation, a, b)=>{
@@ -91,7 +87,7 @@ export const bzIntToWord = (int)=>{
     liczba = Math.floor(liczba/1000)
   }
 
-  return(`${znak} ${wynik} ${`zł`} ${grosze}/100`);
+  return(`${znak} ${wynik} zł ${grosze}/100 gr` );
 }
 
 export const setToken = (bzToken)=> cookies.set('bzToken', bzToken )

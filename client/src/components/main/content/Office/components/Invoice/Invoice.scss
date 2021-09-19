@@ -37,6 +37,36 @@
     }
   }
 
+  .buttons {
+    width:100%;
+    margin:2vw 0;
+
+    button {
+      width:20vw;
+      min-height:3vw;
+      margin:0 2vw;
+      color:#fff;
+      font-size:150%;
+      border:1px solid #0000;
+      border-radius:0.5vw;
+      &:hover{
+        font-size:170%;
+        border:1px solid #fff;
+        box-shadow: 0 0 0.5vw 0.2vw #999;
+      }
+    }
+
+    .red {
+      background-color:#711;
+      &:hover{background-color:#911;}
+    }
+
+    .green {
+      background-color:#171;
+      &:hover{background-color:#191;}
+    }
+  }
+
   .inputWrapper {
     margin:0.5vw 0;
     padding:0.25vw;

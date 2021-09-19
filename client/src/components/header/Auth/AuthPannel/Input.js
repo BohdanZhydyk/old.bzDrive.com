@@ -3,13 +3,12 @@ import React from 'react'
 import { translate, nrErrToTxt } from './../../../../store/translate'
 
 
-export const Input =({ props:{action, input, nr, lang, fn} })=>{
+export const Input =({ props:{action, input, nr, lang, headerFn} })=>{
 
   let error = input.error && ` - ${nrErrToTxt(lang, input.error.nr, input.error.min, input.error.max)}`
 
   let CHANGE_INPUT = (e)=>
-    fn({
-      app:"drive",
+  headerFn({
       type:"CHANGE_INPUT",
       payload: {
         form: action,

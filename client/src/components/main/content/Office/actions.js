@@ -7,8 +7,8 @@ import {
   getToken,
   remToken,
   bzCalc,
-  unixToDateConverter,
-  unixToYearMonthConverter
+  inputDateToStandart,
+  unixToDateTimeConverter
 } from './../../../../store/functions'
 
 export const actions = (action, office, setOffice)=>{
@@ -24,6 +24,8 @@ export const actions = (action, office, setOffice)=>{
     case "CHANGE_INPUT":          CHANGE_INPUT(office, setOffice, action.payload);    break;
     case "CHANGE_ARTICLE":        CHANGE_ARTICLE(office, setOffice, action.payload);  break;
     case "LINE_CLICK":            LINE_CLICK(office, setOffice, action.payload);      break;
+    case "PAY_METHOD":            PAY_METHOD(office, setOffice, action.payload);      break;
+    case "PAY_DATE":              PAY_DATE(office, setOffice, action.payload);        break;
     default: break;
   }
 }
@@ -54,7 +56,15 @@ let ADD_INVOICE = (office, setOffice, action)=>{
     }
   }
 
+  
   bzPost("/office", { newInvoice:getUser().login }, (data)=>{
+
+    let method = "gotówka"
+    let date = {
+      year:unixToDateTimeConverter().year,
+      month:unixToDateTimeConverter().month,
+      day:unixToDateTimeConverter().day
+    }
 
     let buyer = {
       name: false, addr: {zip:false, town:false, street:false},
@@ -64,12 +74,13 @@ let ADD_INVOICE = (office, setOffice, action)=>{
 
     let newObj = {
       place: data[0].place,
-      date: unixToDateConverter(),
+      date: unixToDateTimeConverter(),
       dealer: data[0],
       buyer,
-      articles: [ {number:false, article:false, price:0, quantity:0, VAT:0, netto:0, vat:0, sum:0} ],
-      comments: [` Dostawa towarów lub świadczenie usług zwolnionych od podatku VAT na podstawie art. 113 ust. 1 i 9 ustawy o VAT.`],
-      invoiceNr: `${letter()}/${unixToYearMonthConverter()}/`
+      articles: [ {number:false, article:false, price:"0", quantity:"1", VAT:"23", netto:"0", vat:"0", sum:"0"} ],
+      comments: [],
+      pay: {method, date},
+      invoiceNr: `${letter()}/${unixToDateTimeConverter().year}/${unixToDateTimeConverter().month}/`
     }
 
     setOffice({ ...office, printing:false, editing: newObj })
@@ -80,7 +91,7 @@ let ADD_INVOICE = (office, setOffice, action)=>{
 
 let SAVE_INVOICE = (office, setOffice, action)=>{
 
-  bzPost("/office", { saveInvoice:action.payload }, (data)=>{ GET_MODE(office, setOffice, {payload:"FA"}) })
+  bzPost("/office", { saveInvoice:action.payload }, (data)=>{ GET_MODE(office, setOffice, {payload:"FS"}) })
 
 }
 
@@ -98,7 +109,7 @@ let PRINT_INVOICE = (office, setOffice, action)=>{
 
 let DELETE_INVOICE = (office, setOffice, action)=>{
 
-  bzPost("/office", { deleteInvoice:action.payload }, (data)=>{ GET_MODE(office, setOffice, {payload:"FA"}) })
+  bzPost("/office", { deleteInvoice:action.payload }, (data)=>{ GET_MODE(office, setOffice, {payload:"FS"}) })
 
 }
 
@@ -133,7 +144,7 @@ let CHANGE_INPUT = (office, setOffice, action)=>{
     switch(action.input.form){
 
       case "place":       return{...line, place:action.input.val}
-      case "date":        return{...line, date:action.input.val}
+      case "date":        return{...line, date:inputDateToStandart(action.input.val)}
 
       case "buyerName":   return{ ...line, buyer:setData("name", line.buyer) }
       case "buyerAcc":    return{ ...line, buyer:setData("acc", line.buyer) }
@@ -233,6 +244,34 @@ let LINE_CLICK = (office, setOffice, action)=>{
         ? pushArticle(articles)
         : delArticle(articles, action.nr)
     }
+  })
+
+}
+
+let PAY_METHOD = (office, setOffice, action)=>{
+
+  let date = {
+    year: office.editing.date.year,
+    month: office.editing.date.month,
+    day: office.editing.date.day,
+  }
+
+  setOffice({
+    ...office,
+    editing: {
+      ...office.editing,
+      pay: {...office.editing.pay, method:action, date} }
+  })
+
+}
+
+let PAY_DATE = (office, setOffice, action)=>{
+
+  setOffice({
+    ...office,
+    editing: {
+      ...office.editing,
+      pay: {...office.editing.pay, date:action} }
   })
 
 }

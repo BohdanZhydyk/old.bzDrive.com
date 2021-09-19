@@ -3,18 +3,18 @@ import React from 'react'
 import { ScreenSaver } from '../ScreenSaver'
 
 
-export const Contacts = ({ props:{cont} })=>{
+export const Contacts = ({ props:{contacts} })=>{
 
-  let src = (cont)=> `https://files.bzdrive.com/img/ico/contacts/${cont.key}.png`
+  let src = (contacts)=> `https://files.bzdrive.com/img/ico/contacts/${contacts.key}.png`
 
   return (
     <div className="left flex start" >
     {
-      cont
+      contacts
       ?
       <>
       {
-        cont.map( (contact, index)=>{
+        contacts.map( (contact, index)=>{
           return (
             <a className="contactBtn"
               href={contact.val}

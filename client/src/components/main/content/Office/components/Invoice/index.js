@@ -1,7 +1,8 @@
 import React from 'react'
 import './Invoice.scss'
 
-import { ExitBtn } from './ExitBtn'
+import { Buttons } from './Buttons'
+import { CloseBtn } from './CloseBtn'
 import Section1 from './Sections/Section1'
 import Section2 from './Sections/Section2'
 import Section3 from './Sections/Section3'
@@ -25,7 +26,11 @@ const Invoice = ({ props:{line, nr, officeFn} })=>{
   return(
     <div className={`Invoice${printMode} flex start column`}>
 
-      { printMode && <ExitBtn props={{invoiceNr, officeFn}} /> }
+      {
+        printMode
+        ? <CloseBtn props={{invoiceNr, officeFn}} />
+        : <Buttons props={{line, officeFn}} />
+      } 
 
       <Section1 props={{printMode, dealer, place, date, nr, officeFn}} />
 
@@ -38,6 +43,8 @@ const Invoice = ({ props:{line, nr, officeFn} })=>{
       <Section5 props={{printMode, line, articles, officeFn}} />
 
       <Section6 props={{printMode}} />
+
+      { !printMode && <Buttons props={{line, officeFn}} /> }  
 
     </div>
   )

@@ -55,6 +55,7 @@ export const Line = ({ props:{mode, line, nr, officeFn} })=>{
   return(
     <div className="line flex wrap">
 
+      { mode === "FS" && <Cells props={{invoiceNr, dealer, buyer, netto, priceVAT, brutto}} /> }
       { mode === "FA" && <Cells props={{invoiceNr, dealer, buyer, netto, priceVAT, brutto}} /> }
       { mode === "TO" && <Cells props={{number, article, netto}} /> }
       { (mode === "KL" || mode === "SP") && <Cells props={{name, nip, contacts, addr}} /> }

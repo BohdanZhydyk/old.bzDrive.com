@@ -31,7 +31,6 @@ const OfficeApp = ()=>{
     invoice = office.invoice
   }
 
-
   return (
     <div className="office">
     {

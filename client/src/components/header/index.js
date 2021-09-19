@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import './Header.scss'
+
+import { actions } from './actions'
 
 import { LogoPannel } from './LogoPannel'
 import { Navigation } from './Navigation'
@@ -10,13 +12,21 @@ import SideBar from './SideBar'
 
 const Header = ({state, fn})=>{
 
-	let active = state?.drive?.auth?.active ? state?.drive?.auth?.active : false
+	const [header, setHeader] = useState(false)
 
-	let logo = state?.drive?.info ? state?.drive?.info : false
-	let nav = state?.drive?.nav ? state?.drive?.nav : false
-	let auth = state?.drive?.auth ? state?.drive?.auth : false
-	let burger = true
-	let user = state?.user
+	const headerFn = (action)=> actions(action, header, setHeader)
+
+	useEffect( ()=>{ !header && headerFn({ type:"GET_STATE" }) },[])
+
+  console.log('header', header)
+
+	let active = header?.auth?.active ? header?.auth?.active : false
+
+	let logo = header?.info ? header?.info : false
+	let nav = header?.nav ? header?.nav : false
+	let auth = header?.auth ? header?.auth : false
+	let burger = header ? true : false
+	let user = header?.user
 	let lang = user?.lang
 
 	switch(user?.role){
@@ -32,24 +42,26 @@ const Header = ({state, fn})=>{
 		default: break
 	}
 
-	let TOGGLE_MENU = (active)=> fn({ app:"drive", type:"TOGGLE_MENU", payload:active })
+	let TOGGLE_MENU = (active)=> headerFn({type:"TOGGLE_MENU", payload:active })
 
 	return(
 		<header className="flex between" >
+
+			<div className={`blur ${!active && `none`}`} onClick={ ()=> TOGGLE_MENU({active:false}) }>111</div>
 
 			<LogoPannel props={{logo}} />
 
 			<div className="flex" >
 
-				<Navigation props={{nav,user,fn}} />
+				<Navigation props={{nav, user, headerFn}} />
 
-				<Auth props={{auth,user,active,TOGGLE_MENU}} />
+				<Auth props={{auth, user, active, TOGGLE_MENU}} />
 
-				<Burger props={{burger,active,TOGGLE_MENU}} />
+				<Burger props={{burger, active, TOGGLE_MENU}} />
 
 			</div>
 
-			{ active && <SideBar props={{active, auth, nav, lang, user, fn, TOGGLE_MENU}} /> }
+			{ active && <SideBar props={{active, auth, nav, lang, user, headerFn, TOGGLE_MENU}} /> }
 
 		</header>
 	)

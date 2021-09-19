@@ -4,7 +4,7 @@ import './Auth.scss'
 import { ScreenSaver } from '../../ScreenSaver'
 
 
-const Auth = ({ props:{auth,user,active,TOGGLE_MENU} })=>{
+const Auth = ({ props:{auth, user, active, TOGGLE_MENU} })=>{
 
   let ImgClick = ()=> TOGGLE_MENU({active: active ? (active === "nav" ? "auth" : false) : `auth`})
 

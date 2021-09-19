@@ -10,39 +10,24 @@ import Statistic from './content/Statistic'
 import CV from './content/CV'
 import Profile from './content/Profile'
 import Office from './content/Office'
-
-import Loader from './content/Loader'
 import Error from './content/Error'
 
 
-const Main = ({state,fn})=>{
-
-	let active = state?.drive?.auth?.active ? state?.drive?.auth?.active : false
-
-	let TOGGLE_MENU = ()=> active && fn({ app:"drive", type:"TOGGLE_MENU", payload:true })
-
+const Main = ()=>{
 	return(
-		<main onClick={ ()=> TOGGLE_MENU() }>
+		<main>
 
-			<div className={ active ? "filter-blur" : "filter" } >
+		<Switch>
+			<Route exact path="/" component={ ()=> <Workshop /> } />
+			<Route path="/news" component={ ()=> <News /> } />
+			<Route path="/apps" component={ ()=> <Applications /> } />
+			<Route path="/statistic" component={ ()=> <Statistic /> }	/>
+			<Route path="/cv" component={ ()=> <CV /> }	/>
+			<Route path="/office" component={ ()=> <Office /> }	/>
+			<Route path="/profile" component={ ()=> <Profile /> }	/>
+			<Route component={ ()=> <Error /> }	/>
+		</Switch>
 
-			{
-				state
-				?
-				<Switch>
-					<Route exact path="/" component={ ()=> <Workshop /> } />
-					<Route path="/news" component={ ()=> <News /> } />
-					<Route path="/apps" component={ ()=> <Applications /> } />
-					<Route path="/statistic" component={ ()=> <Statistic /> }	/>
-					<Route path="/cv" component={ ()=> <CV /> }	/>
-					<Route path="/office" component={ ()=> <Office /> }	/>
-					<Route path="/profile" component={ ()=> <Profile /> }	/>
-					<Route component={ ()=> <Error /> }	/>
-				</Switch>
-				: <Loader />
-			}
-
-			</div>
 		</main>
 	)
 }

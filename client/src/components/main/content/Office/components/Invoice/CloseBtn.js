@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-export const ExitBtn = ({ props:{invoiceNr, officeFn} })=>{
+export const CloseBtn = ({ props:{invoiceNr, officeFn} })=>{
 
   const EXIT_PRINT_EDIT_MODE = ()=>{
     document.title = `bzDrive.com`

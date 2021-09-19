@@ -17,7 +17,7 @@ export const Summary = ({ props:{printMode, articles, comments, officeFn} }) => 
   return(
     <div className="summary flex stretch">
 
-      <Comments comments={comments} />
+      <Comments props={{printMode, comments}} />
 
       <div>
         <div className={`TXT cellTop${printMode} flex`}>Razem</div>

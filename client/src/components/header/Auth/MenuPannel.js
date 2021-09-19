@@ -5,9 +5,9 @@ import AuthPannel from './AuthPannel'
 import { LangBtn } from './LangBtn'
 
 
-export const MenuPannel = ({ props:{active, auth, lang, user, fn, TOGGLE_MENU} })=>{
+export const MenuPannel = ({ props:{active, auth, lang, user, headerFn, TOGGLE_MENU} })=>{
 
-	let EXIT_MENU = ()=> fn({ app:"drive", type:"EXIT_MENU" })
+	let EXIT_MENU = ()=> headerFn({type:"EXIT_MENU" })
 
 	return(
 		<div className="menuPannel">
@@ -17,7 +17,7 @@ export const MenuPannel = ({ props:{active, auth, lang, user, fn, TOGGLE_MENU} }
 			{ 
 				user.role === "guest"
 				?
-				<AuthPannel props={{auth, lang, fn}} />
+				<AuthPannel props={{auth, lang, headerFn}} />
 				:
 				<div className="menuBtn menuBtnExit flex" onClick={ ()=> EXIT_MENU() } >
 					{translate(lang, "logoutBtn")}

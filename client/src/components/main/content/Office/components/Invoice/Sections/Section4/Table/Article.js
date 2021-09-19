@@ -40,7 +40,7 @@ export const Article = ({ props:{printMode, el = "top", index = "top", officeFn}
   let InputVAT = <Input props={{ printMode, nr:index, el:"VAT", val:VAT, officeFn }} />
 
   let txtNOR = top ? `Lp.` : `${index + 1}.`
-  let txtART = top ? `Artykul towaru` : InputNumber
+  let txtART = top ? `Artykul` : InputNumber
   let txtSER = top ? `Nazwa towaru / usługi` : InputArticle
   let txtPRG = top ? `Cena, zł` : InputPrice
   let txtQUA = top ? `Ilość` : InputQuantity

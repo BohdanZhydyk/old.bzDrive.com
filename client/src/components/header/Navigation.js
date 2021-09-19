@@ -6,7 +6,7 @@ import { translate } from './../../store/translate'
 import { ScreenSaver } from '../ScreenSaver'
 
 
-export const Navigation = ({ props:{nav,user,fn} })=>{
+export const Navigation = ({ props:{nav,user,headerFn} })=>{
 
 	let obj = (btn, nr)=> {
 		return {
@@ -15,7 +15,7 @@ export const Navigation = ({ props:{nav,user,fn} })=>{
 		}
 	}
 
-	let BTN = (to)=> to !== "" && fn({ app: "drive", type: "ACTIVE_NAV_BTN", payload:to })
+	let BTN = (to)=> to !== "" && headerFn({type: "ACTIVE_NAV_BTN", payload:to })
 
 	return(
 		<nav className={`navigation flex end`} >
