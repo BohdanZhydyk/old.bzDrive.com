@@ -6,6 +6,7 @@ const { auth }	= require('./../routes/auth/auth')
 const { office }	= require('./../routes/office')
 const { workshop }	= require('./../routes/workshop')
 const { news }	= require('./../routes/news')
+const { statistic }	= require('./../routes/statistic')
 
 exports.POST = (req, res)=>{
 
@@ -29,6 +30,7 @@ exports.POST = (req, res)=>{
       case "/news":       news(req, res, InData, (data)=> send(data) );                 break;
       case "/office":     office(req, res, InData, (data)=> send(data) );               break;
       case "/workshop":   workshop(req, res, InData, (data)=> send(data) );             break;
+      case "/statistic":  statistic(req, res, InData, (data)=> send(data) );            break;
       default: break
     }
 

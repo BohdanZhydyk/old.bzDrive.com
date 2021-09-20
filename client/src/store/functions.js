@@ -112,7 +112,7 @@ export const bzPost = async ( link, object, callback )=>{
     user: false,
     object: object
   }
-
+  
   // let href = window.location.href
   let hostname = window.location.hostname
 
@@ -142,7 +142,7 @@ export const bzPost = async ( link, object, callback )=>{
     OutData.Errors.push({err:err, host:hostname, from:link})
     return "no IP"
   })
-
+  
   axios.post( api+link, OutData).then( (res)=>{
 
     setToken(res.data.bzToken)

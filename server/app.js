@@ -16,6 +16,7 @@ app.post('/cv', (req, res)=> InOut(req.route.path, req, res) )
 app.post('/news', (req, res)=> InOut(req.route.path, req, res) )
 app.post('/office', (req, res)=> InOut(req.route.path, req, res) )
 app.post('/workshop', (req, res)=> InOut(req.route.path, req, res) )
+app.post('/statistic', (req, res)=> InOut(req.route.path, req, res) )
 
 
 const port = 5000

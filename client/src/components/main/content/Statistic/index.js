@@ -1,29 +1,33 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import './Statistic.scss'
+
+import { getUser } from './../../../../store/functions'
+
+import { actions } from './actions'
+
+import { Statistic } from './components/Statistic'
+import Loader from './../Loader'
 
 
 const StatisticApp = ()=>{
 
-  // if( !state ){ fn({ app:"statistic", type:"GET_STATE" }) }
+  const [statistic, setStatistic] = useState(false)
 
-  // let table = []
-  // if(state){
-  //   table = state.map( (item, index)=>{
-  //     return {id:index, user:item.user, IP:item.IP.ip}
-  //   })
-  // }
+  const statisticFn = (action)=> actions(action, statistic, setStatistic)
+
+  useEffect( ()=>{ !statistic && statisticFn({ type:"GET_STATE" }) },[])
+
+  let user = getUser()
+
+  // console.log('statistic', statistic)
 
   return(
-    <div className="statistic flex column">
-      Statistic
-      {/* {
-        state &&
-        table.map( (item, index)=>{
-          return(
-            <div>{`id: ${item.id} | user: ${item.user.login} | IP: ${item.IP}`}</div>
-          )
-        })
-      } */}
+    <div className="statistic">
+      {
+        !statistic
+        ? <Loader />
+        : <Statistic props={{statistic, user, statisticFn}} />
+      }
     </div>
   )
 }
