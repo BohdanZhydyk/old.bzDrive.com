@@ -6,7 +6,6 @@ import { actions } from './actions'
 import Loader from './../Loader'
 import ModeBtns from './components/ModeBtns'
 import Table from './components/Table'
-import Invoice from './components/Invoice'
 
 
 const OfficeApp = ()=>{
@@ -19,16 +18,12 @@ const OfficeApp = ()=>{
 
   console.log('office', office)
 
-  let printMode, editMode, mode, btns, names, table, invoice
+  let mode, btns, pri, edi, table
 
   if(office){
-    printMode = office.printing
-    editMode = office.editing
     mode = office.mode
     btns = office.btns
-    names = btns.names
     table = office.table
-    invoice = office.invoice
   }
 
   return (
@@ -39,11 +34,9 @@ const OfficeApp = ()=>{
       :
       <>
 
-        { printMode && <Invoice props={{line:printMode, nr:"print", officeFn}} /> }
+        <ModeBtns props={{mode, btns, officeFn}} />
 
-        <ModeBtns props={{mode, names, officeFn}} />
-
-        { table && <Table props={{mode, editMode, table, invoice, officeFn}} /> }
+        { table && <Table props={{mode, table, officeFn}} /> }
 
       </>
     }

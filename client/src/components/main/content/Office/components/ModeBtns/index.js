@@ -1,13 +1,14 @@
 import React from 'react'
 
+import './ModeBtns.scss'
 import { ModeBtn } from './ModeBtn'
 
 
-const ModeBtns = ({ props:{mode, names, officeFn} })=>{
+const ModeBtns = ({ props:{mode, btns, officeFn} })=>{
   return(
-    <div className="flex wrap">
+    <div className="modeBtns flex wrap">
 
-      { names.map( (btn, index)=> <ModeBtn props={{mode, btn, officeFn}} key={`ModeBtn${index}`} /> ) }
+      { btns.map( (btn, index)=> <ModeBtn props={{mode, btn, officeFn}} key={`ModeBtn${index}`} /> ) }
       
     </div>
   )

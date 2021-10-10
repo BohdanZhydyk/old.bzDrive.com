@@ -16,7 +16,7 @@ exports.statistic = (req, res, InData, callback)=>{
     client.db(dbName)
       .collection('statistic')
       .find({}).sort({_id:-1})
-      // .limit(100)
+      // .limit(2)
       .toArray( (error, result)=>{
         error && callback( Err(InData, error) )
         callback( Out(InData, result) )

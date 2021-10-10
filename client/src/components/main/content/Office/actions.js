@@ -15,12 +15,12 @@ export const actions = (action, office, setOffice)=>{
   switch(action.type){
     case "GET_STATE":             GET_STATE(office, setOffice, action);               break;
     case "GET_MODE":              GET_MODE(office, setOffice, action);                break;
-    case "ADD_INVOICE":           ADD_INVOICE(office, setOffice, action);             break;
-    case "SAVE_INVOICE":          SAVE_INVOICE(office, setOffice, action);            break;
-    case "EDIT_INVOICE":          EDIT_INVOICE(office, setOffice, action);            break;
-    case "PRINT_INVOICE":         PRINT_INVOICE(office, setOffice, action);           break;
-    case "DELETE_INVOICE":        DELETE_INVOICE(office, setOffice, action);          break;
-    case "EXIT_PRINT_EDIT_MODE":  EXIT_PRINT_EDIT_MODE(office, setOffice, action);    break;                           break;
+    case "ADD_NEW":               ADD_NEW(office, setOffice, action.payload);         break;
+    case "SAVE":                  SAVE(office, setOffice, action);                    break;
+    case "DELETE":                DELETE(office, setOffice, action);                  break;
+    case "EDIT":                  EDIT(office, setOffice, action);                    break;
+    case "PRINT":                 PRINT(office, setOffice, action);                   break;
+    case "EXIT_PRINT_EDIT_MODE":  EXIT_PRINT_EDIT_MODE(office, setOffice, action);    break;
     case "CHANGE_INPUT":          CHANGE_INPUT(office, setOffice, action.payload);    break;
     case "CHANGE_ARTICLE":        CHANGE_ARTICLE(office, setOffice, action.payload);  break;
     case "LINE_CLICK":            LINE_CLICK(office, setOffice, action.payload);      break;
@@ -40,82 +40,122 @@ let GET_MODE = (office, setOffice, action)=>{
   
   bzPost("/office", { getMode:action.payload }, (data)=>{
 
-    setOffice({ ...office, mode:action.payload, editing:false, printing:false, table:{ lines:data } })
+    setOffice({ ...office, mode:action.payload, table:data })
 
   })
 
 }
 
-let ADD_INVOICE = (office, setOffice, action)=>{
+let ADD_NEW = (office, setOffice, payload)=>{
 
-  let letter = ()=>{
-    switch(getUser().login){
-      case "bz83": return "B"
-      case "Vitalii": return "V"
-      default: return "X"
-    }
-  }
+  bzPost("/office", { new:getUser().login }, (data)=>{
 
+    let newObj
+
+    if(payload === "FS"){
+    
+      let letter = ()=>{
+        switch(getUser().login){
+          case "bz83": return "B"
+          case "Vitalii": return "V"
+          default: return "X"
+        }
+      }
   
-  bzPost("/office", { newInvoice:getUser().login }, (data)=>{
-
-    let method = "gotówka"
-    let date = {
-      year:unixToDateTimeConverter().year,
-      month:unixToDateTimeConverter().month,
-      day:unixToDateTimeConverter().day
+      newObj = {
+        _id: "new",
+        edi:true,
+        place: data[0].place,
+        date: unixToDateTimeConverter(),
+        dealer: data[0],
+        buyer:{
+          name: false, addr: {zip:false, town:false, street:false},
+          img: false, contacts: {www:false, email:false, tel:false},
+          account: false, nip: false, place: false, user: false
+        },
+        articles: [{
+          number:false, article:false, price:0.00, quantity:1,
+          VAT:23, netto:0.00, vat:0.00, sum:0.00
+        }],
+        comments: [],
+        pay: {
+          method:"gotówka",
+          date:{
+            year:unixToDateTimeConverter().year,
+            month:unixToDateTimeConverter().month,
+            day:unixToDateTimeConverter().day
+          }
+        },
+        invoiceNr: `${letter()}/${unixToDateTimeConverter().year}/${unixToDateTimeConverter().month}/`
+      }
+  
     }
 
-    let buyer = {
-      name: false, addr: {zip:false, town:false, street:false},
-      img: false, contacts: {www:false, email:false, tel:false},
-      account: false, nip: false, place: false, user: false
+    if(payload === "ZL"){
+
+      newObj = {
+        _id: "new",
+        edi:true,
+        place: data[0].place,
+        date: unixToDateTimeConverter(),
+        dealer: data[0]
+      }
+  
     }
 
-    let newObj = {
-      place: data[0].place,
-      date: unixToDateTimeConverter(),
-      dealer: data[0],
-      buyer,
-      articles: [ {number:false, article:false, price:"0", quantity:"1", VAT:"23", netto:"0", vat:"0", sum:"0"} ],
-      comments: [],
-      pay: {method, date},
-      invoiceNr: `${letter()}/${unixToDateTimeConverter().year}/${unixToDateTimeConverter().month}/`
-    }
-
-    setOffice({ ...office, printing:false, editing: newObj })
+    setOffice({ ...office, table:[newObj, ...office.table] })
 
   })
 
 }
 
-let SAVE_INVOICE = (office, setOffice, action)=>{
+let EDIT = (office, setOffice, action)=>{
 
-  bzPost("/office", { saveInvoice:action.payload }, (data)=>{ GET_MODE(office, setOffice, {payload:"FS"}) })
-
-}
-
-let EDIT_INVOICE = (office, setOffice, action)=>{
-
-  setOffice({ ...office, printing:false, editing:action.payload })
+  setOffice({
+    ...office,
+    table: office.table.map( el=> el._id === action.payload._id ? {...el, edi:true} : {...el, edi:false} )
+  })
 
 }
 
-let PRINT_INVOICE = (office, setOffice, action)=>{
+let SAVE = (office, setOffice, action)=>{
+
+  bzPost("/office", { save:action.payload, mode:office.mode }, (data)=>{
+    GET_MODE(office, setOffice, {payload:office.mode})
+  })
+
+}
+
+let DELETE = (office, setOffice, action)=>{
+
+  bzPost("/office", { delete:action.payload, mode:office.mode }, (data)=>{
+    GET_MODE(office, setOffice, {payload:office.mode})
+  })
+
+}
+
+let PRINT = (office, setOffice, action)=>{
 
   setOffice({ ...office, printing:action.payload, editing:false })
 
-}
-
-let DELETE_INVOICE = (office, setOffice, action)=>{
-
-  bzPost("/office", { deleteInvoice:action.payload }, (data)=>{ GET_MODE(office, setOffice, {payload:"FS"}) })
+  setOffice({
+    ...office,
+    table: office.table.map( el=> el._id === action.payload._id
+      ? {...el, pri:true, edi:false}
+      : {...el, pri:false, edi:false}
+    )
+  })
 
 }
 
 let EXIT_PRINT_EDIT_MODE = (office, setOffice, action)=>{
 
-  setOffice({ ...office, printing:false, editing:false })
+  let newTable = office.table.filter( (el)=> el.invoiceNr.length > 11 )
+
+  setOffice({
+    ...office,
+    table: newTable.map( el=>{ return({...el, pri:false, edi:false}) }  )
+  })
 
 }
 
@@ -162,7 +202,10 @@ let CHANGE_INPUT = (office, setOffice, action)=>{
     }
   }
 
-  setOffice({ ...office, editing: setLine(office.editing) })
+  setOffice({
+    ...office,
+    table: office.table.map( line=> line._id === action.id ? setLine(line) : line )
+  })
 
 }
 
@@ -214,7 +257,10 @@ let CHANGE_ARTICLE = (office, setOffice, action)=>{
     }
   }
 
-  setOffice({ ...office, editing: setArticle(office.editing) })
+  setOffice({
+    ...office,
+    table: office.table.map( line=> line._id === action.id ? setArticle(line) : line )
+  })
 
 }
 
@@ -223,7 +269,7 @@ let LINE_CLICK = (office, setOffice, action)=>{
   let pushArticle = (articles)=>{
     let newArr = []
     for(let i=0; i<articles.length; i++){ newArr.push( articles[i] ) }
-    newArr.push( {number:false, article:false, price:0, quantity:0, VAT:0, netto:0, vat:0, sum:0} )
+    newArr.push( {number:false, article:false, price:0, quantity:1, VAT:23, netto:0, vat:0, sum:0} )
     return newArr
   }
 
@@ -233,34 +279,37 @@ let LINE_CLICK = (office, setOffice, action)=>{
     return newArr
   }
 
-  let articles = office.editing.articles
-
   setOffice({
     ...office,
-    editing: {
-      ...office.editing,
-      articles:
-        action.act === "plus"
-        ? pushArticle(articles)
-        : delArticle(articles, action.nr)
-    }
+    table: office.table.map( line=>{
+      return(
+        line._id === action.id
+        ?
+        {
+          ...line,
+          articles:
+            action.act === "plus"
+            ? pushArticle(line.articles)
+            : delArticle(line.articles, action.nr)
+        }
+        : line 
+      )
+    })
   })
 
 }
 
 let PAY_METHOD = (office, setOffice, action)=>{
 
-  let date = {
-    year: office.editing.date.year,
-    month: office.editing.date.month,
-    day: office.editing.date.day,
-  }
-
   setOffice({
     ...office,
-    editing: {
-      ...office.editing,
-      pay: {...office.editing.pay, method:action, date} }
+    table: office.table.map( line=>{
+      return(
+        line._id === action.id
+        ? {...line, pay:{...line.pay, method:action.method}}
+        : line 
+      )
+    })
   })
 
 }
@@ -269,9 +318,13 @@ let PAY_DATE = (office, setOffice, action)=>{
 
   setOffice({
     ...office,
-    editing: {
-      ...office.editing,
-      pay: {...office.editing.pay, date:action} }
+    table: office.table.map( line=>{
+      return(
+        line._id === action.id
+        ? {...line, pay:{...line.pay, date:action.date}}
+        : line 
+      )
+    })
   })
 
 }

@@ -3,6 +3,10 @@ import React from 'react'
 
 export const Statistic = ({ props:{statistic, user, statisticFn} })=>{
 
+  // console.log('statistic', statistic.map( ( obj=> {
+  //   return {...obj, unix:(parseInt(obj._id.substring(0, 8), 16) * 1000)}
+  // } )) )
+
   let newStat = [
     {name:"drive", count:statistic.filter( line => line.link === "/drive")},
     {name:"workshop", count:statistic.filter( line => line.link === "/workshop")},

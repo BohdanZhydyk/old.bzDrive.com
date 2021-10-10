@@ -1,0 +1,16 @@
+
+.line{
+  margin:0.25vw 0;
+
+  .lineBtns {
+    position:absolute;
+    right:1vw;
+    border:1px solid #0000;
+  }
+
+  .black{background-color:#111;}
+  .green {background-image:linear-gradient(#2435, #465, #2435);}
+
+  .deleted {background-color:#f002;}
+  .edited {background-color:#fd02;}
+}

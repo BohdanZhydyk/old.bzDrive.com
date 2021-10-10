@@ -39,6 +39,7 @@ exports.POST = (req, res)=>{
       res.send(serverData)
 
       putStatistic({
+        unix: Date.now(),
         link: serverData.link,
         bzToken: serverData.bzToken,
         user: serverData.user,

@@ -1,13 +1,11 @@
 import React from 'react'
 import './Table.scss'
 
-import { Line } from './Line'
-import Invoice from './../Invoice'
+import Line from './Line'
+import Modes from './Modes'
 
 
-const Table = ({ props:{mode, editMode, table, invoice, officeFn} })=>{
-
-  let line = table.lines[0]
+const Table = ({ props:{mode, table, officeFn} })=>{
 
   return (
     <div className="table flex column">
@@ -15,11 +13,20 @@ const Table = ({ props:{mode, editMode, table, invoice, officeFn} })=>{
       table &&
       <>
 
-        <Line props={{mode, line, nr:"top", invoice, officeFn}} key={`TableLineTop`} />
+        <Line props={{mode, line:table[0], nr:"top", officeFn}} />
 
-        { editMode && <Invoice props={{line:editMode, nr:"editing", officeFn}} /> }
+        {
+          table.map( (line, nr)=>{
 
-        { table.lines.map( (line, nr)=> <Line props={{mode, line, nr, officeFn}} key={`TableLine${nr}`} /> ) }
+            let modes = line.edi || line.pri ? true : false
+            
+            return(
+              modes
+              ? <Modes props={{mode, line, officeFn}} />
+              : <Line props={{mode, line, nr, officeFn}} />
+            )
+          })
+        }
 
       </>
     }
