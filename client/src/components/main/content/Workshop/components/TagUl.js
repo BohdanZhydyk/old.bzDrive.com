@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-export const TagUl = ({body, user})=>{
+export const TagUl = ({ props:{body, user} })=>{
   return(
     <section className="tag">
       <ul className="TagUl">

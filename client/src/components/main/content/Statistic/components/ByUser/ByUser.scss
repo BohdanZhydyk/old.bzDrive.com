@@ -1,0 +1,30 @@
+
+.ByUser {
+  width:100%;
+  margin:0 0 2vw 0;
+
+  .line{
+    width:100%;
+    margin:0;
+
+    .top{
+      color:#f60;
+      background-color:#111;
+    }
+
+    .lineCell{
+      min-height:1.2vw;
+      padding:0 0.5vw;
+      border:1px solid #999;
+      border-radius:0.25vw;
+    }
+
+    .n{width:4vw;}
+    .login{width:13vw;}
+    .country_name{width:10vw;}
+    .region{width:10vw;}
+    .postal_code{width:5vw;}
+    .city{width:13vw;}
+    .asn_org{width:35vw;}
+  }
+}

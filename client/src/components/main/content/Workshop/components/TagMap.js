@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const TagMap = ({body, user})=>{
+export const TagMap = ({ props:{body, user} })=>{
 
   const allow = `
     accelerometer;

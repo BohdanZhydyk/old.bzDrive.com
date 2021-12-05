@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const TagVideo = ({body, user})=>{
+export const TagVideo = ({ props:{body, user} })=>{
 
   const allow = `
     accelerometer;

@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 
 
-export const TagSlider = ({body, user})=>{
+export const TagSlider = ({ props:{body, user} })=>{
 
   let initialSlider = {
     active: 0,
     images: body
   }
+
+  console.log(body)
 
   const [slider, setSlider] = useState(initialSlider)
 

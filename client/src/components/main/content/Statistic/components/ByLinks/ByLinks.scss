@@ -1,0 +1,28 @@
+
+.ByLinks {
+  width:100%;
+  margin:0 0 2vw 0;
+
+  .line{
+    width:98%;
+    margin:1px 0;
+
+    .lineL{
+      width:9%;
+      margin:0 1% 0 0;
+    }
+
+    .lineR{
+      width:90%;
+      border:1px dashed #999;
+      border-radius:0.5vw;
+
+      .countLine{
+        background-color:#f60;
+        border-radius:0.5vw;
+
+        .transparent{color:#0000;}
+      }
+    }
+  }
+}
