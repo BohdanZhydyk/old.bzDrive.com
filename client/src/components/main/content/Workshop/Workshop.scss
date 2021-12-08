@@ -14,7 +14,20 @@
 
     .TagP {
       width:100%;
-      text-indent:2vw;
+
+      p {
+        text-indent:2vw;
+        text-align:justify;
+        @media (max-width: 767px) {text-indent:5vw;}
+      }
+      img {
+        width:10vw;
+        padding:0.5vw;
+        @media (max-width: 767px) {
+          width:30vw;
+          padding:1vw;
+        }
+      }
     }
 
     .TagUl {
@@ -51,19 +64,31 @@
       .el-L {
         width:75%;
         border-right:1px solid #f60;
+        @media (min-width: 768px) and (max-width: 1024px) {width:60%;}
+        @media (max-width: 767px) {
+          width:100%;
+          border-right:none;
+          border-bottom:1px solid #f60;
+        }
 
         iframe {
           width:calc(4vw * 16);
           height:calc(4vw * 9);
           opacity:0.8;
-          margin:1vw;
+          margin:1vw 1vw 3vw 1vw;
           border-radius:0.5vw;
+          @media (max-width: 767px) {
+            width:calc(5vw * 16);
+            height:calc(5vw * 9);
+          }
         }
       }
 
       .el-R {
         width:20%;
         padding:2vw 0;
+        @media (min-width: 768px) and (max-width: 1024px) {width:35%;}
+        @media (max-width: 767px) {width:60%;}
 
         .contact {
           width:90%;
@@ -79,13 +104,15 @@
               padding:0.25vw 1vw;
               border:1px solid;
               border-color:#0000;
+              @media (max-width: 767px) {padding:0.25vw 0 0.25vw 5vw;}
 
               .contentTxt {
                 width:90%;
   
                 .el {
                   width:100%;
-                  min-height:1.5vw;
+                  min-height:2vw;
+                  @media (max-width: 767px) {min-height:4vw;}
   
                   &:hover {font-size:110%;}
                 }
@@ -104,71 +131,61 @@
       position:relative;
       width:100%;
 
-      .sliderTop {
-        width:100%;
-        min-height:70vh;
+      .Image {
+        height:38vw;
+        border-radius:0.5vw;
+        @media (max-width: 767px) {height:42vw;}
+      }
 
-        .sliderBtn {
-          width:10%;
-          min-height:50vh;
-          
-          img {
-            width:50%;
-            opacity:0.1;
-          }
-      
-          &:hover img {
-            width:70%;
+      .sliderImgBtn {
+
+        img {
+          width:4vw;
+          padding:0.5vw;
+          opacity:0.1;
+          @media (max-width: 767px) {width:6vw;}
+
+          &:hover {
+            width:5vw;
+            padding:0;
             opacity:1;
-            transition: width 0.25s;
-          }
-        }
-      
-        .sliderImage {
-          width:80%;
-      
-          img {
-            width:50vw;
-          }
-        
-          span {
-            position:absolute;
-            top:10%;
-            left:15%;
-            padding:0.5vw 2vw;
-            font-size:200%;
-            font-weight:bold;
-            background-color:#2225;
-            border-radius:0.5vw;
+            transition: width 0.25s, padding 0.25s, opacity 0.25s;
+            @media (max-width: 767px) {width:7vw;}
           }
         }
       }
 
-      .sliderBottom {
-        width:100%;
-        min-height:5vh;
+      .folderPannel {
+        position:absolute;
+        top:0;
+        left:5vw;
+        @media (max-width: 767px) {left:2vw;}
 
-        .sliderLineItem {
-          width:1.5vw;
-          min-height:1.5vw;
-          margin:1vw;
-          border:5px solid #ccc;
-          opacity:0.5;
-          border-radius:50%;
-          background-image:linear-gradient(#444, #aaa);
-          transition: width 0.25s, min-height 0.25s, margin 0.25s;
+        .sliderTxt {
+          min-height:3vw;
+          background-color:#0008;
+          padding:0 3vw;
+          font-size:200%;
+          border:1px solid #999;
+          border-radius:0.5vw;
+          @media (max-width: 767px) {font-size:150%;}
+        }
 
-          &-active {
-            border:5px solid #fff;
-            background-image:linear-gradient(#000, #666);
-          }
+        .sliderFolderBtn {
+          width:4vw;
+          height:4vw;
+          margin:0 0 0 2vw;
 
-          &:hover {
-            width:2vw;
-            min-height:2vw;
-            margin:0.75vw;
-            opacity:1;
-            transition: width 0.25s, min-height 0.25s, margin 0.25s;
+          img {
+            width:3vw;
+            padding:0.5vw;
+            opacity:0.1;
+            &:hover {
+              width:4vw;
+              padding:0;
+              opacity:1;
+              transition: width 0.25s, padding 0.25s, opacity 0.25s;
+            }
           }
         }
       }

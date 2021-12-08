@@ -7,7 +7,7 @@ export const TagContacts = ({ props:{body, user} })=>{
 
   return(
     <section className="tag">
-      <div className="TagContacts flex center stretch">
+      <div className="TagContacts flex center stretch wrap">
 
         <Left props={{map, user}} />
         <Right props={{contacts, user}} />
@@ -24,7 +24,7 @@ const Left = ({ props:{map, user} })=>{
       map.map( (el, i)=>{
         return(
           <iframe
-            className="map boxShadow"
+            className="boxShadow"
             key={`ContactsMap${i}`}
             src={el.content}
             title={el.title}

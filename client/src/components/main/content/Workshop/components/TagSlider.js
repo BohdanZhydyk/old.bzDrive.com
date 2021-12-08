@@ -2,43 +2,61 @@ import React, { useState } from 'react'
 
 
 export const TagSlider = ({ props:{body, user} })=>{
+  
+  const [slider, setSlider] = useState({
+    folder: 0,
+    img: 0,
+    body
+  })
 
-  let initialSlider = {
-    active: 0,
-    images: body
-  }
+  let image = `${slider.body[slider.folder].imgs[slider.img]}`
+  let btnL = `https://files.bzdrive.com/img/ico/sliderBtnL.png`
+  let btnR = `https://files.bzdrive.com/img/ico/sliderBtnR.png`
+  let btnU = `https://files.bzdrive.com/img/ico/sliderBtnU.png`
+  let btnD = `https://files.bzdrive.com/img/ico/sliderBtnD.png`
 
-  console.log(body)
+  let move = (dir)=>{
 
-  const [slider, setSlider] = useState(initialSlider)
+    let body = slider.body
+    let bodyLen = body.length
+    let folder = slider.folder
+    let folderLen = slider.body[slider.folder].imgs.length
+    let img = slider.img
 
-  const sliderFn = (action)=>{
-    switch(action.type){
-      case "SLIDER_BTN_CLICK":
-        let len = slider.images.length
-        let id = action.data.id
-        let dir = action.data.dir
-
-        if(dir === "L")  id -= 1
-        if(dir === "R")  id += 1
-
-        if(id === -1)   id = len - 1
-        if(id === len)  id = 0
-
-        setSlider({
-          ...slider,
-          active: id
-        })
-        break
-      default: break
+    switch(dir){
+      case "U": setSlider({ ...slider, img:0, folder:( folder === 0 ? (bodyLen - 1) : folder - 1 ) }); break;
+      case "D": setSlider({ ...slider, img:0, folder:( bodyLen === (folder + 1) ? 0 : folder + 1 ) }); break;
+      case "L": setSlider({ ...slider, img:( img === 0 ? (folderLen - 1) : img - 1 ) }); break;
+      case "R": setSlider({ ...slider, img:( folderLen === (img + 1) ? 0 : img + 1 ) }); break;
+      default: break;
     }
   }
 
   return(
     <section className="tag">
-      <div className="TagSlider">
-        <SliderTop slider={slider} user={user} sliderFn={sliderFn} />
-        <SliderBottom slider={slider} sliderFn={sliderFn} />
+      <div className="TagSlider flex between stretch">
+
+        <div className="sliderImgBtn L flex" onClick={()=>move('L')}>
+          <img src={btnL} alt="Left" />
+        </div>
+
+        <img className="Image" src={image} alt="SliderImage" />
+
+        <div className="sliderImgBtn R flex" onClick={()=>move('R')}>
+          <img src={btnR} alt="Right" />
+        </div>
+
+        <div className="folderPannel">
+          <div className="sliderFolderBtn Up flex start" onClick={()=>move('U')}>
+            <img src={btnU} alt="Up" />
+          </div>
+          <span className="sliderTxt flex">{slider.body[slider.folder].txt[user.lang]}</span>
+          <div className="sliderFolderBtn Dn flex start" onClick={()=>move('D')}>
+            <img src={btnD} alt="Down" />
+          </div>
+          
+        </div>
+
       </div>
     </section>
     
@@ -49,71 +67,4 @@ export const TagSlider = ({ props:{body, user} })=>{
   //     {txt:string, src:string}, {txt:string, src:string}, ...
   //   ]
   // }
-}
-
-
-const SliderTop = ({slider, user, sliderFn})=>{
-  return(
-    <div className="sliderTop flex">
-    {
-      slider.images.map( (image, id)=>{
-
-        switch(id){
-          case slider.active:
-            return(
-              <div className="flex between" key={`tagSlider${image.txt}`}>
-                <SliderBtn dir="L" id={id} sliderFn={sliderFn} />
-                <SliderImage image={image} user={user} />
-                <SliderBtn dir="R" id={id} sliderFn={sliderFn} />
-              </div>
-            )
-          default:
-            return(
-              <div key={`tagSlider${image.txt[user.lang]}`}></div>
-            )
-        }
-
-      })
-    }
-    </div>
-  )
-}
-
-const SliderBtn = ({dir, id, sliderFn})=>{
-  return(
-    <div
-      className="sliderBtn flex"
-      onClick={ ()=> sliderFn({ type:"SLIDER_BTN_CLICK", data:{dir, id} }) }
-    >
-      <img
-        src={`https://autogaz.bzdrive.com/images/slider/sliderBtn${dir}.png`}
-        alt={`sliderBtn${dir}`}
-      />
-    </div>
-  )
-}
-
-const SliderImage = ({image, user})=>{
-  return(
-    <div className="sliderImage flex">
-      <img src={image.src} alt="sliderImg" />
-      <span>{image.txt[user.lang]}</span>
-    </div>
-  )
-}
-
-const SliderBottom = ({slider, sliderFn})=>{
-  return(
-    <div className="sliderBottom flex">
-    {
-      slider.images.map( (image, id)=>
-        <div
-          className={ id === slider.active ? `sliderLineItem sliderLineItem-active flex` : `sliderLineItem flex` }
-          onClick={ ()=> sliderFn({ type:"SLIDER_BTN_CLICK", data:{dir:false, id} }) }
-          key={`sliderLineItem${id}`}
-        ></div>
-      )
-    }
-    </div>
-  )
 }
