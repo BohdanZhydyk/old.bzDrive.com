@@ -90,6 +90,35 @@ export const bzIntToWord = (int)=>{
   return(`${znak} ${wynik} zł ${grosze}/100 gr` );
 }
 
+export const NormalizeNr = (mode, nr)=>{
+  let sign = nr.sign
+  while(sign.length !== 6){ sign = `0${sign}` }
+  return `${mode === "FS" ? `${nr?.letter}/` : ``}${nr?.year}/${nr?.month}/${sign}`
+}
+
+export const errName = (val)=> val ? (val?.length > 3 ? false : true) : true
+export const errZIP = (val)=> val ? (val?.length > 4 ? false : true) : true
+export const errTown = (val)=> val ? (val?.length > 3 ? false : true) : true
+export const errStreet = (val)=> val ? (val?.length > 3 ? false : true) : true
+export const errTel = (val)=> val ? (val?.length > 9 ? false : true) : true
+export const errNIP = (val)=> val ? (val?.length > 9 ? false : true) : true
+export const errBrand = (val)=> val ? (val?.length > 3 ? false : true) : true
+export const errModel = (val)=> val ? (val?.length > 2 ? false : true) : true
+export const errFaults = (val)=> val ? (val?.length > 2 ? false : true) : true
+export const errNumbers = (val)=> val ? (val?.length > 5 ? false : true) : true
+
+export const SummaryAll = (art)=>{
+  let net = "0.00"
+  let vat = "0.00"
+  let sum = "0.00"
+  for(let i=0; i<art?.length; i++){
+    net = bzCalc( "+", net, art[i].netto )
+    vat = bzCalc( "+", vat, art[i].vat )
+    sum = bzCalc( "+", sum, art[i].sum )
+  }
+  return { net, vat, sum }
+}
+
 export const setToken = (bzToken)=> cookies.set('bzToken', bzToken )
 export const remToken = ()=> cookies.remove('bzToken')
 export const getToken = ()=> cookies.get('bzToken')

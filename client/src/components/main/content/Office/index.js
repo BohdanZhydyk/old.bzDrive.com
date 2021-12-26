@@ -4,8 +4,8 @@ import './Office.scss'
 import { actions } from './actions'
 
 import Loader from './../Loader'
-import ModeBtns from './components/ModeBtns'
-import Table from './components/Table'
+import ModeBtns from './ModeBtns'
+import Table from './Table'
 
 
 const OfficeApp = ()=>{
@@ -18,13 +18,9 @@ const OfficeApp = ()=>{
 
   console.log('office', office)
 
-  let mode, btns, pri, edi, table
-
-  if(office){
-    mode = office.mode
-    btns = office.btns
-    table = office.table
-  }
+  let btns = office.btns
+  let mode = office.mode
+  let table = office.table
 
   return (
     <div className="office">
@@ -34,9 +30,9 @@ const OfficeApp = ()=>{
       :
       <>
 
-        <ModeBtns props={{mode, btns, officeFn}} />
+        { btns && <ModeBtns props={{btns, mode, officeFn}} /> }
 
-        { table && <Table props={{mode, table, officeFn}} /> }
+        { table && <Table props={{mode, table, officeFn}}/> }
 
       </>
     }

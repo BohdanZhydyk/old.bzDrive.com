@@ -44,73 +44,84 @@ exports.office = (req, res, InData, callback)=>{
     //SAVE
     if(InData.object.save){
 
-      let save = {
-        status:"edited",
-        place:InData.object.save.place,
-        date:InData.object.save.date,
-        dealer:InData.object.save.dealer,
-        buyer:InData.object.save.buyer,
-        invoiceNr:InData.object.save.invoiceNr,
-        articles:InData.object.save.articles,
-        comments:InData.object.save.comments,
-        netto:InData.object.save.netto,
-        priceVAT:InData.object.save.priceVAT,
-        brutto:InData.object.save.brutto,
-        pay:InData.object.save.pay
+      let id = InData.object.save.id
+      let mode = InData.object.mode
+
+      let save = ()=>{
+        switch(mode){
+          case "FS":
+            return {
+              status:InData.object.save.status,
+              nr:InData.object.save.nr,
+              place:InData.object.save.place,
+              date:InData.object.save.date,
+              dealer:InData.object.save.dealer,
+              buyer:InData.object.save.buyer,
+              articles:InData.object.save.articles,
+              comments:InData.object.save.comments,
+              netto:InData.object.save.netto,
+              priceVAT:InData.object.save.priceVAT,
+              brutto:InData.object.save.brutto,
+              pay:InData.object.save.pay
+            }
+          case "ZL":
+            return {
+              status:InData.object.save.status,
+              nr:InData.object.save.nr,
+              place:InData.object.save.place,
+              date:InData.object.save.date,
+              dealer:InData.object.save.dealer,
+              car:InData.object.save.car,
+              buyer:InData.object.save.buyer,
+              articles:InData.object.save.articles,
+              netto:InData.object.save.netto,
+              priceVAT:InData.object.save.priceVAT,
+              brutto:InData.object.save.brutto
+            }
+          default: break
+        }
       }
 
-      InData.object.save._id === "new"
-      ?
-      client.db(dbName)
-        .collection(`base${InData.object.mode}`)
-        .find({}).sort({_id:-1})
-        .toArray( (error, result)=>{
-
-          error && callback( Err(InData, error) )
-
-          let RES = result[0] ? result[0] : {invoiceNr:`-/----/--/000000`}
-          let nr = ''
-          for(let i=10; i<RES.invoiceNr.length; i++){
-            nr = nr + RES.invoiceNr[i]
-          }
-          let toSix = (dig)=>{
-            dig = ( parseFloat(dig)+1 ).toString()
-            while(dig.length < 6){ dig = "0" + dig }
-            return (dig)
-          }
-
-          save.status = "saved"
-          save.invoiceNr = InData.object.save.invoiceNr + toSix(nr)
-
+      switch(save().status){
+        case "saved":
           client.db(dbName)
-            .collection(`base${InData.object.mode}`)
-            .insertOne(save, (error, result)=>{
-              error && callback( Err(InData, error) )
-              callback( Out(InData, result) )
-          })
-      })
-      :
-      client.db(dbName)
-        .collection(`base${InData.object.mode}`).updateOne(
-          {_id: new ObjectID(InData.object.save._id)},
-          {$set:save},
-          {upsert:true}, (error, result)=>{
-            error && callback( Err(InData, error) )
-            callback( Out(InData, result) )
-      })
-    }
+            .collection(`base${mode}`)
+            .find({
+              "nr.letter": save().nr.letter,
+              "nr.year": save().nr.year,
+              "nr.month": save().nr.month
+            })
+            .sort({_id:-1})
+            .toArray( (error, result)=>{
 
-    //DELETE
-    InData.object.delete &&
-    client.db(dbName)
-      .collection(`base${InData.object.mode}`)
-      .updateOne(
-        {_id: new ObjectID(InData.object.delete._id)},
-        { $set:{status:"deleted"} },
-        {upsert:true}, (error, result)=>{
-          error && callback( Err(InData, error) )
-          callback( Out(InData, result) )
-    })
+              error && callback( Err(InData, error) )
+
+              result[0]
+              ? save().nr.sign = ( parseInt(result[0].nr.sign) + 1 ).toString()
+              : save().nr.sign = ( 1 ).toString()              
+
+              client.db(dbName)
+                .collection(`base${InData.object.mode}`)
+                .insertOne(save(), (error, result)=>{
+                  error && callback( Err(InData, error) )
+                  callback( Out(InData, result) )
+              })
+          })
+          break
+        default:
+          client.db(dbName)
+            .collection(`base${mode}`)
+            .updateOne(
+              {_id: new ObjectID(id)},
+              {$set: {...save(), status:save().status} },
+              {upsert:true}, (error, result)=>{
+                error && callback( Err(InData, error) )
+                callback( Out(InData, result) )
+          })
+          break
+      }
+
+    }
 
   })
   
