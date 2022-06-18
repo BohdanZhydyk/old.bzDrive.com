@@ -1,0 +1,87 @@
+
+.profile {
+  width:95vw;
+  margin:2vw 0 3vw 0;
+
+  .profileAva {
+    width:20%;
+    margin:0 0 3vw 0;
+    align-content:flex-start;
+    @media (min-width: 768px) and (max-width: 1024px) {width:30%;}
+    @media (max-width: 767px) {width:90%;}
+    
+    img {
+      width:90%;
+      border-radius:0.5vw;
+      @media (max-width: 767px) {width:30%;}
+    }
+
+    .downloadAva {
+      width:90%;
+      margin:2vw;
+      min-height:4vw;
+      border:1px dashed #999;
+      @media (max-width: 767px) {width:60%; min-height:20vw;}
+    }
+  }
+
+  .profileInfo {
+    width:70%;
+    padding:0 2vw;
+    @media (min-width: 768px) and (max-width: 1024px) {width:60%;}
+    @media (max-width: 767px) {width:90%;}
+
+    .profileTheme {
+      width:100%;
+      font-size:120%;
+      padding:0.5vw 2vw;
+      background-color:#0003;
+      border-bottom:3px solid #999;
+    }
+
+    .profileSection {
+      width:100%;
+      padding:0.5vw 1vw 2vw 1vw;
+
+      .inputWrapper {
+        width:40%;
+        margin:0.5vw 0;
+        padding:0.5vw 1vw;
+        border-radius:0.5vw;
+        @media (min-width: 768px) and (max-width: 1024px) {width:60%;}
+        @media (max-width: 767px) {width:80%;}
+
+        legend {
+          padding:0 0.5vw;
+          font-size:80%;
+        }
+        input {
+          width:100%;
+          min-height:2vw;
+          background-color:#0000;
+          border:none;
+        }
+
+        .profileBtn {
+          width:100%;
+          min-height:4vw;
+          border-radius:0.5vw;
+          background-color:#171;
+          &:hover {
+            background-color:#191;
+          }
+          @media (min-width: 768px) and (max-width: 1024px) {min-height:4vw;}
+          @media (max-width: 767px) {min-height:5vw;}
+        }
+      }
+    }
+  }
+
+  .cookies {
+    color:#fd0;
+    &:hover {
+      color:#f60;
+      text-decoration:underline;
+    }
+  }
+}

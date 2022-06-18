@@ -1,0 +1,166 @@
+
+.CV {
+  width:100%;
+  padding:1vw 0 2vw 0;
+  @media print {
+    color:#000;
+    background-color:#fff;
+  }
+
+  .header {
+    width:95%;
+    padding: 1vw;
+    font-size: 200%;
+    font-weight: bold;
+    border:1px solid #999;
+    border-radius:0.5vw;
+
+    .hdrLR {
+      width:10%;
+      @media print {display:none;}
+    }
+
+    .hdrC {width:80%;}
+  }
+
+  .main {
+    padding: 0 2vw;
+    @media (orientation: portrait) {flex-direction: column;}
+    @media print {flex-direction: row;}
+
+      
+    .mainL {
+      width: 38%;
+      padding: 0 0.5vw;
+      @media (orientation: portrait) {width: 100%;}
+      @media print {width: 38%;}
+
+      .photo {
+        width: 100%;
+        margin: 1vw 0;
+        border: 1px solid #999;
+        border-radius:0.5vw;
+      
+        .text {
+          width: 100%;
+          font-size: 150%;
+          padding: 0.5vw 0;
+        }
+      
+        .img {
+          width: 25vw;
+          margin: 1vw 0;
+          border-radius: 0.5vw;
+        }
+        @media print {
+          .img {width: 150px;}
+        }
+      }
+    }
+    
+    .mainR {
+      width: 60%;
+      padding: 0 0.5vw;
+      @media (orientation: portrait) {width: 100%;}
+      @media print {width: 60%;}
+    }
+
+    .container {
+      width:100%;
+      margin:1vw 0;
+      padding:0.5vw 0;
+      border:1px solid #999;
+      border-radius:0.5vw;
+
+      .name {
+        color:#f60;
+        width:90%;
+        margin:0.5vw 0;
+        padding:0 0.5vw;
+        font-weight:bold;
+        border-bottom:2px dashed #f60;
+      }
+
+      .line {
+        width:95%;
+
+        img {
+          width:1.5vw;
+          min-width:20px;
+          margin:0.2vw 1vw;
+          padding:0.5vw;
+          @media print {display: none;}
+        }
+
+        span {
+          width:20%;
+        }
+      
+        a {
+          width:60%;
+          @media print {text-decoration: none;}
+        }
+      }
+
+      .paragraph {
+        width:100%;
+        padding:0.2vw 1vw;
+        text-indent:2vw;
+        text-align:justify;
+      }
+
+      .project {
+        width:100%;
+        margin:0.5vw;
+        padding:1vw;
+        border:1px solid #999;
+        border-radius:0.5vw;
+        @media print {color:#000;}
+        &:hover {
+          border-color:#fd0;
+          background-color:#111;
+        }
+
+        .projName {
+          padding:0 1vw;
+          font-weight:bold;
+
+          span {
+            font-size:150%;
+          }
+        }
+
+        .description {
+          text-indent:2vw;
+        }
+
+        .technologies {
+          width:100%;
+
+          .tech {
+            width:7vw;
+            margin:0.5vw;
+            padding:0.5vw 0;
+            border:1px solid #999;
+            border-radius:0.5vw;
+      
+            img {
+              width: 3vw;
+              min-width: 20px;
+              @media print {display: none;}
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .footer {
+    width:95%;
+    padding: 1vw;
+    text-indent: 3vw;
+    text-align: justify;
+    border:1px solid #999;
+    border-radius:0.5vw;
+  }
+}

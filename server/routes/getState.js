@@ -2,32 +2,55 @@ const mongo = require('mongodb')
 const mongoClient = mongo.MongoClient
 const ObjectID = mongo.ObjectID
 
-const { url, dbName } = require('./../safe/safe')
-const { Err, Out } = require('./../InOut/Out')
+const { bzDB } = require('./../bzDB')
 
 
-exports.getState = (link, req, res, InData, callback)=>{
+exports.getState = (req, res)=>{
 
-  let id
+  let _id = new ObjectID('61dca3e9ec2924c7d900834d')
 
-  switch(link){
-    case "/drive":    id = '605918e6ec292437d800834d'; break;
-    case "/cv":       id = '602a8ad3ec29245f3000834d'; break;
-    default: break;
-  }
+  bzDB( { req, res, collection:'bzState', act:"FIND_ONE", query:{_id} }, (data)=>{
 
-  mongoClient.connect(url, { useUnifiedTopology: true }, (error, client)=>{
+    let sendData = (nav)=>{
+      res.send({
+        ...data,
+        object:{
+          ...data.object,
+          result:{
+            ...data.object.result,
+            nav:nav
+          }
+        }
+      })
+    }
 
-    error && callback( Err(InData, error) )
+    switch(data?.user?.role){
+      case "admin":
+        sendData(data.object.result.nav)
+        break
+      case "master":
+        sendData(
+          data.object.result.nav.filter(
+            el=> (el.role !== 'admin')
+          )
+        )
+        break
+      case "user":
+        sendData(
+          data.object.result.nav.filter(
+            el=> (el.role !== 'admin') && (el.role !== 'master')
+          )
+        )
+        break
+      default:
+        sendData(
+          data.object.result.nav.filter(
+            el=> el.role === 'guest'
+          )
+        )
+        break
+    }
+    }
+  )
 
-    // GET STATE
-    client.db(dbName)
-      .collection('state')
-      .findOne( { _id: new ObjectID(id)}, (error, result)=>{
-        error && callback( Err(InData, error) )
-        callback( Out(InData, result) )
-    })
-
-  })
-  
 }

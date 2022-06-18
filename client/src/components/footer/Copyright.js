@@ -1,43 +1,46 @@
-import React from 'react'
-
-import { ScreenSaver } from '../ScreenSaver'
+import { translate } from "../../state/translate"
 
 
-export const Copyright = ({ props:{author, link} })=>{
+export const Copyright = ({ props:{author, user, link} })=>{
 
-  let arr = [
-    {data:author ? author : [], txt:"author"},
-    {data:link ? link : [], txt:"link"},
-    {data:[`2018-${ new Date().getFullYear() }`], txt:"year"}
-  ]
+  let lang = user.lang
+  let cl = ['txtOrg', 'txtWht', 'txtOrg', 'txtWht', 'txtOrg', 'txtWht']
+  let href = `https://${link[0] + link[1] + link[2]}/`
 
   return (
-    <div className="right flex end">
-    {
-      author
-      ?
-      <>
+    <div className="flex end">
+
+      <span className="group flex">
+        <span>{ `${translate(lang, "created")}:`}</span>
+      </span>
+
+      <span className="group flex">
       {
-        arr.map( (el,nr)=> <Line el={el} nr={nr} key={`FooterSpan${el.txt}${nr}`} /> )
+        author.map( (el, i)=> <span className={`${cl[i]} bold`} key={`Author${i}`}>{el}</span> )
       }
-      </>
-      : <ScreenSaver arr={["Txt","Txt"]} />
-    }
+      </span>
+
+      <span className="group flex">
+      {
+        link.map( (el, i)=>{
+          return(
+            <a href={href} target="_blank" rel="noreferrer" key={`Link${i}`} >
+              <span className={`${cl[i]} bold`}>{el}</span>
+            </a>
+          )
+          
+        })
+      }
+      </span>
+
+      <span className="group flex">
+        <span>&copy;</span>
+      </span>
+
+      <span className="group flex">
+        <span>{`2018-${ new Date().getFullYear() }`}</span>
+      </span>
+
     </div>
-  )
-}
-
-const Line = ({el, nr})=>{
-
-  let color = false
-  let cl = ()=>{
-    color = !color
-    return color ? `txtWht` : `txtOrg`
-  }
-
-  return(
-    <span className="footerSpan" >
-    { el.data.map( (item, index)=> <span className={cl()} key={el.txt+nr+index}>{item}</span> ) }
-    </span>
   )
 }

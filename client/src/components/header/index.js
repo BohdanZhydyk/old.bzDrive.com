@@ -1,70 +1,35 @@
-import React, { useState, useEffect } from 'react'
-import './Header.scss'
-
-import { actions } from './actions'
-
-import { LogoPannel } from './LogoPannel'
-import { Navigation } from './Navigation'
-import Auth from './Auth'
-import { Burger } from './Burger' 
-import SideBar from './SideBar'
+import "./Header.scss"
+import { NoData } from "../All/NoData"
+import { SiteLogo } from "./SiteLogo"
+import { SiteNavigation } from "./SiteNavigation"
+import SiteAuth from "./SiteAuth"
 
 
-const Header = ({state, fn})=>{
+const Header = ({ props:{state, user, side, appFn} })=>{
 
-	const [header, setHeader] = useState(false)
+	let saver = state ? false : true
 
-	const headerFn = (action)=> actions(action, header, setHeader)
+	let info = saver ? ["Img", "Txt"] : state.info
+	let nav = saver ? ["Txt", "Txt", "Txt"] : state.nav
+	let auth = ["Img"]
 
-	useEffect( ()=>{ !header && headerFn({ type:"GET_STATE" }) },[])
+  return(
+    <header className="flex between">
 
-  console.log('header', header)
-
-	let active = header?.auth?.active ? header?.auth?.active : false
-
-	let logo = header?.info ? header?.info : false
-	let nav = header?.nav ? header?.nav : false
-	let auth = header?.auth ? header?.auth : false
-	let burger = header ? true : false
-	let user = header?.user
-	let lang = user?.lang
-
-	switch(user?.role){
-		case "master":
-			nav = nav.filter( (item)=> item.role !== "admin" )
-			break
-		case "user":
-			nav = nav.filter( (item)=> item.role !== "master" && item.role !== "admin" )
-			break
-		case "guest":
-			nav = nav.filter( (item)=> item.role !== "user" && item.role !== "master" && item.role !== "admin" )
-			break
-		default: break
-	}
-
-	let TOGGLE_MENU = (active)=> headerFn({type:"TOGGLE_MENU", payload:active })
-
-	return(
-		<header className="flex between" >
-
-			<div className={`blur ${!active && `none`}`} onClick={ ()=> TOGGLE_MENU({active:false}) }>111</div>
-
-			<LogoPannel props={{logo}} />
-
-			<div className="flex" >
-
-				<Navigation props={{nav, user, headerFn}} />
-
-				<Auth props={{auth, user, active, TOGGLE_MENU}} />
-
-				<Burger props={{burger, active, TOGGLE_MENU}} />
-
+			<div className="siteLogo flex start">
+				{ saver ? <NoData props={info} /> : <SiteLogo props={{info}} /> }
+			</div>
+			
+			<div className="siteNavigation flex end">
+				{ saver ? <NoData props={nav} /> : <SiteNavigation props={{nav, user, appFn}} /> }
 			</div>
 
-			{ active && <SideBar props={{active, auth, nav, lang, user, headerFn, TOGGLE_MENU}} /> }
+			<div className="siteAuth flex end">
+				{ saver ? <NoData props={auth} /> : <SiteAuth props={{user, side, nav, appFn}} /> }
+			</div>
 
-		</header>
-	)
+    </header>
+  )
 }
 
 export default Header

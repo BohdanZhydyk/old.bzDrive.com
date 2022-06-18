@@ -1,42 +1,35 @@
-import React, { useState, useEffect } from 'react'
-import './Footer.scss'
+import "./Footer.scss"
+import { NoData } from "../All/NoData"
 
-import { bzPost } from './../../store/functions'
-
+import { Cookie } from './Cookie'
 import { Contacts } from './Contacts'
 import { Copyright } from './Copyright'
 
 
-const Footer = ()=>{
+const Footer = ({ props:{state, user, cookie, appFn} })=>{
 
-	const [footer, setFooter] = useState(false)
+  let saver = state ? false : true
 
-  useEffect( ()=>{
-		!footer &&
-		bzPost("/drive", { getState:true }, (data)=>{
-			setFooter({
-				contacts:data.info.contacts,
-				author:data.info.author,
-				link:data.info.link
-			})
-		})
-	},[])
+  let contacts = saver ? ["Img", "Img", "Img", "Img", "Img"] : state.info.contacts
+	let author = saver ? ["Txt", "Txt", "Txt", "Txt", "Txt"] : state.info.author
+	let link = saver ? ["Txt"] : state.info.link
 
-  console.log('footer', footer)
+  return(
+    <footer className="flex between wrap" style={cookie ? {} : {marginBottom:"5vw"}}>
 
-	let contacts = footer?.contacts ? footer?.contacts : false
-	let author = footer?.author ? footer?.author : false
-	let link = footer?.link ? footer?.link : false
+      <div className="Contacts flex start">
+				{ saver ? <NoData props={contacts} /> : <Contacts props={{contacts}} /> }
+			</div>
 
-	return(
-		<footer className="flex between wrap">
+      <div className="Copy flex end">
+				{ saver ? <NoData props={author} /> : <Copyright props={{author, user, link}} /> }
+			</div>
 
-			<Contacts props={{contacts}} />
-
-			<Copyright props={{author, link}} />
-			
-		</footer>
-	)
+      
+      { !cookie && <Cookie props={{user, cookie, appFn}} /> }
+      
+    </footer>
+  )
 }
 
 export default Footer

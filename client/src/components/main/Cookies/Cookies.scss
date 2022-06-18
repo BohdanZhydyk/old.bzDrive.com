@@ -1,0 +1,43 @@
+
+.cvApp {
+  width:95%;
+
+  p {
+    width:100%;
+    text-indent:3vw;
+    text-align:justify;
+  }
+
+  a {
+    width:80%;
+    color:#fd0;
+    margin:0 0 1.5vw 0;
+  }
+
+  .version {width:100%;}
+
+  .h2 {
+    width:80%;
+    font-size:150%;
+    margin:1vw 0 2vw 0;
+    padding:0.5vw 0;
+    text-align:center;
+  }
+
+  .h3 {
+    width:100%;
+    font-size:120%;
+    margin:2vw 0 1vw 0;
+    padding:0.5vw 0;
+    text-align:center;
+    border-top:1px dashed #999
+  }
+
+  .ul {
+    width:100%;
+
+    p {margin-bottom:0;}
+
+    .li {width:calc(100% - 4vw); margin:0 2vw;}
+  }
+}

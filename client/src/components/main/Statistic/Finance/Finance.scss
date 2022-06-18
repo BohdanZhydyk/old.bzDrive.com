@@ -1,0 +1,82 @@
+
+.Finance{
+  width:100%;
+
+  .date{
+    width:100%;
+    margin:0.5vw 0 0 0;
+    min-height:1.5vw;
+  }
+  
+  .dashedLine{
+    width:100%;
+    border-top:1px dashed #999;
+    border-bottom:1px dashed #999;
+  }
+
+  .names{
+    width:20%;
+    padding:0.5vw 0;
+
+    section{
+      width:100%;
+      
+      .line{
+        width:90%;
+        min-height:1.5vw;
+        margin:0.25vw 0;
+      }
+
+      .sumGrn{font-size:120%; color:#0c0;}
+      .sumRed{font-size:120%; color:#f00;}
+    }
+  }
+
+  .verticalLine{
+    width:1px;
+    margin:0 1vw;
+    background-color:#999;
+  }
+
+  .lines{
+    position:relative;
+    width:70%;
+    padding:0.5vw 0;
+
+    .scale{
+      position:absolute;
+      top:1vw;
+      width:100%;
+
+      span{
+        width:25%;
+        min-height:0.5vw;
+        border-left:1px solid #999;
+        border-right:1px solid #999;
+      }
+    }
+
+    section{
+      width:100%;
+  
+      .line{
+        width:100%;
+        min-height:1.5vw;
+        margin:0.25vw 0;
+        border-radius:0.5vw;
+  
+        span{
+          min-height:1.5vw;
+          border-radius:0 0.5vw 0.5vw 0;
+        }
+      }
+
+      .taxGrn{font-size:120%; color:#0c0;}
+      .taxRed{font-size:120%; color:#f00;}
+      
+      .lineRed{background-color:#f009;}
+      .lineYlw{background-color:#fd09;}
+      .lineGrn{background-color:#0c09;}
+    }
+  }
+}

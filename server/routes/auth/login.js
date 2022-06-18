@@ -2,69 +2,68 @@ const mongo = require('mongodb')
 const mongoClient = mongo.MongoClient
 const ObjectID = mongo.ObjectID
 
-
-const { url, dbName } = require('./../../safe/safe')
-const { Err, Out } = require('./../../InOut/Out')
+const { bzDB } = require('./../../bzDB')
 const { bzPassHash, bzPassCompare } = require('./../../safe/bcrypt')
 
+exports.login = (req, res, ServerData, callback)=>{
 
-exports.login = async (InData, callback)=>{
-  
-  mongoClient.connect(url, { useUnifiedTopology: true }, (error, client)=>{
+  let object = ServerData.object
 
-    error && callback( Err(InData, error) )
+	let inputs = object.inputs
 
-    client.db(dbName)
-      .collection('bzUsers')
-      .findOne({ login:InData.authData.login.val }, (error, result)=>{
-      
-      error && callback( Err(InData, error) )
+	let login = inputs.filter( el=> el.name === "login" )[0].val
+	let pass = inputs.filter( el=> el.name === "pass" )[0].val
 
-      if(!result){
-        callback({
-          ...InData,
-          authData:{
-            ...InData.authData,
-            login:{
-              ...InData.authData.login,
-              error: {nr:4}
-            }
+  bzDB( { req, res, collection:'bzUsers', act:"FIND_ONE", query:{login} }, (dbData)=>{
+
+      if(!dbData?.object?.result){
+        res.send({
+          ...ServerData,
+          object:{
+            result:{
+              inputs: inputs.map( el=> el.name === "login" ? {...el, error:8} : {...el})
+            },
+            errors:false
           }
         })
         return
       }
       
-      bzPassCompare( InData.authData.pass.val, result.pass, (data)=>{
+      bzPassCompare( pass, dbData.object.result.pass, (isPass)=>{
 
-        if(!data){
-          callback({
-            ...InData,
-            authData:{
-              ...InData.authData,
-              pass:{
-                ...InData.authData.pass,
-                error: {nr:5}
-              }
+        if(!isPass){
+          res.send({
+            ...ServerData,
+            object:{
+              result:{
+                inputs: inputs.map( el=> el.name === "pass" ? {...el, error:9} : {...el})
+              },
+              errors:false
             }
           })
           return
         }
 
-        callback({
-          ...InData,
-          user:{
-            role: result.role,
-            login: result.login,
-            lang: result.lang,
-            sex: result.sex,
-            ava: result.ava
+        res.send({
+          ...ServerData,
+          object:{
+            result:{
+              user:{
+                role: dbData.object.result.role,
+                login: dbData.object.result.login,
+                email: dbData.object.result.email,
+                lang: dbData.object.result.lang,
+                sex: dbData.object.result.sex,
+                ava: dbData.object.result.ava
+              }
+            },
+            errors:false
           }
         })
 
       })
 
-    })
-
-  })
+    }
+  )
 
 }

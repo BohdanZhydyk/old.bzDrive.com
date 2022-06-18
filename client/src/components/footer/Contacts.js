@@ -1,35 +1,26 @@
-import React from 'react'
-
-import { ScreenSaver } from '../ScreenSaver'
-
 
 export const Contacts = ({ props:{contacts} })=>{
 
-  let src = (contacts)=> `https://files.bzdrive.com/img/ico/contacts/${contacts.key}.png`
-
+  
   return (
-    <div className="left flex start" >
+    <div className="flex start" >
     {
-      contacts
-      ?
-      <>
-      {
-        contacts.map( (contact, index)=>{
-          return (
-            <a className="contactBtn"
-              href={contact.val}
-              target="_blank"
-              rel="noreferrer"
-              key={`contact${contact.key+index}`} >
+      contacts.map( (btn, index)=>{
 
-              <img className="imgBtn" alt="contact" src={ src(contact) } />
+        let src = `https://files.bzdrive.com/img/ico/contacts/${btn.key}.png`
+        
+        return (
+          <a className="contactBtn"
+            href={btn.val}
+            target="_blank"
+            rel="noreferrer"
+            key={`contact${btn.key+index}`} >
 
-            </a>
-          )
-        })
-      }
-      </>
-      : <ScreenSaver arr={["Img","Img","Img","Img","Img"]} />
+            <img className="imgBtn" src={src} alt="contact" />
+
+          </a>
+        )
+      })
     }
     </div>
   )

@@ -1,22 +1,30 @@
 const express = require('express')
 const cors = require('cors')
 
-const { InOut } = require('./InOut')
+const { getState }			= require('./routes/getState')
+const { getWorkshop }		= require('./routes/getWorkshop')
+const { getOffice }			= require('./routes/getOffice')
+const { getTraffic }		= require('./routes/getTraffic')
+const { getCV }					= require('./routes/getCV')
+const { getCookies }		= require('./routes/getCookies')
+const { auth }					= require('./routes/auth/auth')
 
 
 const app = express()
 app.use( cors() )
 app.use( express.json() )
 
-app.get('/*', (req, res)=> InOut(req.route.path, req, res) )
+app.get('/*', (req, res) => res.sendFile( __dirname + "/public/index.html" ) )
 
-app.post('/auth', (req, res)=> InOut(req.route.path, req, res) )
-app.post('/drive', (req, res)=> InOut(req.route.path, req, res) )
-app.post('/cv', (req, res)=> InOut(req.route.path, req, res) )
-app.post('/news', (req, res)=> InOut(req.route.path, req, res) )
-app.post('/office', (req, res)=> InOut(req.route.path, req, res) )
-app.post('/workshop', (req, res)=> InOut(req.route.path, req, res) )
-app.post('/statistic', (req, res)=> InOut(req.route.path, req, res) )
+app.post('/getState', (req, res)=> getState(req, res) )
+
+app.post('/getWorkshop', 		(req, res)=> getWorkshop(req, res) 	)
+app.post('/getOffice', 			(req, res)=> getOffice(req, res) 		)
+app.post('/getTraffic', 		(req, res)=> getTraffic(req, res) 	)
+app.post('/getCV', 					(req, res)=> getCV(req, res) 				)
+app.post('/getCookies', 		(req, res)=> getCookies(req, res) 	)
+
+app.post('/auth', (req, res)=> auth(req, res) )
 
 
 const port = 5000

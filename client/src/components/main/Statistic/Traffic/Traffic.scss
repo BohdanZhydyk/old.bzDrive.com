@@ -1,0 +1,71 @@
+
+.Traffic{
+  width:100%;
+  margin:0 0 2vw 0;
+
+  .IntervalBtns{
+    width:100%;
+
+    .intervalBtn, .intervalBtnAct{
+      width:20%;
+      min-height:3vw;
+      margin:1vw 0;
+      border:1px solid #999;
+      border-radius:0.5vw;
+    }
+    
+    .intervalBtn{
+      background-color:#2225;
+      &:hover{
+        border-color:#f60;
+        background-image:linear-gradient(#2225, #111, #2225);
+      }
+    }
+
+    .intervalBtnAct{
+      background-color:#354;
+      &:hover{
+        border-color:#f60;
+        background-image:linear-gradient(#4652, #243, #4652);
+      }
+    }
+  }
+
+  .trafficLines{
+    width:100%;
+
+    .trafficLine{
+      width:100%;
+      &:hover .cell{
+        color:#fd0;
+        border-color:#f60;
+      }
+
+      .cell{
+        min-height:2vw;
+        padding:0 0.5vw;
+        border:1px solid #999;
+        border-radius:0.25vw;
+        white-space: nowrap;      /*keep text on one line */
+        overflow: hidden;         /*prevent text from being shown outside the border */
+        text-overflow: ellipsis;  /*cut off text with an ellipsis*/
+      }
+
+      .cellCount{width:4%;}
+      .cellDateTime{width:6%;}
+      .cellLogin{width:10%;}
+      .cellAddr{width:70%;}
+  
+      .colorTop{
+        min-height:3vw;
+        margin:0.25vw 0;
+        color:#f60;
+        font-size:110%;
+        background-color:#111;
+      }
+      .colorCell{
+        background-color:#1915;
+      }
+    }
+  }
+}
