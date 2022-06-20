@@ -1,15 +1,16 @@
 {
-  "name": "public_nodejs",
+  "name": "bzdrive_server",
   "version": "1.0.0",
-  "description": "Server bzDrive.com",
+  "description": "bzDrive.com Server",
+  "private": true,
+  "author": "Bohdan Zhydyk bzua83@gmail.com bzdrive.com",
+  "license": "ISC",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "nodemon app.js",
     "start": "node app.js"
   },
-  "author": "Bohdan Zhydyk bzua83@gmail.com bzdrive.com",
-  "license": "ISC",
   "dependencies": {
     "axios": "^0.24.0",
     "bcrypt": "^5.0.0",

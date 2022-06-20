@@ -1,3 +1,4 @@
+import React from 'react'
 import { translate } from "../../state/translate"
 
 

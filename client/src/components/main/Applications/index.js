@@ -1,5 +1,6 @@
-import './AplicationsApp.scss'
+import React from 'react'
 import { NavLink } from 'react-router-dom'
+import './AplicationsApp.scss'
 
 
 const ApplicationsApp = ()=>{

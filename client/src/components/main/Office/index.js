@@ -1,10 +1,12 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import './Office.scss'
 
+import { unixToDateTimeConverter } from './../../../state/functions'
 import { actions } from './actions'
 
 import { ScreenSaver } from './../../All/ScreenSaver'
 import ModeBtns from './ModeBtns'
+import Calendar from './Calendar'
 import Table from './Table'
 
 
@@ -33,6 +35,8 @@ const OfficeApp = ()=>{
       <>
 
         { btns && <ModeBtns props={{btns, mode, officeFn}} /> }
+
+        { (table && mode === "ZL") && <Calendar props={{table}} /> }
 
         { table && <Table props={{mode, MM_YYYY, setMM_YYYY, table, officeFn}}/> }
 

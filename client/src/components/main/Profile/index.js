@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import './Profile.scss'
 import { bzGetUser } from './../../../state/functions'

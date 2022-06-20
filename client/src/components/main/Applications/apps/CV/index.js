@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import { useReactToPrint } from 'react-to-print';
 import './index.scss'
 

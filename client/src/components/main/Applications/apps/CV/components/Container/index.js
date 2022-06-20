@@ -1,3 +1,4 @@
+import React from 'react'
 import { InfoLine } from './InfoLine'
 import { Technologie } from './Technologie'
 import { Language } from './Language'

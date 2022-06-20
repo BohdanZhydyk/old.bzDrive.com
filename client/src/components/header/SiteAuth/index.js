@@ -1,3 +1,4 @@
+import React from 'react'
 import { MenuPannel } from './MenuPannel'
 import { AuthPannel } from './AuthPannel'
 import { SiteNavigation } from '../SiteNavigation'

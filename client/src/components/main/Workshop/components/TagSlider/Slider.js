@@ -1,3 +1,5 @@
+import React from 'react'
+
 
 export const Slider = ({ props:{admin, txt, image, sliderFn} })=>{
 

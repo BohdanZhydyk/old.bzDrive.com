@@ -1,3 +1,5 @@
+import React from 'react'
+
 
 export const TagP = ({ props:{body, user} })=>{
   return(

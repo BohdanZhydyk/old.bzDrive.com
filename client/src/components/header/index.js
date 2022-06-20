@@ -1,3 +1,4 @@
+import React from 'react'
 import "./Header.scss"
 import { NoData } from "../All/NoData"
 import { SiteLogo } from "./SiteLogo"

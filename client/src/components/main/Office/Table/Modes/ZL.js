@@ -1,3 +1,4 @@
+import React from 'react'
 import { NormalizeNr } from "../../../../../state/functions"
 import { Cell } from "./../Cell"
 import EditArea from "../EditArea"

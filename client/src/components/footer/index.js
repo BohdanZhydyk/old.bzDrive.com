@@ -1,3 +1,4 @@
+import React from 'react'
 import "./Footer.scss"
 import { NoData } from "../All/NoData"
 

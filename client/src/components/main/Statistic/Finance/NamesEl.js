@@ -1,3 +1,4 @@
+import React from 'react'
 import { bzCalc } from './../../../../state/functions'
 
 

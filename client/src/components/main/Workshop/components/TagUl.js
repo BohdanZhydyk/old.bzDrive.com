@@ -1,3 +1,5 @@
+import React from 'react'
+
 
 export const TagUl = ({ props:{body, user} })=>{
   return(

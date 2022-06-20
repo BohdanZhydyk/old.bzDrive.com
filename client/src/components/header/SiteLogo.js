@@ -1,3 +1,6 @@
+import React from 'react'
+
+
 export const SiteLogo = ({ props:{info} })=>{
 
 	let org = false

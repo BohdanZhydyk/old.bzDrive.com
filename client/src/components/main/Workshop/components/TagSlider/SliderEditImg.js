@@ -1,3 +1,5 @@
+import React from 'react'
+
 
 export const SliderEditImg = ({ props:{img, n, i, sliderFn} })=>{
 

@@ -1,5 +1,4 @@
-import React from "react"
-
+import React from 'react'
 import { Cell } from "./../Cell"
 import EditArea from "../EditArea"
 

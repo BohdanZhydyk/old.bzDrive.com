@@ -1,3 +1,4 @@
+import React from 'react'
 import { SummaryAll, bzPriceToWord } from "../../../../../../state/functions"
 import { Input } from "./Input"
 

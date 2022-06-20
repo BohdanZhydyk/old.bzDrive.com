@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react'
-import { bzCalc } from './../../../../state/functions'
+import React, { useState } from 'react'
 
 import './Finance.scss'
 import { LinesEl } from './LinesEl'

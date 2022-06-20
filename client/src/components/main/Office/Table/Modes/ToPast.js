@@ -1,11 +1,10 @@
+import React from 'react'
+
 
 export const ToPast = ({ props:{mode, table, MM_YYYY, setMM_YYYY, officeFn} })=>{
 
   let months = ["00","01","02","03","04","05","06","07","08","09","10","11","12"]
-  let docs = {
-    "FS": "Faktury",
-    "ZL": "Zlecenia"
-  }
+  let docs = { "FS": "Faktury", "ZL": "Zlecenia" }
 
   let MM = MM_YYYY.MM - 1
   let YYYY = MM_YYYY.YYYY

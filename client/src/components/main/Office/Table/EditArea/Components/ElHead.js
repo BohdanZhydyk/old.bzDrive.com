@@ -1,3 +1,4 @@
+import React from 'react'
 import { NormalizeNr } from "../../../../../../state/functions"
 
 import { Input } from "./Input"

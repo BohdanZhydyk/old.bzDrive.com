@@ -1,3 +1,5 @@
+import React from 'react'
+
 
 export const MenuPannel = ({ props:{user, avaImg, menuImg, AvaClick, MenuClick, appFn} })=>{
 

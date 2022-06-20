@@ -1,3 +1,5 @@
+import React from 'react'
+
 
 export const TrafficLines = ({ props:{traffic} })=>{
 

@@ -1,3 +1,4 @@
+import React from 'react'
 import {
   vin_sanitise,
   numbers_sanitise,
