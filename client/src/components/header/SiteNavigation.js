@@ -8,16 +8,24 @@ export const SiteNavigation = ({ props:{nav, user, appFn} })=>{
 	let path = window.location.pathname
 	let lang = user.lang
 
-	const navActive = (to, arr)=>{
-		return(
-			arr.map( el => (el.to === to) ? {...el, active:true} : {...el, active:false} )
+	const navActive = (btn, arr)=>{
+		return arr.map( el=>({
+				...el,
+				active: (el.to === btn) ? true : false,
+				show: (el.to === btn) ? !el.show : false
+			})
 		)
 	}
 
 	const [navigation, setNavigation] = useState( navActive(path, nav) )
 
-	let BTN = (to)=>{
-		setNavigation( navActive(to, navigation) )
+	let SHOW = (btn)=>{
+		setNavigation( navigation.map( el=>( {...el, show: (el.to === btn) ? !el.show : false} ) ) )
+	}
+
+	let BTN = (btn)=>{
+		SHOW(btn)
+		setNavigation( navActive(btn, navigation) )
 		appFn({type:"SIDE_CLICK", payload:{ava:false, menu:false} })
 	}
 
@@ -26,15 +34,41 @@ export const SiteNavigation = ({ props:{nav, user, appFn} })=>{
 		{
 			navigation.map( (btn, nr)=>{
 
+				let classes = `navBtn ${ btn.active ? `navBtnActive` : `` } flex`
 				let key = `navBtn${btn.to}${nr}`
-				let classes = `navItem flex ${ btn.active ? 'navItemActive' : '' }`
 
 				return(
-					<NavLink className={classes} to={btn.to} onClick={ ()=> BTN(btn.to) } key={key} >
+					<div className={`navItem flex column`} key={key} >
 
-						<span className="flex">{ translate(lang, btn.name) }</span>
+						{
+							btn.subnav
+							?
+							<div className={classes} to={btn.to} onClick={ ()=> SHOW(btn.to) } >
+								{ translate(lang, btn.name) }
+							</div>
+							:
+							<NavLink className={classes} to={btn.to} onClick={ ()=> BTN(btn.to) } >
+								{ translate(lang, btn.name) }
+							</NavLink>
+						}
 
-					</NavLink>
+						<div className="navSubBtns flex column">
+						{
+							btn.subnav && btn.show && btn.subnav.map( (subbtn, k)=>{
+
+								let cl = `navSubBtn ${ subbtn.active ? `navSubBtnActive` : `` } flex`
+								let key = `navSubBtn${subbtn.to}${k}`
+
+								return(
+									<NavLink className={cl} to={btn.to + subbtn.to} onClick={ ()=> BTN(btn.to) } key={key} >
+										{ translate(lang, subbtn.name) }
+									</NavLink>
+								)
+							})
+						}
+						</div>
+
+					</div>
 				)
 			})
 		}

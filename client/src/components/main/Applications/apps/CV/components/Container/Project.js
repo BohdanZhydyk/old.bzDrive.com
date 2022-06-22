@@ -15,12 +15,9 @@ export const Project = ({data})=>{
       <div className="technologies flex">
       {
         data.tech.map( (item, index)=>
-          <div className="tech flex column">
+          <div className="tech flex column" key={`tech${data.name}${index}`} >
 
-            <img
-              src={`https://files.bzdrive.com/img/CV/ico/tech/${item}.png`}
-              key={`tech${data.name}${index}`} alt="img"
-            />
+            <img src={`https://files.bzdrive.com/img/CV/ico/tech/${item}.png`} alt="img" />
 
             <span>{item}</span>
 

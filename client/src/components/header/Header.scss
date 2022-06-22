@@ -15,31 +15,71 @@ header {
   
   .siteNavigation {
     width:75%;
-
+    position:relative;
+    
     .navItem {
-      width:10vw;
-      min-height:1.5vw;
-      margin:0.5vw;
-      background-image:linear-gradient(#333,#111,#333);
-      border-top:1px solid #999;
-      border-bottom:1px solid #999;
-      border-radius:0.5vw;
-      &:hover {
-        box-shadow: 0 0 0.5vw 0.2vw #999;
+
+      .navBtn {
+        width:10vw;
+        min-height:1.5vw;
+        margin:0.5vw;
+        background-image:linear-gradient(#333,#111,#333);
+        border-top:1px solid #999;
+        border-bottom:1px solid #999;
+        border-radius:0.5vw;
+        &:hover {
+          box-shadow: 0 0 0.5vw 0.2vw #999;
+          border-color:#fd0;
+        }
+        @media (min-width: 768px) and (max-width: 1024px) {
+          width:9vw;
+          min-height:2.5vw;
+          margin:0.25vw;
+        }
+        @media  (max-width: 767px) {
+          display:none;
+        }
+      }
+
+      .navBtnActive {
         border-color:#f60;
       }
-      @media (min-width: 768px) and (max-width: 1024px) {
-        width:9vw;
-        min-height:2.5vw;
-        margin:0.25vw;
-      }
-      @media  (max-width: 767px) {
-        display:none;
-      }
-    }
+      
+      .navSubBtns {
+        position:absolute;
+        top:3vw;
+        margin:0 -1vw 0 1vw;
+        padding:0 0.5vw;
+        background-color:#333;
+        border-radius:0.5vw;
+        z-index:999;
 
-    .navItemActive {
-      border-color:#f60;
+        .navSubBtn {
+          width:10vw;
+          min-height:1.5vw;
+          margin:0.25vw;
+          background-image:linear-gradient(#333,#111,#333);
+          border-top:1px solid #999;
+          border-bottom:1px solid #999;
+          border-radius:0.5vw;
+          &:hover {
+            box-shadow: 0 0 0.5vw 0.2vw #999;
+            border-color:#fd0;
+          }
+          @media (min-width: 768px) and (max-width: 1024px) {
+            width:9vw;
+            min-height:2.5vw;
+            margin:0.25vw;
+          }
+          @media  (max-width: 767px) {
+            display:none;
+          }
+        }
+
+        .navSubBtnActive {
+          border-color:#f60;
+        }
+      }
     }
   }
 
@@ -190,25 +230,67 @@ header {
       .siteNavigationWide {
         width:100%;
         padding:1.5vw 0 2vw 0;
-      }
-
-      .navItem {
-        width:80%;
-        min-height:3vw;
-        margin:0.5vw;
-        background-image:linear-gradient(#333,#111,#333);
-        border-top:1px solid #999;
-        border-bottom:1px solid #999;
-        border-radius:0.5vw;
-        &:hover {
-          box-shadow: 0 0 0.5vw 0.2vw #999;
-          border-color:#f60;
+        position:relative;
+    
+        .navItem {
+          width:80%;
+    
+          .navBtn {
+            width:80%;
+            min-height:3vw;
+            margin:0.5vw;
+            background-image:linear-gradient(#333,#111,#333);
+            border-top:1px solid #999;
+            border-bottom:1px solid #999;
+            border-radius:0.5vw;
+            &:hover {
+              box-shadow: 0 0 0.5vw 0.2vw #999;
+              border-color:#f60;
+            }
+            @media (min-width: 768px) and (max-width: 1024px) {
+              min-height:4vw;
+            }
+            @media  (max-width: 767px) {
+              min-height:5vw;
+            }
+          }
+    
+          .navBtnActive {
+            border-color:#f60;
+          }
+          
+          .navSubBtns {
+            width:100%;
+            margin:0 0 0 10%;
+            z-index:999;
+    
+            .navSubBtn {
+              width:70%;
+              min-height:1.5vw;
+              margin:0.25vw;
+              background-image:linear-gradient(#333,#111,#333);
+              border-top:1px solid #999;
+              border-bottom:1px solid #999;
+              border-radius:0.5vw;
+              &:hover {
+                box-shadow: 0 0 0.5vw 0.2vw #999;
+                border-color:#fd0;
+              }
+              @media (min-width: 768px) and (max-width: 1024px) {
+                min-height:4vw;
+              }
+              @media  (max-width: 767px) {
+                min-height:5vw;
+              }
+            }
+    
+            .navSubBtnActive {
+              border-color:#f60;
+            }
+          }
         }
       }
-  
-      .navItemActive {
-        border-color:#f60;
-      }
+    
     }
 
     .menuPannel {

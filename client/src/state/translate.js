@@ -103,11 +103,11 @@ export const translate = (lang = 'en', txt)=>{
       if(lang === 'pl'){ return `Aplikacje` }
       if(lang === 'ru'){ return `Приложения` }
       break
-    case "Statistic":
-      if(lang === 'en'){ return `Statistic` }
-      if(lang === 'ua'){ return `Статистика` }
-      if(lang === 'pl'){ return `Statystyka` }
-      if(lang === 'ru'){ return `Статистика` }
+    case "bzStore":
+      if(lang === 'en'){ return `bzStore` }
+      if(lang === 'ua'){ return `bzМагазин` }
+      if(lang === 'pl'){ return `bzSklep` }
+      if(lang === 'ru'){ return `bzМагазин` }
       break
     case "CV":
       if(lang === 'en'){ return `CV` }
@@ -115,11 +115,71 @@ export const translate = (lang = 'en', txt)=>{
       if(lang === 'pl'){ return `CV` }
       if(lang === 'ru'){ return `Резюме` }
       break
+    case "Unsplash":
+      if(lang === 'en'){ return `Unsplash` }
+      if(lang === 'ua'){ return `Unsplash` }
+      if(lang === 'pl'){ return `Unsplash` }
+      if(lang === 'ru'){ return `Unsplash` }
+      break
+    case "Statistic":
+      if(lang === 'en'){ return `Statistic` }
+      if(lang === 'ua'){ return `Статистика` }
+      if(lang === 'pl'){ return `Statystyka` }
+      if(lang === 'ru'){ return `Статистика` }
+      break
+    case "Traffic":
+      if(lang === 'en'){ return `Statistic` }
+      if(lang === 'ua'){ return `Трафік` }
+      if(lang === 'pl'){ return `Trafik` }
+      if(lang === 'ru'){ return `Трафик` }
+      break
+    case "Finances":
+      if(lang === 'en'){ return `Finances` }
+      if(lang === 'ua'){ return `Фінанси` }
+      if(lang === 'pl'){ return `Finanse` }
+      if(lang === 'ru'){ return `Финансы` }
+      break
     case "Office":
       if(lang === 'en'){ return `Office` }
       if(lang === 'ua'){ return `Офіс` }
       if(lang === 'pl'){ return `Biuro` }
       if(lang === 'ru'){ return `Офис` }
+      break
+    case "ZL":
+      if(lang === 'en'){ return `Orders` }
+      if(lang === 'ua'){ return `Замовлення` }
+      if(lang === 'pl'){ return `Zlecenia` }
+      if(lang === 'ru'){ return `Заказы` }
+      break
+    case "FS":
+      if(lang === 'en'){ return `Sale` }
+      if(lang === 'ua'){ return `Продаж` }
+      if(lang === 'pl'){ return `Sprzedaż` }
+      if(lang === 'ru'){ return `Продажа` }
+      break
+    case "FZ":
+      if(lang === 'en'){ return `Buy` }
+      if(lang === 'ua'){ return `Купівля` }
+      if(lang === 'pl'){ return `Zakup` }
+      if(lang === 'ru'){ return `Покупка` }
+      break
+    case "SP":
+      if(lang === 'en'){ return `Sellers` }
+      if(lang === 'ua'){ return `Продавці` }
+      if(lang === 'pl'){ return `Sprzedawcy` }
+      if(lang === 'ru'){ return `Продавцы` }
+      break
+    case "KL":
+      if(lang === 'en'){ return `Customers` }
+      if(lang === 'ua'){ return `Клієнти` }
+      if(lang === 'pl'){ return `Klienci` }
+      if(lang === 'ru'){ return `Клиенты` }
+      break
+    case "TO":
+      if(lang === 'en'){ return `Warehouse` }
+      if(lang === 'ua'){ return `Склад` }
+      if(lang === 'pl'){ return `Magazyn` }
+      if(lang === 'ru'){ return `Склад` }
       break
     case "Profile":
       if(lang === 'en'){ return `Profile` }
