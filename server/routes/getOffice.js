@@ -3,31 +3,17 @@ const mongoClient = mongo.MongoClient
 const ObjectID = mongo.ObjectID
 
 const { bzDB } = require('./../bzDB')
+const {getRandomColor} = require('./../functions')
 
 
 exports.getOffice = (req, res)=>{
   
   let object = req.body.object
-  let _id = new ObjectID('61ed465fec2924bc9a00834d')
-  
-  // GET STATE
-  object.getState &&
-  bzDB( { req, res, collection:'bzState', act:"FIND_ONE", query:{_id} }, (data)=>{
-
-    res.send({
-      ...data,
-      object:{
-        ...data.object,
-        result:{...data.object.result}
-      }
-    })
-
-  })
 
   // //GET MODE
   object.getMode &&
   bzDB( { req, res, collection:`base${object.getMode}`, act:"FIND", query:object.query }, (data)=>{
-
+    
     res.send({
       ...data,
       object:{
@@ -41,20 +27,6 @@ exports.getOffice = (req, res)=>{
   // //GET CLIENT
   object.getClient &&
   bzDB( { req, res, collection:`baseKL`, act:"FIND", query:object.getClient }, (data)=>{
-
-    res.send({
-      ...data,
-      object:{
-        ...data.object,
-        result:data.object.result
-      }
-    })
-
-  })
-
-  // //GET TO PAST
-  object.getToPast &&
-  bzDB( { req, res, collection:`base${object.getToPast}`, act:"FIND", query:object.query }, (data)=>{
 
     res.send({
       ...data,
@@ -107,10 +79,19 @@ exports.getOffice = (req, res)=>{
             status: object.save.status,
             nr: object.save.nr,
             place: object.save.place,
-            date: object.save.date,
-            dateTo: object.save.dateTo,
+            date: {
+              ...object.save.date,
+              unix: Date.parse(`${object.save.date.year}-${object.save.date.month}-${object.save.date.day}`)
+            },
+            dateTo: {
+              ...object.save.dateTo,
+              unix: Date.parse(`${object.save.dateTo.year}-${object.save.dateTo.month}-${object.save.dateTo.day}`)
+            },
             dealer: object.save.dealer,
-            car: object.save.car,
+            car: {
+              ...object.save.car,
+              color: getRandomColor()
+            },
             buyer: object.save.buyer,
             articles: object.save.articles,
             netto: object.save.netto,

@@ -12,20 +12,16 @@ export const bzSetToken = (bzToken)=> cookies.set('bzToken', bzToken )
 export const bzSetUser = (user)=> cookies.set( 'bzUser', JSON.stringify(user) )
 export const bzSetCookie = ()=> cookies.set('bzCookie', true)
 
-export const unixToDateTimeConverter = ( unix = new Date(Date.now()) )=>{
-  let year = unix.getFullYear()
-  let month = (unix.getMonth()+1) < 10 ? "0"+(unix.getMonth()+1) : unix.getMonth()+1
-  let day = unix.getDate() < 10 ? "0"+unix.getDate() : unix.getDate()
-  let hour = unix.getHours() < 10 ? "0"+unix.getHours() : unix.getHours()
-  let min = unix.getMinutes() < 10 ? "0"+unix.getMinutes() : unix.getMinutes()
-  let sec = unix.getSeconds() < 10 ? "0"+unix.getSeconds() : unix.getSeconds()
+export const unixToDateTimeConverter = ( DATE = new Date(Date.now()) )=>{
   let dateTime = {
-    year:   year.toString(),
-    month:  month.toString(),
-    day:    day.toString(),
-    hour:   hour.toString(),
-    min:    min.toString(),
-    sec:    sec.toString()
+    year:     DATE.getFullYear(),
+    month:    DATE.getMonth() + 1,
+    day:      DATE.getDate(),
+    weekday:  DATE.getDay() !== 0 ? DATE.getDay() : 7,
+    hour:     DATE.getHours(),
+    min:      DATE.getMinutes(),
+    sec:      DATE.getSeconds(),
+    lastDay:  new Date( new Date().getFullYear(), new Date().getMonth()+1, 0 ).getDate()
   }
   return dateTime
 }
@@ -111,9 +107,9 @@ export const bzPriceToWord = (int)=>{
 }
 
 export const NormalizeNr = (mode, nr)=>{
-  let sign = nr.sign
-  while(sign.length !== 6){ sign = `0${sign}` }
-  return `${mode === "FS" ? `${nr?.letter}/` : ``}${nr?.year}/${nr?.month}/${sign}`
+  let sign = nr?.sign
+  while(sign && sign.length !== 6){ sign = `0${sign}` }
+  return `${mode}/${nr?.year}/${nr?.month}/${sign}`
 }
 
 let digits = "0123456789"
@@ -248,25 +244,41 @@ export const bzPost = async (link, object, callback)=>{
     return "no IP"
   })
 
-  axios.post( api+link, ClientData).then( (res)=>{
+  axios.post( api+link, ClientData)
+    .then( (res)=>{
 
-    console.log('ServerData',res.data)
+      console.log('ServerData',res.data)
 
-    let bzToken = res?.data?.bzToken
-    let user = res?.data?.user
-    let IP = res?.data?.IP
-    let result = res?.data?.object?.result
-    let errors = res?.data?.object?.errors
+      let bzToken = res?.data?.bzToken
+      let user = res?.data?.user
+      let IP = res?.data?.IP
+      let result = res?.data?.object?.result
+      let errors = res?.data?.object?.errors
 
-    let lang = IP?.country_code ? IP?.country_code.toLowerCase() : 'en'
+      let lang = IP?.country_code ? IP?.country_code.toLowerCase() : 'en'
 
-    errors && errors.map( (err)=> console.log('err',err) )
+      errors && errors.map( (err)=> console.log('err',err) )
 
-    bzSetToken(bzToken)
-    bzSetUser( {...user, lang: user.lang ? user.lang : lang} )
+      bzSetToken(bzToken)
+      bzSetUser( {...user, lang: user.lang ? user.lang : lang} )
 
-    callback(result)
+      callback(result)
 
-  }).catch( (err)=> console.log('err',err) )
+    })
+    .catch( (err)=> console.log('err',err) )
   
 }
+
+export const bzGet = (link, cb)=>{
+
+  let hostname = window.location.hostname
+
+  let api = (hostname === 'localhost')
+    ? 'http://localhost:5000'
+    : 'https://bzdrive.com'
+
+  axios.get(api + link)
+    .then( (res)=>{ cb(res.data.object.result) })
+    .catch( (err)=> console.log('err',err) )
+  
+} 

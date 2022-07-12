@@ -1,46 +1,61 @@
 import React from 'react'
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 
 import "./Main.scss"
-import { ScreenSaver } from "../All/ScreenSaver"
+import { ScreenSaver } from "./../All/ScreenSaver"
+
 import Error from './Error'
 import Workshop from "./Workshop"
 import News from "./News"
-import Applications from "./Applications"
-import Office from "./Office"
-import Statistic from "./Statistic"
+
+import ZL from "./Office/ZL"
+import FS from "./Office/FS"
+import FZ from './Error'
+import SP from './Error'
+import KL from './Error'
+import TO from './Error'
+import Document from "./Office/Document"
+
+import CV from "./Applications/CV"
+import Store from "./Applications/Store"
+import Unsplash from './Applications/Unsplash'
+
+import Traffic from "./Statistic/Traffic"
+import Finance from "./Statistic/Finance"
+
 import Profile from "./Profile"
 import Cookies from "./Cookies"
-import CV from "./Applications/apps/CV"
-import Bistro from "./Applications/apps/Bistro"
-import Unsplash from './Applications/apps/Unsplash'
 
 
 const Main = ({ props:{state, user, side, appFn} })=>{
 
+  let path = window.location.pathname.split("/")
   let nav = state ? state.nav : []
 
   let classes = `flex column start ${(side.ava || side.menu) ? `blur` : ``}`  
-  let MAIN_CLICK = ()=> (side.ava || side.menu) && appFn({ type:"SIDE_CLICK", payload:{ava:false, menu:false} })
+  let MAIN_CLICK = ()=>{
+    (side.ava || side.menu) && appFn({ type:"SIDE_CLICK", payload:{ava:false, menu:false} })
+    appFn({type:"NAV_ACTIVE", payload:{btn:path, show:false} })
+  }
 
   let routes = (to)=>{
     switch(to){
       case "/news":                 return <News />
       case "/profile":              return <Profile />
-      // Office
-      case "/office/zl":            return <Office />
-      case "/office/fs":            return <Office />
-      case "/office/fz":            return <Office />
-      case "/office/sp":            return <Office />
-      case "/office/kl":            return <Office />
-      case "/office/to":            return <Office />
       // Applications
-      case "/apps/store":           return <Applications />
+      case "/apps/store":           return <Store />
       case "/apps/cv":              return <CV />
       case "/apps/unsplash":        return <Unsplash />
+      // Office
+      case "/office/zl":            return <ZL />
+      case "/office/fs":            return <FS />
+      case "/office/fz":            return <FZ />
+      case "/office/sp":            return <SP />
+      case "/office/kl":            return <KL />
+      case "/office/to":            return <TO />
       // Statistic
-      case "/statistic/traffic":    return <Statistic />
-      case "/statistic/finances":   return <Statistic />
+      case "/statistic/traffic":    return <Traffic />
+      case "/statistic/finances":   return <Finance />
       default:                      return <Workshop />
     }
   }
@@ -79,6 +94,8 @@ const Main = ({ props:{state, user, side, appFn} })=>{
             )
           })
         }
+
+          <Route exact path="/document" element={ <Document /> } />
         
           <Route exact path="/cookies" element={ <Cookies /> } />
 

@@ -1,0 +1,81 @@
+
+.ZL {
+  width:100%;
+  min-height:2vw;
+  margin:1vw 0;
+
+  .Week {
+    width:100%;
+
+    .Order {
+      width:calc(13% * 7 + 14px);
+      border-bottom:1px solid #9995;
+      
+      .Car {
+        position:relative;
+        padding:0.25vw 0;
+        border-radius:0.5vw;
+        opacity:0.8;
+
+        &:hover {
+          color:#fd0;
+          opacity:1;
+        }
+
+        .StatusLine {
+          position:absolute;
+          width:100%;
+          min-height:3px;
+        }
+
+        .CarName {margin:0 0.5vw;}
+      }
+    }
+  
+    .Day {
+      width:13%;
+      margin:1vw 0 0 0;
+      padding:0.25vw 0;
+      opacity:0.3;
+      background-color:#222;
+      border:1px solid #999;
+      border-radius:0.5vw;
+  
+      .DayLine {
+        width:100%;
+        min-height:2vw;
+        @media (min-width: 768px) and (max-width: 1024px) {
+          font-size:100%;
+        }
+        @media (max-width: 767px) {
+          font-size:70%;
+          min-height:3vw;
+        }
+      }
+    }
+    .DayPannel {
+      color:#f60;
+      font-weight:bold;
+      opacity:1;
+      background-color:#111;
+    }
+    .ActiveMonth {
+      color:#fff;
+      opacity:1;
+    }
+    .HoliDay {
+      width:13%;
+      background-color:#f001;
+      border:1px solid #999;
+      border-radius:0.5vw;
+    }
+    .DayActive {
+      border-color:#f60;
+      background-color:#f60;
+    }
+
+    .EditArea {
+      width:100%;
+    }
+  }
+}

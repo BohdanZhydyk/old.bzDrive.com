@@ -23,3 +23,13 @@ exports.getRandomInt = (min, max)=>{
   let maximum = Math.floor(max)
   return ( Math.floor(Math.random() * (maximum - minimum) + minimum) ).toString()
 }
+
+exports.getRandomColor = (dark = 50, light = 200)=>{
+  const getRandomInt = (min, max)=>{
+    //The maximum is exclusive and the minimum is inclusive
+    let minimum = Math.ceil(min)
+    let maximum = Math.floor(max)
+    return ( Math.floor(Math.random() * (maximum - minimum) + minimum) ).toString()
+  }
+  return `rgb(${getRandomInt(dark, light)}, ${getRandomInt(dark, light)}, ${getRandomInt(dark, light)})`
+}

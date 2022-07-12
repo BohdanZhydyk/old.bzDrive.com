@@ -152,10 +152,10 @@ export const translate = (lang = 'en', txt)=>{
       if(lang === 'ru'){ return `Заказы` }
       break
     case "FS":
-      if(lang === 'en'){ return `Sale` }
-      if(lang === 'ua'){ return `Продаж` }
-      if(lang === 'pl'){ return `Sprzedaż` }
-      if(lang === 'ru'){ return `Продажа` }
+      if(lang === 'en'){ return `Invoices` }
+      if(lang === 'ua'){ return `Рахунки` }
+      if(lang === 'pl'){ return `Faktury` }
+      if(lang === 'ru'){ return `Cчета` }
       break
     case "FZ":
       if(lang === 'en'){ return `Buy` }
@@ -264,6 +264,18 @@ export const translate = (lang = 'en', txt)=>{
       if(lang === 'ua'){ return `Приймаю` }
       if(lang === 'pl'){ return `Akceptuję` }
       if(lang === 'ru'){ return `Принимаю` }
+      break
+    case "DayNames":
+      if(lang === 'en'){ return ['mo','tu','we','th','fr','sa','su'] }
+      if(lang === 'ua'){ return ['пн','вт','ср','чт','пт','сб','нд'] }
+      if(lang === 'pl'){ return ['po','wt','śr','cz','pi','so','ni'] }
+      if(lang === 'ru'){ return ['пн','вт','ср','чт','пт','сб','нд'] }
+      break
+    case "MonthNames":
+      if(lang === 'en'){ return ['jan','feb','mar','apr','maj','jun','jul','aug','sep','oct','nov','dec'] }
+      if(lang === 'ua'){ return ['січ','лют','бер','кві','тра','чер','лип','сер','вер','жов','лис','гру'] }
+      if(lang === 'pl'){ return ['sty','lut','mrz','kwi','maj','cze','lip','sie','wrz','paź','lis','gru'] }
+      if(lang === 'ru'){ return ['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'] }
       break
     default: break
   }

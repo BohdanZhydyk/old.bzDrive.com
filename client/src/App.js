@@ -10,6 +10,7 @@ import {
 import {
   GET_STATE,
   SIDE_CLICK,
+  NAV_ACTIVE,
   SET_USER,
   LANG_CHG,
   COOKIE_OK,
@@ -40,6 +41,7 @@ function App() {
     switch(type){
       case "GET_STATE":     GET_STATE( setState, setUser, setCookie );                    break
       case "SIDE_CLICK":    SIDE_CLICK( payload, setSide );                               break
+      case "NAV_ACTIVE":    NAV_ACTIVE( payload, state, setState );                       break
       case "SET_USER":      SET_USER( payload, setState, setUser, setSide, setCookie );   break
       case "LANG_CHG":      LANG_CHG( payload, user, setUser, setSide, bzSetUser );       break
       case "COOKIE_OK":     COOKIE_OK( setCookie );                                       break

@@ -18,7 +18,7 @@ export const TagContacts = ({ props:{body, user} })=>{
   )
 }
 
-const Left = ({ props:{map, user} })=>{
+const Left = ({ props:{map} })=>{
   return(        
     <div className="el-L flex">
     {

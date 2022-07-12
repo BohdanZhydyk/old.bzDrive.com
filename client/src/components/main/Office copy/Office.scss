@@ -2,11 +2,6 @@
 .office {
   width:100%;
 
-  .title {
-    font-size:200%;
-    margin:0 0 1vw 0;
-  }
-
   .line{
     width:100%;
     margin:0.5vw 0;
@@ -40,7 +35,7 @@
       background-color:#111;
     }
     .saved {background-color:#0f02;}
-    .edited {background-color:#4657;}
+    .edited {background-color:#fd02;}
     .done {background-color:#0005;}
     .deleted {background-color:#f002;}
     .cell{

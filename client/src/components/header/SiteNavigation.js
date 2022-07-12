@@ -1,38 +1,24 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import { translate } from '../../state/translate'
 
 
 export const SiteNavigation = ({ props:{nav, user, appFn} })=>{
 
-	let path = window.location.pathname
+	let path = window.location.pathname.split("/")
 	let lang = user.lang
+	
+	useEffect( ()=> appFn({type:"NAV_ACTIVE", payload:{btn:path, show:false} }), [] )
 
-	const navActive = (btn, arr)=>{
-		return arr.map( el=>({
-				...el,
-				active: (el.to === btn) ? true : false,
-				show: (el.to === btn) ? !el.show : false
-			})
-		)
-	}
-
-	const [navigation, setNavigation] = useState( navActive(path, nav) )
-
-	let SHOW = (btn)=>{
-		setNavigation( navigation.map( el=>( {...el, show: (el.to === btn) ? !el.show : false} ) ) )
-	}
-
-	let BTN = (btn)=>{
-		SHOW(btn)
-		setNavigation( navActive(btn, navigation) )
-		appFn({type:"SIDE_CLICK", payload:{ava:false, menu:false} })
+	let CLICK = (btn, side)=>{
+		btn && appFn({type:"NAV_ACTIVE", payload:{btn:btn.split("/"), show:true} })
+		side && appFn({type:"SIDE_CLICK", payload:{ava:false, menu:false} })
 	}
 
 	return(
 		<>
 		{
-			navigation.map( (btn, nr)=>{
+			nav.map( (btn, nr)=>{
 
 				let classes = `navBtn ${ btn.active ? `navBtnActive` : `` } flex`
 				let key = `navBtn${btn.to}${nr}`
@@ -43,11 +29,11 @@ export const SiteNavigation = ({ props:{nav, user, appFn} })=>{
 						{
 							btn.subnav
 							?
-							<div className={classes} to={btn.to} onClick={ ()=> SHOW(btn.to) } >
+							<div className={classes} to={btn.to} onClick={ ()=> CLICK(btn.to, false) } >
 								{ translate(lang, btn.name) }
 							</div>
 							:
-							<NavLink className={classes} to={btn.to} onClick={ ()=> BTN(btn.to) } >
+							<NavLink className={classes} to={btn.to} onClick={ ()=> CLICK(btn.to, true) } >
 								{ translate(lang, btn.name) }
 							</NavLink>
 						}
@@ -57,10 +43,11 @@ export const SiteNavigation = ({ props:{nav, user, appFn} })=>{
 							btn.subnav && btn.show && btn.subnav.map( (subbtn, k)=>{
 
 								let cl = `navSubBtn ${ subbtn.active ? `navSubBtnActive` : `` } flex`
+								let subTo = btn.to + subbtn.to
 								let key = `navSubBtn${subbtn.to}${k}`
 
 								return(
-									<NavLink className={cl} to={btn.to + subbtn.to} onClick={ ()=> BTN(btn.to) } key={key} >
+									<NavLink className={cl} to={subTo} onClick={ ()=> CLICK(subTo, true) } key={key} >
 										{ translate(lang, subbtn.name) }
 									</NavLink>
 								)

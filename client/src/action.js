@@ -29,6 +29,28 @@ export const GET_STATE = (setState, setUser, setCookie)=>{
 
 export const SIDE_CLICK = (payload, setSide)=> setSide(payload)
 
+export const NAV_ACTIVE = (payload, state, setState)=>{
+  let btn = payload.btn[1] ? "/" + payload.btn[1] : "/"
+  let subBtn = payload.btn[2] ? "/" + payload.btn[2] : false
+  setState({
+    ...state,
+    nav: state.nav.map( el=>{
+        return {
+          ...el,
+          active: (el.to === btn) ? true : false,
+          show: payload.show && (el.to === btn) ? !el.show : false,
+          subnav:
+            el.subnav
+            ? subBtn
+              ? el.subnav.map( sub=> (sub.to === subBtn) ? {...sub, active:true} : {...sub, active:false} )
+              : el.subnav
+            : false
+        }
+      }
+    )
+  })
+}
+
 export const SET_USER = (payload, setState, setUser, setSide, setCookie)=>{
   setUser(payload)
   setState(false)

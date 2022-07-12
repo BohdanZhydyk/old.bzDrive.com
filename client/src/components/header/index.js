@@ -8,25 +8,23 @@ import SiteAuth from "./SiteAuth"
 
 const Header = ({ props:{state, user, side, appFn} })=>{
 
-	let saver = state ? false : true
-
-	let info = saver ? ["Img", "Txt"] : state.info
-	let nav = saver ? ["Txt", "Txt", "Txt"] : state.nav
+	let info = state ? state.info : ["Img", "Txt"]
+	let nav = state ? state.nav : ["Txt", "Txt", "Txt"]
 	let auth = ["Img"]
 
   return(
     <header className="flex between">
 
 			<div className="siteLogo flex start">
-				{ saver ? <NoData props={info} /> : <SiteLogo props={{info}} /> }
+				{ state ? <SiteLogo props={{info}} /> : <NoData props={info} /> }
 			</div>
 			
 			<div className="siteNavigation flex end">
-				{ saver ? <NoData props={nav} /> : <SiteNavigation props={{nav, user, appFn}} /> }
+				{ state ? <SiteNavigation props={{nav, user, appFn}} /> : <NoData props={nav} /> }
 			</div>
 
 			<div className="siteAuth flex end">
-				{ saver ? <NoData props={auth} /> : <SiteAuth props={{user, side, nav, appFn}} /> }
+				{ state ? <SiteAuth props={{user, side, nav, appFn}} /> : <NoData props={auth} /> }
 			</div>
 
     </header>

@@ -4,7 +4,7 @@ import './Traffic.scss'
 import { actions } from './actions'
 import { IntBtns } from './IntBtns'
 import { TrafficLines } from './TrafficLines'
-import { Loader } from './../Loader'
+import { ScreenSaver } from './../../../All/ScreenSaver'
 
 
 const Traffic = ()=>{
@@ -65,7 +65,7 @@ const Traffic = ()=>{
 
       <IntBtns props={{intervals, trafficFn}} />
 
-      { traffic ? <TrafficLines props={{traffic}} /> : <Loader /> }
+      { traffic ? <TrafficLines props={{traffic}} /> : <ScreenSaver /> }
 
     </div>
   )
