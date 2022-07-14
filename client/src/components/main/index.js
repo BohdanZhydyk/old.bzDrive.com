@@ -19,6 +19,7 @@ import Document from "./Office/Document"
 import CV from "./Applications/CV"
 import Store from "./Applications/Store"
 import Unsplash from './Applications/Unsplash'
+import Pass from './Applications/Pass'
 
 import Traffic from "./Statistic/Traffic"
 import Finance from "./Statistic/Finance"
@@ -46,6 +47,7 @@ const Main = ({ props:{state, user, side, appFn} })=>{
       case "/apps/store":           return <Store />
       case "/apps/cv":              return <CV />
       case "/apps/unsplash":        return <Unsplash />
+      case "/apps/pass":            return <Pass />
       // Office
       case "/office/zl":            return <ZL />
       case "/office/fs":            return <FS />

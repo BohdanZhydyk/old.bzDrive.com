@@ -27,6 +27,8 @@ const Document = ()=>{
     DO: ()=> handlePrint()
   }
 
+  handlePrint()
+
   // console.log("doc", doc)
 
   return(

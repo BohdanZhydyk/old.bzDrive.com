@@ -4,6 +4,29 @@
   min-height:2vw;
   margin:1vw 0;
 
+  .horizontalLine {
+    width:95%;
+    margin:0.5vw 0;
+    border-top:1px dashed #f60;
+  }
+
+  .AddWeekBtn {
+    width:100%;
+    
+    .Btn {
+      width:30vw;
+      min-height:1.5vw;
+      margin:1vw 5vw 0 0;
+      padding:0.5vw 0;
+      background-color:#171;
+      border-radius:0.5vw;
+      &:hover {
+        font-size:120%;
+        background-image:linear-gradient(#191, #151 30% 70%, #191);
+      }
+    }
+  }
+
   .Week {
     width:100%;
 
@@ -76,6 +99,53 @@
 
     .EditArea {
       width:100%;
+    }
+  }
+
+  .Salary {
+    width:100%;
+    margin:2vw 0 0 0;
+    padding:1vw 0;
+
+    .SalaryOrder {
+      width:95%;
+      margin:0 0 0.25vw 0;
+
+      .Cell {
+        padding:0.5vw;
+        border:1px solid #999;
+        border-radius:0.25vw;
+      }
+
+      .OrderNr {width:calc(15% - 1vw - 2px);}
+      .Car {width:calc(50% - 1vw - 2px);}
+      .Tel {width:calc(15% - 1vw - 2px);}
+      .Brutto {width:calc(10% - 1vw - 2px);}
+    }
+
+    .SaveCheckedBtn {
+      width:95%;
+
+      .Cell {
+        min-height:2vw;
+        padding:0.5vw;
+        border:1px solid #0000;
+        border-radius:0.25vw;
+      }
+
+      .EmptyBefore {
+        width:calc(70% - 1vw - 2px);
+        font-size:130%;
+      }
+      .EmptyAfter {width:3vw;}
+      .Btn {
+        width:calc(20% - 1vw - 2px);
+        background-color:#171;
+        &:hover {
+          font-size:120%;
+          background-image:linear-gradient(#191, #151 30% 70%, #191);
+        }
+      }
     }
   }
 }

@@ -52,7 +52,7 @@ function App() {
 
   useEffect( ()=> appFn({type:"GET_STATE"}), [] )
 
-  console.log('state',state)
+  // console.log('state',state)
 
   return (
 

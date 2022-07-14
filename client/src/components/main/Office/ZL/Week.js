@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from "react"
 
-import { WeekDaysLine } from "./WeekDaysLine"
+import { DaysLine } from "./DaysLine"
 import { Orders } from "./Orders"
 
 
-export const Week = ({ props:{mode, week, GetDay, lang, translate, ReloadFn, officeFn} })=>{
+export const Week = ({ props:{mode, line, l, GetDay, lang, translate, ReloadFn, officeFn} })=>{
 
-  const [table, setTable] = useState(false)
+  let week = line.week
+  
+  const [table, setTable] = useState(line.table)
 
   let query = {
     $and: [
-      {"date.unix": { $lte: week[week.length - 1].unix }},
+      {"date.unix": { $lte: line.week[line.week.length - 1].unix }},
       { $or: [
-        {"dateTo.unix":{ $gte: week[0].unix }},
+        {"dateTo.unix":{ $gte: line.week[0].unix }},
         {"status":"edited"}
       ]}
     ]
@@ -46,15 +48,15 @@ export const Week = ({ props:{mode, week, GetDay, lang, translate, ReloadFn, off
     )
 
   }) },[])
-
-  // console.log("table", table)
+  
+  // console.log("week-"+l, week)
 
   return(
     <div className="Week flex stretch wrap">
     
-      <WeekDaysLine props={{mode, week, table, GetDay, lang, translate, ReloadFn, officeFn}}/>
+      {line && <DaysLine props={{mode, week, GetDay, lang, translate, ReloadFn, officeFn}}/>}
     
-      <Orders props={{mode, week, table, ReloadFn, officeFn}}/>
+      {table && <Orders props={{mode, week, table, ReloadFn, officeFn}}/>}
 
     </div>
   )

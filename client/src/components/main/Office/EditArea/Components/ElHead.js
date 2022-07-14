@@ -1,10 +1,12 @@
 import React from 'react'
-import { NormalizeNr } from "../../../../../state/functions"
+import { NormalizeNr, bzGetUser } from "../../../../../state/functions"
 
 import { Input } from "./../../../../All/Input"
 
 
 export const ElHead = ({ props:{mode, dealer, place, date, dateTo, status, nr, print, AreaFn} })=>{
+
+  let userOk = ()=> (bzGetUser().login === dealer.user)
 
   let placeInput = {form:"PLACE", type:"text", legend:"Miejscowość", val:place, style:" end"}
   let fromInput = {form:"FROM_DATE", type:"date", legend:"Data wystawienia", val:date, style:" end"}
@@ -28,7 +30,7 @@ export const ElHead = ({ props:{mode, dealer, place, date, dateTo, status, nr, p
 
       <div className="placeDate flex wrap end">
 
-        { (!print && mode === "ZL") && <OrderDone props={{status, AreaFn}} /> }
+        { (userOk() && !print && mode === "ZL") && <OrderDone props={{status, AreaFn}} /> }
 
         <DocNr props={{mode, nr}} />
 

@@ -6,33 +6,28 @@ import "./ZL.scss"
 import { bzGetUser } from './../../../../state/functions'
 import { translate } from "./../../../../state/translate"
 import { officeFn } from "../actions"
-import {
-  GetDay,
-  Calendar
-} from "./ZL_Logic"
+import { GetDay, Calendar } from "./CalendarLogic"
+import { Title } from "./Title"
 import { ScreenSaver } from "./../../../All/ScreenSaver"
-import { WeekDaysPannel } from "./WeekDaysPannel"
+import { DaysPannelTop } from "./DaysPannelTop"
+import { AddWeekBtn } from "./AddWeekBtn"
 import { Week } from "./Week"
+import { Salary } from "./Salary"
 
 
 const ZL = ()=>{
 
   const mode = "ZL"
   
-  const lang = bzGetUser().lang
+  const user = bzGetUser()
+  const lang = user.lang
+  const role = user.role
   
   const [calendar, setCalendar] = useState( false )
   
   useEffect( ()=>{ !calendar && setCalendar( Calendar() ) },[])
   
-  let ReloadFn = ()=>{ setCalendar(false); setCalendar( Calendar() ) }
-
-  const MonthNames = translate(lang, "MonthNames")
-
-  let first = calendar && calendar[0][0]
-  let last = calendar && calendar[calendar.length - 1][calendar[calendar.length - 1].length - 1]
-  let from = `: ${first.day} ${MonthNames[parseInt(first.month - 1)]} ${first.year}`
-  let to = ` - ${last.day} ${MonthNames[parseInt(last.month - 1)]} ${last.year}`
+  let ReloadFn = ( NewCalendar = Calendar() )=>{ setCalendar(false); setCalendar( NewCalendar ) }
 
   // console.log("calendar", calendar)
 
@@ -44,20 +39,30 @@ const ZL = ()=>{
       :
       <div className="ZL flex column">
 
-        <span className="title flex bold">{`${translate(lang, mode)}${from}${to}`}</span>
+        <Title props={{mode, lang, calendar}}/>
 
-        <WeekDaysPannel props={{lang, translate}}/>
+        <div className="horizontalLine"></div>
+
+        <AddWeekBtn props={{act:"MINUS_WEEK", calendar, setCalendar, officeFn}}/>
+
+        <DaysPannelTop props={{lang, translate}}/>
 
         {
-          calendar.map( (week, w)=>{
+          calendar.map( (line, l)=>{
 
-            let props = {mode, week, GetDay, lang, translate, ReloadFn, officeFn}
-            let key = `WeekKey${w}`
+            let props = {mode, line, l, GetDay, lang, translate, ReloadFn, officeFn}
+            let key = `WeekKey${l}${line.week[0].unix}`
 
             return <Week props={props} key={key} />
 
           })
         }
+
+        <AddWeekBtn props={{act:"PLUS_WEEK", calendar, setCalendar, officeFn}}/>
+
+        <div className="horizontalLine"></div>
+
+        <Salary props={{mode, role, ReloadFn, officeFn}} />
 
       </div>
     }

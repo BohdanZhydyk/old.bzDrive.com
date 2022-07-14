@@ -11,46 +11,33 @@ exports.getState = (req, res)=>{
 
   bzDB( { req, res, collection:'bzState', act:"FIND_ONE", query:{_id} }, (data)=>{
 
-    let sendData = (nav)=>{
+    let Filter = (nav, lvl)=>{
+      let arr = []
+      arr = nav.filter( el=> (el.lvl <= lvl) )
       res.send({
         ...data,
         object:{
           ...data.object,
           result:{
             ...data.object.result,
-            nav:nav
+            nav: arr.map( el=> el.subnav
+              ? {...el, subnav:el.subnav.filter( el=> (el.lvl <= lvl) )}
+              : el
+            )
           }
         }
       })
     }
 
+    let nav = data.object.result.nav
+
     switch(data?.user?.role){
-      case "admin":
-        sendData(data.object.result.nav)
-        break
-      case "master":
-        sendData(
-          data.object.result.nav.filter(
-            el=> (el.role !== 'admin')
-          )
-        )
-        break
-      case "user":
-        sendData(
-          data.object.result.nav.filter(
-            el=> (el.role !== 'admin') && (el.role !== 'master')
-          )
-        )
-        break
-      default:
-        sendData(
-          data.object.result.nav.filter(
-            el=> el.role === 'guest'
-          )
-        )
-        break
+      case "admin":   Filter( nav, 3 );     break
+      case "master":  Filter( nav, 2 );     break
+      case "user":    Filter( nav, 1 );     break
+      default:        Filter( nav, 0 );     break
     }
-    }
-  )
+
+  })
 
 }

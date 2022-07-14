@@ -1,0 +1,96 @@
+
+.Pass {
+  width:100%;
+
+  .title {
+    width:100%;
+    font-size:150%;
+    margin:0.5vw 0;
+
+    .txtOrg{ margin-left:1vw; }
+  }
+
+  .PassTable {
+    width:95%;
+
+    .PassEl {
+      position:relative;
+      width:calc( (100% / 5) - 2vw - 4px );
+      margin:0.5vw;
+      padding:0.5vw;
+      background-color:#4659;
+      border:1px solid #999;
+      border-radius:0.5vw;
+
+      img {
+        position:absolute;
+        left:0;
+        width:1.5vw;
+        margin:0.25vw 0.5vw;
+      }
+    }
+    .edit{
+      @extend .PassEl;
+      padding:0.75vw;
+      margin:0.5vw 0.5vw -1px 0.5vw;
+      background-color:#222;
+      background-image:linear-gradient(#f605, #222);
+      border-bottom:none;
+      border-radius:0.5vw 0.5vw 0 0;
+    }
+
+    .EditPannel {
+      width:100%;
+
+      .PassSubEl {
+        width:100%;
+        margin-bottom:0.25vw;
+        padding:0.5vw;
+        background-color:#222;
+        border:1px solid #999;
+        border-radius:0.5vw;
+
+        .inputWrapper{
+          width:calc((100% / 3) - 2.5vw - 8px);
+          margin:0 0.5vw;
+          border-radius:0.5vw;
+          @media (max-width: 768px) {
+            width:100%;
+          }
+        }
+
+        .textAreaWrapper {
+          width:calc(100% - 3vw - 2px);
+          margin:0 0.5vw;
+          border-radius:0.5vw;
+          @media (max-width: 768px) {
+            width:100%;
+          }
+        }
+
+        legend {
+          font-size:80%;
+          margin:0 1vw;
+          padding:0 0.5vw;
+          color:#f60;
+        }
+
+        input {
+          width:100%;
+          border:none;
+          background-color:#0000;
+        }
+
+        textarea {
+          width:100%;
+          min-height:2vw;
+          color:#fff;
+          margin:0.25vw 0;
+          resize:none;
+          border:none;
+          background-color:#0000;
+        }
+      }
+    }
+  }
+}

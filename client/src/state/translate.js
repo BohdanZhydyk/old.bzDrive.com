@@ -121,6 +121,12 @@ export const translate = (lang = 'en', txt)=>{
       if(lang === 'pl'){ return `Unsplash` }
       if(lang === 'ru'){ return `Unsplash` }
       break
+    case "bzPass":
+      if(lang === 'en'){ return `bzPasswords` }
+      if(lang === 'ua'){ return `bzПаролі` }
+      if(lang === 'pl'){ return `bzHasła` }
+      if(lang === 'ru'){ return `bzПароли` }
+      break
     case "Statistic":
       if(lang === 'en'){ return `Statistic` }
       if(lang === 'ua'){ return `Статистика` }

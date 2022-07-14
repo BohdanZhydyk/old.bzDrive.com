@@ -25,7 +25,16 @@ export const ElFaults = ({ props:{car, print, AreaFn} })=>{
           {faults ? car.faults : ""}
         </textarea>
         :
-        <div className="FaultsTxt">{faults ? car.faults : ""}</div>
+        <div className="FaultsTxt">
+          {
+            !faults
+            ? ""
+            : car.faults.split('\n').map( (el, l)=>{
+              let key = `FaltsLine_${l}_${Math.floor(Math.random() * 5)}`
+                return (<div className="FaltsLine flex start" key={key}>{el}</div>)
+              })
+          }
+        </div>
       }
 
     </section>

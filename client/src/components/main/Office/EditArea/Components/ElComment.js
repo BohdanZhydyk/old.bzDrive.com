@@ -25,7 +25,17 @@ export const ElComment = ({ props:{comments, print, AreaFn} })=>{
             {comments}
           </textarea>
           :
-          <div className="CommentsTxt">{comments}</div>
+          // <div className="CommentsTxt">{comments}</div>
+          <div className="CommentsTxt">
+          {
+            !comments
+            ? ""
+            : comments.split('\n').map( (el, l)=>{
+              let key = `CommentsLine_${l}_${Math.floor(Math.random() * 5)}`
+                return (<div className="CommentsLine flex start" key={key}>{el}</div>)
+              })
+          }
+        </div>
         }
 
       </div>

@@ -1,5 +1,7 @@
 import React from "react"
 
+import { TwoDig } from "../../state/functions"
+
 
 export const Input =({ props:{input, print, Fn} })=>{
 
@@ -14,8 +16,8 @@ export const Input =({ props:{input, print, Fn} })=>{
 
   let VAL = input.type === "date" ? input.val : false
   let YYYY = `${parseInt(VAL?.year)}`
-  let MM = (parseInt(VAL?.month) < 10) ? `0${parseInt(VAL?.month)}` : `${parseInt(VAL?.month)}`
-  let DD = (parseInt(VAL?.day) < 10) ? `0${parseInt(VAL?.day)}` : `${parseInt(VAL?.day)}`
+  let MM = TwoDig(VAL?.month)
+  let DD = TwoDig(VAL?.day)
 
   let date = input.type === "date" ? {year:YYYY, month:MM, day:DD} : false
 
@@ -33,9 +35,7 @@ export const Input =({ props:{input, print, Fn} })=>{
       ?
       <fieldset className={`inputWrapper ${input.error && `inputWrapperError`} flex wrap`}>
 
-        <legend >
-          {input.legend}
-        </legend>
+        <legend>{input.legend}</legend>
 
         <input
           type={ input.type }

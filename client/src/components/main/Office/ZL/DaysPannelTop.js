@@ -1,7 +1,7 @@
 import React from "react"
 
 
-export const WeekDaysPannel = ({ props:{lang, translate} })=>{
+export const DaysPannelTop = ({ props:{lang, translate} })=>{
 
   const DayNames = translate(lang, "DayNames")
   

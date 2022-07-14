@@ -26,14 +26,7 @@ export const unixToDateTimeConverter = ( DATE = new Date(Date.now()) )=>{
   return dateTime
 }
 
-export const inputDateToStandart = ( date )=>{
-  let newDate = {
-    year:   date[0]+date[1]+date[2]+date[3],
-    month:  date[5]+date[6],
-    day:    date[8]+date[9]
-  }
-  return newDate
-}
+export const TwoDig = (dig)=> (parseInt(dig) < 10) ? `0${parseInt(dig)}` : `${parseInt(dig)}`
 
 export const bzCalc = (operation, a, b)=>{
   let x = parseFloat(a)
@@ -107,9 +100,11 @@ export const bzPriceToWord = (int)=>{
 }
 
 export const NormalizeNr = (mode, nr)=>{
+  let month = nr?.month
   let sign = nr?.sign
+  while(month && month.length !== 2){ month = `0${month}` }
   while(sign && sign.length !== 6){ sign = `0${sign}` }
-  return `${mode}/${nr?.year}/${nr?.month}/${sign}`
+  return `${mode}/${nr?.year}/${month}/${sign}`
 }
 
 let digits = "0123456789"

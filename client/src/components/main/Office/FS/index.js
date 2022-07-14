@@ -5,7 +5,8 @@ import "./FS.scss"
 import { translate } from "./../../../../state/translate"
 import {
   unixToDateTimeConverter,
-  bzGetUser
+  bzGetUser,
+  TwoDig
 } from "./../../../../state/functions"
 import { officeFn } from "../actions"
 import { ScreenSaver } from "./../../../All/ScreenSaver"
@@ -68,12 +69,12 @@ const FS = ()=>{
   
   let nipInput = {form:"NIP", type:"text", legend:"NIP", val:nip}
   let clientInput = {form:"CLIENT", type:"text", legend:"Client", val:client}
-  let fomInput = {form:"FROM", type:"date", legend:"Od", val:from}
+  let fromInput = {form:"FROM", type:"date", legend:"Od", val:from}
   let toInput = {form:"TO", type:"date", legend:"Do", val:to}
 
   let title = `${translate(lang, mode)}:
-    ${from.day} ${MonthNames[parseInt(from.month - 1)]} ${from.year} -
-    ${to.day} ${MonthNames[parseInt(to.month - 1)]} ${to.year}`
+    ${TwoDig(from.day)} ${MonthNames[parseInt(from.month - 1)]} ${from.year} -
+    ${TwoDig(to.day)} ${MonthNames[parseInt(to.month - 1)]} ${to.year}`
 
   let ReloadFn = ()=>{ setInvoices(false); GET_TABLE(from, to) }
 
@@ -92,7 +93,7 @@ const FS = ()=>{
         <div className="SearchPannel flex end">
           <Input props={{input:nipInput, Fn:invFn}} />
           <Input props={{input:clientInput, Fn:invFn}} />
-          <Input props={{input:fomInput, Fn:invFn}} />
+          <Input props={{input:fromInput, Fn:invFn}} />
           <Input props={{input:toInput, Fn:invFn}} />
         </div>
 
