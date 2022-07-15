@@ -32,4 +32,21 @@
     }
   }
 
+  .line {
+    width:95%;
+
+    .EditArea {
+      width:100%;
+    }
+  }
+
+  .EmptyList {
+    width:80%;
+    padding:1.5vw 0;
+    font-size:150%;
+    background-image:linear-gradient(#f605, #0000 20% 80%, #f605);
+    border:1px solid #f60;
+    border-radius:0.5vw;
+  }
+
 }

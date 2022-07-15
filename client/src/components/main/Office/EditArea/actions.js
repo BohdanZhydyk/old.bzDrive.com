@@ -3,7 +3,9 @@ import {
   bzGetUser,
   bzCalc,
   unixToDateTimeConverter,
-  FirstToCapital
+  FirstToCapital,
+  DigLen,
+  UnixToYYYYMMDD
 } from "./../../../../state/functions"
 import axios from 'axios'
 
@@ -28,8 +30,18 @@ export const EFFECT = (mode, setDealer, place, setPlace, nr, setNr)=>{
 
 export const HEAD = {
   CHG_PLACE:      (action, setPlace)=> setPlace( action.value ),
-  CHG_FROM_DATE:  (action, setDate)=> setDate( action.value ),
-  CHG_TO_DATE:    (action, setDateTo)=> setDateTo( action.value ),
+  CHG_FROM_DATE:  (action, pay, setPay, dateTo, setDate)=>{
+    let newFrom = ( DigLen(action.value.year, 4)+DigLen(action.value.month, 2)+DigLen(action.value.day, 2) )
+    let To = ( DigLen(dateTo.year, 4)+DigLen(dateTo.month, 2)+DigLen(dateTo.day, 2) )
+    let payDate = ( DigLen(pay.date.year, 4)+DigLen(pay.date.month, 2)+DigLen(pay.date.day, 2) )
+    To >= newFrom && setDate( action.value )
+    payDate < newFrom && setPay({ ...pay, date:action.value })
+  },
+  CHG_TO_DATE:    (action, date, setDateTo)=>{
+    let newTo = ( DigLen(action.value.year, 4)+DigLen(action.value.month, 2)+DigLen(action.value.day, 2) )
+    let Date = ( DigLen(date.year, 4)+DigLen(date.month, 2)+DigLen(date.day, 2) )
+    newTo >= Date && setDateTo( action.value )
+  },
   CHG_STATUS:     (action, setStatus)=> setStatus( action.value )
 }
 
@@ -119,7 +131,11 @@ export const ART = {
 export const FOO = {
   CHG_COMMENTS: (action, setComments)=> setComments(action.value),
   CHG_METHOD:   (action, pay, setPay)=> setPay({ ...pay, method:action.value }),
-  CHG_PAYDATE:  (action, pay, setPay)=> setPay({ ...pay, date:action.value })
+  CHG_PAYDATE:  (action, date, pay, setPay)=>{
+    let newPay = ( DigLen(action.value.year, 4)+DigLen(action.value.month, 2)+DigLen(action.value.day, 2) )
+    let Date = ( DigLen(date.year, 4)+DigLen(date.month, 2)+DigLen(date.day, 2) )
+    Date <= newPay && setPay({ ...pay, date:action.value })
+  }
 }
 
 export const GET_CEIDG = (action, date, buyer, setBuyer, client, setClient)=>{

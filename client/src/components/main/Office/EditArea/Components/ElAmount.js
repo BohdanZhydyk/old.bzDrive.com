@@ -1,12 +1,12 @@
 import React from 'react'
-import { SummaryAll, bzPriceToWord, TwoDig } from "../../../../../state/functions"
+import { SummaryAll, bzPriceToWord, DigLen } from "../../../../../state/functions"
 import { Input } from "./../../../../All/Input"
 
 
 export const ElAmount = ({ props:{mode, pay, articles, print, AreaFn} })=>{
 
   let payDateEdit = {form:"PAYDATE", type:"date", legend:`Data`, val:pay.date}
-  let payDate = `${TwoDig(pay.date.day)}.${TwoDig(pay.date.month)}.${pay.date.year}`
+  let payDate = `${DigLen(pay.date.day, 2)}.${DigLen(pay.date.month, 2)}.${DigLen(pay.date.year, 4)}`
 
   let amount = (mode === "FS")
   ? [

@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 
+import { UnixToYYYYMMDD } from "../../../../state/functions"
 import EditArea from "./../EditArea"
 
 
@@ -9,7 +10,7 @@ export const Order = ({ props:{mode, week, zl, ReloadFn, officeFn} }) => {
 
   let CANCEL = ()=> setShow(false)
 
-  const Day = (u)=> new Date(u).getDay() !== 0 ? new Date(u).getDay() : 7
+  const Day = (unix)=> new Date(unix).getDay() !== 0 ? new Date(unix).getDay() : 7
 
   let car = `${zl.car.brand} - ${zl.car.model}`
 
@@ -19,16 +20,16 @@ export const Order = ({ props:{mode, week, zl, ReloadFn, officeFn} }) => {
   let firstDayUnix = week[0].unix
   let lastDayUnix = week[week.length - 1].unix
 
-  if( (zl.date.unix <= firstDayUnix) ){ day = 1 }
-  if( (zl.dateTo.unix >= lastDayUnix) ){ dayTo = 7 }
+  if( (UnixToYYYYMMDD(zl.date.unix) <= UnixToYYYYMMDD(firstDayUnix)) ){ day = 1 }
+  if( (UnixToYYYYMMDD(zl.dateTo.unix) >= UnixToYYYYMMDD(lastDayUnix)) ){ dayTo = 7 }
 
   let widthZl = (dayTo - day) + 1
 
   let orderStyles = {
     display: (
       zl.status === "edited"
-      && firstDayUnix > Date.now()
-      && firstDayUnix - 84600000 > zl.dateTo.unix
+      && UnixToYYYYMMDD(firstDayUnix) >= UnixToYYYYMMDD(Date.now())
+      && UnixToYYYYMMDD(firstDayUnix) > UnixToYYYYMMDD(zl.dateTo.unix)
     ) ? `none` : `flex`
   }
   let beforeStyles = {width:`calc( (100% / 7) * ${day - Day(firstDayUnix)})`}

@@ -1,10 +1,10 @@
 import React, { useState } from "react"
 
-import { TwoDig } from "../../../../state/functions"
+import { DigLen, IsSameDay, IsSameMonth } from "../../../../state/functions"
 import EditArea from "./../EditArea"
 
 
-export const DaysLine = ({ props:{mode, week, GetDay, lang, translate, ReloadFn, officeFn} })=>{
+export const DaysLine = ({ props:{mode, week, lang, translate, ReloadFn, officeFn} })=>{
 
   const MonthNames = translate(lang, "MonthNames")
 
@@ -18,16 +18,19 @@ export const DaysLine = ({ props:{mode, week, GetDay, lang, translate, ReloadFn,
     {
       week.map( (day, n)=>{
 
-        let ActiveMonth = parseInt(day.month) === parseInt( GetDay().month ) ? `ActiveMonth` : ``
+        let sameDay = IsSameDay( day.unix, Date.now() )
+        let sameMonth = IsSameMonth( day.unix, Date.now() )
+
+        let ActiveMonth = sameMonth ? `ActiveMonth` : ``
         let HoliDay = (day.weekday === 6 || day.weekday === 7) ? `HoliDay` : ``
-        let DayActive = parseInt(day.unix / 1000000) === parseInt(Date.now() / 1000000) ? `DayActive` : ``
+        let DayActive = sameDay ? `DayActive` : ``
         let classes = `${ActiveMonth} ${HoliDay} ${DayActive} Day flex column start`
 
         return(
           <div className={classes} key={`CalendarDay${n+day.unix}`}>
 
-            <div className="DayLine flex" onClick={ ()=>SHOW_AREA(DayActive) }>
-              { `${TwoDig(day.day)} ${MonthNames[parseInt(day.month - 1)]} ${day.year}` }
+            <div className="DayLine flex" onClick={ ()=>SHOW_AREA(sameDay) }>
+              { `${DigLen(day.day, 2)} ${MonthNames[parseInt(day.month - 1)]} ${DigLen(day.year, 4)}` }
             </div>
 
           </div>

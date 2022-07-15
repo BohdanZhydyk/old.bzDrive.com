@@ -3,10 +3,10 @@ import cookies from 'js-cookie'
 import "./EditArea.scss"
 
 import {
-  emptyArt, YYYYMMDD,
-  HEAD, BUYER, CAR, CLI, ART, FOO,
-  EFFECT, GET_CEIDG, SAVE_DOC
+  emptyArt, YYYYMMDD, HEAD, BUYER, CAR, CLI,
+  ART, FOO, EFFECT, GET_CEIDG, SAVE_DOC
 } from "./actions"
+import { ElStatus } from "./Components/ElStatus"
 import { EditAreaBtns } from "./Components/EditAreaBtns"
 import { ElHead } from "./Components/ElHead"
 import { ElInfo } from "./Components/ElInfo"
@@ -45,8 +45,8 @@ const EditArea = ({ props:{mode, line, CANCEL, PRINTFUNC, ReloadFn, officeFn} })
   let AreaFn = (action)=>{
     switch(action.type){
       case "CHG_PLACE":       HEAD.CHG_PLACE(action, setPlace);                                 break
-      case "CHG_FROM_DATE":   HEAD.CHG_FROM_DATE(action, setDate);                              break
-      case "CHG_TO_DATE":     HEAD.CHG_TO_DATE(action, setDateTo);                              break
+      case "CHG_FROM_DATE":   HEAD.CHG_FROM_DATE(action, pay, setPay, dateTo, setDate);         break
+      case "CHG_TO_DATE":     HEAD.CHG_TO_DATE(action, date, setDateTo);                        break
       case "CHG_STATUS":      HEAD.CHG_STATUS(action, setStatus);                               break
 
       case "CHG_BUYER_NAME":  BUYER.CHG_BUYER_NAME(action, buyer, setBuyer);                    break
@@ -86,7 +86,7 @@ const EditArea = ({ props:{mode, line, CANCEL, PRINTFUNC, ReloadFn, officeFn} })
       
       case "CHG_COMMENTS":    FOO.CHG_COMMENTS(action, setComments);                            break
       case "CHG_METHOD":      FOO.CHG_METHOD(action, pay, setPay);                              break
-      case "CHG_PAYDATE":     FOO.CHG_PAYDATE(action, pay, setPay);                             break
+      case "CHG_PAYDATE":     FOO.CHG_PAYDATE(action, date, pay, setPay);                       break
 
       case "KEYUP_BUYER_NIP": GET_CEIDG(action, date, buyer, setBuyer, client, setClient);      break
 
@@ -119,11 +119,13 @@ const EditArea = ({ props:{mode, line, CANCEL, PRINTFUNC, ReloadFn, officeFn} })
       dealer &&
       <div className="EditArea flex column start">
 
+        <ElStatus props={{mode, status, dealer, print, AreaFn}}/>
+
         <EditAreaBtns props={{mode, status, dealer, id, AreaFn, CANCEL, print, DO}}/>
 
         {
           (mode === "FS" || mode === "ZL") &&
-          <ElHead props={{mode, dealer, place, date, dateTo, status, nr, print, AreaFn}} />
+          <ElHead props={{mode, dealer, place, date, dateTo, nr, print, AreaFn}} />
         }
 
         {

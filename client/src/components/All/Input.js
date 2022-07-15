@@ -1,6 +1,6 @@
 import React from "react"
 
-import { TwoDig } from "../../state/functions"
+import { DigLen } from "../../state/functions"
 
 
 export const Input =({ props:{input, print, Fn} })=>{
@@ -15,9 +15,9 @@ export const Input =({ props:{input, print, Fn} })=>{
   let ON_KEYUP = (e)=>{ Fn({type:`KEYUP_${input.form}`, value:e.target.value, key:e.key}) }
 
   let VAL = input.type === "date" ? input.val : false
-  let YYYY = `${parseInt(VAL?.year)}`
-  let MM = TwoDig(VAL?.month)
-  let DD = TwoDig(VAL?.day)
+  let YYYY = VAL?.year && DigLen(VAL.year, 4)
+  let MM = VAL?.month && DigLen(VAL.month, 2)
+  let DD = VAL?.day && DigLen(VAL.day, 2)
 
   let date = input.type === "date" ? {year:YYYY, month:MM, day:DD} : false
 

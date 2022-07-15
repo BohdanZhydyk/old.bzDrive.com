@@ -256,11 +256,8 @@ const InfoLineOne = ({ props:{input} })=>{
     <>
     {
       input.map( (el, i)=>{
-
-        let key = `InfoLine${input.legend}${i}`
-        
         return(
-          <div className="infoLine" key={key}>
+          <div className="infoLine" key={`InfoLine${input.legend}${i}`}>
 
             <span className="infoLineLegend flex start">
               {`${el.legend}:`}
@@ -284,7 +281,7 @@ const InfoLineEdit = ({ props:{input, print, AreaFn} })=>{
 
       {
         input.map( (el, i)=>{
-          return <Input props={{input:el, print, Fn:AreaFn}} />
+          return <Input props={{input:el, print, Fn:AreaFn}} key={`InfoLine${input.legend}${i}`} />
         })
       }
 

@@ -1,5 +1,6 @@
 
 .EditArea{
+  position:relative;
   width:100%;
   margin:1vw 0;
   padding:0.5vw 0;
@@ -80,6 +81,48 @@
     }
   }
 
+  .ElStatus {
+    position:absolute;
+    left:2vw;
+    width:50%;
+    
+    .OrderStatusBtn {
+      width:30%;
+      min-height:3vw;
+      margin:0.5vw;
+      color:#999;
+      background-color:#444;
+      border-radius:0.5vw;
+      &:hover {
+        color:#fff;
+        font-size:120%;
+        background-image:linear-gradient(#f609, #0000 25% 75%, #f609);
+      }
+      @media (max-width: 768px) {min-height:5vw;}
+    }
+
+    .BtnAct_EDITED {
+      color:#fff;
+      background-color:#171;
+      &:hover {background-image:linear-gradient(#1a1, #0000 30% 70%, #1a1);}
+    }
+    .BtnAct_DONE {
+      color:#fff;
+      background-color:#fd09;
+      &:hover {background-image:linear-gradient(#fd0, #0000 30% 70%, #fd0);}
+    }
+    .BtnAct_SAVED, .BtnAct_NEW {
+      color:#fff;
+      background-color:#465;
+      &:hover {background-image:linear-gradient(#243, #0000 30% 70%, #243);}
+    }
+    .BtnAct_DELETED {
+      color:#fff;
+      background-color:#f007;
+      &:hover {background-image:linear-gradient(#f00, #0000 30% 70%, #f00);}
+    }
+  }
+
   .ElHead {
     width:95%;
     margin:0.5vw 0 1vw 0;
@@ -99,19 +142,6 @@
     .placeDate{
       width:60%;
       @media (max-width: 1024px) {width:60%;}
-
-      .orderDone {
-        width:25%;
-        min-height:3vw;
-        background-color:#171;
-        border-radius:0.5vw;
-        &:hover {
-          font-size:120%;
-          background-color:#191;
-        }
-        @media (min-width: 768px) and (max-width: 1024px) {margin:0 0 0 40%;}
-        @media (max-width: 768px) {width:30%; min-height:5vw;}
-      }
 
       .DocNr {
         width:70%;

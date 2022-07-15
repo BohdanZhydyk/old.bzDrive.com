@@ -17,7 +17,11 @@ export const Copyright = ({ props:{author, user, link} })=>{
 
       <span className="group flex">
       {
-        author.map( (el, i)=> <span className={`${cl[i]} bold`} key={`Author${i}`}>{el}</span> )
+        author.map( (el, i)=>
+          <span className={`${cl[i]} bold`} key={`Author${i}`}>
+            {el}
+          </span>
+        )
       }
       </span>
 
@@ -26,7 +30,11 @@ export const Copyright = ({ props:{author, user, link} })=>{
         link.map( (el, i)=>{
           return(
             <a href={href} target="_blank" rel="noreferrer" key={`Link${i}`} >
-              <span className={`${cl[i]} bold`}>{el}</span>
+
+              <span className={`${cl[i]} bold`}>
+                {el}
+              </span>
+              
             </a>
           )
           

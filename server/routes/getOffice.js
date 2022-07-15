@@ -82,10 +82,12 @@ exports.getOffice = (req, res)=>{
             date: {
               ...object.save.date,
               unix: Date.parse(`${object.save.date.year}-${object.save.date.month}-${object.save.date.day}`)
+              // unix: Date.now()
             },
             dateTo: {
               ...object.save.dateTo,
               unix: Date.parse(`${object.save.dateTo.year}-${object.save.dateTo.month}-${object.save.dateTo.day}`)
+              // unix: Date.now()
             },
             dealer: object.save.dealer,
             car: {

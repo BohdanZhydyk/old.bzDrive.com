@@ -9,7 +9,7 @@ const { getCV }					= require('./routes/getCV')
 const { getCookies }		= require('./routes/getCookies')
 const { auth }					= require('./routes/auth/auth')
 
-const { ChangeDB }					= require('./safe/ChangeDB')
+const { ChangeDB }			= require('./safe/ChangeDB')
 
 
 const app = express()

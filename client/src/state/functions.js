@@ -26,7 +26,40 @@ export const unixToDateTimeConverter = ( DATE = new Date(Date.now()) )=>{
   return dateTime
 }
 
-export const TwoDig = (dig)=> (parseInt(dig) < 10) ? `0${parseInt(dig)}` : `${parseInt(dig)}`
+export const DigLen = (dig, len)=>{
+  let newDig = dig ? dig.toString() : "E"
+  while(newDig.length < len){ newDig = `0${newDig}` }
+  return newDig
+}
+
+export const UnixToYYYYMMDD = (unix)=>{
+  let YYYY = DigLen(new Date(unix).getFullYear(), 4)
+  let MM = DigLen(new Date(unix).getMonth()+1, 2)
+  let DD = DigLen(new Date(unix).getDate(), 2)
+  return parseInt( YYYY + MM + DD )
+}
+
+export const  IsSameDay = (firstUnix, secondUnix)=>{
+  let getYYYYMMDD = (unix)=>{
+    let newDate = new Date(unix)
+    return `${DigLen(newDate.getFullYear(), 4)}${DigLen(newDate.getMonth()+1, 2)}${DigLen(newDate.getDate(), 2)}`
+  }
+  return getYYYYMMDD(firstUnix) === getYYYYMMDD(secondUnix)
+}
+export const  IsSameMonth = (firstUnix, secondUnix)=>{
+  let getYYYYMM = (unix)=>{
+    let newDate = new Date(unix)
+    return `${DigLen(newDate.getFullYear(), 4)}${DigLen(newDate.getMonth()+1, 2)}`
+  }
+  return getYYYYMM(firstUnix) === getYYYYMM(secondUnix)
+}
+export const  IsSameYear = (firstUnix, secondUnix)=>{
+  let getYYYY = (unix)=>{
+    let newDate = new Date(unix)
+    return `${DigLen(newDate.getFullYear(), 4)}`
+  }
+  return getYYYY(firstUnix) === getYYYY(secondUnix)
+}
 
 export const bzCalc = (operation, a, b)=>{
   let x = parseFloat(a)
@@ -100,11 +133,7 @@ export const bzPriceToWord = (int)=>{
 }
 
 export const NormalizeNr = (mode, nr)=>{
-  let month = nr?.month
-  let sign = nr?.sign
-  while(month && month.length !== 2){ month = `0${month}` }
-  while(sign && sign.length !== 6){ sign = `0${sign}` }
-  return `${mode}/${nr?.year}/${month}/${sign}`
+  return `${nr.letter}/${DigLen(nr.year, 4)}/${DigLen(nr.month, 2)}/${DigLen(nr.sign, 6)}`
 }
 
 let digits = "0123456789"
