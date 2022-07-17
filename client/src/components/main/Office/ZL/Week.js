@@ -4,7 +4,7 @@ import { DaysLine } from "./DaysLine"
 import { Orders } from "./Orders"
 
 
-export const Week = ({ props:{mode, line, l, GetDay, lang, translate, ReloadFn, officeFn} })=>{
+export const Week = ({ props:{mode, line, user, translate, ReloadFn, officeFn} })=>{
 
   let week = line.week
   
@@ -54,7 +54,7 @@ export const Week = ({ props:{mode, line, l, GetDay, lang, translate, ReloadFn, 
   return(
     <div className="Week flex stretch wrap">
     
-      {line && <DaysLine props={{mode, week, lang, translate, ReloadFn, officeFn}}/>}
+      {line && <DaysLine props={{mode, week, user, translate, ReloadFn, officeFn}}/>}
     
       {table && <Orders props={{mode, week, table, ReloadFn, officeFn}}/>}
 

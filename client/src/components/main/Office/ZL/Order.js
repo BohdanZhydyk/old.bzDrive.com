@@ -14,6 +14,8 @@ export const Order = ({ props:{mode, week, zl, ReloadFn, officeFn} }) => {
 
   let car = `${zl.car.brand} - ${zl.car.model}`
 
+  let ava = zl.dealer.img
+
   let day = Day(zl.date.unix)
   let dayTo = Day(zl.dateTo.unix)
 
@@ -49,8 +51,6 @@ export const Order = ({ props:{mode, week, zl, ReloadFn, officeFn} }) => {
     }
   }
 
-  // let afterStyles = {width:`calc( (100% / 7) * ${Day(lastDayUnix) - dayTo})`}
-
   return(
       <div className="Order flex start wrap" style={orderStyles}>
 
@@ -61,12 +61,11 @@ export const Order = ({ props:{mode, week, zl, ReloadFn, officeFn} }) => {
           <div className="StatusLine flex" style={{backgroundColor:statusStiles(zl.status)}}></div>
 
           <div className="CarName flex start">
-            {car}
+            <img className="OrderAva" src={ava} alt="ava" />
+            <span>{car}</span>
           </div>
           
         </div>
-
-        {/* <div className="After" style={afterStyles}></div> */}
 
         { show && <EditArea props={{mode, line:zl, CANCEL, ReloadFn, officeFn}}/> }
 

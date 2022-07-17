@@ -1,10 +1,7 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 
 import "./../Office.scss"
-import {
-  NormalizeNr,
-  nip_sanitize
-} from "./../../../../state/functions"
+import { NormalizeNr, nip_sanitize } from "./../../../../state/functions"
 import { Cell } from "./../Cell"
 import EditArea from "./../EditArea"
 
@@ -17,16 +14,18 @@ export const Invoice = ({ props:{mode, line, n, ReloadFn, officeFn} })=>{
 
   let cell = (line, n)=>{
 
-    let nr = n === 0      ? "Faktura Nr."   : NormalizeNr(mode, line?.nr)
+    let user = n === 0    ? "Wlasciciel"    : line?.dealer?.shortname
+    let nr = n === 0      ? "Faktura Nr."   : NormalizeNr(line?.nr)
     let nip = n === 0     ? "NIP"           : nip_sanitize(line?.buyer?.nip)
     let name = n === 0    ? "Nabywca"       : line?.buyer?.name
     let brutto = n === 0  ? "Cena brutto"   : line?.brutto
 
     return {
+      user:   {txt:user,    cl:"small",   align:"start",  line, n, cb:()=>setShow(!show) },
       nr:     {txt:nr,      cl:"small",   align:"",       line, n},
-      nip:    {txt:nip,     cl:"small",   align:"",       line, n},
       name:   {txt:name,    cl:"big",     align:"start",  line, n},
-      brutto: {txt:brutto,  cl:"small",   align:"end",    line, n, cb:()=>setShow(!show) }
+      nip:    {txt:nip,     cl:"small",   align:"",       line, n},
+      brutto: {txt:brutto,  cl:"small",   align:"end",    line, n}
     }
   }
 
@@ -34,13 +33,16 @@ export const Invoice = ({ props:{mode, line, n, ReloadFn, officeFn} })=>{
     <div className="line flex stretch wrap">
 
       <div>
+        <Cell props={ cell(line, n).user }/>
         <Cell props={ cell(line, n).nr }/>
-        <Cell props={ cell(line, n).nip }/>
       </div>
 
       <Cell props={ cell(line, n).name }/>
 
-      <Cell props={ cell(line, n).brutto }/>
+      <div>
+        <Cell props={ cell(line, n).nip }/>
+        <Cell props={ cell(line, n).brutto }/>
+      </div>
 
       { show && <EditArea props={{mode, line, CANCEL, ReloadFn, officeFn}}/> }
 

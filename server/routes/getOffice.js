@@ -56,6 +56,14 @@ exports.getOffice = (req, res)=>{
   if(object.save){
     
     let mode = object.mode
+    let DayParse = (date)=>{
+      return {
+        year: date.year,
+        month: date.month,
+        day: date.day,
+        unix: Date.parse(`${date.year}-${date.month}-${date.day}`)
+      }
+    }
 
     let save = ()=>{
       switch(mode){
@@ -64,7 +72,7 @@ exports.getOffice = (req, res)=>{
             status: object.save.status,
             nr: object.save.nr,
             place: object.save.place,
-            date: object.save.date,
+            date: DayParse(object.save.date),
             dealer: object.save.dealer,
             buyer: object.save.buyer,
             articles: object.save.articles,
@@ -72,28 +80,17 @@ exports.getOffice = (req, res)=>{
             netto: object.save.netto,
             priceVAT: object.save.priceVAT,
             brutto: object.save.brutto,
-            pay: object.save.pay
+            pay: { ...object.save.pay, date: DayParse(object.save.pay.date) }
           }
         case "ZL":
           return {
             status: object.save.status,
             nr: object.save.nr,
             place: object.save.place,
-            date: {
-              ...object.save.date,
-              unix: Date.parse(`${object.save.date.year}-${object.save.date.month}-${object.save.date.day}`)
-              // unix: Date.now()
-            },
-            dateTo: {
-              ...object.save.dateTo,
-              unix: Date.parse(`${object.save.dateTo.year}-${object.save.dateTo.month}-${object.save.dateTo.day}`)
-              // unix: Date.now()
-            },
+            date: DayParse(object.save.date),
+            dateTo: DayParse(object.save.dateTo),
             dealer: object.save.dealer,
-            car: {
-              ...object.save.car,
-              color: getRandomColor()
-            },
+            car: { ...object.save.car, color: getRandomColor() },
             buyer: object.save.buyer,
             articles: object.save.articles,
             netto: object.save.netto,

@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react"
 
 import "./../Office.scss"
 import "./FS.scss"
-import { unixToDateTimeConverter, bzGetUser } from "./../../../../state/functions"
+import { bzUnixToDateTime, bzGetUser, DateToUnix } from "./../../../../state/functions"
 import { officeFn } from "../actions"
 import { Title } from "./Title"
 import { ScreenSaver } from "./../../../All/ScreenSaver"
-import { SearchPannel } from "./SearchPannel"
+import SearchPannel from "../SearchPannel"
 import { Invoice } from "./Invoice"
 import { EmptyList } from "./EmptyList"
 
@@ -14,6 +14,8 @@ import { EmptyList } from "./EmptyList"
 const FS = ()=>{
 
   const mode = "FS"
+
+  const [searchSt, setSearchSt] = useState( false )
 
   const user = bzGetUser()
   const lang = user.lang
@@ -25,39 +27,81 @@ const FS = ()=>{
   const [client, setClient] = useState("")
 
   const [from, setFrom] = useState({
-    year:unixToDateTimeConverter().year,
-    month:unixToDateTimeConverter().month,
+    year:bzUnixToDateTime().year,
+    month:bzUnixToDateTime().month,
     day:1
   })
 
   const [to, setTo] = useState({
-    year:unixToDateTimeConverter().year,
-    month:unixToDateTimeConverter().month,
-    day:unixToDateTimeConverter().lastDay
+    year:bzUnixToDateTime().year,
+    month:bzUnixToDateTime().month,
+    day:bzUnixToDateTime().lastDay
   })
   
-  const GET_TABLE = (from, to)=>{
-    let query = {
-      $and: [
-        {"nr.year":{ $gte:from.year, $lte:to.year }},
-        {"nr.month":{ $gte:from.month, $lte:to.month }},
-        {"nr.day":{ $gte:from.day, $lte:to.day }}
-      ]
-    }
-    officeFn( {type:"GET_TABLE", mode, query}, (data)=>{ setInvoices(data)} )
-  }
+  const GET_TABLE = (query, cb)=> officeFn( {type:"GET_TABLE", mode, query}, (data)=> cb(data) )
 
-  useEffect( ()=>{ !invoices && GET_TABLE(from, to) },[])
+  useEffect( ()=>{
+    !invoices &&
+    GET_TABLE(
+      { "date.unix":{$gte:DateToUnix(from), $lte:DateToUnix(to)} },
+      (data)=> setInvoices(data)
+    )
+  },[])
 
   const invFn = (action)=>{
+
+    let from = action.from
+    let to = action.to
+    let client = action.client.length > 0 ? action.client : false
+    let nip = action.nip.length > 0 ? action.nip : false
+
+    let query1 = (client)
+      ? {
+          $or:[
+            {"buyer.name":{ $regex:client.toUpperCase() }},
+            {"buyer.name":{ $regex:client.toLowerCase() }},
+            {"buyer.name":{
+              $regex:(client.toLowerCase().charAt(0).toUpperCase() + client.toLowerCase().slice(1))
+            }}
+          ]
+        }
+      : {}
+    let query2 = (nip) ? { "buyer.nip":{$regex:nip} } : {}
+    let query3 = (from && to) ? { "date.unix":{$gte:DateToUnix(from), $lte:DateToUnix(to)} } : {}
+
     switch(action.type){
-      case "CHG_FROM":  setFrom({...action.value}); GET_TABLE(action.value, to);  return
-      case "CHG_TO":    setTo({...action.value}); GET_TABLE(from, action.value);  return
+      case "CHG_FROM":
+        setFrom({...action.value})
+        GET_TABLE(
+          { $and: [query1, query2, query3] },
+          (data)=> setInvoices(data)
+        )
+        return
+      case "CHG_TO":
+        setTo({...action.value})
+        GET_TABLE(
+          { $and: [query1, query2, query3] },
+          (data)=> setInvoices(data)
+        )
+        return
+      case "SEARCH":
+        setFrom({...action.from}); setTo({...action.to}); setSearchSt( true )
+        GET_TABLE(
+          { $and: [query1, query2, query3] },
+          (data)=> setInvoices(data)
+        )
+        return
       default: return
     }
   }
 
-  let ReloadFn = ()=>{ setInvoices(false); GET_TABLE(from, to) }
+  let ReloadFn = ()=>{
+    setInvoices(false);
+    GET_TABLE(
+      { "date.unix":{$gte:DateToUnix(from), $lte:DateToUnix(to)} },
+      (data)=> setInvoices(data)
+    )
+  }
 
   // console.log("invoices", invoices)
 
@@ -69,9 +113,9 @@ const FS = ()=>{
       :
       <div className="FS flex column">
 
-        <Title props={{mode, lang, from, to}}/>
+        <Title props={{mode, searchSt, lang, from, to}}/>
 
-        <SearchPannel props={{nip, client, from, to, invFn}}/>
+        <SearchPannel props={{mode, nip, client, from, to, Fn:invFn}}/>
 
         {
           [ {}, ...invoices ].map( (line, n)=>
@@ -81,7 +125,7 @@ const FS = ()=>{
           )
         }
 
-        <EmptyList props={{invoices}}/>
+        { invoices.length === 0 && <EmptyList /> }
         
       </div>
     }

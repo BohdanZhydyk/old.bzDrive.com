@@ -1,8 +1,8 @@
-import { unixToDateTimeConverter } from "../../../../state/functions"
+import { bzUnixToDateTime } from "../../../../state/functions"
 
 
 export const GetDay = ( unix = Date.now() )=>{
-  let NewDate = unixToDateTimeConverter( new Date(unix) )
+  let NewDate = bzUnixToDateTime( new Date(unix) )
   return {
     unix:     unix,
     weekday:  NewDate.weekday,

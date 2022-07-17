@@ -71,11 +71,10 @@ const DocNr = ({ props:{mode, nr} })=>{
   return(
     <section className="DocNr flex bold">
     {
-      nr?.year &&
       <>
         <span className="docName flex end">{ docName() }</span>
 
-        <span className="Number flex">{ NormalizeNr(mode, nr) }</span>
+        <span className="Number flex">{ NormalizeNr(nr) }</span>
       </>
     }
     </section>

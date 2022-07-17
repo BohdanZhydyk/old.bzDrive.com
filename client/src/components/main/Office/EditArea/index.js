@@ -6,6 +6,7 @@ import {
   emptyArt, YYYYMMDD, HEAD, BUYER, CAR, CLI,
   ART, FOO, EFFECT, GET_CEIDG, SAVE_DOC
 } from "./actions"
+import { bzGetUser } from "../../../../state/functions"
 import { ElStatus } from "./Components/ElStatus"
 import { EditAreaBtns } from "./Components/EditAreaBtns"
 import { ElHead } from "./Components/ElHead"
@@ -43,6 +44,9 @@ const EditArea = ({ props:{mode, line, CANCEL, PRINTFUNC, ReloadFn, officeFn} })
   useEffect( ()=>{ !dealer && EFFECT(mode, setDealer, place, setPlace, nr, setNr) },[])
 
   let AreaFn = (action)=>{
+
+    if( bzGetUser().login !== dealer.user && bzGetUser().role !== "admin" ){ setStatus("deleted") }
+
     switch(action.type){
       case "CHG_PLACE":       HEAD.CHG_PLACE(action, setPlace);                                 break
       case "CHG_FROM_DATE":   HEAD.CHG_FROM_DATE(action, pay, setPay, dateTo, setDate);         break
@@ -88,7 +92,7 @@ const EditArea = ({ props:{mode, line, CANCEL, PRINTFUNC, ReloadFn, officeFn} })
       case "CHG_METHOD":      FOO.CHG_METHOD(action, pay, setPay);                              break
       case "CHG_PAYDATE":     FOO.CHG_PAYDATE(action, date, pay, setPay);                       break
 
-      case "KEYUP_BUYER_NIP": GET_CEIDG(action, date, buyer, setBuyer, client, setClient);      break
+      case "KEYUP_IMG_BUYER_NIP": GET_CEIDG(action, date, buyer, setBuyer, client, setClient);  break
 
       case "PRINT_DOC":
         let el = {

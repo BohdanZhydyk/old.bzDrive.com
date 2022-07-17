@@ -15,7 +15,7 @@ export const ElStatus = ({ props:{mode, status, dealer, print, AreaFn} })=>{
   : [{status:"new", txt:{act:"Nowe", dis:"Nowe"}}]
 
   let CHG_STATUS = (st)=> st !== "new" && AreaFn({type:"CHG_STATUS", value:st})
-  let userOk = ()=> (bzGetUser().login === dealer.user)
+  let userOk = ()=> (bzGetUser().login === dealer.user) || bzGetUser().role === "admin"
 
   return(
     <span className="ElStatus flex start wrap">

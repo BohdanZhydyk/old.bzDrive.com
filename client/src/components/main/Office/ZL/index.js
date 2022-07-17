@@ -6,7 +6,7 @@ import "./ZL.scss"
 import { bzGetUser } from './../../../../state/functions'
 import { translate } from "./../../../../state/translate"
 import { officeFn } from "../actions"
-import { GetDay, Calendar } from "./CalendarLogic"
+import { Calendar } from "./CalendarLogic"
 import { Title } from "./Title"
 import { ScreenSaver } from "./../../../All/ScreenSaver"
 import { DaysPannelTop } from "./DaysPannelTop"
@@ -50,7 +50,7 @@ const ZL = ()=>{
         {
           calendar.map( (line, l)=>{
 
-            let props = {mode, line, l, GetDay, lang, translate, ReloadFn, officeFn}
+            let props = {mode, line, user, translate, ReloadFn, officeFn}
             let key = `WeekKey${l}${line.week[0].unix}`
 
             return <Week props={props} key={key} />
@@ -62,7 +62,7 @@ const ZL = ()=>{
 
         <div className="horizontalLine"></div>
 
-        <Salary props={{mode, role, ReloadFn, officeFn}} />
+        <Salary props={{mode, lang, role, calendar, ReloadFn, officeFn}} />
 
       </div>
     }

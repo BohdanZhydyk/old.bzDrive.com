@@ -12,7 +12,7 @@ export const Input =({ props:{input, print, Fn} })=>{
     Fn({type:`CHG_${input.form}`, value})
   }
 
-  let ON_KEYUP = (e)=>{ Fn({type:`KEYUP_${input.form}`, value:e.target.value, key:e.key}) }
+  let ON_KEYUP_IMG = (e)=>{ Fn({type:`KEYUP_IMG_${input.form}`, value:e.target.value, key:e.key}) }
 
   let VAL = input.type === "date" ? input.val : false
   let YYYY = VAL?.year && DigLen(VAL.year, 4)
@@ -28,12 +28,14 @@ export const Input =({ props:{input, print, Fn} })=>{
     ? input.type === "date" ? ( !print ? InputModeVal : TextModeVal ) : input.val
     : ""
 
+  let img = `https://files.bzdrive.com/img/ico/ico${input.img}.png`
+  
   return(
     <>
     {
       !print
       ?
-      <fieldset className={`inputWrapper ${input.error && `inputWrapperError`} flex wrap`}>
+      <fieldset className={`inputWrapper ${input.error && `inputWrapperError`} flex`}>
 
         <legend>{input.legend}</legend>
 
@@ -42,8 +44,17 @@ export const Input =({ props:{input, print, Fn} })=>{
           placeholder={ "wprowadź dane..." }
           value={ val }
           onChange={ (e)=> ON_CHANGE(e) }
-          onKeyUp={ (e)=> ON_KEYUP(e) }
+          onKeyUp={ (e)=> e.key === "Enter" && ON_KEYUP_IMG(e) }
         />
+
+        {
+          ( input.img && input?.val?.length > 0 ) &&
+          <img
+            src={img}
+            onClick={ ()=> ON_KEYUP_IMG({ target:{value:val}, key:"Enter" }) }
+            alt="search"
+          />
+        }
 
       </fieldset>
       :

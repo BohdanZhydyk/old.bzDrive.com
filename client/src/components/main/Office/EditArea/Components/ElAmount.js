@@ -1,5 +1,5 @@
 import React from 'react'
-import { SummaryAll, bzPriceToWord, DigLen } from "../../../../../state/functions"
+import { SumArray, bzPriceToWord, DigLen } from "../../../../../state/functions"
 import { Input } from "./../../../../All/Input"
 
 
@@ -8,16 +8,18 @@ export const ElAmount = ({ props:{mode, pay, articles, print, AreaFn} })=>{
   let payDateEdit = {form:"PAYDATE", type:"date", legend:`Data`, val:pay.date}
   let payDate = `${DigLen(pay.date.day, 2)}.${DigLen(pay.date.month, 2)}.${DigLen(pay.date.year, 4)}`
 
+  let sum = SumArray(articles.map( (el)=> el.sum) )
+
   let amount = (mode === "FS")
   ? [
-      { txt: `Do zapłaty`, content: `${ SummaryAll(articles).sum } zł` },
-      { txt: `Kwota słownie`, content: bzPriceToWord( SummaryAll(articles).sum ) },
+      { txt: `Do zapłaty`, content: `${sum} zł` },
+      { txt: `Kwota słownie`, content: bzPriceToWord(sum) },
       { txt: `Sposób płatności`, content: print ? pay.method : <Method props={{ method:(pay.method === `gotówka`), AreaFn }} /> },
       { txt: `Termin płatności`, content: print ? payDate : <Input props={{ input:payDateEdit, print, Fn:AreaFn }} /> }
     ]
   : [
-      { txt: `Do zapłaty`, content: `${ SummaryAll(articles).sum } zł` },
-      { txt: `Kwota słownie`, content: bzPriceToWord( SummaryAll(articles).sum ) }
+      { txt: `Do zapłaty`, content: `${sum} zł` },
+      { txt: `Kwota słownie`, content: bzPriceToWord(sum) }
     ]
 
   return(

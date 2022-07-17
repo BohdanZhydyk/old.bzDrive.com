@@ -4,9 +4,9 @@ import { DigLen, IsSameDay, IsSameMonth } from "../../../../state/functions"
 import EditArea from "./../EditArea"
 
 
-export const DaysLine = ({ props:{mode, week, lang, translate, ReloadFn, officeFn} })=>{
+export const DaysLine = ({ props:{mode, week, user, translate, ReloadFn, officeFn} })=>{
 
-  const MonthNames = translate(lang, "MonthNames")
+  const MonthNames = translate(user.lang, "MonthNames")
 
   const [showNew, setShowNew] = useState(false)
   let SHOW_AREA = (active)=> active && setShowNew(!showNew)

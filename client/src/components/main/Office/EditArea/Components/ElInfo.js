@@ -63,6 +63,7 @@ export const ElInfo = ({ props:{mode, car, client, dealer, buyer, print, AreaFn}
           type:"text",
           legend:"NIP",
           val:(info?.nip !== "NIP" ? nip_sanitize(info.nip) : ""),
+          img: (title !== "Sprzedawca" ? "Search" : false),
           error:errNIP( info?.nip !== "NIP" ? nip_sanitize(info.nip) : "" )
         }
       ],

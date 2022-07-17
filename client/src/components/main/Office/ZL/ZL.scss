@@ -51,7 +51,14 @@
           min-height:3px;
         }
 
-        .CarName {margin:0 0.5vw;}
+        .CarName {
+          margin:0 0.5vw;
+
+          .OrderAva {
+            width:1vw;
+            margin:0 0.5vw 0 0;
+          }
+        }
       }
     }
   
@@ -108,16 +115,36 @@
     padding:1vw 0;
 
     .SalaryOrder {
+      position:relative;
       width:95%;
-      margin:0 0 0.25vw 0;
+      margin:0.25vw 0 0 0;
 
       .Cell {
-        padding:0.5vw;
+        padding:0 0.5vw;
         border:1px solid #999;
         border-radius:0.25vw;
       }
 
-      .OrderNr {width:calc(15% - 1vw - 2px);}
+      .StatusLine {
+        position:absolute;
+        top:1.5vw;
+        left:3vw;
+        width:calc(15% - 1vw - 2px);
+        min-height:3px;
+      }
+      .OrderNr {
+        width:calc(15% - 1vw - 2px);
+
+        .OrderAva {
+          width:2vw;
+          height:2vw;
+          margin:0.25vw 0.5vw 0.25vw 0.25vw;
+          border-radius:0.25vw;
+          background-color:#0005;
+
+          img {width:1.5vw;}
+        }
+      }
       .Car {width:calc(50% - 1vw - 2px);}
       .Tel {width:calc(15% - 1vw - 2px);}
       .Brutto {width:calc(10% - 1vw - 2px);}
@@ -125,6 +152,7 @@
 
     .SaveCheckedBtn {
       width:95%;
+      margin:0.5vw 0 0 0;
 
       .Cell {
         min-height:2vw;

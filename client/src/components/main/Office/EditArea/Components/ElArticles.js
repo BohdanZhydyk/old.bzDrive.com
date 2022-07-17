@@ -1,5 +1,5 @@
 import React from 'react'
-import { SummaryAll } from "../../../../../state/functions"
+import { SumArray } from "../../../../../state/functions"
 
 
 export const ElArticles = ({ props:{mode, articles, print, AreaFn} })=>{
@@ -36,9 +36,9 @@ export const ElArticles = ({ props:{mode, articles, print, AreaFn} })=>{
       price: {cl:"elNone", val: "none"},
       quantity: {cl:"elNone", val: "none"},
       VAT: {cl:"elTop", val: "Razem"},
-      netto: SummaryAll(newArticles).net,
-      vat: SummaryAll(newArticles).vat,
-      sum: SummaryAll(newArticles).sum
+      netto: SumArray(newArticles.map( (el)=> el.netto)),
+      vat: SumArray(newArticles.map( (el)=> el.vat)),
+      sum: SumArray(newArticles.map( (el)=> el.sum))
   }
 
   return(

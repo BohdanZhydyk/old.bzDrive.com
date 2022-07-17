@@ -2,10 +2,10 @@ import {
   bzPost,
   bzGetUser,
   bzCalc,
-  unixToDateTimeConverter,
+  bzUnixToDateTime,
   FirstToCapital,
   DigLen,
-  UnixToYYYYMMDD
+  SumArray
 } from "./../../../../state/functions"
 import axios from 'axios'
 
@@ -15,9 +15,9 @@ export const emptyArt = {
 }
 
 export const YYYYMMDD = {
-  year: unixToDateTimeConverter().year,
-  month: unixToDateTimeConverter().month,
-  day: unixToDateTimeConverter().day,
+  year: bzUnixToDateTime().year,
+  month: bzUnixToDateTime().month,
+  day: bzUnixToDateTime().day,
 }
 
 export const EFFECT = (mode, setDealer, place, setPlace, nr, setNr)=>{
@@ -148,27 +148,27 @@ export const GET_CEIDG = (action, date, buyer, setBuyer, client, setClient)=>{
 
       let SetInfoFromNIP = (obj)=>{
         switch(action.type){
-          case "KEYUP_BUYER_NIP":    setBuyer({...buyer, ...obj});     break
-          case "KEYUP_CLIENT_NIP":   setClient({...client, ...obj});   break
+          case "KEYUP_IMG_BUYER_NIP":    setBuyer({...buyer, ...obj});     break
+          case "KEYUP_IMG_CLIENT_NIP":   setClient({...client, ...obj});   break
           default: break
         }
       }
 
       if( data[0] ){ SetInfoFromNIP(data[0].client); return }
-
-      let NIP = ""
-      for(let i=0; i<nip.length; i++){ if(nip[i] !== "-") NIP += nip[i] }
-
-      let YYYY = date.year
-      let MM = date.month < 10 ? `0${date.month}` : `${date.month}`
-      let DD = date.day < 10 ? `0${date.day}` : `${date.day}`
+      
+      let NIP = nip.split("-").join("")
+      let YYYY = DigLen(new Date( Date.now() ).getFullYear(), 4)
+      let MM =   DigLen(new Date( Date.now() ).getMonth()+1, 2)
+      let DD =   DigLen(new Date( Date.now() ).getDate(), 2)
 
       let link = `https://wl-api.mf.gov.pl/api/search/nip/${NIP}?date=${YYYY}-${MM}-${DD}`
       
       axios.get( link ).then( (res)=>{
+
         if(res.status === 200){
           
           res = res.data.result.subject
+          
           let newAddr = (res.residenceAddress ? res.residenceAddress : res.workingAddress).split(', ')
           let zip = ""
           let town = ""
@@ -179,18 +179,21 @@ export const GET_CEIDG = (action, date, buyer, setBuyer, client, setClient)=>{
               if(i > 6) town += newAddr[1][i]
             }
           }
-
-          SetInfoFromNIP({
-            name: res.name ? FirstToCapital( res.name ) : "",
-            // account: res.accountNumbers[0] ? res.accountNumbers[0] : "",
-            addr:{
-              zip,
-              town: FirstToCapital(town),
-              street: newAddr[0] ? `ul. ${FirstToCapital(newAddr[0])}` : ""
+          
+          SetInfoFromNIP (
+            {
+              name: res.name ? FirstToCapital( res.name ) : "",
+              // account: res.accountNumbers[0] ? res.accountNumbers[0] : "",
+              addr:{
+                zip,
+                town: FirstToCapital(town),
+                street: newAddr[0] ? `ul. ${FirstToCapital(newAddr[0])}` : ""
+              }
             }
-          })
+          )
 
         }
+        
       })
 
     })
@@ -200,15 +203,10 @@ export const GET_CEIDG = (action, date, buyer, setBuyer, client, setClient)=>{
 
 export const SAVE_DOC = ({mode, id, action, place, date, dateTo, nr, dealer, buyer, car, client, articles, comments, pay, ReloadFn, officeFn})=>{
 
-  let net = "0.00"
-  let vat = "0.00"
-  let sum = "0.00"
+  let net = SumArray(articles.map( el=> el.netto ))
+  let vat = SumArray(articles.map( el=> el.vat ))
+  let sum = SumArray(articles.map( el=> el.sum ))
 
-  for(let i=0; i<articles?.length; i++){
-    net = bzCalc( "+", net, articles[i].netto )
-    vat = bzCalc( "+", vat, articles[i].vat )
-    sum = bzCalc( "+", sum, articles[i].sum )
-  }
   let save = {
     id, status:action.status, place, date, dateTo, nr, dealer, buyer,
     car, client, articles, comments, netto:net, priceVAT:vat, brutto:sum, pay

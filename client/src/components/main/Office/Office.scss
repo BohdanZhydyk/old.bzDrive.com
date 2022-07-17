@@ -78,31 +78,28 @@
     }
   }
 
-  .ToPast{
+  .SearchPannel {
+    width:80%;
 
-    .empty{
-      width:80vw;
-      padding:0.5vw 0;
-      font-size:120%;
-      border:1px solid #f60;
-      border-radius:0.5vw;
-    }
-
-    .ToPastBtn{
-      width:20vw;
-      min-height:3vw;
-      margin:0.5vw 0;
-      font-size:120%;
-      background-color:#171;
-      border-radius:0.5vw;
-      &:hover{
-        font-size:140%;
-        background-color:#191;
+    fieldset {
+      width:20%;
+  
+      legend {
+        color:#f60;
       }
-      @media (max-width: 767px) {
-        width:40vw;
-        min-height:5vw;
+  
+      input {
+        width:100%;
       }
     }
+  }
+
+  .EmptyList {
+    width:85%;
+    padding:1.5vw 0;
+    font-size:150%;
+    background-image:linear-gradient(#f605, #0000 20% 80%, #f605);
+    border:1px solid #f60;
+    border-radius:0.5vw;
   }
 }

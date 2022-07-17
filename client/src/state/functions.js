@@ -12,10 +12,10 @@ export const bzSetToken = (bzToken)=> cookies.set('bzToken', bzToken )
 export const bzSetUser = (user)=> cookies.set( 'bzUser', JSON.stringify(user) )
 export const bzSetCookie = ()=> cookies.set('bzCookie', true)
 
-export const unixToDateTimeConverter = ( DATE = new Date(Date.now()) )=>{
+export const bzUnixToDateTime = ( DATE = new Date(Date.now()) )=>{
   let dateTime = {
     year:     DATE.getFullYear(),
-    month:    DATE.getMonth() + 1,
+    month:    DATE.getMonth()+1,
     day:      DATE.getDate(),
     weekday:  DATE.getDay() !== 0 ? DATE.getDay() : 7,
     hour:     DATE.getHours(),
@@ -32,33 +32,38 @@ export const DigLen = (dig, len)=>{
   return newDig
 }
 
+export const DateToUnix = (date)=>{
+  return Date.parse( `${DigLen(date.year,4)}-${DigLen(date.month,2)}-${DigLen(date.day,2)}` )
+}
+
+export const DateToYYYYMMDD = (date)=>{
+  return `${DigLen(date.year, 4)}${DigLen(date.month, 2)}${DigLen(date.day, 2)}`
+}
+
 export const UnixToYYYYMMDD = (unix)=>{
   let YYYY = DigLen(new Date(unix).getFullYear(), 4)
   let MM = DigLen(new Date(unix).getMonth()+1, 2)
   let DD = DigLen(new Date(unix).getDate(), 2)
   return parseInt( YYYY + MM + DD )
 }
+export const UnixToYYYYMM = (unix)=>{
+  let YYYY = DigLen(new Date(unix).getFullYear(), 4)
+  let MM = DigLen(new Date(unix).getMonth()+1, 2)
+  return parseInt( YYYY + MM )
+}
+export const UnixToYYYY = (unix)=>{
+  let YYYY = DigLen(new Date(unix).getFullYear(), 4)
+  return parseInt( YYYY )
+}
 
 export const  IsSameDay = (firstUnix, secondUnix)=>{
-  let getYYYYMMDD = (unix)=>{
-    let newDate = new Date(unix)
-    return `${DigLen(newDate.getFullYear(), 4)}${DigLen(newDate.getMonth()+1, 2)}${DigLen(newDate.getDate(), 2)}`
-  }
-  return getYYYYMMDD(firstUnix) === getYYYYMMDD(secondUnix)
+  return UnixToYYYYMMDD(firstUnix) === UnixToYYYYMMDD(secondUnix)
 }
 export const  IsSameMonth = (firstUnix, secondUnix)=>{
-  let getYYYYMM = (unix)=>{
-    let newDate = new Date(unix)
-    return `${DigLen(newDate.getFullYear(), 4)}${DigLen(newDate.getMonth()+1, 2)}`
-  }
-  return getYYYYMM(firstUnix) === getYYYYMM(secondUnix)
+  return UnixToYYYYMM(firstUnix) === UnixToYYYYMM(secondUnix)
 }
 export const  IsSameYear = (firstUnix, secondUnix)=>{
-  let getYYYY = (unix)=>{
-    let newDate = new Date(unix)
-    return `${DigLen(newDate.getFullYear(), 4)}`
-  }
-  return getYYYY(firstUnix) === getYYYY(secondUnix)
+  return UnixToYYYY(firstUnix) === UnixToYYYY(secondUnix)
 }
 
 export const bzCalc = (operation, a, b)=>{
@@ -73,24 +78,17 @@ export const bzCalc = (operation, a, b)=>{
   }
 }
 
-export const SummaryAll = (art)=>{
-  let net = "0.00"
-  let vat = "0.00"
-  let sum = "0.00"
-  for(let i=0; i<art?.length; i++){
-    net = bzCalc( "+", net, art[i].netto )
-    vat = bzCalc( "+", vat, art[i].vat )
-    sum = bzCalc( "+", sum, art[i].sum )
-  }
-  return { net, vat, sum }
+export const SumArray = (arr, sum = "0.00")=>{
+  for(let i=0; i<arr?.length; i++) sum = bzCalc( "+", sum, arr[i] )
+  return sum
 }
 
-export const bzPriceToWord = (int)=>{
+export const bzPriceToWord = (price)=>{
 
-  if(!int) return ""
+  if(!price) return ""
 
-  let liczba = parseInt( int.split('.')[0] )
-  let grosze = int.split('.')[1]
+  let liczba = parseInt( price.split('.')[0] )
+  let grosze = price.split('.')[1]
 
   let jednosci = ["","jeden","dwa","trzy","cztery","pięć","sześć","siedem","osiem","dziewięć"]
   let nascie = ["","jedenaście","dwanaście","trzynaście","czternaście","piętnaście","szesnaście","siedemnaście","osiemnaście","dziewietnaście"]
@@ -132,8 +130,12 @@ export const bzPriceToWord = (int)=>{
   return(`${znak} ${wynik} zł ${grosze}/100 gr` );
 }
 
-export const NormalizeNr = (mode, nr)=>{
-  return `${nr.letter}/${DigLen(nr.year, 4)}/${DigLen(nr.month, 2)}/${DigLen(nr.sign, 6)}`
+export const NormalizeNr = (nr)=>{
+  let letter = nr?.letter ? nr.letter : "--"
+  let year = nr?.year ? DigLen(nr.year, 4) : "----"
+  let month = nr?.month ? DigLen(nr.month, 2) : "--"
+  let sign = nr?.sign ? DigLen(nr.sign, 6) : "======"
+  return `${letter}/${year}/${month}/${sign}`
 }
 
 let digits = "0123456789"
