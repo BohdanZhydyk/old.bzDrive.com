@@ -30,17 +30,16 @@ export const EFFECT = (mode, setDealer, place, setPlace, nr, setNr)=>{
 
 export const HEAD = {
   CHG_PLACE:      (action, setPlace)=> setPlace( action.value ),
-  CHG_FROM_DATE:  (action, pay, setPay, dateTo, setDate)=>{
+  CHG_FROM_DATE:  (action, setDate, dateTo, setDateTo, pay, setPay)=>{
     let newFrom = ( DigLen(action.value.year, 4)+DigLen(action.value.month, 2)+DigLen(action.value.day, 2) )
     let To = ( DigLen(dateTo.year, 4)+DigLen(dateTo.month, 2)+DigLen(dateTo.day, 2) )
-    let payDate = ( DigLen(pay.date.year, 4)+DigLen(pay.date.month, 2)+DigLen(pay.date.day, 2) )
-    To >= newFrom && setDate( action.value )
-    payDate < newFrom && setPay({ ...pay, date:action.value })
+    if(To >= newFrom){ setDate(action.value) }else{ setDate(action.value); setDateTo(action.value) }
+    setPay({...pay, date:action.value})
   },
-  CHG_TO_DATE:    (action, date, setDateTo)=>{
+  CHG_TO_DATE:    (action, date, setDate, setDateTo)=>{
     let newTo = ( DigLen(action.value.year, 4)+DigLen(action.value.month, 2)+DigLen(action.value.day, 2) )
     let Date = ( DigLen(date.year, 4)+DigLen(date.month, 2)+DigLen(date.day, 2) )
-    newTo >= Date && setDateTo( action.value )
+    if(newTo >= Date){ setDateTo(action.value) }else{ setDate(action.value); setDateTo(action.value) }
   },
   CHG_STATUS:     (action, setStatus)=> setStatus( action.value )
 }

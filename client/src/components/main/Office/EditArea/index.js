@@ -48,10 +48,10 @@ const EditArea = ({ props:{mode, line, CANCEL, PRINTFUNC, ReloadFn, officeFn} })
     if( bzGetUser().login !== dealer.user && bzGetUser().role !== "admin" ){ setStatus("deleted") }
 
     switch(action.type){
-      case "CHG_PLACE":       HEAD.CHG_PLACE(action, setPlace);                                 break
-      case "CHG_FROM_DATE":   HEAD.CHG_FROM_DATE(action, pay, setPay, dateTo, setDate);         break
-      case "CHG_TO_DATE":     HEAD.CHG_TO_DATE(action, date, setDateTo);                        break
-      case "CHG_STATUS":      HEAD.CHG_STATUS(action, setStatus);                               break
+      case "CHG_PLACE":       HEAD.CHG_PLACE(action, setPlace);                                     break
+      case "CHG_FROM_DATE":   HEAD.CHG_FROM_DATE(action, setDate, dateTo, setDateTo, pay, setPay);  break
+      case "CHG_TO_DATE":     HEAD.CHG_TO_DATE(action, date, setDate, setDateTo);                   break
+      case "CHG_STATUS":      HEAD.CHG_STATUS(action, setStatus);                                   break
 
       case "CHG_BUYER_NAME":  BUYER.CHG_BUYER_NAME(action, buyer, setBuyer);                    break
       case "CHG_BUYER_ZIP":   BUYER.CHG_BUYER_ZIP(action, buyer, setBuyer);                     break
