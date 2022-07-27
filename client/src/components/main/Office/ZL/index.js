@@ -50,7 +50,7 @@ const ZL = ()=>{
         {
           calendar.map( (line, l)=>{
 
-            let props = {mode, line, user, translate, ReloadFn, officeFn}
+            let props = {mode, line, l, user, translate, ReloadFn, officeFn}
             let key = `WeekKey${l}${line.week[0].unix}`
 
             return <Week props={props} key={key} />

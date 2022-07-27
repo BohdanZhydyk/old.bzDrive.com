@@ -101,8 +101,7 @@
     
     .logo{
       width:40%;
-      font-size:400%;
-      @media (max-width: 1024px) {width:40%;}
+      font-size:300%;
       
       .contacts {
         margin:0 0 0 5vw;
@@ -131,6 +130,14 @@
           padding:0.25vw 0;
           margin:0 0 0 1vw;
           border:1px solid #999;
+
+          input {
+            width:30%;
+            margin:0;
+            font-size:100%;
+            background-color:#0000;
+            border:1px solid #999;
+          }
         }
       }
 

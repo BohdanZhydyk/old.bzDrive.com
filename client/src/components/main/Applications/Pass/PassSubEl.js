@@ -10,25 +10,20 @@ export const PassSubEl = ({ props:{subEl, PassFn} })=>{
       form:`USERNAME`.toUpperCase(),
       type:"text",
       legend:"userName",
-      // style:"infoName",
-      val:( subEl?.userName ? subEl.userName : "" ),
-      // error: errBrand( info?.brand !== "Marka" ? info.brand : "" )
+      val:( subEl?.userName ? subEl.userName : "" )
     },
     {
       form:`LOGIN`.toUpperCase(),
       type:"text",
       legend:"login",
-      // style:"infoName",
-      val:( subEl?.login ? subEl.login : "" ),
-      // error: errBrand( info?.brand !== "Marka" ? info.brand : "" )
+      val:( subEl?.login ? subEl.login : "" )
     },
     {
       form:`PASS`.toUpperCase(),
       type:"password",
       legend:"password",
-      // style:"infoName",
-      val:( subEl?.pass ? subEl.pass : "" ),
-      // error: errBrand( info?.brand !== "Marka" ? info.brand : "" )
+      img: "Show",
+      val:( subEl?.pass ? subEl.pass : "" )
     }
   ]
   return(

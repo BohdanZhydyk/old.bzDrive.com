@@ -4,7 +4,7 @@ import { bzGetUser } from "../../../../../state/functions"
 import ActionBtn from '../../../../All/ActionBtn'
 
 
-export const EditAreaBtns = ({ props:{mode, status, dealer, id, AreaFn, CANCEL, print, DO} })=>{
+export const EditAreaBtns = ({ props:{mode, status, dealer, id, AreaFn, CANCEL, print, noPrint, DO} })=>{
 
   let Status = mode === "KL"
     ? `client`
@@ -41,7 +41,7 @@ export const EditAreaBtns = ({ props:{mode, status, dealer, id, AreaFn, CANCEL, 
       click: ()=> (errors ? SAVE() : ()=>{})
     },
     {
-      is: (saved || edited || done),
+      is: !noPrint && (saved || edited || done),
       name: "Print",
       click: ()=> PRINT()
     },

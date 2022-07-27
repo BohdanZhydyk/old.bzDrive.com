@@ -23,11 +23,13 @@ const EditArea = ({ props:{mode, line, CANCEL, PRINTFUNC, ReloadFn, officeFn} })
   const el = line
   const id = el?._id ? el._id : false
 
+  const [noPrint, setNoPrint] = useState( false )
+
   const [status, setStatus] = useState( el?.status )
+  const [nr, setNr] = useState( el?.nr )
   const [place, setPlace] = useState( el?.place )
   const [date, setDate] = useState( el?.date ? el.date : YYYYMMDD )
   const [dateTo, setDateTo] = useState( el?.dateTo ? el.dateTo : YYYYMMDD )
-  const [nr, setNr] = useState( el?.nr )
   const [dealer, setDealer] = useState( el?.dealer ? el.dealer : false )
   const [buyer, setBuyer] = useState( el?.buyer ? el.buyer : false)
   const [car, setCar] = useState( el?.car ? el.car : false)
@@ -44,10 +46,13 @@ const EditArea = ({ props:{mode, line, CANCEL, PRINTFUNC, ReloadFn, officeFn} })
   useEffect( ()=>{ !dealer && EFFECT(mode, setDealer, place, setPlace, nr, setNr) },[])
 
   let AreaFn = (action)=>{
+    
+    setNoPrint(true)
 
     if( bzGetUser().login !== dealer.user && bzGetUser().role !== "admin" ){ setStatus("deleted") }
 
     switch(action.type){
+      case "CHG_NR":          HEAD.CHG_NR(action, nr, setNr);                                       break
       case "CHG_PLACE":       HEAD.CHG_PLACE(action, setPlace);                                     break
       case "CHG_FROM_DATE":   HEAD.CHG_FROM_DATE(action, setDate, dateTo, setDateTo, pay, setPay);  break
       case "CHG_TO_DATE":     HEAD.CHG_TO_DATE(action, date, setDate, setDateTo);                   break
@@ -125,7 +130,7 @@ const EditArea = ({ props:{mode, line, CANCEL, PRINTFUNC, ReloadFn, officeFn} })
 
         <ElStatus props={{mode, status, dealer, print, AreaFn}}/>
 
-        <EditAreaBtns props={{mode, status, dealer, id, AreaFn, CANCEL, print, DO}}/>
+        <EditAreaBtns props={{mode, status, dealer, id, AreaFn, CANCEL, print, noPrint, DO}}/>
 
         {
           (mode === "FS" || mode === "ZL") &&
@@ -162,7 +167,7 @@ const EditArea = ({ props:{mode, line, CANCEL, PRINTFUNC, ReloadFn, officeFn} })
           <ElSignatures props={{sign}} />
         }
 
-        <EditAreaBtns props={{mode, status, dealer, id, AreaFn, CANCEL, print, DO}}/>
+        <EditAreaBtns props={{mode, status, dealer, id, AreaFn, CANCEL, print, noPrint, DO}}/>
 
       </div>
     }

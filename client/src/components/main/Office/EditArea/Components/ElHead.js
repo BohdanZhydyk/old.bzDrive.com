@@ -1,5 +1,5 @@
 import React from 'react'
-import { NormalizeNr } from "../../../../../state/functions"
+import { NormalizeNr, DigLen } from "../../../../../state/functions"
 
 import { Input } from "./../../../../All/Input"
 
@@ -28,7 +28,7 @@ export const ElHead = ({ props:{mode, dealer, place, date, dateTo, nr, print, Ar
 
       <div className="placeDate flex wrap end">
 
-        <DocNr props={{mode, nr}} />
+        <DocNr props={{mode, print, nr, AreaFn}} />
 
         <div className="placeDateInputs flex wrap end">
           
@@ -58,7 +58,7 @@ const Contacts = ({ props:{dealer} })=>{
   )
 }
 
-const DocNr = ({ props:{mode, nr} })=>{
+const DocNr = ({ props:{mode, print, nr, AreaFn} })=>{
 
   let docName = ()=>{
     switch(mode){
@@ -68,13 +68,24 @@ const DocNr = ({ props:{mode, nr} })=>{
     }
   }
 
+  let CHG_NR = (val)=> val < 10000 && AreaFn({ type:"CHG_NR", sign:parseInt(val) })
+
   return(
     <section className="DocNr flex bold">
     {
       <>
         <span className="docName flex end">{ docName() }</span>
 
-        <span className="Number flex">{ NormalizeNr(nr) }</span>
+        {
+          mode === "FS" && !print
+          ?
+          <span className="Number flex">
+            <span>{ NormalizeNr(nr, true) }</span>
+            <input type="number" value={ DigLen(nr?.sign, 4) } onChange={ (e)=> CHG_NR(e.target.value) } />
+          </span>
+          :
+          <span className="Number flex">{ NormalizeNr(nr) }</span>
+        }
       </>
     }
     </section>

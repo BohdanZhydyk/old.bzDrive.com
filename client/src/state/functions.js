@@ -27,7 +27,7 @@ export const bzUnixToDateTime = ( DATE = new Date(Date.now()) )=>{
 }
 
 export const DigLen = (dig, len)=>{
-  let newDig = dig ? dig.toString() : "E"
+  let newDig = dig ? dig.toString() : "0"
   while(newDig.length < len){ newDig = `0${newDig}` }
   return newDig
 }
@@ -130,12 +130,12 @@ export const bzPriceToWord = (price)=>{
   return(`${znak} ${wynik} zł ${grosze}/100 gr` );
 }
 
-export const NormalizeNr = (nr)=>{
+export const NormalizeNr = (nr, short)=>{
   let letter = nr?.letter ? nr.letter : "--"
   let year = nr?.year ? DigLen(nr.year, 4) : "----"
   let month = nr?.month ? DigLen(nr.month, 2) : "--"
-  let sign = nr?.sign ? DigLen(nr.sign, 6) : "======"
-  return `${letter}/${year}/${month}/${sign}`
+  let sign = nr?.sign ? DigLen(nr.sign, 4) : "----"
+  return `${letter}/${year}/${month}/${!short ? sign : ``}`
 }
 
 let digits = "0123456789"

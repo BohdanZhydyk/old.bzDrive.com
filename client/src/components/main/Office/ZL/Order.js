@@ -52,23 +52,23 @@ export const Order = ({ props:{mode, week, zl, ReloadFn, officeFn} }) => {
   }
 
   return(
-      <div className="Order flex start wrap" style={orderStyles}>
+    <div className="Order flex start wrap" style={orderStyles}>
 
-        <div style={beforeStyles}></div>
+      <div style={beforeStyles}></div>
 
-        <div className="Car flex start" style={carStyles} onClick={ ()=>setShow(!show) }>
+      <div className="Car flex start" style={carStyles} onClick={ ()=>setShow(!show) }>
 
-          <div className="StatusLine flex" style={{backgroundColor:statusStiles(zl.status)}}></div>
+        <div className="StatusLine flex" style={{backgroundColor:statusStiles(zl.status)}}></div>
 
-          <div className="CarName flex start">
-            <img className="OrderAva" src={ava} alt="ava" />
-            <span>{car}</span>
-          </div>
-          
+        <div className="CarName flex start">
+          <img className="OrderAva" src={ava} alt="ava" />
+          <span>{car}</span>
         </div>
-
-        { show && <EditArea props={{mode, line:zl, CANCEL, ReloadFn, officeFn}}/> }
-
+        
       </div>
+
+      { show && <EditArea props={{mode, line:zl, CANCEL, ReloadFn, officeFn}}/> }
+
+    </div>
   )
 }

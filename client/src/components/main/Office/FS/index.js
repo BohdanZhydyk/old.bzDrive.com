@@ -38,15 +38,16 @@ const FS = ()=>{
     day:bzUnixToDateTime().lastDay
   })
   
-  const GET_TABLE = (query, cb)=> officeFn( {type:"GET_TABLE", mode, query}, (data)=> cb(data) )
-
-  useEffect( ()=>{
-    !invoices &&
-    GET_TABLE(
-      { "date.unix":{$gte:DateToUnix(from), $lte:DateToUnix(to)} },
-      (data)=> setInvoices(data)
-    )
-  },[])
+  const GET_FS_TABLE = (query, cb)=> officeFn(
+    {
+      type:"GET_TABLE",
+      mode,
+      query: (user.login === "Anna")
+        ? query
+        : {...query, "dealer.user":user.login}
+    },
+    (data)=> cb(data)
+  )
 
   const invFn = (action)=>{
 
@@ -72,21 +73,21 @@ const FS = ()=>{
     switch(action.type){
       case "CHG_FROM":
         setFrom({...action.value})
-        GET_TABLE(
+        GET_FS_TABLE(
           { $and: [query1, query2, query3] },
           (data)=> setInvoices(data)
         )
         return
       case "CHG_TO":
         setTo({...action.value})
-        GET_TABLE(
+        GET_FS_TABLE(
           { $and: [query1, query2, query3] },
           (data)=> setInvoices(data)
         )
         return
       case "SEARCH":
         setFrom({...action.from}); setTo({...action.to}); setSearchSt( true )
-        GET_TABLE(
+        GET_FS_TABLE(
           { $and: [query1, query2, query3] },
           (data)=> setInvoices(data)
         )
@@ -95,9 +96,17 @@ const FS = ()=>{
     }
   }
 
+  useEffect( ()=>{
+    !invoices &&
+    GET_FS_TABLE(
+      { "date.unix":{$gte:DateToUnix(from), $lte:DateToUnix(to)} },
+      (data)=> setInvoices(data)
+    )
+  },[])
+
   let ReloadFn = ()=>{
     setInvoices(false);
-    GET_TABLE(
+    GET_FS_TABLE(
       { "date.unix":{$gte:DateToUnix(from), $lte:DateToUnix(to)} },
       (data)=> setInvoices(data)
     )

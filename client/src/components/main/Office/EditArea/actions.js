@@ -24,11 +24,12 @@ export const EFFECT = (mode, setDealer, place, setPlace, nr, setNr)=>{
   bzPost("/getOffice", { new:bzGetUser().login }, (data)=>{
     setDealer(data[0])
     !place && setPlace( data[0].addr.town )
-    !nr?.year && setNr({ letter:mode, ...YYYYMMDD, sign:(nr?.sign ? nr?.sign : `------`) })
+    !nr?.year && setNr({ letter:mode, ...YYYYMMDD, sign:nr?.sign })
   })
 }
 
 export const HEAD = {
+  CHG_NR: (action, nr, setNr)=> setNr( {...nr, sign:action.sign} ),
   CHG_PLACE:      (action, setPlace)=> setPlace( action.value ),
   CHG_FROM_DATE:  (action, setDate, dateTo, setDateTo, pay, setPay)=>{
     let newFrom = ( DigLen(action.value.year, 4)+DigLen(action.value.month, 2)+DigLen(action.value.day, 2) )

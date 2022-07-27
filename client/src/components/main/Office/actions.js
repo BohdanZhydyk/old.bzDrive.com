@@ -35,7 +35,6 @@ const PLUS_WEEK = (calendar, setCalendar)=>{
 }
 
 const SAVE_DOC = (mode, payload, ReloadFn)=>{
-  console.log("save",payload)
   bzPost("/getOffice", { mode, save:payload }, (data)=>{ ReloadFn() })
 }
 

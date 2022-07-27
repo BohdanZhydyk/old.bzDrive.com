@@ -17,3 +17,5 @@
 `w zleceniach "sortowac" klocki ze zleceniami`
 
 `zrobic zapis do bazy danych nowych klientow`
+
+`18.07.2022 Logan edited - widoczny, done - niewidoczny (sprawdzic!!!)`

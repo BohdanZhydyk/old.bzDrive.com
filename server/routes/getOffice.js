@@ -58,9 +58,9 @@ exports.getOffice = (req, res)=>{
     let mode = object.mode
     let DayParse = (date)=>{
       return {
-        year: date.year,
-        month: date.month,
-        day: date.day,
+        year: parseInt(date.year),
+        month: parseInt(date.month),
+        day: parseInt(date.day),
         unix: Date.parse(`${date.year}-${date.month}-${date.day}`)
       }
     }
@@ -122,6 +122,7 @@ exports.getOffice = (req, res)=>{
       case "saved":
         object.save.status = "edited"
         query = {
+          "dealer.user": save().dealer.user,
           "nr.letter": save().nr.letter,
           "nr.year": save().nr.year,
           "nr.month": save().nr.month
@@ -131,8 +132,8 @@ exports.getOffice = (req, res)=>{
           let Result = data.object.result[0]
 
           Result
-            ? save().nr.sign = ( parseInt(Result.nr.sign) + 1 ).toString()
-            : save().nr.sign = ( 1 ).toString()
+          ? save().nr.sign = ( parseInt(Result.nr.sign) + 1 ).toString()
+          : save().nr.sign = ( 1 ).toString()
 
           bzDB( { req, res, collection:`base${mode}`, act:"INSERT_ONE", query:save() }, (InsertData)=>{
           
