@@ -79,6 +79,12 @@ export const nrErrToTxt = (lang = 'en', nr)=>{
       if(lang === 'pl'){ return `nieprawidłowy kod weryfikacyjny!` }
       if(lang === 'ru'){ return `неверный код подтверждения!` }
       break
+    case 14:
+      if(lang === 'en'){ return `such e-mail is not present in a database!` }
+      if(lang === 'ua'){ return `такого e-mail немає у базі даних!` }
+      if(lang === 'pl'){ return `takiego e-mail nie ma w bazie danych!` }
+      if(lang === 'ru'){ return `такого e-mail нету в базе данных!` }
+      break
     default: break
   }
 }
@@ -223,6 +229,12 @@ export const translate = (lang = 'en', txt)=>{
       if(lang === 'pl'){ return `hasło 2` }
       if(lang === 'ru'){ return `пароль 2` }
       break
+    case "confirmInput":
+      if(lang === 'en'){ return `confirmation code` }
+      if(lang === 'ua'){ return `код підтвердження` }
+      if(lang === 'pl'){ return `kod potwierdzający` }
+      if(lang === 'ru'){ return `код подтверждения` }
+      break
     case "loginBtn":
       if(lang === 'en'){ return `Authorizing` }
       if(lang === 'ua'){ return `Авторизація` }
@@ -238,7 +250,7 @@ export const translate = (lang = 'en', txt)=>{
     case "forgotBtn":
       if(lang === 'en'){ return `Password recovery` }
       if(lang === 'ua'){ return `Відновлення паролю` }
-      if(lang === 'pl'){ return `Odzyskiwanie hasła` }
+      if(lang === 'pl'){ return `Zresetowanie hasła` }
       if(lang === 'ru'){ return `Восстановление пароля` }
       break
     case "logoutBtn":

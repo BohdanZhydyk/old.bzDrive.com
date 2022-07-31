@@ -105,8 +105,6 @@ export const SEND_FORM = (form, activeForms, auth, setAuth, appFn)=>{
 
   bzPost('/auth', activeForms[0], (data)=>{
 
-    console.log('action auth',data)
-
     let SET_USER = (user)=>{
       bzSetUser(user)
       appFn({type:"SET_USER", payload:user})

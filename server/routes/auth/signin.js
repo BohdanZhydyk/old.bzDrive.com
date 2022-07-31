@@ -7,9 +7,11 @@ const { bzDB } = require('./../../bzDB')
 const { bzPassHash, bzPassCompare } = require('./../../safe/bcrypt')
 const { getRandomInt } = require('./../../functions')
 const { emailPass } = require('./../../safe/safe')
+const { EmailBody } = require('./EmailBody')
 
 exports.signin = (req, res, ServerData, callback)=>{
   
+  let lang = ServerData.user.lang
   let object = ServerData.object
 	let inputs = object.inputs
   
@@ -39,8 +41,8 @@ exports.signin = (req, res, ServerData, callback)=>{
 
         let query = {
           login: ConfRes.login,
-          role: ConfRes.role ? ConfRes.role : "user",
           email: ConfRes.email,
+          role: ConfRes.role ? ConfRes.role : "user",
           lang: ConfRes.lang ? ConfRes.lang : false,
           sex: ConfRes.sex ? ConfRes.sex : false,
           ava: ConfRes.ava ? ConfRes.ava : false,
@@ -145,28 +147,28 @@ exports.signin = (req, res, ServerData, callback)=>{
 
                 let query = {
                   login: login,
-                  role: "user",
                   email: email,
-                  code: codeHash,
-                  pass: passHash,
-                  bzToken: Request.bzToken,
+                  role: "user",
                   lang: Request.user.lang ? Request.user.lang : false,
                   sex: Request.user.sex ? Request.user.sex : false,
                   ava: Request.user.ava ? Request.user.ava : false,
+                  code: codeHash,
+                  pass: passHash,
+                  bzToken: Request.bzToken,
                   unix: Date.now()
                 }
 
                 bzDB( { req, res, collection:'bzUsersConfirm', act:"INSERT_ONE", query }, (insertData)=>{
 
+                  let mode = "signin"
+
                   let emailData = JSON.parse(JSON.stringify(
                     {
-                      emailMode: "SignIn",
                       pass: emailPass,
-                      login: login,
-                      to: email,
                       from: "admin@bzdrive.com",
+                      to: email,
                       theme: "bzDrive - SignIn code...",
-                      code: code
+                      msg: EmailBody({mode, email, login, lang, code})
                     }
                   ))
 

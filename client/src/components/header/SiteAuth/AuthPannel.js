@@ -42,6 +42,8 @@ export const AuthPannel = ({ props:{user, appFn} })=>{
     }
   }
 
+  console.log('auth', auth)
+
 	return(
 		<>
     {
