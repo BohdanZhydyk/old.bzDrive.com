@@ -9,9 +9,9 @@ export const Orders = ({ props:{mode, week, table, ReloadFn, officeFn} })=>{
     {
       table && table.map( (zl, n)=>{
 
-        let orderKey = `Order${n + zl._id}`
+        let key = `Order${n + zl._id}`
 
-        return <Order props={{mode, week, zl, ReloadFn, officeFn}} key={orderKey}/>
+        return <Order props={{mode, week, zl, ReloadFn, officeFn}} key={key}/>
 
       })
     }

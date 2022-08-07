@@ -27,13 +27,6 @@ export const Order = ({ props:{mode, week, zl, ReloadFn, officeFn} }) => {
 
   let widthZl = (dayTo - day) + 1
 
-  let orderStyles = {
-    display: (
-      zl.status === "edited"
-      && UnixToYYYYMMDD(firstDayUnix) >= UnixToYYYYMMDD(Date.now())
-      && UnixToYYYYMMDD(firstDayUnix) > UnixToYYYYMMDD(zl.dateTo.unix)
-    ) ? `none` : `flex`
-  }
   let beforeStyles = {width:`calc( (100% / 7) * ${day - Day(firstDayUnix)})`}
   let carStyles = {
     opacity: zl.status === "edited" ? 1 : 0.5,
@@ -52,7 +45,7 @@ export const Order = ({ props:{mode, week, zl, ReloadFn, officeFn} }) => {
   }
 
   return(
-    <div className="Order flex start wrap" style={orderStyles}>
+    <div className="Order flex start wrap">
 
       <div style={beforeStyles}></div>
 
