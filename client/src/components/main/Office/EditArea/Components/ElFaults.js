@@ -6,7 +6,7 @@ export const ElFaults = ({ props:{car, print, AreaFn} })=>{
 
   let CHANGE_TEXTAREA = (e)=> AreaFn({type:`CHG_CAR_FAULTS`, value:e.target.value})
 
-  let classes = `title bold flex start ${errFaults( car?.faults ? car?.faults : "" ) ? `txtOrg` : ``}`
+  let classes = `title bold flex start`
 
   let faults = car?.faults !== "Opis i zakres uszkodzenia"
   let placeholder = faults ? car.faults : "wprowadź dane..."
@@ -27,7 +27,7 @@ export const ElFaults = ({ props:{car, print, AreaFn} })=>{
         :
         <div className="FaultsTxt">
           {
-            !faults
+            (!faults || faults === "")
             ? ""
             : car.faults.split('\n').map( (el, l)=>{
               let key = `FaltsLine_${l}_${Math.floor(Math.random() * 5)}`

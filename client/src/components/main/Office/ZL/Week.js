@@ -53,10 +53,8 @@ export const Week = ({ props:{mode, line, l, user, translate, ReloadFn, officeFn
 
   }) },[])
   
-  console.log("week-"+l, week)
-  console.log("table-"+l, table)
-  console.log("after-"+l, after)
-  console.log("first-"+l, firstDayUnix)
+  // console.log("week-"+l, week)
+  // console.log("table-"+l, table)
 
   return(
     <div className="Week flex stretch wrap">

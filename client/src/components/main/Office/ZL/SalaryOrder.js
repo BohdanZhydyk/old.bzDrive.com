@@ -45,8 +45,13 @@ export const SalaryOrder = ({ props:{mode, order, obj, CHECK_ORDER, ReloadFn, of
       <span className="Car Cell flex start" style={emptyStyle} onClick={ ()=>setShow(!show) }>{obj.car}</span>
 
       <span className="Tel Cell flex column" style={obj.style}>
-      {obj.name && <a href={`tel: ${obj.name}`} rel="noreferrer">{obj.name}</a>}
-      {obj.tel && <a href={`tel: ${obj.tel}`} rel="noreferrer">{obj.tel}</a>}
+        {
+          obj.name &&
+          obj.mode
+          ? <a href={`tel: ${obj.name}`} rel="noreferrer">{obj.name}</a>
+          : <span className="txtWht">{obj.name}</span>
+        }
+        {obj.tel && <a href={`tel: ${obj.tel}`} rel="noreferrer">{obj.tel}</a>}
       </span>
 
       <span className="Brutto Cell flex end" style={obj.style}>{`${obj.brutto} zł`}</span>

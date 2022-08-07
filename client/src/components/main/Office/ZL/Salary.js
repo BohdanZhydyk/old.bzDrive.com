@@ -37,15 +37,15 @@ export const Salary = ({ props:{mode, lang, role, calendar, ReloadFn, officeFn} 
 
   let sumObj = {
     obj:{
-      tel:`Suma razem`, brutto:SumBrutto,
-      style:{justifyContent:"flex-end", color:"#f60", fontWeight:"bold", fontSize:"120%"}
+      name:`Suma razem`, brutto:SumBrutto,
+      style:{color:"#f60", fontWeight:"bold", fontSize:"120%"}
     }
   }
 
   let chkObj = {
     obj:{
-      tel:`Suma zaznaczonych`, brutto:ChkBrutto,
-      style:{justifyContent:"flex-end", color:"#fd0", fontWeight:"bold", fontSize:"120%"}
+      name:`Suma zaznaczonych`, brutto:ChkBrutto,
+      style:{color:"#fd0", fontWeight:"bold", fontSize:"120%"}
     }
   }
 

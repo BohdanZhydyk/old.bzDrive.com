@@ -230,7 +230,6 @@ export const errTel = (val)=> val ? (val?.length > 10 ? false : true) : true
 export const errNIP = (val)=> val ? (val?.length > 12 ? false : true) : true
 export const errBrand = (val)=> val ? (val?.length > 1 ? false : true) : true
 export const errModel = (val)=> val ? (val?.length > 1 ? false : true) : true
-export const errFaults = (val)=> val ? (val?.length > 2 ? false : true) : true
 export const errNumbers = (val)=> val ? (val?.length > 5 ? false : true) : true
 
 export const bzPost = async (link, object, callback)=>{

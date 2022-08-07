@@ -14,15 +14,22 @@
     width:100%;
     
     .Btn {
-      width:30vw;
-      min-height:1.5vw;
+      width:25%;
+      min-height:2vw;
       margin:1vw 5vw 0 0;
-      padding:0.5vw 0;
       background-color:#171;
       border-radius:0.5vw;
       &:hover {
         font-size:120%;
         background-image:linear-gradient(#191, #151 30% 70%, #191);
+      }
+      @media (min-width: 481px) and (max-width: 767px) {
+        width:40%;
+        min-height:4vw;
+      }
+      @media (max-width: 481px) {
+        width:50%;
+        min-height:5vw;
       }
     }
   }
@@ -39,6 +46,7 @@
         padding:0.25vw 0;
         border-radius:0.5vw;
         opacity:0.8;
+        @media (max-width: 767px) {padding:0.5vw 0;}
 
         &:hover {
           color:#fd0;
@@ -53,10 +61,14 @@
 
         .CarName {
           margin:0 0.5vw;
+          @media (min-width: 481px) and (max-width: 767px) {font-size:80%;}
+          @media (max-width: 481px) {font-size:80%;}
 
           .OrderAva {
             width:1vw;
             margin:0 0.5vw 0 0;
+            @media (min-width: 481px) and (max-width: 767px) {width:1.5vw}
+            @media (max-width: 481px) {width:2vw}
           }
         }
       }
@@ -118,6 +130,8 @@
       position:relative;
       width:95%;
       margin:0.25vw 0 0 0;
+      @media (min-width: 481px) and (max-width: 767px) {font-size:80%;}
+      @media (max-width: 481px) {font-size:80%;}
 
       .Cell {
         padding:0 0.5vw;
@@ -134,6 +148,8 @@
       }
       .OrderNr {
         width:calc(15% - 1vw - 2px);
+        @media (min-width: 481px) and (max-width: 767px) {width:calc(21% - 1vw - 2px);}
+        @media (max-width: 481px) {width:calc(25% - 1vw - 2px);}
 
         .OrderAva {
           width:2vw;
@@ -141,13 +157,37 @@
           margin:0.25vw 0.5vw 0.25vw 0.25vw;
           border-radius:0.25vw;
           background-color:#0005;
+          @media (min-width: 481px) and (max-width: 767px) {
+            width:2vw;
+            height:2vw;
+          }
+          @media (max-width: 481px) {
+            width:3vw;
+            height:3vw;
+          }
 
-          img {width:1.5vw;}
+          img {
+            width:1.5vw;
+            @media (min-width: 481px) and (max-width: 767px) {width:2vw;}
+            @media (max-width: 481px) {width:3vw;}
+          }
         }
       }
-      .Car {width:calc(50% - 1vw - 2px);}
-      .Tel {width:calc(15% - 1vw - 2px);}
-      .Brutto {width:calc(10% - 1vw - 2px);}
+      .Car {
+        width:calc(50% - 1vw - 2px);
+        @media (min-width: 481px) and (max-width: 767px) {width:calc(35% - 1vw - 2px);}
+        @media (max-width: 481px) {width:calc(28% - 1vw - 2px);}
+      }
+      .Tel {
+        width:calc(15% - 1vw - 2px);
+        @media (min-width: 481px) and (max-width: 767px) {width:calc(20% - 1vw - 2px);}
+        @media (max-width: 481px) {width:calc(20% - 1vw - 2px);}
+      }
+      .Brutto {
+        width:calc(10% - 1vw - 2px);
+        @media (min-width: 481px) and (max-width: 767px) {width:calc(15% - 1vw - 2px);}
+        @media (max-width: 481px) {width:calc(16% - 1vw - 2px);}
+      }
     }
 
     .SaveCheckedBtn {
@@ -164,14 +204,29 @@
       .EmptyBefore {
         width:calc(70% - 1vw - 2px);
         font-size:130%;
+        @media (min-width: 481px) and (max-width: 767px) {width:calc(53% - 1vw - 2px);}
+        @media (max-width: 481px) {width:calc(60% - 1vw - 2px);}
       }
-      .EmptyAfter {width:3vw;}
+      .EmptyAfter {
+        width:5%;
+        @media (min-width: 481px) and (max-width: 767px) {width:2%;}
+        @media (max-width: 481px) {width:10%;}
+      }
       .Btn {
         width:calc(20% - 1vw - 2px);
+        min-height:1.5vw;
         background-color:#171;
         &:hover {
-          font-size:120%;
+          font-size:110%;
           background-image:linear-gradient(#191, #151 30% 70%, #191);
+        }
+        @media (min-width: 481px) and (max-width: 767px) {
+          width:calc(33% - 1vw - 2px);
+          min-height:4vw;
+        }
+        @media (max-width: 481px) {
+          width:calc(37% - 1vw - 2px);
+          min-height:4vw;
         }
       }
     }

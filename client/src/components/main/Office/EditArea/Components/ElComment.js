@@ -5,7 +5,7 @@ export const ElComment = ({ props:{comments, print, AreaFn} })=>{
 
   let CHANGE_TEXTAREA = (e)=> AreaFn({type:`CHG_COMMENTS`, value:e.target.value})
 
-  let placeholder = comments === "" ? "wprowadź dane..." : ""
+  let placeholder = (!comments || comments === "") ? "wprowadź dane..." : ""
 
   return(
     <>
@@ -22,13 +22,13 @@ export const ElComment = ({ props:{comments, print, AreaFn} })=>{
           !print
           ?
           <textarea className="CommentsTxt" placeholder={placeholder} onChange={ (e)=> CHANGE_TEXTAREA(e) }>
-            {comments}
+            {!comments ? "" : comments}
           </textarea>
           :
           // <div className="CommentsTxt">{comments}</div>
           <div className="CommentsTxt">
           {
-            !comments
+            (!comments || comments === "")
             ? ""
             : comments.split('\n').map( (el, l)=>{
               let key = `CommentsLine_${l}_${Math.floor(Math.random() * 5)}`
