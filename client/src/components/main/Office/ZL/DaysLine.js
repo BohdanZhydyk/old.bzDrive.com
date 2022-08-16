@@ -25,9 +25,10 @@ export const DaysLine = ({ props:{mode, week, user, translate, ReloadFn, officeF
         let HoliDay = (day.weekday === 6 || day.weekday === 7) ? `HoliDay` : ``
         let DayActive = sameDay ? `DayActive` : ``
         let classes = `${ActiveMonth} ${HoliDay} ${DayActive} Day flex column start`
+        let title = sameDay ? `Dodać nowe zlecenie` : ``
 
         return(
-          <div className={classes} key={`CalendarDay${n+day.unix}`}>
+          <div className={classes} key={`CalendarDay${n+day.unix}`} title={title}>
 
             <div className="DayLine flex" onClick={ ()=>SHOW_AREA(sameDay) }>
               { `${DigLen(day.day, 2)} ${MonthNames[parseInt(day.month - 1)]} ${DigLen(day.year, 4)}` }

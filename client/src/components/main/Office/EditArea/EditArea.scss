@@ -55,7 +55,11 @@
   .ElStatus {
     position:absolute;
     left:2vw;
-    width:50%;
+    width:40%;
+    @media (max-width: 768px) {
+      width:50%;
+      font-size:80%;
+    }
     
     .OrderStatusBtn {
       width:30%;
@@ -118,7 +122,7 @@
       @media print {width:60%;}
 
       .DocNr {
-        width:70%;
+        width:75%;
         font-size:150%;
         margin:0.5vw 0;
         @media (max-width: 767px) {width:100%;}

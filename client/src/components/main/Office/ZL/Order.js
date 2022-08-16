@@ -44,12 +44,19 @@ export const Order = ({ props:{mode, week, zl, ReloadFn, officeFn} }) => {
     }
   }
 
+  let lines = `--------------------------------------------------`
+  let name = `${zl?.buyer?.name ? `klient: ${zl.buyer.name}\n` : ``}`
+  let tel = `${zl?.buyer?.contacts?.tel ? `tel: ${zl.buyer.contacts.tel}\n` : ``}`
+  let faults = `\n${zl?.car?.faults ? `${lines}\n${zl.car.faults}\n${lines}\n` : ``}`
+  let brutto = `\n${zl?.brutto ? `brutto: ${zl.brutto} zł` : ``}`
+  let title = `${name}${tel}${faults}${brutto}`
+
   return(
     <div className="Order flex start wrap">
 
       <div style={beforeStyles}></div>
 
-      <div className="Car flex start" style={carStyles} onClick={ ()=>setShow(!show) }>
+      <div className="Car flex start" style={carStyles} title={title} onClick={ ()=>setShow(!show) }>
 
         <div className="StatusLine flex" style={{backgroundColor:statusStiles(zl.status)}}></div>
 

@@ -114,6 +114,13 @@
     .DayActive {
       border-color:#f60;
       background-color:#f60;
+      &:hover {
+        color:#fd0;
+        font-size:120%;
+        font-weight:bold;
+        background-color:#0000;
+        background-image:linear-gradient(#f60, #f605 30% 70%, #f60);
+      }
     }
 
     .EditArea {
@@ -130,6 +137,7 @@
       position:relative;
       width:95%;
       margin:0.25vw 0 0 0;
+      &:hover {color:#fd0;}
       @media (min-width: 481px) and (max-width: 767px) {font-size:80%;}
       @media (max-width: 481px) {font-size:80%;}
 

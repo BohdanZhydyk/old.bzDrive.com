@@ -3,43 +3,58 @@ import React from "react"
 import { Input } from "../../../All/Input"
 
 
-export const PassSubEl = ({ props:{subEl, PassFn} })=>{
+export const PassSubEl = ({ props:{newEl, subEl, id, inputNr, ElFn} })=>{
 
-  let inputs = [
-    {
-      form:`USERNAME`.toUpperCase(),
-      type:"text",
-      legend:"userName",
-      val:( subEl?.userName ? subEl.userName : "" )
-    },
-    {
-      form:`LOGIN`.toUpperCase(),
-      type:"text",
-      legend:"login",
-      val:( subEl?.login ? subEl.login : "" )
-    },
-    {
-      form:`PASS`.toUpperCase(),
-      type:"password",
-      legend:"password",
-      img: "Show",
-      val:( subEl?.pass ? subEl.pass : "" )
-    }
-  ]
+  const USERNAME = {
+    inputNr,
+    form:`USERNAME`.toUpperCase(),
+    type:"text",
+    legend:"userName",
+    val:( subEl?.userName ? subEl.userName : "" )
+  }
+
+  const LOGIN = {
+    inputNr,
+    form:`LOGIN`.toUpperCase(),
+    type:"text",
+    legend:"login",
+    val:( subEl?.login ? subEl.login : "" )
+  }
+
+  const PASS = {
+    id,
+    inputNr,
+    form:`PASS`.toUpperCase(),
+    type:( subEl?.pass ? "text" : subEl?.pass?.length === 0 ? "text" : "password" ),
+    legend:"password",
+    img: "Show",
+    val:( subEl?.pass ? subEl.pass : subEl?.pass?.length === 0 ? "" : "??????????" )
+  }
+
+  let DEL_LINE = ()=> ElFn({type:`DEL_LINE`, nr:inputNr})
+
   return(
     <div  className="PassSubEl flex wrap">
-    
-      { inputs.map( (el, i)=> <Input props={{input:el, Fn:PassFn}} key={`INPUT_${el.form}_${i}`}/> ) }
 
-      <fieldset className={`textAreaWrapper`}>
+      <div className="Inputs flex wrap">
+      
+        <Input props={{input:USERNAME, Fn:ElFn}} key={`INPUT_${USERNAME.form}_${inputNr[0]}${inputNr[1]}`}/>
 
-        <legend>{`info`}</legend>
+        <Input props={{input:LOGIN, Fn:ElFn}} key={`INPUT_${LOGIN.form}_${inputNr[0]}${inputNr[1]}`}/>
 
-        <textarea>
-          { subEl?.info ? subEl.info : "" }
-        </textarea>
+        <Input props={{input:PASS, Fn:ElFn}} key={`INPUT_${PASS.form}_${inputNr[0]}${inputNr[1]}`}/>
 
-      </fieldset>
+      </div>
+
+      <div className="LineBtn flex end">
+        <img
+          className="imgBtn"
+          src="https://files.bzdrive.com/img/ico/icoDelete.png"
+          onClick = { ()=> DEL_LINE() }
+          title="usunąć linię"
+          alt="delete"
+        />
+      </div>
       
     </div>
   )

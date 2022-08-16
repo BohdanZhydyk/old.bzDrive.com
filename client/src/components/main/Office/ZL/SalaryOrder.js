@@ -21,25 +21,18 @@ export const SalaryOrder = ({ props:{mode, order, obj, CHECK_ORDER, ReloadFn, of
     }
   }
 
+  let title = `\n${order?.car?.faults ? `${order.car.faults}` : ``}`
   let img = `https://files.bzdrive.com/img/ico/ico${order?.chk ? `Check` : `Empty`}.png`
   let ava = order && order?.dealer?.img
 
   return(
-    <div className="SalaryOrder flex wrap stretch">
+    <div className="SalaryOrder flex wrap stretch" title={title}>
 
       <div className={`StatusLine flex`} style={{backgroundColor:statusStiles(obj.status)}}></div>
 
       <span className="OrderNr Cell flex start" style={emptyStyle}>
-
-        {
-          ava &&
-          <span className="OrderAva flex">
-            <img src={ava} alt="ava" />
-          </span>
-        }
-
+        { ava && <span className="OrderAva flex"><img src={ava} alt="ava" /></span> }
         <span>{obj.nr}</span>
-
       </span>
 
       <span className="Car Cell flex start" style={emptyStyle} onClick={ ()=>setShow(!show) }>{obj.car}</span>

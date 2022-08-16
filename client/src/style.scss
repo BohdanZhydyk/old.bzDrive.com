@@ -112,6 +112,7 @@ body {
     width: calc(100% - 1vw - 2px);
     padding:0.25vw 0.5vw;
     border:none;
+    resize:none;
     color:#fff;
     background-color:#0000;
     resize:none;
@@ -122,6 +123,10 @@ body {
 
   img {
     width:1.5vw;
+    margin:0 0 0 0.5vw;
+    @media (min-width: 768px) and (max-width: 1024px) {width:2vw;}
+    @media (min-width: 481px) and (max-width: 767px) {width:2.5vw;}
+    @media (max-width: 481px) {width:3vw;}
     &:hover {
       background-color:#0005;
       border-radius:0.2vw;

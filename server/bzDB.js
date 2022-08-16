@@ -8,11 +8,12 @@ const { unixToDateTimeConverter } = require('./functions')
 
 exports.bzDB = (
   {
-    req,          // request
-    res,          // response
-    collection,   // name of db collection
-    act,          // action FIND, FIND_ONE, ...
-    query         // query of search
+    req,              // request
+    res,              // response
+    collection,       // name of db collection
+    act,              // action FIND, FIND_ONE, ...
+    query,            // query of search
+    sort = {_id:-1}   // sort of search
   },
   callback        // callback function
   )=>{
@@ -31,7 +32,7 @@ exports.bzDB = (
       function FIND(){
         client.db(dbName)
           .collection(collection)
-          .find(query).sort({_id:-1})
+          .find(query).sort(sort)
           .toArray( (error, result)=>{
             error
             ? callback( {bzToken, IP, user, object:{result:false, errors:error}} )

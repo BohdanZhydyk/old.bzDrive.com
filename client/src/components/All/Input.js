@@ -9,10 +9,12 @@ export const Input =({ props:{input, print, Fn} })=>{
     let arr = e.target.value.split('-')
     let YYYYMMDD = {year:parseInt(arr[0]), month:parseInt(arr[1]), day:parseInt(arr[2])}
     let value = input.type === "date" ? YYYYMMDD : e.target.value
-    Fn({type:`CHG_${input.form}`, value})
+    Fn({type:`CHG_${input.form}`, value, input})
   }
 
-  let ON_KEYUP_IMG = (e)=>{ Fn({type:`KEYUP_IMG_${input.form}`, value:e.target.value, key:e.key}) }
+  let ON_KEYUP_IMG = (e)=>{
+    Fn({type:`KEYUP_IMG_${input.form}`, value:e.target.value, key:e.key, input})
+  }
 
   let VAL = input.type === "date" ? input.val : false
   let YYYY = VAL?.year && DigLen(VAL.year, 4)
