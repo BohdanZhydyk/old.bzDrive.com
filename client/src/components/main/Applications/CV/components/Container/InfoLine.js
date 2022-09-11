@@ -3,7 +3,7 @@ import React from 'react'
 
 export const InfoLine = ({data})=>{
 
-  let src = `https://files.bzdrive.com/img/CV/ico/info/${data.name}.png`
+  let src = `https://bzdrive.com/files/CV/ico/info/${data.name}.png`
 
   return (
     <div className="line flex wrap start" >

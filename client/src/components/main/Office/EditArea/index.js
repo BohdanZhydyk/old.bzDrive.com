@@ -4,7 +4,7 @@ import "./EditArea.scss"
 
 import {
   emptyArt, YYYYMMDD, HEAD, BUYER, CAR, CLI,
-  ART, FOO, EFFECT, GET_CEIDG, SAVE_DOC
+  ART, FILE, FOO, EFFECT, GET_CEIDG, SAVE_DOC
 } from "./actions"
 import { bzGetUser } from "../../../../state/functions"
 import { ElStatus } from "./Components/ElStatus"
@@ -13,6 +13,7 @@ import { ElHead } from "./Components/ElHead"
 import { ElInfo } from "./Components/ElInfo"
 import { ElFaults } from "./Components/ElFaults"
 import { ElArticles } from "./Components/ElArticles"
+import { ElFiles } from "./Components/ElFiles"
 import { ElComment } from "./Components/ElComment"
 import { ElAmount } from "./Components/ElAmount"
 import { ElSignatures } from "./Components/ElSignatures"
@@ -35,6 +36,7 @@ const EditArea = ({ props:{mode, line, CANCEL, PRINTFUNC, ReloadFn, officeFn} })
   const [car, setCar] = useState( el?.car ? el.car : false)
   const [client, setClient] = useState( el?.client ? el.client : false)
   const [articles, setArticles] = useState( el?.articles ? el.articles : [emptyArt] )
+  const [files, setFiles] = useState( el?.files ? el.files : [] )
   const [comments, setComments] = useState( el?.comments ? el.comments : '' )
   const [pay, setPay] = useState( el.pay ? el.pay : {method:"gotówka",  date:YYYYMMDD} )
 
@@ -92,6 +94,8 @@ const EditArea = ({ props:{mode, line, CANCEL, PRINTFUNC, ReloadFn, officeFn} })
       case "ART_LINE_PLUS":   ART.ART_LINE_PLUS(articles, setArticles);                         break
       case "ART_LINE_DELETE": ART.ART_LINE_DELETE(action, articles, setArticles);               break
       case "CHG_ARTICLES":    ART.CHG_ARTICLES(action, articles, setArticles);                  break
+
+      case "ADD_FILE":        FILE.ADD_FILE(id, action, setFiles);                              break
       
       case "CHG_COMMENTS":    FOO.CHG_COMMENTS(action, setComments);                            break
       case "CHG_METHOD":      FOO.CHG_METHOD(action, pay, setPay);                              break
@@ -150,6 +154,11 @@ const EditArea = ({ props:{mode, line, CANCEL, PRINTFUNC, ReloadFn, officeFn} })
         {
           (mode === "FS" || mode === "ZL") &&
           <ElArticles props={{mode, articles, print, AreaFn}} />
+        }
+
+        {
+          (mode === "ZL" && nr?.sign) &&
+          <ElFiles props={{nr, files, print, AreaFn}} />
         }
 
         {

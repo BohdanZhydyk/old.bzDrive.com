@@ -1,18 +1,35 @@
-import React from 'react'
-import { Input } from './Input'
+import React, { useState } from 'react'
+
+import { Input } from './../../All/Input'
 
 
-export const Information = ({ props:{infos, profFn} })=>{
+export const Information = ({ props:{profile} })=>{
+
+  const [infos, setInfos] = useState([
+    {form:`ROLE`, type:"text", legend:"role", val:profile.role},
+    {form:`LOGIN`, type:"text", legend:"login", val:profile.login},
+    {form:`EMAIL`, type:"text", legend:"email", val:profile.email},
+    {form:`LANG`, type:"text", legend:"lang", val:profile.lang},
+    {form:`SEX`, type:"text", legend:"sex", val:profile.sex}
+  ])
+  
+  let Fn = (action)=>{
+    let type = action.type
+    let payload = action.payload
+    switch(type){
+      case "Change-email":
+        setInfos( infos.map( (el)=> el.name === 'email' ? {...el, val:payload} : {...el} ) )
+        break
+      default: break
+    }
+  }
+
   return(
-    <section className="profileSection">
+    <section className="ProfileSection">
     
-    { infos.map( (input, i)=> <Input props={{input, profFn}} key={`ProfInfos${i}`} /> ) }
+      { infos.map( (input, i)=> <Input props={{input, Fn}} key={`ProfInfos${i}`} /> ) }
 
-      <div className="inputWrapper flex">
-
-        <div className="profileBtn flex">Potwierdzić</div>
-
-      </div>
+      <div className="ProfileBtn flex">Potwierdzić</div>
 
     </section>
   )

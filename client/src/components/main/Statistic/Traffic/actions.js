@@ -1,14 +1,7 @@
 import { bzPost } from './../../../../state/functions'
 
-export const actions = (action, intervals, setIntervals, traffic, setTraffic)=>{
-  switch(action.type){
-    case "GET_STATE":     GET_STATE(action, setTraffic);                               break
-    case "SELECT_INT":    SELECT_INT(action, setTraffic, intervals, setIntervals);     break
-    default: break
-  }
-}
 
-let GET_STATE = (action, setTraffic)=>{
+export const GET_STATE = (action, setTraffic)=>{
 
   let query = {"date.unix":{ $gt:(Date.now() - action.int) }}
 
@@ -16,7 +9,7 @@ let GET_STATE = (action, setTraffic)=>{
   
 }
 
-let SELECT_INT = (action, setTraffic, intervals, setIntervals)=>{
+export const SELECT_INT = (action, setTraffic, intervals, setIntervals)=>{
 
   setTraffic(false)
 

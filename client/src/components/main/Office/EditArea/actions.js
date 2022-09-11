@@ -128,6 +128,14 @@ export const ART = {
   }
 }
 
+export const FILE = {
+  ADD_FILE: (id, action, setFiles)=>{
+    bzPost("/getOffice", { addFile:true, id, file:action.file }, (data)=>{
+      setFiles(data.files)
+    })
+  }
+}
+
 export const FOO = {
   CHG_COMMENTS: (action, setComments)=> setComments(action.value),
   CHG_METHOD:   (action, pay, setPay)=> setPay({ ...pay, method:action.value }),

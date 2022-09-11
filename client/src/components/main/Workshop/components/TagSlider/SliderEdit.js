@@ -5,8 +5,8 @@ import { SliderEditImg } from './SliderEditImg'
 
 export const SliderEdit = ({ props:{slider, sliderFn} })=>{
 
-  let btnSave = `https://files.bzdrive.com/img/ico/icoSave.png`
-  let btnCancel = `https://files.bzdrive.com/img/ico/icoCancel.png`
+  let btnSave = `https://bzdrive.com/files/ico/icoSave.png`
+  let btnCancel = `https://bzdrive.com/files/ico/icoCancel.png`
 
   let SAVE = ()=> sliderFn({type:"SAVE"})
   let CANCEL = ()=> sliderFn({type:"EDIT"})

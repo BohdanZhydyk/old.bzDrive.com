@@ -3,7 +3,7 @@ import React from 'react'
 
 export const Header = ({ props:{data, handlePrint} })=>{
 
-  let printImg = "https://files.bzdrive.com/img/ico/icoPrint.png"
+  let printImg = "https://bzdrive.com/files/ico/icoPrint.png"
   
   return (
     <div className="header boxShadow flex">

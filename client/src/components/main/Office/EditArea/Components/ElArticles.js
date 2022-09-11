@@ -125,7 +125,7 @@ const Btn = ({ props:{i, cl, mode, newArticles, AreaFn} })=>{
 
   let len =  mode === "ZL" ? newArticles.length < 14 : newArticles.length < 17
   let top = (cl === "VAT elTop")
-  let src = `https://files.bzdrive.com/img/ico/ico${top ? `Plus` : `Delete`}.png`
+  let src = `https://bzdrive.com/files/ico/ico${top ? `Plus` : `Delete`}.png`
   let type = top ? (len ? "ART_LINE_PLUS" : "") : "ART_LINE_DELETE"
   let none = (cl === `VAT elEmpty`) ? `none` : `flex`
 

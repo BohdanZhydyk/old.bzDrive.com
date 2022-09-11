@@ -382,6 +382,61 @@
     }
   }
 
+  .ElFiles {
+    width:95%;
+    margin:0 0 1vw 0;
+    border:1px solid #999;
+    border-radius:0.5vw;
+
+    .title {
+      width:90%;
+      padding:0.5vw 5%;
+      font-size:150%;
+      background-color:#222;
+      border-radius:0.5vw;
+      @media print {background-color:#0002;}
+    }
+
+    .File {
+      width:98%;
+      min-height:1.5vw;
+      border-bottom:1px solid #555;
+
+      .FileName {
+        width:calc(80% - 1vw);
+        padding:0 0.5vw;
+        &:hover img {
+          width:3vw;
+          height:3vw;
+          margin:0 0.5vw 0 0;
+        }
+        &:hover span {
+          font-size:110%;
+          font-weight:bold;
+        }
+
+        img {
+          width:2vw;
+          height:2vw;
+          margin:0.5vw 1vw 0.5vw 0.5vw;
+        }
+      }
+      .FileSize {width:5%;}
+      .FileBtns {width:15%;}
+    }
+
+    .FileActive {
+      &:hover {background-color:#222;}
+    }
+
+    .AddNewFileArea {
+      width:95%;
+      margin:0.25vw 0;
+      border:1px dashed #555;
+      &:hover {border-color:#191;}
+    }
+  }
+
   .ElComment {
     width:95%;
     margin:0 0 1vw 0;

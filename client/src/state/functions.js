@@ -66,6 +66,13 @@ export const  IsSameYear = (firstUnix, secondUnix)=>{
   return UnixToYYYY(firstUnix) === UnixToYYYY(secondUnix)
 }
 
+export const bzBytesCalc = (Bytes)=>{
+  if(Bytes > 1073741824) return `${(parseFloat(Bytes) / parseFloat(1073741824)).toFixed(1)} GB`
+  if(Bytes > 1048576) return `${(parseFloat(Bytes) / parseFloat(1048576)).toFixed(1)} MB`
+  if(Bytes > 1024) return `${(parseFloat(Bytes) / parseFloat(1024)).toFixed(1)} kB`
+  else return `${Bytes} B`
+}
+
 export const bzCalc = (operation, a, b)=>{
   let x = parseFloat(a)
   let y = parseFloat(b)

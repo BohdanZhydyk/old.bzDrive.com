@@ -38,7 +38,7 @@ export const MenuPannel = ({ props:{user, avaImg, menuImg, AvaClick, MenuClick, 
 
 const LangBtn = ({ props:{lang, active, appFn} })=>{
 
-	let img = `https://files.bzdrive.com/img/ico/lng/lng${lang}.png`
+	let img = `https://bzdrive.com/files/ico/lng/lng${lang}.png`
 	let classes = `${active ? `imgBtnBig` : `imgBtn`}`
 
 	let LANG_CHG = ()=> !active && appFn({type:"LANG_CHG", payload:lang })

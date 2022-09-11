@@ -49,7 +49,7 @@ export const PassSubEl = ({ props:{newEl, subEl, id, inputNr, ElFn} })=>{
       <div className="LineBtn flex end">
         <img
           className="imgBtn"
-          src="https://files.bzdrive.com/img/ico/icoDelete.png"
+          src="https://bzdrive.com/files/ico/icoDelete.png"
           onClick = { ()=> DEL_LINE() }
           title="usunąć linię"
           alt="delete"

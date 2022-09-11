@@ -10,7 +10,7 @@ exports.getOffice = (req, res)=>{
   
   let object = req.body.object
 
-  // //GET MODE
+  // GET MODE
   object.getMode &&
   bzDB( { req, res, collection:`base${object.getMode}`, act:"FIND", query:object.query }, (data)=>{
     
@@ -24,7 +24,7 @@ exports.getOffice = (req, res)=>{
 
   })
 
-  // //GET CLIENT
+  // GET CLIENT
   object.getClient &&
   bzDB( { req, res, collection:`baseKL`, act:"FIND", query:object.getClient }, (data)=>{
 
@@ -38,7 +38,7 @@ exports.getOffice = (req, res)=>{
 
   })
     
-  // //NEW
+  // NEW
   object.new &&
   bzDB( { req, res, collection:`baseSP`, act:"FIND", query:{user:object.new} }, (data)=>{
 
@@ -52,7 +52,38 @@ exports.getOffice = (req, res)=>{
 
   })
 
-  //SAVE
+  // ADD_FILE
+  object.addFile &&
+  bzDB( { req, res, collection:`baseZL`, act:"FIND_ONE", query:{_id:new ObjectID(object.id)} }, (data)=>{
+
+    let file = {fileID:Date.now(), ...object.file}
+    
+    let save = {
+      ...data.object.result,
+      files: data.object.result?.files ? [...data.object.result.files, file] : [file]
+    }
+
+    let query = {...save, _id:new ObjectID(object.id)}
+
+    bzDB( { req, res, collection:`baseZL`, act:"UPDATE_ONE", query }, (data)=>{
+
+      bzDB( { req, res, collection:`baseZL`, act:"FIND_ONE", query:{_id:new ObjectID(object.id)} }, (data)=>{
+
+        res.send({
+          ...data,
+          object:{
+            ...data.object,
+            result:data.object.result
+          }
+        })
+
+      })
+
+    })
+
+  })
+
+  // SAVE
   if(object.save){
     
     let mode = object.mode

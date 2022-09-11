@@ -3,9 +3,9 @@ import React from 'react'
 
 export const SliderEditImg = ({ props:{img, n, i, sliderFn} })=>{
 
-  let btnL = "https://files.bzdrive.com/img/ico/sliderBtnL.png"
-  let btnR = "https://files.bzdrive.com/img/ico/sliderBtnR.png"
-  let btnDel = "https://files.bzdrive.com/img/ico/icoDelete.png"
+  let btnL = "https://bzdrive.com/files/ico/sliderBtnL.png"
+  let btnR = "https://bzdrive.com/files/ico/sliderBtnR.png"
+  let btnDel = "https://bzdrive.com/files/ico/icoDelete.png"
 
   let MOVE_IMG = (from, to)=> sliderFn({type:"MOVE_IMG", folder:n, from, to})
 

@@ -14,7 +14,7 @@ export const Order = ({ props:{mode, week, zl, ReloadFn, officeFn} }) => {
 
   let car = `${zl.car.brand} - ${zl.car.model}`
 
-  let ava = zl.dealer.img
+  let ava = `https://bzdrive.com/files/users/${zl.dealer.user}.png`
 
   let day = Day(zl.date.unix)
   let dayTo = Day(zl.dateTo.unix)

@@ -13,7 +13,6 @@ export const ElComment = ({ props:{comments, print, AreaFn} })=>{
       (comments || !print) &&
       <div className="ElComment flex wrap">
 
-
         <div className="title bold flex start">
           {"Uwagi"}
         </div>

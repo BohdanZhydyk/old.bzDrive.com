@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
 import './Traffic.scss'
-import { actions } from './actions'
+import { GET_STATE, SELECT_INT } from './actions'
 import { IntBtns } from './IntBtns'
 import { TrafficLines } from './TrafficLines'
 import { ScreenSaver } from './../../../All/ScreenSaver'
@@ -45,10 +45,10 @@ const Traffic = ()=>{
   }
 
   const [intervals, setIntervals] = useState([
-    {name:"day", to:86400000, act:true},
-    {name:"week", to:604800000},
-    {name:"month", to:2678400000},
-    {name:"year", to:31536000000}
+    {name:"last day", to:86400000, act:true},
+    {name:"last week", to:604800000},
+    {name:"last month", to:2678400000},
+    {name:"last year", to:31536000000}
   ])
 
   let int = 0
@@ -56,7 +56,15 @@ const Traffic = ()=>{
 
   const [traffic, setTraffic] = useState(false)
 
-  const trafficFn = (action)=> actions(action, intervals, setIntervals, traffic, setTraffic)
+  // const trafficFn = (action)=> actions(action, intervals, setIntervals, traffic, setTraffic)
+
+  const trafficFn = (action)=>{
+    switch(action.type){
+      case "GET_STATE":     GET_STATE(action, setTraffic);                               break
+      case "SELECT_INT":    SELECT_INT(action, setTraffic, intervals, setIntervals);     break
+      default: break
+    }
+  }
 
   useEffect( ()=>{ !traffic && trafficFn({ type:"GET_STATE", int }) },[])
 

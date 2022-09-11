@@ -22,8 +22,8 @@ export const SalaryOrder = ({ props:{mode, order, obj, CHECK_ORDER, ReloadFn, of
   }
 
   let title = `\n${order?.car?.faults ? `${order.car.faults}` : ``}`
-  let img = `https://files.bzdrive.com/img/ico/ico${order?.chk ? `Check` : `Empty`}.png`
-  let ava = order && order?.dealer?.img
+  let img = `https://bzdrive.com/files/ico/ico${order?.chk ? `Check` : `Empty`}.png`
+  let ava = order && `https://bzdrive.com/files/users/${order.dealer.user}.png`
 
   return(
     <div className="SalaryOrder flex wrap stretch" title={title}>

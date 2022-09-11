@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 
 export const Protection = ({ props:{profFn} })=>{
   return(
-    <section className="profileSection">
+    <section className="ProfileSection">
 
       <NavLink to="/cookies" className="inputWrapper flex start">
 

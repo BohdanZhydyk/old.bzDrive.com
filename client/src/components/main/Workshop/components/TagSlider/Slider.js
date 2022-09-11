@@ -3,9 +3,9 @@ import React from 'react'
 
 export const Slider = ({ props:{admin, txt, image, sliderFn} })=>{
 
-  let btnL = `https://files.bzdrive.com/img/ico/sliderBtnL.png`
-  let btnR = `https://files.bzdrive.com/img/ico/sliderBtnR.png`
-  let btnEdit = `https://files.bzdrive.com/img/ico/icoEdit.png`
+  let btnL = `https://bzdrive.com/files/ico/sliderBtnL.png`
+  let btnR = `https://bzdrive.com/files/ico/sliderBtnR.png`
+  let btnEdit = `https://bzdrive.com/files/ico/icoEdit.png`
 
   let SLIDE_LEFT = ()=> sliderFn({type:"SLIDE_LEFT"})
   let SLIDE_RIGHT = ()=> sliderFn({type:"SLIDE_RIGHT"})

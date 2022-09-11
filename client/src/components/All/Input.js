@@ -30,7 +30,7 @@ export const Input =({ props:{input, print, Fn} })=>{
     ? input.type === "date" ? ( !print ? InputModeVal : TextModeVal ) : input.val
     : ""
 
-  let img = `https://files.bzdrive.com/img/ico/ico${input.img}.png`
+  let img = `https://bzdrive.com/files/ico/ico${input.img}.png`
   
   return(
     <>

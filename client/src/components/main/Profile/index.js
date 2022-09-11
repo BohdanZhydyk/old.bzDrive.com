@@ -1,91 +1,63 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 
 import './Profile.scss'
 import { bzGetUser } from './../../../state/functions'
 import { ScreenSaver } from '../../All/ScreenSaver'
 import { Information } from './Information'
 import { Security } from './Security'
+import { Activity } from './Activity'
 import { Protection } from './Protection'
+import { ProfileAva } from './ProfileAva'
 
 
 const ProfileApp = ()=>{
 
-  const [profile, setProfile] = useState(false)
+  const [profile, setProfile] = useState( bzGetUser() )
 
-  const [infos, setInfos] = useState([
-    {name:"role", type:"text", val:bzGetUser().role, holder:"role", error:false},
-    {name:"login", type:"text", val:bzGetUser().login, holder:"login", error:false},
-    {name:"email", type:"text", val:bzGetUser().email, holder:"email", error:false},
-    {name:"lang", type:"text", val:bzGetUser().lang, holder:"lang", error:false},
-    {name:"sex", type:"text", val:bzGetUser().sex, holder:"sex", error:false}
+  const [sections, setSections] = useState([
+    {txt:"Informacja", component:<Information props={{ profile }} />, act:true},
+    {txt:"Bezpieczeństwo", component:<Security props={{}} />},
+    {txt:"Historja aktywnośći", component:<Activity props={{}} />},
+    {txt:"Ochrona danych", component:<Protection props={{}} />}
   ])
 
-  const [inputs, setInputs] = useState([
-    {name:"pass", type:"password", val:"", holder:"stare hasło", error:false},
-    {name:"pass1", type:"password", val:"", holder:"nowe hasło", error:false},
-    {name:"pass2", type:"password", val:"", holder:"powtórż nowe hasło", error:false}
-  ])
-
-  useEffect( ()=>{ !profile && setProfile( bzGetUser() ) },[])
-
-  let profFn = (action)=>{
-    let type = action.type
-    let payload = action.payload
-    switch(type){
-      case "Change-email":
-        setInfos( infos.map( (el)=> el.name === 'email' ? {...el, val:payload} : {...el} ) )
-        break
-      case "Change-pass":
-        setInputs( inputs.map( (el)=> el.name === 'pass' ? {...el, val:payload} : {...el} ) )
-        break
-      case "Change-pass1":
-        setInputs( inputs.map( (el)=> el.name === 'pass1' ? {...el, val:payload} : {...el} ) )
-        break
-      case "Change-pass2":
-        setInputs( inputs.map( (el)=> el.name === 'pass2' ? {...el, val:payload} : {...el} ) )
-        break
-      default: break
-    }
-  }
+  let OPEN = (i)=> setSections(
+    sections.map( (el, n)=>
+      (n === i) ? {...el, act:true} : {...el, act:false}
+    )
+  )
 
   return(
-    <div className="flex column">
+    <>
     {
       !profile
-      ? <ScreenSaver />
+      ?
+      <ScreenSaver />
       :
-      <div className="profile flex stretch wrap">
+      <div className="Profile flex stretch wrap">
 
-        <div className="profileAva flex wrap">
-
-          <img src={`https://files.bzdrive.com/img/users/${profile.login ? profile.login : `man`}.png`} alt="ava" />
-        
-          <div className="downloadAva flex">zmienic avatarkę...</div>
-
-        </div>
+        <ProfileAva props={{profile}} />
       
-        <div className="profileInfo">
+        <div className="ProfileInfo">
+        {
+          sections.map( (el, i)=>{
+            return(
+              <section key={`ProfileInfo_${el.txt}_${el.i}`}>
 
-          <div className="profileTheme bold">Informacja</div>
+                <div className="ProfileTheme bold" onClick={ ()=>OPEN(i) }>{el.txt}</div>
 
-          <Information props={{infos, profFn}} />
+                { el.act && <div>{el.component}</div> }
 
-          <div className="profileTheme">Bezpieczeństwo</div>
-
-          <Security props={{inputs, profFn}} />
-
-          <div className="profileTheme">Historja aktywnośći</div>
-
-          <div className="profileTheme">Ochrona danych</div>
-
-          <Protection props={{profFn}} />
-
+              </section>
+            )
+          })
+        }
         </div>
 
       </div>
     }
 
-    </div>
+    </>
   )
 }
 

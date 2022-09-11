@@ -9,7 +9,7 @@ export const Contacts = ({ props:{contacts} })=>{
     {
       contacts.map( (btn, index)=>{
 
-        let src = `https://files.bzdrive.com/img/ico/contacts/${btn.key}.png`
+        let src = `https://bzdrive.com/files/ico/contacts/${btn.key}.png`
         
         return (
           <a className="contactBtn"

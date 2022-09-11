@@ -70,7 +70,7 @@ const UserPannel = ({ props:{user, appFn} })=>{
 
   let LOGOUT = ()=> appFn({type:"LOGOUT"})
 
-  let AvaBig = `https://files.bzdrive.com/img/users/${user.ava ? user.login : `man`}.png`
+  let AvaBig = `https://bzdrive.com/files/users/${user.ava ? user.login : `man`}.png`
 
   return(
     <div className="userPannel flex wrap stretch">

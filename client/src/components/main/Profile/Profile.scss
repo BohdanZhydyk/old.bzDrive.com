@@ -1,9 +1,9 @@
 
-.profile {
+.Profile {
   width:95vw;
   margin:2vw 0 3vw 0;
 
-  .profileAva {
+  .ProfileAva {
     width:20%;
     margin:0 0 3vw 0;
     align-content:flex-start;
@@ -16,22 +16,23 @@
       @media (max-width: 767px) {width:30%;}
     }
 
-    .downloadAva {
+    .DownloadAva {
       width:90%;
       margin:2vw;
       min-height:4vw;
       border:1px dashed #999;
+      &:hover {border-color:#f60;}
       @media (max-width: 767px) {width:60%; min-height:20vw;}
     }
   }
 
-  .profileInfo {
+  .ProfileInfo {
     width:70%;
     padding:0 2vw;
     @media (min-width: 768px) and (max-width: 1024px) {width:60%;}
     @media (max-width: 767px) {width:90%;}
 
-    .profileTheme {
+    .ProfileTheme {
       width:100%;
       font-size:120%;
       padding:0.5vw 2vw;
@@ -39,45 +40,55 @@
       border-bottom:3px solid #999;
     }
 
-    .profileSection {
+    .ProfileSection {
       width:100%;
       padding:0.5vw 1vw 2vw 1vw;
 
       .inputWrapper {
-        width:40%;
+        width:calc(50% - 2px);
         margin:0.5vw 0;
-        padding:0.5vw 1vw;
+        padding:0.25vw 0.25vw 0 0.25vw;
         border-radius:0.5vw;
-        @media (min-width: 768px) and (max-width: 1024px) {width:60%;}
-        @media (max-width: 767px) {width:80%;}
+        @media (min-width: 768px) and (max-width: 1024px) {width:calc(60% - 2px);}
+        @media (max-width: 767px) {width:calc(80% - 2px);}
 
         legend {
           padding:0 0.5vw;
           font-size:80%;
+          color:#f60;
         }
         input {
           width:100%;
-          min-height:2vw;
+          min-height:1.5vw;
           background-color:#0000;
           border:none;
         }
+      }
 
-        .profileBtn {
-          width:100%;
+      .ProfileBtn {
+        width:calc(50% - 4px);
+        margin-top:1vw;
+        padding:0 0.5vw;
+        min-height:3vw;
+        border-radius:0.5vw;
+        background-color:#171;
+        &:hover {
+          background-color:#191;
+        }
+        @media (min-width: 768px) and (max-width: 1024px) {
+          width:calc(60% - 4px);
           min-height:4vw;
-          border-radius:0.5vw;
-          background-color:#171;
-          &:hover {
-            background-color:#191;
-          }
-          @media (min-width: 768px) and (max-width: 1024px) {min-height:4vw;}
-          @media (max-width: 767px) {min-height:5vw;}
+        }
+        @media (max-width: 767px) {
+          width:calc(80% - 2px);
+          min-height:5vw;
         }
       }
     }
   }
 
   .cookies {
+    min-height:2vw;
     color:#fd0;
     &:hover {
       color:#f60;

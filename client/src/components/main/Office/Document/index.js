@@ -28,7 +28,7 @@ const Document = ()=>{
       let letter = doc.nr.letter
       let YYYY = DigLen(doc.nr.year, 4)
       let MM = DigLen(doc.nr.month, 2)
-      let DD = DigLen(doc.nr.sign, 6)
+      let DD = DigLen(doc.nr.sign, 4)
       document.title = `${letter}/${YYYY}/${MM}/${DD}`
     }
   })
@@ -40,7 +40,7 @@ const Document = ()=>{
 
   handlePrint()
 
-  console.log("doc", doc)
+  // console.log("doc", doc)
 
   return(
     <div className="Document" ref={componentRef}>

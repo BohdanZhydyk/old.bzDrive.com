@@ -10,8 +10,8 @@ export const SiteAuth = ({ props:{user, side, nav, appFn} })=>{
 	let MenuClick = ()=> appFn({type:"SIDE_CLICK", payload:{ava:false, menu:!side.menu} })
 	let BlurClick = ()=> appFn({type:"SIDE_CLICK", payload:{ava:false, menu:false} })
 
-	let avaImg = `https://files.bzdrive.com/img/users/${user?.ava ? user.login : `man`}.png`
-	let menuImg = "https://files.bzdrive.com/img/ico/icoMore.png"
+	let avaImg = `https://bzdrive.com/files/users/${user?.ava ? user.login : `man`}.png`
+	let menuImg = "https://bzdrive.com/files/ico/icoMore.png"
 
 	return(
 		<>

@@ -3,7 +3,7 @@ import React from 'react'
 
 export const Language = ({data})=>{
 
-  let src = `https://files.bzdrive.com/img/CV/ico/lang/${data.txt}.png`
+  let src = `https://bzdrive.com/files/CV/ico/lang/${data.txt}.png`
 
   return (
     <div className="line flex wrap start" >
