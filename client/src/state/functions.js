@@ -2,6 +2,8 @@ import axios from 'axios'
 import cookies from 'js-cookie'
 
 
+const MSG = (name, msg)=> console.log(name, msg)
+
 export const bzRemToken = ()=> cookies.remove('bzToken')
 export const bzRemUser = ()=> cookies.remove('bzUser')
 export const bzRemCookie = ()=> cookies.remove('bzCookie')
@@ -242,10 +244,7 @@ export const errNumbers = (val)=> val ? (val?.length > 5 ? false : true) : true
 export const bzPost = async (link, object, callback)=>{
 
   let hostname = window.location.hostname
-
-  let api = (hostname === 'localhost')
-    ? 'http://localhost:5000'
-    : 'https://bzdrive.com'
+  let api = (hostname === 'localhost') ? 'http://localhost:5000' : 'https://bzdrive.com'
 
   let ClientData = {
     Errors: [],
@@ -255,49 +254,49 @@ export const bzPost = async (link, object, callback)=>{
     object: object
   }
 
-  ClientData.IP = await axios.get('https://json.geoiplookup.io').then( (res)=> {
+  let IP_API = 'https://json.geoiplookup.io'
+
+  ClientData.IP = await axios.get( IP_API ).then( (res)=> {
 
     return {
-      host: hostname,
-      from: link,
-      ip: res.data.ip,
-      postal_code: res.data.postal_code,
+      host:         hostname,
+      from:         link,
+      ip:           res.data.ip,
+      postal_code:  res.data.postal_code,
       country_code: res.data.country_code,
       country_name: res.data.country_name,
-      region: res.data.region,
-      city: res.data.city,
-      asn_org: res.data.asn_org
+      region:       res.data.region,
+      city:         res.data.city,
+      asn_org:      res.data.asn_org
       //isp:org:hostname:latitude:longitude:continent_code:continent_name:district:timezone_name:
       //connection_type:asn_number:asn:currency_code:currency_name:success:premium: 
     }
 
   }).catch( (err)=>{
     ClientData.Errors.push({err:err, host:hostname, from:link})
-    return "no IP"
+    MSG(`${hostname}${link}`, err)
+    return "No IP..."
   })
 
-  axios.post( api+link, ClientData)
-    .then( (res)=>{
+  axios.post( api+link, ClientData).then( (res)=>{
 
-      console.log('ServerData',res.data)
+    let data = res.data
 
-      let bzToken = res?.data?.bzToken
-      let user = res?.data?.user
-      let IP = res?.data?.IP
-      let result = res?.data?.object?.result
-      let errors = res?.data?.object?.errors
+    MSG("ServerData", data)
 
-      let lang = IP?.country_code ? IP?.country_code.toLowerCase() : 'en'
+    let errors = data?.object?.errors
+    errors && errors.map( (err)=> MSG("err", err) )
+    
+    let countryCode = data?.IP?.country_code ? data?.IP.country_code.toLowerCase() : 'en'
+    let lang = data?.user?.lang ? data?.user.lang : countryCode
 
-      errors && errors.map( (err)=> console.log('err',err) )
+    bzSetToken( data?.bzToken )
+    bzSetUser( {...data?.user, lang} )
 
-      bzSetToken(bzToken)
-      bzSetUser( {...user, lang: user.lang ? user.lang : lang} )
+    callback(data?.object?.result)
 
-      callback(result)
-
-    })
-    .catch( (err)=> console.log('err',err) )
+  })
+  .catch( (err)=> MSG("err", err) )
   
 }
 
@@ -311,6 +310,6 @@ export const bzGet = (link, cb)=>{
 
   axios.get(api + link)
     .then( (res)=>{ cb(res.data.object.result) })
-    .catch( (err)=> console.log('err',err) )
+    .catch( (err)=> MSG("err", err) )
   
 } 

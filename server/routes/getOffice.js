@@ -12,7 +12,7 @@ exports.getOffice = (req, res)=>{
 
   // GET MODE
   object.getMode &&
-  bzDB( { req, res, collection:`base${object.getMode}`, act:"FIND", query:object.query }, (data)=>{
+  bzDB( { req, res, col:`base${object.getMode}`, act:"FIND", query:object.query }, (data)=>{
     
     res.send({
       ...data,
@@ -26,7 +26,7 @@ exports.getOffice = (req, res)=>{
 
   // GET CLIENT
   object.getClient &&
-  bzDB( { req, res, collection:`baseKL`, act:"FIND", query:object.getClient }, (data)=>{
+  bzDB( { req, res, col:`baseKL`, act:"FIND", query:object.getClient }, (data)=>{
 
     res.send({
       ...data,
@@ -40,7 +40,7 @@ exports.getOffice = (req, res)=>{
     
   // NEW
   object.new &&
-  bzDB( { req, res, collection:`baseSP`, act:"FIND", query:{user:object.new} }, (data)=>{
+  bzDB( { req, res, col:`baseSP`, act:"FIND", query:{user:object.new} }, (data)=>{
 
     res.send({
       ...data,
@@ -54,7 +54,7 @@ exports.getOffice = (req, res)=>{
 
   // ADD_FILE
   object.addFile &&
-  bzDB( { req, res, collection:`baseZL`, act:"FIND_ONE", query:{_id:new ObjectID(object.id)} }, (data)=>{
+  bzDB( { req, res, col:`baseZL`, act:"FIND_ONE", query:{_id:new ObjectID(object.id)} }, (data)=>{
 
     let file = {fileID:Date.now(), ...object.file}
     
@@ -65,9 +65,9 @@ exports.getOffice = (req, res)=>{
 
     let query = {...save, _id:new ObjectID(object.id)}
 
-    bzDB( { req, res, collection:`baseZL`, act:"UPDATE_ONE", query }, (data)=>{
+    bzDB( { req, res, col:`baseZL`, act:"UPDATE_ONE", query }, (data)=>{
 
-      bzDB( { req, res, collection:`baseZL`, act:"FIND_ONE", query:{_id:new ObjectID(object.id)} }, (data)=>{
+      bzDB( { req, res, col:`baseZL`, act:"FIND_ONE", query:{_id:new ObjectID(object.id)} }, (data)=>{
 
         res.send({
           ...data,
@@ -138,7 +138,7 @@ exports.getOffice = (req, res)=>{
 
     switch(save().status){
       case "client":
-        bzDB( { req, res, collection:`base${mode}`, act:"INSERT_ONE", query:save() }, (data)=>{
+        bzDB( { req, res, col:`base${mode}`, act:"INSERT_ONE", query:save() }, (data)=>{
 
           res.send({
             ...data,
@@ -158,7 +158,7 @@ exports.getOffice = (req, res)=>{
           "nr.year": save().nr.year,
           "nr.month": save().nr.month
         }
-        bzDB( { req, res, collection:`base${mode}`, act:"FIND", query }, (data)=>{
+        bzDB( { req, res, col:`base${mode}`, act:"FIND", query }, (data)=>{
 
           let Result = data.object.result[0]
 
@@ -166,7 +166,7 @@ exports.getOffice = (req, res)=>{
           ? save().nr.sign = ( parseInt(Result.nr.sign) + 1 ).toString()
           : save().nr.sign = ( 1 ).toString()
 
-          bzDB( { req, res, collection:`base${mode}`, act:"INSERT_ONE", query:save() }, (InsertData)=>{
+          bzDB( { req, res, col:`base${mode}`, act:"INSERT_ONE", query:save() }, (InsertData)=>{
           
             res.send({
               ...InsertData,
@@ -183,7 +183,7 @@ exports.getOffice = (req, res)=>{
       default:
         let id = new ObjectID(object.save.id)
         query = {...save(), _id:id}
-        bzDB( { req, res, collection:`base${mode}`, act:"UPDATE_ONE", query }, (data)=>{
+        bzDB( { req, res, col:`base${mode}`, act:"UPDATE_ONE", query }, (data)=>{
 
           res.send({
             ...data,

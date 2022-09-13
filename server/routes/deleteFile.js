@@ -1,9 +1,13 @@
 const fs = require('fs')
 
 exports.deleteFile = (req, res)=>{
+
+  console.log("abc",req.body.object)
+  // res.status(200).send({ message:"File deleted successfully" })
+  return
   
-  const fileAddr = __dirname + "/../public/" + req.body.fileAddr
-  const fileName = req.body.fileName
+  const fileAddr = __dirname + "/../public/" + req.body.object.fileAddr
+  const fileName = req.body.object.fileName
 
   fs.stat(`${fileAddr}/${fileName}`, (err, stats)=>{
 

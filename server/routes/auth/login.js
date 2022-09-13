@@ -14,7 +14,7 @@ exports.login = (req, res, ServerData, callback)=>{
 	let login = inputs.filter( el=> el.name === "login" )[0].val
 	let pass = inputs.filter( el=> el.name === "pass" )[0].val
 
-  bzDB( { req, res, collection:'bzUsers', act:"FIND_ONE", query:{login} }, (dbData)=>{
+  bzDB( { req, res, col:'bzUsers', act:"FIND_ONE", query:{login} }, (dbData)=>{
 
       if(!dbData?.object?.result){
         res.send({

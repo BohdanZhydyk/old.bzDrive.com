@@ -13,7 +13,7 @@ exports.getPass = (req, res)=>{
 
   // GET ALL
   object.getAll &&
-  bzDB( { req, res, collection:`bzPass`, act:"FIND", query:object.query, sort:object.sort }, (data)=>{
+  bzDB( { req, res, col:`bzPass`, act:"FIND", query:object.query, sort:object.sort }, (data)=>{
     
     res.send({
       ...data,
@@ -34,7 +34,7 @@ exports.getPass = (req, res)=>{
 
   // GET ONE
   object.getOne &&
-  bzDB( { req, res, collection:`bzPass`, act:"FIND_ONE", query:{_id: new ObjectID(object.query._id)} }, (data)=>{
+  bzDB( { req, res, col:`bzPass`, act:"FIND_ONE", query:{_id: new ObjectID(object.query._id)} }, (data)=>{
 
     let pass = data?.object?.result?.siteData[object.query.nr]?.pass
       ? deCrypt(data.object.result.siteData[object.query.nr].pass)
@@ -52,7 +52,7 @@ exports.getPass = (req, res)=>{
 
   // SAVE
   object.save &&
-  bzDB( { req, res, collection:`bzPass`, act:"FIND_ONE", query:{_id: new ObjectID(object.query._id)} }, (data)=>{
+  bzDB( { req, res, col:`bzPass`, act:"FIND_ONE", query:{_id: new ObjectID(object.query._id)} }, (data)=>{
 
     let _id = new ObjectID(object.query._id)
     let dataPass = (i)=>{
@@ -75,7 +75,7 @@ exports.getPass = (req, res)=>{
 
     data.object.result
     ?
-    bzDB( { req, res, collection:`bzPass`, act:"UPDATE_ONE", query:{...save, _id} }, (data)=>{
+    bzDB( { req, res, col:`bzPass`, act:"UPDATE_ONE", query:{...save, _id} }, (data)=>{
       res.send({
         ...data,
         object:{
@@ -85,7 +85,7 @@ exports.getPass = (req, res)=>{
       })
     })
     :
-    bzDB( { req, res, collection:`bzPass`, act:"INSERT_ONE", query:save }, (data)=>{
+    bzDB( { req, res, col:`bzPass`, act:"INSERT_ONE", query:save }, (data)=>{
       res.send({
         ...data,
         object:{
@@ -99,7 +99,7 @@ exports.getPass = (req, res)=>{
 
   // DELETE
   object.delete &&
-  bzDB( { req, res, collection:`bzPass`, act:"DELETE_ONE", query:{_id: new ObjectID(object.query)} }, (data)=>{
+  bzDB( { req, res, col:`bzPass`, act:"DELETE_ONE", query:{_id: new ObjectID(object.query)} }, (data)=>{
     
     res.send({
       ...data,

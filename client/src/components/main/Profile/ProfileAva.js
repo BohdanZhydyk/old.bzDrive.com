@@ -1,25 +1,34 @@
 import React from 'react'
 
-import { bzGetUser } from './../../../state/functions'
 import { UploadFile } from '../../All/UploadFile'
 
 
-export const ProfileAva = ({ props:{profile} })=>{
+export const ProfileAva = ({ props:{profile, ProFn} })=>{
 
-  let img = `https://bzdrive.com/files/users/${profile.login ? profile.login : `man`}.png`
+  let fileAddr = `files/users/`
+  let fileName = `${profile.login}_${Date.now()}.png`
+
+  let CHG_AVA = (data)=> ProFn({
+    type:"CHG_AVA",
+    login:profile.login,
+    fileAddr,
+    oldFile:profile.ava,
+    newFile:fileName
+  })
 
   let props = {
     txt:`zmienic avatarkę...`,
-    fileAddr:`files/users/`,
-    fileName:`${bzGetUser().login}.png`,
+    fileAddr,
+    fileName,
     accept:`image/png`,
-    multiple:false
+    multiple:false,
+    callback: (data)=> CHG_AVA(data)
   }
 
   return(
     <div className="ProfileAva flex wrap">
 
-      <img src={img} alt="ava" />
+      <img src={`https://bzdrive.com/files/users/${profile.ava}`} alt="ava" />
     
       <div className="DownloadAva flex">
 

@@ -13,7 +13,7 @@ exports.getFin = (req, res)=>{
 
   // GET STATE
   object.getState &&
-  bzDB({ req, res, collection:'bzState', act:"FIND_ONE", query:{_id} }, (data)=>{
+  bzDB({ req, res, col:'bzState', act:"FIND_ONE", query:{_id} }, (data)=>{
 
     res.send({
       ...data,
@@ -28,11 +28,11 @@ exports.getFin = (req, res)=>{
   // SAVE STATE
   object.saveState &&
   bzDB({
-    req, res, collection:`bzState`, act:"UPDATE_ONE",
+    req, res, col:`bzState`, act:"UPDATE_ONE",
     query:{name:"finanseApp_state", fin:object.fin, _id}
   }, (data)=>{
 
-    bzDB( { req, res, collection:'bzState', act:"FIND_ONE", query:{_id} }, (data)=>{
+    bzDB( { req, res, col:'bzState', act:"FIND_ONE", query:{_id} }, (data)=>{
 
       res.send({
         ...data,

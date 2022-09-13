@@ -9,7 +9,7 @@ exports.getTraffic = (req, res)=>{
 
   let query = req.body.object.query
 
-  bzDB( { req, res, collection:'bzStatistic', act:"FIND", query }, (data)=>{
+  bzDB( { req, res, col:'bzStatistic', act:"FIND", query }, (data)=>{
 
       res.send({
         ...data,

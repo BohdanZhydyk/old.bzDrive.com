@@ -9,7 +9,7 @@ exports.getState = (req, res)=>{
 
   let _id = new ObjectID('61dca3e9ec2924c7d900834d')
 
-  bzDB( { req, res, collection:'bzState', act:"FIND_ONE", query:{_id} }, (data)=>{
+  bzDB( { req, res, col:'bzState', act:"FIND_ONE", query:{_id} }, (data)=>{
 
     let Filter = (nav, lvl)=>{
       let arr = []

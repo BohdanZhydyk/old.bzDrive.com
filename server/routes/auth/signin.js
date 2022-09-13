@@ -20,7 +20,7 @@ exports.signin = (req, res, ServerData, callback)=>{
     let confirm = inputs[0].val
     let bzToken = req.body.bzToken
 
-    bzDB( { req, res, collection:'bzUsersConfirm', act:"FIND", query:{bzToken} }, (confirmData)=>{
+    bzDB( { req, res, col:'bzUsersConfirm', act:"FIND", query:{bzToken} }, (confirmData)=>{
 
       let ConfRes = confirmData.object.result[0]
 
@@ -49,7 +49,7 @@ exports.signin = (req, res, ServerData, callback)=>{
           pass: ConfRes.pass
         }
 
-        bzDB( { req, res, collection:'bzUsers', act:"INSERT_ONE", query }, (dbData)=>{
+        bzDB( { req, res, col:'bzUsers', act:"INSERT_ONE", query }, (dbData)=>{
 
           res.send({
             ...ServerData,
@@ -68,7 +68,7 @@ exports.signin = (req, res, ServerData, callback)=>{
             }
           })
 
-          bzDB( { req, res, collection:'bzUsersConfirm', act:"DELETE_ONE", query:{bzToken} }, (confirmData)=>{})
+          bzDB( { req, res, col:'bzUsersConfirm', act:"DELETE_ONE", query:{bzToken} }, (confirmData)=>{})
 
         })
 
@@ -88,11 +88,11 @@ exports.signin = (req, res, ServerData, callback)=>{
   let confirmTime = 120000 // 5 minutes
   let deleteUnix = { "unix":{ $lte:(Date.now() - confirmTime) } }
 
-  bzDB( { req, res, collection:'bzUsersConfirm', act:"DELETE_MANY", query:deleteUnix }, (deleteManyData)=>{
+  bzDB( { req, res, col:'bzUsersConfirm', act:"DELETE_MANY", query:deleteUnix }, (deleteManyData)=>{
   
-    bzDB( { req, res, collection:'bzUsers', act:"FIND_ONE", query:{login} }, (userData)=>{
+    bzDB( { req, res, col:'bzUsers', act:"FIND_ONE", query:{login} }, (userData)=>{
 
-      bzDB( { req, res, collection:'bzUsersConfirm', act:"FIND_ONE", query:{login} }, (confData)=>{
+      bzDB( { req, res, col:'bzUsersConfirm', act:"FIND_ONE", query:{login} }, (confData)=>{
 
         if(userData.object.result || confData.object.result){
           res.send({
@@ -107,9 +107,9 @@ exports.signin = (req, res, ServerData, callback)=>{
           return
         }
 
-        bzDB( { req, res, collection:'bzUsers', act:"FIND_ONE", query:{email} }, (userData)=>{
+        bzDB( { req, res, col:'bzUsers', act:"FIND_ONE", query:{email} }, (userData)=>{
 
-          bzDB( { req, res, collection:'bzUsersConfirm', act:"FIND_ONE", query:{email} }, (confData)=>{
+          bzDB( { req, res, col:'bzUsersConfirm', act:"FIND_ONE", query:{email} }, (confData)=>{
 
             if(userData.object.result || confData.object.result){
               res.send({
@@ -158,7 +158,7 @@ exports.signin = (req, res, ServerData, callback)=>{
                   unix: Date.now()
                 }
 
-                bzDB( { req, res, collection:'bzUsersConfirm', act:"INSERT_ONE", query }, (insertData)=>{
+                bzDB( { req, res, col:'bzUsersConfirm', act:"INSERT_ONE", query }, (insertData)=>{
 
                   let mode = "signin"
 

@@ -36,7 +36,6 @@ export const UploadFile = ({ props:{txt, fileAddr, fileName, accept, multiple, c
       res.status === 200
       ? UPLOADED(res.data) //res.data = {name, size, mimetype}
       : setErr(res.data.message)
-
     })
 
   }

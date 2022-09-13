@@ -99,7 +99,12 @@ const FS = ()=>{
   useEffect( ()=>{
     !invoices &&
     GET_FS_TABLE(
-      { "date.unix":{$gte:DateToUnix(from), $lte:DateToUnix(to)} },
+      {
+        $and:[
+          {"nr.year":bzUnixToDateTime().year},
+          {"nr.month":bzUnixToDateTime().month}
+        ]
+      },
       (data)=> setInvoices(data)
     )
   },[])

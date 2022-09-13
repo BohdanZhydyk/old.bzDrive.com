@@ -23,7 +23,7 @@ exports.forgot = (req, res, ServerData, callback)=>{
     let confirm = inputs[0].val
     let bzToken = req.body.bzToken
 
-    bzDB( { req, res, collection:'bzUsersConfirm', act:"FIND", query:{bzToken} }, (confirmData)=>{
+    bzDB( { req, res, col:'bzUsersConfirm', act:"FIND", query:{bzToken} }, (confirmData)=>{
 
       let ConfRes = confirmData.object.result[0]
 
@@ -44,7 +44,7 @@ exports.forgot = (req, res, ServerData, callback)=>{
 
         let email = ConfRes.email
 
-        bzDB( { req, res, collection:'bzUsers', act:"FIND", query:{email} }, (userData)=>{
+        bzDB( { req, res, col:'bzUsers', act:"FIND", query:{email} }, (userData)=>{
 
           let UserRes = userData.object.result[0]
 
@@ -59,7 +59,7 @@ exports.forgot = (req, res, ServerData, callback)=>{
   
           let query = {_id:id, login, email, role, lang, sex, ava, pass}
   
-          bzDB( { req, res, collection:'bzUsers', act:"UPDATE_ONE", query }, (dbData)=>{
+          bzDB( { req, res, col:'bzUsers', act:"UPDATE_ONE", query }, (dbData)=>{
   
             res.send({
               ...ServerData,
@@ -71,7 +71,7 @@ exports.forgot = (req, res, ServerData, callback)=>{
               }
             })
   
-            bzDB( { req, res, collection:'bzUsersConfirm', act:"DELETE_ONE", query:{bzToken} }, (confirmData)=>{})
+            bzDB( { req, res, col:'bzUsersConfirm', act:"DELETE_ONE", query:{bzToken} }, (confirmData)=>{})
   
           })
 
@@ -92,9 +92,9 @@ exports.forgot = (req, res, ServerData, callback)=>{
   let confirmTime = 120000 // 5 minutes
   let deleteUnix = { "unix":{ $lte:(Date.now() - confirmTime) } }
 
-  bzDB( { req, res, collection:'bzUsersConfirm', act:"DELETE_MANY", query:deleteUnix }, (deleteManyData)=>{
+  bzDB( { req, res, col:'bzUsersConfirm', act:"DELETE_MANY", query:deleteUnix }, (deleteManyData)=>{
 
-    bzDB( { req, res, collection:'bzUsers', act:"FIND_ONE", query:{email} }, (userData)=>{
+    bzDB( { req, res, col:'bzUsers', act:"FIND_ONE", query:{email} }, (userData)=>{
 
       if(!userData.object.result){
         res.send({
@@ -145,7 +145,7 @@ exports.forgot = (req, res, ServerData, callback)=>{
             unix: Date.now()
           }
 
-          bzDB( { req, res, collection:'bzUsersConfirm', act:"INSERT_ONE", query }, (insertData)=>{
+          bzDB( { req, res, col:'bzUsersConfirm', act:"INSERT_ONE", query }, (insertData)=>{
 
             let mode = "forgot"
 
