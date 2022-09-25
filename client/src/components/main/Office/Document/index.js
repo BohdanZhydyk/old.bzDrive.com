@@ -3,7 +3,7 @@ import { useReactToPrint } from 'react-to-print';
 import cookies from 'js-cookie'
 
 import "./Document.scss"
-import { DigLen } from "../../../../state/functions";
+import { DigLen, bzPost } from "../../../../state/functions";
 import { ScreenSaver } from "./../../../All/ScreenSaver"
 import EditArea from "./../EditArea"
 
@@ -19,8 +19,15 @@ const Document = ()=>{
   })
 
   useEffect( ()=>{
-    let coo = cookies.get('Document') ? JSON.parse( cookies.get('Document') ) : false
-    !doc && setMode(coo.mode); setDoc(coo.el); cookies.remove('Document')
+    let GET_DOC = ()=>{
+      let coo = cookies.get('Document') ? JSON.parse( cookies.get('Document') ) : false
+      bzPost( "/getOffice", { getDoc:coo.mode, id:coo.id }, (data)=>{
+        setMode(coo.mode)
+        setDoc(data)
+        handlePrint()
+      })
+    }
+    !doc && GET_DOC()
   },[])
 
   useEffect(()=>{
@@ -37,10 +44,6 @@ const Document = ()=>{
     print:true,
     DO: ()=> handlePrint()
   }
-
-  handlePrint()
-
-  // console.log("doc", doc)
 
   return(
     <div className="Document" ref={componentRef}>

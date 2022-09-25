@@ -34,12 +34,15 @@
   .trafficLines{
     width:100%;
 
-    .trafficLine{
-      width:100%;
+    .LineCells{
       &:hover .cell{
         color:#fd0;
         border-color:#f60;
       }
+    }
+
+    .trafficLine{
+      width:100%;
 
       .cell{
         min-height:2vw;
@@ -63,9 +66,7 @@
         font-size:110%;
         background-color:#111;
       }
-      .colorCell{
-        background-color:#1915;
-      }
+      .colorCell{background-color:#1915;}
     }
   }
 }

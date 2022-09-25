@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react"
 
-import { UnixToYYYYMMDD, DigLen } from "../../../../state/functions"
 import { DaysLine } from "./DaysLine"
 import { Orders } from "./Orders"
 
@@ -25,8 +24,7 @@ export const Week = ({ props:{mode, line, l, user, translate, ReloadFn, officeFn
         ]
       }
 
-
-  useEffect(  ()=>{ !table && officeFn( {type:"GET_TABLE", mode, query}, (data)=>{
+  useEffect(  ()=>{ !table && officeFn( {type:"GET_TABLE", mode, login:user.login, query}, (data)=>{
 
     setTable(
       data.map( (zl)=>{

@@ -4,7 +4,7 @@ import "./EditArea.scss"
 
 import {
   emptyArt, YYYYMMDD, HEAD, BUYER, CAR, CLI,
-  ART, FILE, FOO, EFFECT, GET_CEIDG, SAVE_DOC
+  ART, FILE, FOO, EFFECT, GET_CEIDG, GET_VIN, SAVE_DOC
 } from "./actions"
 import { bzGetUser } from "../../../../state/functions"
 import { ElStatus } from "./Components/ElStatus"
@@ -28,7 +28,7 @@ const EditArea = ({ props:{mode, line, CANCEL, PRINTFUNC, ReloadFn, officeFn} })
 
   const [status, setStatus] = useState( el?.status )
   const [nr, setNr] = useState( el?.nr )
-  const [place, setPlace] = useState( el?.place )
+  const [place, setPlace] = useState( el?.place ? el.place : el?.dealer?.addr?.town )
   const [date, setDate] = useState( el?.date ? el.date : YYYYMMDD )
   const [dateTo, setDateTo] = useState( el?.dateTo ? el.dateTo : YYYYMMDD )
   const [dealer, setDealer] = useState( el?.dealer ? el.dealer : false )
@@ -102,13 +102,10 @@ const EditArea = ({ props:{mode, line, CANCEL, PRINTFUNC, ReloadFn, officeFn} })
       case "CHG_PAYDATE":     FOO.CHG_PAYDATE(action, date, pay, setPay);                       break
 
       case "KEYUP_IMG_BUYER_NIP": GET_CEIDG(action, date, buyer, setBuyer, client, setClient);  break
+      case "KEYUP_IMG_CAR_VIN":   GET_VIN(action, car, setCar);                                 break
 
       case "PRINT_DOC":
-        let el = {
-          id, place, date, dateTo, nr, dealer, buyer,
-          car, client, articles, comments, pay
-        }
-        cookies.set( 'Document', JSON.stringify({mode, el}) )
+        cookies.set( 'Document', JSON.stringify({mode, id}) )
         window.open(`/document`, "_blank")
         break
 

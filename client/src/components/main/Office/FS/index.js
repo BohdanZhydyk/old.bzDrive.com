@@ -4,6 +4,7 @@ import "./../Office.scss"
 import "./FS.scss"
 import { bzUnixToDateTime, bzGetUser, DateToUnix } from "./../../../../state/functions"
 import { officeFn } from "../actions"
+import Settings from "../Settings"
 import { Title } from "./Title"
 import { ScreenSaver } from "./../../../All/ScreenSaver"
 import SearchPannel from "../SearchPannel"
@@ -44,7 +45,7 @@ const FS = ()=>{
       mode,
       query: (user.login === "Anna")
         ? query
-        : {...query, "dealer.user":user.login}
+        : {...query, user:user.login}
     },
     (data)=> cb(data)
   )
@@ -112,7 +113,12 @@ const FS = ()=>{
   let ReloadFn = ()=>{
     setInvoices(false);
     GET_FS_TABLE(
-      { "date.unix":{$gte:DateToUnix(from), $lte:DateToUnix(to)} },
+      {
+        $and:[
+          {"nr.year":bzUnixToDateTime().year},
+          {"nr.month":bzUnixToDateTime().month}
+        ]
+      },
       (data)=> setInvoices(data)
     )
   }
@@ -126,6 +132,8 @@ const FS = ()=>{
       ? <ScreenSaver />
       :
       <div className="FS flex column">
+
+        <Settings props={{user}} />
 
         <Title props={{mode, searchSt, lang, from, to}}/>
 

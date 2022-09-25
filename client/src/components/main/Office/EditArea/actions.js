@@ -87,7 +87,7 @@ export const ART = {
   ART_LINE_PLUS:    (articles, setArticles)=> setArticles([ ...articles, emptyArt ]),
 
   ART_LINE_DELETE:  (action, articles, setArticles)=>{
-    setArticles(articles.filter( (art, n)=> (n !== action.i - 1) && art ))
+    setArticles(articles.filter( (art, n)=> (n !== action.i) && art ))
   },
 
   CHG_ARTICLES: (action, articles, setArticles)=>{
@@ -113,13 +113,13 @@ export const ART = {
 
     setArticles(
       articles.map( (art, n)=>{
-        if( n === (action.i - 1) ){
-          if( action.cl === "ART el" ){ return {...art, article:action.value} }
-          if( action.cl === "PRC el" ){ return calc({...art, price:action.value}) }
-          if( action.cl === "QUA el" ){ return calc({...art, quantity:action.value}) }
-          if( action.cl === "VAT el" ){ return calc({...art, VAT:action.value}) }
-          if( action.cl === "PRV el" ){ return {...art, vat:action.value} }
-          if( action.cl === "SUM el" ){ return calcFromSUM({...art, sum:action.value}) }
+        if( n === (action.i) ){
+          if( action.cl === "ART" ){ return {...art, article:action.value} }
+          if( action.cl === "PRC" ){ return calc({...art, price:action.value}) }
+          if( action.cl === "QUA" ){ return calc({...art, quantity:action.value}) }
+          if( action.cl === "VAT" ){ return calc({...art, VAT:action.value}) }
+          if( action.cl === "PRV" ){ return {...art, vat:action.value} }
+          if( action.cl === "SUM" ){ return calcFromSUM({...art, sum:action.value}) }
         }
         else{ return art }
       })
@@ -152,17 +152,17 @@ export const GET_CEIDG = (action, date, buyer, setBuyer, client, setClient)=>{
 
     let nip = action.value
 
-    bzPost("/getOffice", { getClient:{"client.nip":nip} }, (data)=>{
+    bzPost("/getOffice", { getClient:{"buyer.nip":nip} }, (data)=>{
 
       let SetInfoFromNIP = (obj)=>{
         switch(action.type){
-          case "KEYUP_IMG_BUYER_NIP":    setBuyer({...buyer, ...obj});     break
-          case "KEYUP_IMG_CLIENT_NIP":   setClient({...client, ...obj});   break
+          case "KEYUP_IMG_BUYER_NIP":    setBuyer(obj);     break
+          case "KEYUP_IMG_CLIENT_NIP":   setClient(obj);   break
           default: break
         }
       }
 
-      if( data[0] ){ SetInfoFromNIP(data[0].client); return }
+      if( data ){ SetInfoFromNIP(data); return }
       
       let NIP = nip.split("-").join("")
       let YYYY = DigLen(new Date( Date.now() ).getFullYear(), 4)
@@ -191,12 +191,13 @@ export const GET_CEIDG = (action, date, buyer, setBuyer, client, setClient)=>{
           SetInfoFromNIP (
             {
               name: res.name ? FirstToCapital( res.name ) : "",
-              // account: res.accountNumbers[0] ? res.accountNumbers[0] : "",
+              nip: nip,
               addr:{
                 zip,
                 town: FirstToCapital(town),
                 street: newAddr[0] ? `ul. ${FirstToCapital(newAddr[0])}` : ""
               }
+              // account: res.accountNumbers[0] ? res.accountNumbers[0] : "",
             }
           )
 
@@ -209,14 +210,70 @@ export const GET_CEIDG = (action, date, buyer, setBuyer, client, setClient)=>{
 
 }
 
+export const GET_VIN = (action, car, setCar)=>{
+  
+  if(action.value.length === 17 && action.key === "Enter"){
+    
+    let vin = action.value
+
+    bzPost("/getOffice", { getCar:{"car.vin":vin} }, (data)=>{
+
+      if( data ){ setCar({...car, data}) }
+      
+      // ZrQEPSkKYnp1YTgzQGdtYWlsLmNvbQ==
+      // FREE = 5,000 API calls/mo
+  
+      // let link = `https://vpic.nhtsa.dot.gov/api/vehicles/decodevinvaluesextended/${vin}?format=json` //Nhtsa
+      let link = `https://auto.dev/api/vin/${vin}?apikey=ZrQEPSkKYnp1YTgzQGdtYWlsLmNvbQ==`
+        
+      axios.get( link ).then( (res)=>{
+  
+        if(res.status === 200){
+          
+          res = res.data
+
+          let size = `${res.engine.size}L_${res.engine.configuration}${res.engine.cylinder}`// zrobic po przecinku
+          let drive = ()=>{
+            switch(res?.drivenWheels){
+              case "four wheel drive": return "4WD"
+              case "all wheel drive": return "AWD"
+              default: return res.drivenWheels
+            }
+          }
+          let code = `${res.engine.manufacturerEngineCode}`
+          let hp = `${parseInt(bzCalc("*", res.engine.horsepower, 0.74))}kW`
+  
+          let engine = `${size}_${code}_${hp}_${drive()}`
+  
+          setCar(
+            {
+              ...car,
+              brand:res?.make?.name ? res.make.name : (data?.brand ? data.brand : ""),
+              model:res?.model?.name ? res.model.name : (data?.model ? data.model : ""),
+              prod:res?.years[0]?.year ? res.years[0].year : (data?.prod ? data.prod : ""),
+              engine: data?.engine ? data.engine : engine
+            }
+          )
+  
+        }
+      })
+      
+    })
+
+  }
+
+}
+
 export const SAVE_DOC = ({mode, id, action, place, date, dateTo, nr, dealer, buyer, car, client, articles, comments, pay, ReloadFn, officeFn})=>{
 
   let net = SumArray(articles.map( el=> el.netto ))
   let vat = SumArray(articles.map( el=> el.vat ))
   let sum = SumArray(articles.map( el=> el.sum ))
 
+  let user = bzGetUser().login
+
   let save = {
-    id, status:action.status, place, date, dateTo, nr, dealer, buyer,
+    id, user, status:action.status, place, date, dateTo, nr, dealer, buyer,
     car, client, articles, comments, netto:net, priceVAT:vat, brutto:sum, pay
   }
   

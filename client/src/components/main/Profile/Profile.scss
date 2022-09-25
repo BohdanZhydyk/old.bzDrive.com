@@ -1,90 +1,116 @@
 
 .Profile {
-  width:95vw;
-  margin:2vw 0 3vw 0;
+  width:100%;
 
-  .ProfileAva {
-    width:20%;
-    margin:0 0 3vw 0;
-    align-content:flex-start;
-    @media (min-width: 768px) and (max-width: 1024px) {width:30%;}
-    @media (max-width: 767px) {width:90%;}
-    
-    img {
-      width:90%;
-      border-radius:0.5vw;
-      @media (max-width: 767px) {width:30%;}
-    }
+  .ProfileTitle {
+    width:100%;
+    margin:1vw 0;
+    font-size:200%;
+  }
 
-    .DownloadAva {
-      width:90%;
-      margin:2vw;
-      min-height:4vw;
-      border:1px dashed #999;
-      &:hover {border-color:#f60;}
-      @media (max-width: 767px) {width:60%; min-height:20vw;}
+  .ProfileSection {
+    width:98vw;
+    padding:1vw 0 3vw 0;
+
+    .ProfileInfo {
+      width:70%;
+      padding:0 2vw;
+      @media (min-width: 768px) and (max-width: 1024px) {width:60%;}
+      @media (max-width: 767px) {width:90%;}
+  
+      .ProfileTheme, .ProfileThemeAct {
+        width:100%;
+        font-size:120%;
+        margin:0.25vw 0 0 0;
+        padding:0.5vw 2vw;
+        background-color:#0003;
+        border-left:5px solid #0000;
+        border-bottom:3px solid #999;
+      }
+
+      .ProfileThemeAct {
+        border-left:5px solid #191;
+        border-radius:2vw 0 0 0;
+      }
+  
+      .ProfileSection {
+        width:100%;
+        padding:0.5vw 1vw 2vw 1vw;
+  
+        .inputWrapper {
+          width:calc(40% - 2px);
+          margin:0.5vw 0;
+          padding:0.25vw 0.25vw 0 0.25vw;
+          border-radius:0.5vw;
+          @media (min-width: 768px) and (max-width: 1024px) {width:calc(60% - 2px);}
+          @media (max-width: 767px) {width:calc(70% - 2px);}
+  
+          legend {
+            padding:0 0.5vw;
+            font-size:80%;
+            color:#f60;
+          }
+          input {
+            width:100%;
+            min-height:1.5vw;
+            background-color:#0000;
+            border:none;
+          }
+        }
+  
+        .ProfileBtn {
+          width:calc(40% - 4px);
+          margin-top:1vw;
+          padding:0 0.5vw;
+          min-height:3vw;
+          border-radius:0.5vw;
+          background-color:#171;
+          &:hover {
+            background-color:#191;
+          }
+          @media (min-width: 768px) and (max-width: 1024px) {
+            width:calc(60% - 4px);
+            min-height:4vw;
+          }
+          @media (max-width: 767px) {
+            width:calc(70% - 2px);
+            min-height:5vw;
+          }
+        }
+  
+        .TrafficLine {
+          width:100%;
+          min-height:2vw;
+          font-size:100%;
+          border-bottom:1px solid #555;
+  
+          .DDMMYYYY {width:12%;}
+          .IP {width:15%;}
+          .Addr {width:70%;}
+        }
+      }
     }
   }
 
-  .ProfileInfo {
-    width:70%;
-    padding:0 2vw;
-    @media (min-width: 768px) and (max-width: 1024px) {width:60%;}
-    @media (max-width: 767px) {width:90%;}
+  .TopLine {
+    padding:0.5vw 0 0 0;
+    background-color:#222;
+  }
 
-    .ProfileTheme {
-      width:100%;
-      font-size:120%;
-      padding:0.5vw 2vw;
-      background-color:#0003;
-      border-bottom:3px solid #999;
-    }
+  .UserLine {
+    width:98%;
+    min-height:2vw;
+    font-size:120%;
+    border-bottom:1px solid #555;
+    &:hover {color:#fd0;}
 
-    .ProfileSection {
-      width:100%;
-      padding:0.5vw 1vw 2vw 1vw;
-
-      .inputWrapper {
-        width:calc(50% - 2px);
-        margin:0.5vw 0;
-        padding:0.25vw 0.25vw 0 0.25vw;
-        border-radius:0.5vw;
-        @media (min-width: 768px) and (max-width: 1024px) {width:calc(60% - 2px);}
-        @media (max-width: 767px) {width:calc(80% - 2px);}
-
-        legend {
-          padding:0 0.5vw;
-          font-size:80%;
-          color:#f60;
-        }
-        input {
-          width:100%;
-          min-height:1.5vw;
-          background-color:#0000;
-          border:none;
-        }
-      }
-
-      .ProfileBtn {
-        width:calc(50% - 4px);
-        margin-top:1vw;
-        padding:0 0.5vw;
-        min-height:3vw;
-        border-radius:0.5vw;
-        background-color:#171;
-        &:hover {
-          background-color:#191;
-        }
-        @media (min-width: 768px) and (max-width: 1024px) {
-          width:calc(60% - 4px);
-          min-height:4vw;
-        }
-        @media (max-width: 767px) {
-          width:calc(80% - 2px);
-          min-height:5vw;
-        }
-      }
-    }
+    .Nr {width:5%; margin:0 0 0 0.5%;}
+    .Role {width:10%; margin:0 0 0 0.5%;}
+    .Login {width:10%; margin:0 0 0 0.5%;}
+    .Email {width:35%; margin:0 0 0 0.5%;}
+    .Lang {width:5%; margin:0 0 0 0.5%;}
+    .Sex {width:7%; margin:0 0 0 0.5%;}
+    .Ava {width:20%; margin:0 0.5% 0 0.5%;}
   }
 
   .cookies {

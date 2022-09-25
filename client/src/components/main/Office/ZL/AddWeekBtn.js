@@ -6,7 +6,9 @@ export const AddWeekBtn = ({ props:{act, calendar, setCalendar, officeFn} })=>{
   let ADD_WEEK = ()=> officeFn({type:act, calendar, setCalendar})
 
   return(
-    <div className="AddWeekBtn flex end">
+    <div className="AddWeekBtn flex">
+
+      <div className="EmptyBtn"></div>
 
       <div className="Btn flex" onClick={ ()=> ADD_WEEK() }>
       {

@@ -14,6 +14,7 @@ export const officeFn = (action, callback)=>{
 
   switch(type){
     case "GET_TABLE":     GET_TABLE(mode, query, callback);       break
+    case "GET_DEALERS":   GET_DEALERS(callback);                  break
     case "MINUS_WEEK":    MINUS_WEEK(calendar, setCalendar);      break
     case "PLUS_WEEK":     PLUS_WEEK(calendar, setCalendar);       break
     case "SAVE_DOC":      SAVE_DOC(mode, payload, ReloadFn);      break
@@ -24,6 +25,10 @@ export const officeFn = (action, callback)=>{
 
 const GET_TABLE = (mode, query, callback)=>{
   bzPost( "/getOffice", { getMode:mode, query }, (data)=>{ callback(data) })
+}
+
+const GET_DEALERS = (callback)=>{
+  bzPost( "/getOffice", { getDealers:true }, (data)=>{ callback(data) })
 }
 
 const MINUS_WEEK = (calendar, setCalendar)=>{

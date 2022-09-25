@@ -1,37 +1,32 @@
-import { bzPost } from './../../../state/functions'
+import { bzDeleteFile, bzPost } from './../../../state/functions'
 
-import axios from 'axios'
 
 export const GET_PROFILE = (action, profile, setProfile)=>{
-  bzPost("/getProfile", { getProfile:true, login:action.login }, (data)=> setProfile(data) )
+  let query = { getUsers:true, lim:1, query:{login:action.login}  }
+  bzPost("/getProfile", query, (data)=> setProfile({...data[0], dealer:null}) )
 }
 
-export const OPEN_SECTION = (action, sections, setSections)=>{
-  setSections(
-    sections.map( (el, nr)=> (nr === action.nr) ? {...el, act:true} : {...el, act:false} )
-  )
+export const GET_TRAFFIC = (action)=>{
+  bzPost("/getProfile", { getTraffic:true, login:action.login }, (data)=> action.cb(data) )
 }
 
-export const CHG_AVA = (action, profile, setProfile)=>{
+export const GET_USERS = (action)=>{
+  bzPost("/getProfile", { getUsers:true, lim:0, query:{} }, (data)=> action.cb(data) )
+}
 
-  let query = { fileAddr:action.fileAddr, fileName:action.oldFile }
+export const CHG_AVA = (action, profile, setProfile, appFn)=>{
 
-  // console.log("query",query)
-  
-  bzPost("/deleteFile", query, (data)=>{
-  //   // data.status === 200 &&
-  //   // console.log("321",data)
-  //   bzPost("/getProfile", {chgAva:true, login:action.login, fileName:action.newFile}, (data)=> setProfile(data) )
-  // })
-  // axios.post( 'https://bzdrive.com/deleteFile', query).then( (res)=>{
-    // console.log("ok", data)
+  let query = action.query
+  let fileAddr = action.fileAddr
+  let oldFile = action.oldFile
+  let newFile = action.newFile
+  let cbData = action.cbData
+  action.login = action.query[0].login
 
-    bzPost("/getProfile", {chgAva:true, login:action.login, fileName:action.newFile}, (data)=> setProfile(data) )
-
-    data.status === 200
-    ? console.log(data)
-    : console.log(data)
-
+  bzPost("/getProfile", {chgAva:true, query, newFile}, (data)=>{
+    GET_PROFILE(action, profile, setProfile)
+    appFn({ type:"RELOAD_USER" })
+    bzDeleteFile(fileAddr, oldFile, (data)=> console.log("deleteFile",data) )
   })
 
 }

@@ -42,7 +42,7 @@ const Main = ({ props:{state, user, side, appFn} })=>{
   let routes = (to)=>{
     switch(to){
       case "/news":                 return <News />
-      case "/profile":              return <Profile />
+      case "/profile":              return <Profile props={{appFn}}/>
       // Applications
       case "/apps/store":           return <Store />
       case "/apps/cv":              return <CV />

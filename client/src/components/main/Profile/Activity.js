@@ -1,37 +1,60 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
-import { Input } from './../../All/Input'
+import { ScreenSaver } from '../../All/ScreenSaver'
 
 
-export const Activity = ({ props:{} })=>{
+export const Activity = ({ props:{login, ProFn} })=>{
 
-  // const [infos, setInfos] = useState([
-  //   {form:`ROLE`, type:"text", legend:"role", val:profile.role},
-  //   {form:`LOGIN`, type:"text", legend:"login", val:profile.login},
-  //   {form:`EMAIL`, type:"text", legend:"email", val:profile.email},
-  //   {form:`LANG`, type:"text", legend:"lang", val:profile.lang},
-  //   {form:`SEX`, type:"text", legend:"sex", val:profile.sex}
-  // ])
-  
-  // let Fn = (action)=>{
-  //   let type = action.type
-  //   let payload = action.payload
-  //   switch(type){
-  //     case "Change-email":
-  //       setInfos( infos.map( (el)=> el.name === 'email' ? {...el, val:payload} : {...el} ) )
-  //       break
-  //     default: break
-  //   }
-  // }
+  const [traffic, setTraffic] = useState(false)
+
+  let topLine = {
+    user:{login:"TOP"},
+    date:{
+      dateTime:{day:"DD", month:"MM", year:"YYYY"}
+    },
+    IP:{
+      ip:"IP", country_code:"Code", country_name:"Country", region:"Region",
+      postal_code:"Postal code", city:"City", asn_org:"Provider"
+    }
+  }
+
+  useEffect( ()=>{ !traffic && ProFn({ type:"GET_TRAFFIC", login, cb:(data)=>setTraffic(data) }) },[])
 
   return(
     <section className="ProfileSection">
+    {
+      !traffic
+      ? <ScreenSaver />
+      :
+      <>
+      {
+        [topLine, ...traffic].map( (el, n)=>{
 
-      <div>activity info...</div>
-    
-      {/* { infos.map( (input, i)=> <Input props={{input, Fn}} key={`ProfInfos${i}`} /> ) }
+          let classes = `TrafficLine ${n === 0 ? `txtOrg bold TopLine` : ``} flex`
 
-      <div className="ProfileBtn flex">Potwierdzić</div> */}
+          let DD_MM_YYYY = `${el.date.dateTime.day}.${el.date.dateTime.month}.${el.date.dateTime.year}`
+
+          let IP = el.IP
+          let addr = `
+            ${IP?.country_code ? `[${IP.country_code}], ` : ``}
+            ${IP?.country_name ? `${IP.country_name}, ` : ``}
+            ${IP?.region ? `${IP.region}, ` : ``}
+            ${IP?.postal_code ? `${IP.postal_code}, ` : ``}
+            ${IP?.city ? `${IP.city}, ` : ``}
+            ${IP?.asn_org ? `${IP.asn_org}` : ``}
+          `
+          
+          return(
+            <div className={classes} key={`TrafficLine${el.user.login}${n}`}>
+              <span className="DDMMYYYY nowrapTxt flex start">{DD_MM_YYYY}</span>
+              <span className="IP nowrapTxt flex start">{el.IP.ip}</span>
+              <span className="Addr nowrapTxt flex start">{addr}</span>
+            </div>
+          )
+        })
+      }
+      </>
+    }
 
     </section>
   )

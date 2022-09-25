@@ -1,0 +1,43 @@
+
+.Info {
+  width:49%;
+  margin:0 0 1vw 0;
+  border:1px solid #999;
+  border-radius:0.5vw;
+  @media (max-width: 767px) {width:100%;}
+  @media print {width:49%;}
+
+  .title {
+    width:90%;
+    font-size:150%;
+    padding:0.5vw 5%;
+    background-color:#222;
+    border-radius:0.5vw;
+    @media print {background-color:#0002;}
+  }
+
+  .infoLine {
+    width:95%;
+    margin:0.25vw 0;
+    border-bottom:1px dotted #999;
+
+    .infoLineLegend {
+      width:100%;
+      font-size:80%;
+    }
+
+    .infoLineValue {
+      padding:0 0 0 5%;
+      font-size:120%;
+      min-height:2vw;
+
+      span {
+        margin:0 1vw 0 0;
+      }
+    }
+
+    .infoName {
+      min-height:3vw;
+    }
+  }
+}

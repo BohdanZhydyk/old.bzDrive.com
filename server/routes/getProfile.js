@@ -10,50 +10,94 @@ exports.getProfile = (req, res)=>{
   
   let object = req.body.object
 
-  // GET PROFILE
-  object.getProfile &&
-  bzDB( { req, res, col:`bzUsers`, act:"FIND_ONE", query:{"login":object.login} }, (data)=>{
+  // GET USERS
+  object.getUsers &&
+  bzDB( { req, res, col:`bzUsers`, act:"FIND", lim:object.lim, query:object.query }, (data)=>{
     
     res.send({
       ...data,
       object:{
         ...data.object,
-        result:{
-          login: data.object.result.login,
-          email: data.object.result.email,
-          role: data.object.result.role,
-          lang: data.object.result.lang,
-          sex: data.object.result.sex,
-          ava: data.object.result.ava
-        }
+        result: data.object.result.map( el=>{
+          return {...el, pass:false}
+        })
       }
     })
 
   })
-  
-  // CHANGE AVA
-  object.chgAva &&
-  bzDB( { req, res, col:`bzUsers`, act:"FIND_ONE", query:{"login":object.login} }, (data)=>{
 
-    console.log("db",data.object.result)
+  // SAVE USERS
+  object.saveUsers &&
+  bzDB( { req, res, col:`bzUsers`, act:"FIND_ONE", query:{login:object.login} }, (data)=>{
 
-    let query = {ava:object.fileName, _id:new ObjectID(data._id)}
+    let _id = new ObjectID(data.object.result._id)
+    let query = {dealer:object.dealer, _id}
     
     bzDB( { req, res, col:`bzUsers`, act:"UPDATE_ONE", query }, (data)=>{
       
+      bzDB( { req, res, col:`bzUsers`, act:"FIND_ONE", query:{login:object.login} }, (data)=>{
+
+        res.send({
+          ...data,
+          object:{
+            ...data.object,
+            result: data.object.result
+          }
+        })
+      })
+
+    })
+
+  })
+
+  // GET TRAFFIC
+  object.getTraffic && getTraffic()
+  function getTraffic(){
+
+    let IPs = []
+    let traffic = []
+  
+    let query = {"user.login":object.login, "IP.host":"bzdrive.com"}
+  
+    bzDB( { req, res, col:'bzStatistic', act:"FIND", query }, (data)=>{
+  
+      data.object.result.map( el=>{
+        if( el.IP.ip && !IPs.includes(el.IP.ip) ){
+          IPs.push(el.IP.ip)
+          traffic.push(el)
+        }
+      })
+  
       res.send({
         ...data,
         object:{
           ...data.object,
-          result:{
-            login: data.object.result.login,
-            email: data.object.result.email,
-            role: data.object.result.role,
-            lang: data.object.result.lang,
-            sex: data.object.result.sex,
-            ava: data.object.result.ava
-          }
+          result: traffic
         }
+      })
+  
+    })
+
+  }
+  
+  // CHANGE AVA
+  object.chgAva &&
+  bzDB( { req, res, col:`bzUsers`, act:"FIND_ONE", query:object.query[0] }, (data)=>{
+
+    let _id = new ObjectID(data.object.result._id)
+    let query = {...object.query[1], _id}
+    
+    bzDB( { req, res, col:`bzUsers`, act:"UPDATE_ONE", query }, (data)=>{
+      
+      bzDB( { req, res, col:`bzUsers`, act:"FIND_ONE", query:object.query[0] }, (data)=>{
+
+        res.send({
+          ...data,
+          object:{
+            ...data.object,
+            result: {...data.object.result, pass:false}
+          }
+        })
       })
 
     })

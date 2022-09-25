@@ -19,9 +19,15 @@
     "cryptr": "^6.0.3",
     "express": "^4.17.1",
     "express-fileupload": "^1.4.0",
-    "mongodb": "^3.6.3"
+    "mongodb": "^3.6.3",
+    "socket.io": "^4.5.2",
+    "ws": "^8.8.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.6"
+  },
+  "optionalDependencies": {
+    "bufferutil": "^4.0.6",
+    "utf-8-validate": "^5.0.9"
   }
 }

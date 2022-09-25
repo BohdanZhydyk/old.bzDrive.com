@@ -24,7 +24,6 @@ export const ElComment = ({ props:{comments, print, AreaFn} })=>{
             {!comments ? "" : comments}
           </textarea>
           :
-          // <div className="CommentsTxt">{comments}</div>
           <div className="CommentsTxt">
           {
             (!comments || comments === "")

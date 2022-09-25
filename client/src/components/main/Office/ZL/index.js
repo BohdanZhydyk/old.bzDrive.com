@@ -7,6 +7,7 @@ import { bzGetUser } from './../../../../state/functions'
 import { translate } from "./../../../../state/translate"
 import { officeFn } from "../actions"
 import { Calendar } from "./CalendarLogic"
+import Settings from "../Settings"
 import { Title } from "./Title"
 import { ScreenSaver } from "./../../../All/ScreenSaver"
 import { DaysPannelTop } from "./DaysPannelTop"
@@ -24,7 +25,7 @@ const ZL = ()=>{
   const role = user.role
   
   const [calendar, setCalendar] = useState( false )
-  
+
   useEffect( ()=>{ !calendar && setCalendar( Calendar() ) },[])
   
   let ReloadFn = ( NewCalendar = Calendar() )=>{ setCalendar(false); setCalendar( NewCalendar ) }
@@ -38,6 +39,8 @@ const ZL = ()=>{
       ? <ScreenSaver />
       :
       <div className="ZL flex column">
+
+        <Settings props={{user, ReloadFn}} />
 
         <Title props={{mode, lang, calendar}}/>
 

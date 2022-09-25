@@ -10,6 +10,10 @@ export const ElHead = ({ props:{mode, dealer, place, date, dateTo, nr, print, Ar
   let fromInput = {form:"FROM_DATE", type:"date", legend:"Data wystawienia", val:date, style:" end"}
   let toInput = {form:"TO_DATE", type:"date", legend:"Naprawic do", val:dateTo, style:" end"}
 
+  let logo = dealer?.img
+    ? `https://bzdrive.com/files/dealers/${dealer.img}`
+    : `https://bzdrive.com/files/dealers/man.png`
+
   return(
     <section className="ElHead flex end wrap">
 
@@ -17,11 +21,11 @@ export const ElHead = ({ props:{mode, dealer, place, date, dateTo, nr, print, Ar
         print &&
         <div className="logo flex start bold">
 
-          <img className="imgBtnBig" src={dealer.img} alt={`Logo-${dealer.id}`} />
+          <img className="imgBtnBig" src={logo} alt={`logo`} />
 
-          <span>{dealer.shortname}</span>
+          <span className="ShortName flex start">{dealer?.shortName ? dealer.shortName : `shortName`}</span>
 
-          { mode === "ZL" && <Contacts props={{dealer}} /> }
+          {/* { mode === "ZL" && <Contacts props={{dealer}} /> } */}
 
         </div>
       }

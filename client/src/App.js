@@ -29,6 +29,7 @@ function App() {
       case "NAV_ACTIVE":    NAV_ACTIVE( action.payload, state, setState );                        break
       case "SET_USER":      SET_USER( action.payload, setState, setUser, setSide, setCookie );    break
       case "LANG_CHG":      LANG_CHG( action.payload, user, setUser, setSide, bzSetUser );        break
+      case "RELOAD_USER":   setUser( bzGetUser() );                                               break
       case "COOKIE_OK":     COOKIE_OK( setCookie );                                               break
       case "LOGOUT":        LOGOUT( setState, setSide, setUser, setCookie );                      break
       default: break

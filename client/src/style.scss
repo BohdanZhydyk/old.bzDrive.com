@@ -55,8 +55,6 @@ body {
   }
 
   a {text-decoration:none; color:#fff;}
-  input {color:#fff;}
-  textarea {color:#fff;}
   
   .noData {background-color:#6669; border-radius:0.2vw;}
   .noDataTxt {
@@ -113,12 +111,14 @@ body {
     padding:0.25vw 0.5vw;
     border:none;
     resize:none;
+    font-size:1vw;
     color:#fff;
     background-color:#0000;
     resize:none;
-    @media (min-width: 481px) and (max-width: 767px) {font-size:80%;}
-    @media (max-width: 481px) {font-size:90%;}
-    @media print {font-size:100%;}
+    @media (min-width: 768px) and (max-width: 1024px) {font-size: 1.5vw;}
+    @media (min-width: 481px) and (max-width: 767px) {font-size: 2.2vw;}
+    @media (max-width: 481px) {font-size: 2.5vw;}
+    @media print {font-size: 10px;}
   }
 
   img {
@@ -136,6 +136,12 @@ body {
 
 .inputWrapperError {
   legend { color:#f60; }
+}
+
+.nowrapTxt {
+  white-space: nowrap;      /*keep text on one line */
+  overflow: hidden;         /*prevent text from being shown outside the border */
+  text-overflow: ellipsis;  /*cut off text with an ellipsis*/
 }
 
 .AlertBox {

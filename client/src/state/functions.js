@@ -231,15 +231,44 @@ export const FirstToCapital = (str)=>{
   return newStr.trim()
 }
 
-export const errName = (val)=> val ? (val?.length > 3 ? false : true) : true
-export const errZIP = (val)=> val ? (val?.length > 5 ? false : true) : true
-export const errTown = (val)=> val ? (val?.length > 3 ? false : true) : true
-export const errStreet = (val)=> val ? (val?.length > 3 ? false : true) : true
-export const errTel = (val)=> val ? (val?.length > 10 ? false : true) : true
-export const errNIP = (val)=> val ? (val?.length > 12 ? false : true) : true
-export const errBrand = (val)=> val ? (val?.length > 1 ? false : true) : true
-export const errModel = (val)=> val ? (val?.length > 1 ? false : true) : true
-export const errNumbers = (val)=> val ? (val?.length > 5 ? false : true) : true
+export const errName =    (val)=> val ? (val?.length > 3  ? false : true) : true
+export const errZIP =     (val)=> val ? (val?.length > 5  ? false : true) : true
+export const errTown =    (val)=> val ? (val?.length > 3  ? false : true) : true
+export const errStreet =  (val)=> val ? (val?.length > 3  ? false : true) : true
+export const errTel =     (val)=> val ? (val?.length > 10 ? false : true) : true
+export const errNIP =     (val)=> val ? (val?.length > 12 ? false : true) : true
+export const errVIN =     (val)=> val ? (val?.length > 16 ? false : true) : true
+export const errBrand =   (val)=> val ? (val?.length > 1  ? false : true) : true
+export const errModel =   (val)=> val ? (val?.length > 1  ? false : true) : true
+export const errNumbers = (val)=> val ? (val?.length > 5  ? false : true) : true
+
+export const bzUploadFile = (file, fileAddr, fileName, cb)=>{
+
+  const formData = new FormData()
+
+  formData.append('file', file)
+  formData.append('fileName', fileName)
+  formData.append('fileAddr', fileAddr)
+
+  const config = { headers: {'content-type': 'multipart/form-data'} }
+
+  let link = 'https://bzdrive.com/uploadFile'
+  // let link = 'http://localhost:5000/uploadFile'
+  
+  axios.post( link, formData, config ).then( (res)=> cb(res) )
+
+}
+
+export const bzDeleteFile = (fileAddr, fileName, cb)=>{
+  
+  let query = { fileAddr, fileName }
+
+  let link = 'https://bzdrive.com/deleteFile'
+  // let link = 'http://localhost:5000/deleteFile'
+
+  axios.post( link, query).then( (res)=> cb(res) )
+
+}
 
 export const bzPost = async (link, object, callback)=>{
 
@@ -278,7 +307,7 @@ export const bzPost = async (link, object, callback)=>{
     return "No IP..."
   })
 
-  axios.post( api+link, ClientData).then( (res)=>{
+  axios.post( api+link, ClientData ).then( (res)=>{
 
     let data = res.data
 

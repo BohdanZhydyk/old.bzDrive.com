@@ -14,7 +14,7 @@ export const Invoice = ({ props:{mode, line, n, ReloadFn, officeFn} })=>{
 
   let cell = (line, n)=>{
 
-    let user = n === 0    ? "Wlasciciel"    : line?.dealer?.shortname
+    let user = n === 0    ? "Wlasciciel"    : line?.dealer?.shortName
     let nr = n === 0      ? "Faktura Nr."   : NormalizeNr(line?.nr)
     let nip = n === 0     ? "NIP"           : nip_sanitize(line?.buyer?.nip)
     let name = n === 0    ? "Nabywca"       : line?.buyer?.name

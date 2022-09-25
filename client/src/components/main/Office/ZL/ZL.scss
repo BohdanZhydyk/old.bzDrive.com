@@ -12,11 +12,21 @@
 
   .AddWeekBtn {
     width:100%;
+
+    .EmptyBtn {
+      width:calc(13% * 5 + 10px);
+      @media (min-width: 481px) and (max-width: 767px) {
+        width:calc(13% * 4 + 8px);
+      }
+      @media (max-width: 481px) {
+        width:calc(13% * 3 + 6px);
+      }
+    }
     
     .Btn {
-      width:25%;
+      width:calc(13% * 2 + 4px);
       min-height:2vw;
-      margin:1vw 5vw 0 0;
+      margin:1vw 0 0 0;
       background-color:#171;
       border-radius:0.5vw;
       &:hover {
@@ -24,11 +34,11 @@
         background-image:linear-gradient(#191, #151 30% 70%, #191);
       }
       @media (min-width: 481px) and (max-width: 767px) {
-        width:40%;
+        width:calc(13% * 3 + 6px);
         min-height:4vw;
       }
       @media (max-width: 481px) {
-        width:50%;
+        width:calc(13% * 4 + 8px);
         min-height:5vw;
       }
     }

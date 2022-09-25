@@ -1,17 +1,17 @@
 import React, { useState } from 'react'
 
-import axios from 'axios'
+import { bzUploadFile } from '../../state/functions'
 
 
 export const UploadFile = ({ props:{txt, fileAddr, fileName, accept, multiple, callback} })=>{
 
-  const [file, setFile] = useState()
+  const [file, setFile] = useState(false)
 
-  const [err, setErr] = useState()
+  const [err, setErr] = useState(false)
 
   const CHANGE = (e)=> setFile(e.target.files[0])
 
-  const CLEAR = ()=> setFile()
+  const CLEAR = ()=> setFile(false)
 
   const UPLOADED = (data)=>{
     CLEAR()
@@ -22,17 +22,7 @@ export const UploadFile = ({ props:{txt, fileAddr, fileName, accept, multiple, c
 
     e.preventDefault()
 
-    const formData = new FormData()
-
-    formData.append('file', file)
-    formData.append('fileName', fileName ? fileName : file.name)
-    formData.append('fileAddr', fileAddr)
-
-    const config = { headers: {'content-type': 'multipart/form-data'} }
-
-    let link = 'https://bzdrive.com/uploadFile' //'http://localhost:5000/uploadFile'
-    
-    axios.post( link, formData, config).then( (res)=>{
+    bzUploadFile(file, fileAddr, fileName, (res)=>{
       res.status === 200
       ? UPLOADED(res.data) //res.data = {name, size, mimetype}
       : setErr(res.data.message)
@@ -45,7 +35,7 @@ export const UploadFile = ({ props:{txt, fileAddr, fileName, accept, multiple, c
 
       <label htmlFor="InputTag" className="InputTag flex wrap">
 
-      { !file?.name && <span>{ txt ? txt : `Select File` }</span> }
+        { !file?.name && <span>{ txt ? txt : `Select File` }</span> }
 
         { file?.name && <span className="FileName flex">{file.name}</span> }
 

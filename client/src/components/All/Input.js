@@ -54,7 +54,7 @@ export const Input =({ props:{input, print, Fn} })=>{
           <img
             src={img}
             onClick={ ()=> ON_KEYUP_IMG({ target:{value:val}, key:"Enter" }) }
-            alt="search"
+            alt={input.img}
           />
         }
 

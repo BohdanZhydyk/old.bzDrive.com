@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { MenuPannel } from './MenuPannel'
 import { AuthPannel } from './AuthPannel'
 import { SiteNavigation } from '../SiteNavigation'
@@ -10,7 +11,7 @@ export const SiteAuth = ({ props:{user, side, nav, appFn} })=>{
 	let MenuClick = ()=> appFn({type:"SIDE_CLICK", payload:{ava:false, menu:!side.menu} })
 	let BlurClick = ()=> appFn({type:"SIDE_CLICK", payload:{ava:false, menu:false} })
 
-	let avaImg = `https://bzdrive.com/files/users/${user?.ava ? user.login : `man`}.png`
+	let avaImg = `https://bzdrive.com/files/users/${user.ava ? user.ava : `male.png`}`
 	let menuImg = "https://bzdrive.com/files/ico/icoMore.png"
 
 	return(

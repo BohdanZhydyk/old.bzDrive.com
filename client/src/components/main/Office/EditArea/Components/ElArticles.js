@@ -6,134 +6,136 @@ export const ElArticles = ({ props:{mode, articles, print, AreaFn} })=>{
 
   let CHANGE_INPUT = (cl, i, e)=> AreaFn({type:`CHG_ARTICLES`, cl, i, value:e.target.value})
 
-  let top = {
-    nr: {cl:"elTop", val: "Lp."},
-    article: {cl:"elTop", val: "Nazwa towaru / usługi"},
-    price: {cl:"elTop", val: "Cena, zł"},
-    quantity: {cl:"elTop", val: "Ilość"},
-    VAT: {cl:"elTop", val: "VAT, %"},
-    netto: {cl:"elTop", val: "Kwota netto, zł"},
-    vat: {cl:"elTop", val: "Kwota VAT, zł"},
-    sum: {cl:"elTop", val: "Wartość brutto, zł"}
+  let Top = {
+    nr: "Lp.",
+    article: "Nazwa towaru / usługi",
+    price: "Cena, zł",
+    quantity: "Ilość",
+    VAT: "VAT, %",
+    netto: "Kwota netto, zł",
+    vat: "Kwota VAT, zł",
+    sum: "Wartość brutto, zł"
   }
   
   let newArticles = articles.filter( (art)=> art !== {} && art)
 
-  let empty = {
-    nr: {cl:"elEmpty", val: "none"},
-    article: {cl:"elEmpty", val: "none"},
-    price: {cl:"elEmpty", val: "none"},
-    quantity: {cl:"elEmpty", val: "none"},
-    VAT: {cl:"elEmpty", val: "none"},
-    netto: {cl:"elEmpty", val: "none"},
-    vat: {cl:"elEmpty", val: "none"},
-    sum: {cl:"elEmpty", val: "none"}
-  }
-
-  let bottom = {
-      nr: {cl:"elNone", val: "none"},
-      article: {cl:"elNone", val: "none"},
-      price: {cl:"elNone", val: "none"},
-      quantity: {cl:"elNone", val: "none"},
-      VAT: {cl:"elTop", val: "Razem"},
-      netto: SumArray(newArticles.map( (el)=> el.netto)),
-      vat: SumArray(newArticles.map( (el)=> el.vat)),
-      sum: SumArray(newArticles.map( (el)=> el.sum))
-  }
+  let plusIco = "https://bzdrive.com/files/ico/icoPlus.png"
+  let deleteIco = "https://bzdrive.com/files/ico/icoDelete.png"
 
   return(
     <section className="ElArticles flex wrap">
 
     {
-      [ top, ...newArticles, empty, bottom ].map( (line, i)=>{
-
-        let classes = (txt)=> txt?.cl ? txt.cl : `el`
-        let valNUR = line.nr?.val ? line.nr.val : `${i}.`
-        let VAL = (txt)=> txt?.val ? txt.val : txt
-
-        let el = {
-          NUR:{ i, cl:`NUR ${classes(line.nr)}`, val:valNUR },
-          ART:{ i, cl:`ART ${classes(line.article)}`, val:VAL(line.article) },
-          PRC:{ i, cl:`PRC ${classes(line.price)}`, val:VAL(line.price) },
-          QUA:{ i, cl:`QUA ${classes(line.quantity)}`, val:VAL(line.quantity) },
-          VAT:{ i, cl:`VAT ${classes(line.VAT)}`, val:VAL(line.VAT) },
-          NET:{ i, cl:`NET ${classes(line.netto)}`, val:VAL(line.netto) },
-          PRV:{ i, cl:`PRV ${classes(line.vat)}`, val:VAL(line.vat) },
-          SUM:{ i, cl:`SUM ${classes(line.sum)}`, val:VAL(line.sum) }
-        }
+      [ Top ].map( (line, i)=>{
 
         return(
-          <div className="line flex wrap stretch" key={`tableLine${i}`}>
+          <div className="line lineTop flex wrap stretch" key={`tableLine${line.nr}${i}`}>
 
-            <Element props={{el:el.NUR, i, print, CHANGE_INPUT}} />
-            <Element props={{el:el.ART, i, print, CHANGE_INPUT}} />
-            <Element props={{el:el.PRC, i, print, CHANGE_INPUT}} />
-            <Element props={{el:el.QUA, i, print, CHANGE_INPUT}} />
-            <Element props={{el:el.VAT, i, print, CHANGE_INPUT}} />
-            <Element props={{el:el.NET, i, print, CHANGE_INPUT}} />
-            <Element props={{el:el.PRV, i, print, CHANGE_INPUT}} />
-            <Element props={{el:el.SUM, i, print, CHANGE_INPUT}} />
-
-            { !print && <Btn props={{i, cl:el.VAT.cl, mode, newArticles, AreaFn}} /> }
+            <span className="NUR flex">{line.nr}</span>
+            <span className={`ART${print ? `print` : ``} flex start`}>{line.article}</span>
+            <span className="PRC flex">{line.price}</span>
+            <span className="QUA flex">{line.quantity}</span>
+            <span className="VAT flex">{line.VAT}</span>
+            <span className="NET flex">{line.netto}</span>
+            <span className="PRV flex">{line.vat}</span>
+            <span className="SUM flex">{line.sum}</span>
+            
+            {
+              !print &&
+              <Btn props={{ico:plusIco, title:`dodać`, alt:"plus", i, mode, newArticles, AreaFn}} />
+            }
 
           </div>
         )
       })
     }
+
+    {
+      newArticles.map( (line, i)=>{
+
+        return(
+          <div className="line flex wrap stretch" key={`tableLine${line.nr}${i}`}>
+
+            <span className="NUR nowrapTxt flex">{`${i + 1}.`}</span>
+            {
+              !print
+              ? <Input props={{cl:"ART", val:line.article, i, CHANGE_INPUT}} />
+              : <span className={`ART${print ? `print` : ``} nowrapTxt flex start`}>{line.article}</span>
+            }
+            {
+              !print
+              ? <Input props={{cl:"PRC", val:line.price, i, CHANGE_INPUT}} />
+              : <span className="PRC nowrapTxt flex">{line.price}</span>
+            }
+            {
+              !print
+              ? <Input props={{cl:"QUA", val:line.quantity, i, CHANGE_INPUT}} />
+              : <span className="QUA nowrapTxt flex">{line.quantity}</span>
+            }
+            {
+              !print
+              ? <Input props={{cl:"VAT", val:line.VAT, i, CHANGE_INPUT}} />
+              : <span className="VAT nowrapTxt flex">{line.VAT}</span>
+            }
+            <span className="NET nowrapTxt flex">{line.netto}</span>
+            <span className="PRV nowrapTxt flex">{line.vat}</span>
+            {
+              !print
+              ? <Input props={{cl:"SUM", val:line.sum, i, CHANGE_INPUT}} />
+              : <span className="SUM nowrapTxt flex">{line.sum}</span>
+            }
+            
+            {
+              !print &&
+              <Btn props={{ico:deleteIco, title:`usunąć`, alt:"delete", i, mode, newArticles, AreaFn}} />
+            }
+
+          </div>
+        )
+      })
+    }
+
+    <div className="line flex wrap stretch bold" style={{marginTop:"2vw"}}>
+      <span className={`EMPTY${print ? `print` : ``} nowrapTxt flex`}></span>
+      <span className="TOT nowrapTxt flex end">{ `Razem:` }</span>
+      <span className="NET nowrapTxt flex">{ SumArray(newArticles.map( (el)=> el.netto)) }</span>
+      <span className="PRV nowrapTxt flex">{ SumArray(newArticles.map( (el)=> el.vat)) }</span>
+      <span className="SUM nowrapTxt flex">{ SumArray(newArticles.map( (el)=> el.sum)) }</span>
+
+      {
+        !print &&
+        <Btn props={{ico:plusIco, title:`dodać`, alt:"plus", i:0, mode, newArticles, AreaFn}} />
+      }
+    </div>
     
     </section>
   )
 }
 
-const Element = ({ props:{el, i, print, CHANGE_INPUT} })=>{
-
-  let classes = `${el.cl} flex`
-
+const Input = ({ props:{cl, val, i, CHANGE_INPUT} })=>{
   return(
-    <div className={classes}>
-    {
-      (i === 0 || el.cl === `NUR el` || el.cl === `NET el`|| el.cl === `PRV el`)
-      ?
-      <span>{ el.val ? el.val : "" }</span>
-      :
-      <>
-      {
-        print
-        ?
-        <div className={`${el.cl === `ART el` && `textStart`}`}>{ el.val ? el.val : "" }</div>
-        :
-        (el.val === `none` || el.val === `Razem`)
-          ?
-          <div>{el.val === `Razem` ? `Razem` : ``}</div>
-          :
-          <input
-            className={`${el.cl === `ART el` && `textStart`}`}
-            type="text"
-            placeholder={ el.val ? el.val : "wprowadź dane..." }
-            value={ el.val ? el.val : "" }
-            onChange={ (e)=> CHANGE_INPUT(el.cl, i, e) }
-          />
-          
-      }
-      </>
-    }
-    </div>
+    <span className={`${cl} nowrapTxt flex`}>
+      <input
+        style={{textAlign:(cl === "ART" ? "left" : "center")}}
+        type="text"
+        placeholder={ val ? val : "wprowadź dane..." }
+        value={ val ? val : "" }
+        onChange={ (e)=> CHANGE_INPUT(cl, i, e) }
+      />
+    </span>
   )
 }
 
-const Btn = ({ props:{i, cl, mode, newArticles, AreaFn} })=>{
+const Btn = ({ props:{ico, title, alt, i, mode, newArticles, AreaFn} })=>{
 
   let len =  mode === "ZL" ? newArticles.length < 14 : newArticles.length < 17
-  let top = (cl === "VAT elTop")
-  let src = `https://bzdrive.com/files/ico/ico${top ? `Plus` : `Delete`}.png`
-  let type = top ? (len ? "ART_LINE_PLUS" : "") : "ART_LINE_DELETE"
-  let none = (cl === `VAT elEmpty`) ? `none` : `flex`
+  let type = alt === "plus" ? (len ? "ART_LINE_PLUS" : "") : "ART_LINE_DELETE"
 
   let BTN_CLICK = ()=> AreaFn({type, i})
 
   return(
-    <div className="lineBtn flex">
-      <img className={`imgBtn ${none}`} src={src} onClick={ ()=> BTN_CLICK() } alt={type} />
+    <div className="flex">
+      <img className="imgBtn" src={ico} title={title} alt={alt} onClick={ ()=> BTN_CLICK() } />
     </div>
   )
 }

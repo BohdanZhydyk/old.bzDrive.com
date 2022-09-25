@@ -6,13 +6,14 @@ const { url, dbName, generateToken } = require('./safe/safe')
 const { unixToDateTimeConverter } = require('./functions')
 
 
-exports.bzDB = ( { req, res, col, act, query, sort = {_id:-1} }, callback )=>{
+exports.bzDB = ( { req, res, col, act, query, sort = {_id:-1}, lim = 0 }, callback )=>{
   // req,       request
   // res,       response
   // col,       name of db collection
   // act,       action FIND, FIND_ONE, ...
   // query,     query of search
   // sort       sort of search
+  // lim        limit of results
   // callback   callback function
 
   let bzToken =   req?.body?.bzToken  ? req.body.bzToken  : generateToken()
@@ -31,7 +32,7 @@ exports.bzDB = ( { req, res, col, act, query, sort = {_id:-1} }, callback )=>{
       const CB = (error, result)=> error ? ERR(bzToken, IP, user, error) : OK(bzToken, IP, user, result)
 
       function FIND(){
-        client.db(dbName).collection(col).find(query).sort(sort).toArray( (e,r)=> CB(e,r) )
+        client.db(dbName).collection(col).find(query).sort(sort).limit(lim).toArray( (e,r)=> CB(e,r) )
       }
       function FIND_ONE(){
         client.db(dbName).collection(col).findOne( query, (e,r)=> CB(e,r) )
@@ -64,17 +65,9 @@ exports.bzDB = ( { req, res, col, act, query, sort = {_id:-1} }, callback )=>{
 
     function Statistic(bzToken, IP, user){
       let date = { unix: Date.now(), dateTime: unixToDateTimeConverter() }
-      user = {
-        login:  user.login,
-        role:   user.role,
-        email:  user.email,
-        lang:   user.lang,
-        sex:    user.sex,
-        ava:    user.ava
-      }
       client.db(dbName)
         .collection('bzStatistic')
-        .insertOne( {user, IP, date, bzToken}, (error, result)=>{
+        .insertOne( {user:user.login, IP, date, bzToken}, (error, result)=>{
           error && ERR(bzToken, IP, user, error)
       })
     }

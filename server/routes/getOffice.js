@@ -10,23 +10,82 @@ exports.getOffice = (req, res)=>{
   
   let object = req.body.object
 
-  // GET MODE
-  object.getMode &&
-  bzDB( { req, res, col:`base${object.getMode}`, act:"FIND", query:object.query }, (data)=>{
-    
-    res.send({
-      ...data,
-      object:{
-        ...data.object,
-        result:data.object.result
+  bzDB( { req, res, col:`bzUsers`, act:"FIND", query:{} }, (data)=>{
+
+    let dealers = data.object.result
+
+    let returnDealer = (login)=>{
+      for(let i=0; i<dealers.length; i++){
+        if(dealers[i].login === login){ return dealers[i].dealer }
       }
+    }
+
+    // GET MODE
+    object.getMode &&
+    bzDB( { req, res, col:`base${object.getMode}`, act:"FIND", query:object.query }, (data)=>{
+      
+      res.send({
+        ...data,
+        object:{
+          ...data.object,
+          result: data.object.result.map( el=>{
+            return { ...el, dealer:returnDealer(el.user) }
+          })
+        }
+      })
+
+    })
+    
+    // GET DOCUMENT
+    object.getDoc &&
+    bzDB( { req, res, col:`base${object.getDoc}`, act:"FIND_ONE", query:{_id:new ObjectID(object.id)} }, (data)=>{
+      
+      let el = data.object.result
+      res.send({
+        ...data,
+        object:{
+          ...data.object,
+          result: { ...el, dealer:returnDealer(el.user) }
+        }
+      })
+      
     })
 
   })
 
   // GET CLIENT
   object.getClient &&
-  bzDB( { req, res, col:`baseKL`, act:"FIND", query:object.getClient }, (data)=>{
+  bzDB( { req, res, col:`baseFS`, act:"FIND", lim:1, query:object.getClient }, (data)=>{
+
+    let client = data?.object?.result[0] ? data.object.result[0].buyer : false
+
+    res.send({ ...data, object:{...data.object, result:client} })
+
+  })
+
+  // GET CAR
+  object.getCar &&
+  bzDB( { req, res, col:`baseZL`, act:"FIND", lim:1, query:object.getCar }, (data)=>{
+
+    let result = data?.object?.result[0]
+
+    let car = result
+      ? {
+        brand: result.car.brand,
+        model: result.car.model,
+        prod: result.car.prod,
+        numbers: result.car.numbers,
+        engine: result.car.engine
+      }
+      : false
+
+    res.send({ ...data, object:{...data.object, result:car} })
+
+  })
+    
+  // NEW
+  object.new &&
+  bzDB( { req, res, col:`baseSP`, act:"FIND", query:{user:object.new} }, (data)=>{
 
     res.send({
       ...data,
@@ -37,10 +96,10 @@ exports.getOffice = (req, res)=>{
     })
 
   })
-    
-  // NEW
-  object.new &&
-  bzDB( { req, res, col:`baseSP`, act:"FIND", query:{user:object.new} }, (data)=>{
+
+  // GET DEALER
+  object.getDealer &&
+  bzDB( { req, res, col:`baseSP`, act:"FIND_ONE", query:{user:object.user} }, (data)=>{
 
     res.send({
       ...data,
@@ -101,10 +160,10 @@ exports.getOffice = (req, res)=>{
         case "FS":
           return {
             status: object.save.status,
+            user: object.save.user,
             nr: object.save.nr,
             place: object.save.place,
             date: DayParse(object.save.date),
-            dealer: object.save.dealer,
             buyer: object.save.buyer,
             articles: object.save.articles,
             comments: object.save.comments,
@@ -116,11 +175,11 @@ exports.getOffice = (req, res)=>{
         case "ZL":
           return {
             status: object.save.status,
+            user: object.save.user,
             nr: object.save.nr,
             place: object.save.place,
             date: DayParse(object.save.date),
             dateTo: DayParse(object.save.dateTo),
-            dealer: object.save.dealer,
             car: { ...object.save.car, color: getRandomColor() },
             buyer: object.save.buyer,
             articles: object.save.articles,
@@ -130,6 +189,7 @@ exports.getOffice = (req, res)=>{
           }
         case "KL": return {
           status: "saved",
+          user: object.save.user,
           client: object.save.client
         }
         default: break
@@ -153,18 +213,17 @@ exports.getOffice = (req, res)=>{
       case "saved":
         object.save.status = "edited"
         query = {
-          "dealer.user": save().dealer.user,
           "nr.letter": save().nr.letter,
           "nr.year": save().nr.year,
           "nr.month": save().nr.month
         }
-        bzDB( { req, res, col:`base${mode}`, act:"FIND", query }, (data)=>{
+        bzDB( { req, res, col:`base${mode}`, act:"FIND", lim:1, query }, (data)=>{
 
           let Result = data.object.result[0]
 
           Result
-          ? save().nr.sign = ( parseInt(Result.nr.sign) + 1 ).toString()
-          : save().nr.sign = ( 1 ).toString()
+          ? save().nr.sign = ( parseInt(Result.nr.sign) + 1 )
+          : save().nr.sign = 1
 
           bzDB( { req, res, col:`base${mode}`, act:"INSERT_ONE", query:save() }, (InsertData)=>{
           

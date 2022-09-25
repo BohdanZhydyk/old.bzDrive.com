@@ -23,7 +23,7 @@ export const SalaryOrder = ({ props:{mode, order, obj, CHECK_ORDER, ReloadFn, of
 
   let title = `\n${order?.car?.faults ? `${order.car.faults}` : ``}`
   let img = `https://bzdrive.com/files/ico/ico${order?.chk ? `Check` : `Empty`}.png`
-  let ava = order && `https://bzdrive.com/files/users/${order.dealer.user}.png`
+  let ava = order && `https://bzdrive.com/files/dealers/${order?.dealer?.img}`
 
   return(
     <div className="SalaryOrder flex wrap stretch" title={title}>
@@ -55,7 +55,7 @@ export const SalaryOrder = ({ props:{mode, order, obj, CHECK_ORDER, ReloadFn, of
         : <div className="imgBtn flex"></div>
       }
 
-      { mode && show && <EditArea props={{mode, line:order, CANCEL, ReloadFn, officeFn}}/> }
+      { mode && order && show && <EditArea props={{mode, line:order, CANCEL, ReloadFn, officeFn}}/> }
 
     </div>
   )

@@ -105,14 +105,17 @@
     
     .logo{
       width:40%;
-      font-size:300%;
       margin:0 0 3vw 0;
       @media (max-width: 767px) {width:100%;}
       @media print {width:40%;}
       
+      .ShortName {
+        font-size:300%;
+      }
+      
       .contacts {
         margin:0 0 0 5vw;
-        font-size:20%;
+        font-size:60%;
       }
     }
     
@@ -179,45 +182,6 @@
 
   .ElInfo {
     width:95%;
-    
-    .info {
-      width:49%;
-      margin:0 0 1vw 0;
-      border:1px solid #999;
-      border-radius:0.5vw;
-      @media (max-width: 767px) {width:100%;}
-      @media print {width:49%;}
-    
-      .title {
-        width:90%;
-        font-size:150%;
-        padding:0.5vw 5%;
-        background-color:#222;
-        border-radius:0.5vw;
-        @media print {background-color:#0002;}
-      }
-
-      .infoLine {
-        width:95%;
-        margin:0.25vw 0;
-        border-bottom:1px dotted #999;
-
-        .infoLineLegend {
-          width:100%;
-          font-size:80%;
-        }
-
-        .infoLineValue {
-          padding:0 0 0 5%;
-          font-size:120%;
-          min-height:2vw;
-        }
-
-        .infoName {
-          min-height:3vw;
-        }
-      }
-    }
   }
 
   .ElFaults {
@@ -258,126 +222,142 @@
   .ElArticles {
     width:95%;
     margin:0 0 1vw 0;
+    padding:0 0 0.5vw 0;
+    border:1px solid #999;
+    border-radius:0.5vw;
+    @media (min-width: 768px) and (max-width: 1024px) {font-size:1vw;}
+    @media (min-width: 481px) and (max-width: 767px) {font-size: 1.3vw;}
+    @media (max-width: 481px) {font-size: 1.8vw;}
     @media print {font-size:1vw;}
     
+    .lineTop {
+      min-height:3vw !important;
+      padding:0 1%;
+      font-weight:bold;
+      border-radius:0.5vw;
+      background-color:#222;
+      border:none !important;
+      @media print {background-color:#0002;}
+    }
+    
     .line {
-      width:100%;
+      width:98%;
+      min-height:2vw;
       margin:0;
+      border-bottom:1px solid #555;
+      @media print {border-bottom:1px solid #999;}
 
-      span {text-align:center;}
-
-      .el {
-        border:1px solid #999;
-        border-radius:0.25vw;
-        min-height:2.5vw;
-        white-space: nowrap;      /*keep text on one line */
-        overflow: hidden;         /*prevent text from being shown outside the border */
-        text-overflow: ellipsis;  /*cut off text with an ellipsis*/
-        &:hover {border-color:#f60;}
-        @media (min-width: 481px) and (max-width: 767px) {font-size:70%;}
-        @media (max-width: 481px) {font-size:50%;}
-        @media print {font-size:100%;}
-
-        input {
-          width:100%;
-          min-height:1.5vw;
-          text-align:center;
-          font-size:1vw;
-          color:#fff;
-          background-color:#0000;
-          border:none;
-          &:focus {
-            color:#fd0;
-            background-color:#1912;
-          }
-          @media (min-width: 481px) and (max-width: 767px) {font-size:80%;}
-          @media (max-width: 481px) {font-size:90%;}
-          @media print {font-size:1vw;}
+      input {
+        width:100%;
+        min-height:2vw;
+        font-size:1vw;
+        color:#fff;
+        background-color:#0000;
+        border:none;
+        &:focus {
+          color:#fd0;
+          background-color:#1912;
         }
-
-        .textStart {
-          width:100%;
-          padding:0 0.5vw;
-          text-align:left;
-        }
+        @media (min-width: 768px) and (max-width: 1024px) {font-size:1vw;}
+        @media (min-width: 481px) and (max-width: 767px) {font-size: 1.3vw;}
+        @media (max-width: 481px) {font-size: 1.8vw;}
+        @media print {font-size: 10px;}
       }
 
-      .elTop {
-        min-height:4.5vw;
-        background-color:#111;
-        border:1px solid #999;
-        border-radius:0.25vw;
-        @media print {background-color:#0002;}
-        @media (min-width: 481px) and (max-width: 767px) {font-size:70%;}
-        @media (max-width: 481px) {font-size:50%;}
-        @media print {font-size:100%;}
-      }
-
-      .elEmpty {
-        color:#0000;
-        min-height:1vw;
-      }
-      
-      .elNone {
-        color:#0000;
-        border:1px solid #0000;
-      }
-  
-      .ART {
-        width:calc(50vw - 2px);
-        @media (min-width: 768px) and (max-width: 1024px) {width:calc(43vw - 2px);}
-        @media (min-width: 481px) and (max-width: 767px) {width:calc(35vw - 2px);}
-        @media (max-width: 481px) {width:calc(39vw - 2px);}
-        @media print {width:calc(62vw - 2px);}
-      }
       .NUR {
-        width:calc(3vw - 2px);
-        @media (min-width: 768px) and (max-width: 1024px) {width:calc(3vw - 2px);}
-        @media (min-width: 481px) and (max-width: 767px) {width:calc(3vw - 2px);}
-        @media (max-width: 481px) {width:calc(3vw - 2px);}
-        @media print {width:calc(3vw - 2px);}
+        width:3vw;
+        text-align:center;
+      }
+      .ART {
+        width:48vw;
+        text-align:left;
+        @media (min-width: 768px) and (max-width: 1024px) {width:44vw;}
+        @media (min-width: 481px) and (max-width: 767px) {width:36vw;}
+        @media (max-width: 481px) {width:24vw;}
+        @media print {width:48vw;}
+      }
+      .ARTprint {
+        width:58vw;
+        text-align:left;
+        @media (min-width: 768px) and (max-width: 1024px) {width:54vw;}
+        @media (min-width: 481px) and (max-width: 767px) {width:46vw;}
+        @media (max-width: 481px) {width:35vw;}
+        @media print {width:58vw;}
       }
       .PRC {
-        width:calc(5vw - 2px);
-        @media (min-width: 768px) and (max-width: 1024px) {width:calc(6vw - 2px);}
-        @media (min-width: 481px) and (max-width: 767px) {width:calc(7vw - 2px);}
-        @media (max-width: 481px) {width:calc(6vw - 2px);}
-        @media print {width:calc(5vw - 2px);}
+        width:5vw;
+        text-align:center;
+        @media (min-width: 768px) and (max-width: 1024px) {width:6vw;}
+        @media (min-width: 481px) and (max-width: 767px) {width:7vw;}
+        @media (max-width: 481px) {width:9vw;}
+        @media print {width:5vw;}
       }
       .QUA {
-        width:calc(4vw - 2px);
-        @media (min-width: 768px) and (max-width: 1024px) {width:calc(5vw - 2px);}
-        @media (min-width: 481px) and (max-width: 767px) {width:calc(6vw - 2px);}
-        @media (max-width: 481px) {width:calc(5vw - 2px);}
-        @media print {width:calc(4vw - 2px);}
+        width:4vw;
+        text-align:center;
+        @media (min-width: 768px) and (max-width: 1024px) {width:4vw;}
+        @media (min-width: 481px) and (max-width: 767px) {width:5vw;}
+        @media (max-width: 481px) {width:6vw;}
+        @media print {width:4vw;}
       }
       .VAT {
-        width:calc(4vw - 2px);
-        @media (min-width: 768px) and (max-width: 1024px) {width:calc(5vw - 2px);}
-        @media (min-width: 481px) and (max-width: 767px) {width:calc(6vw - 2px);}
-        @media (max-width: 481px) {width:calc(5vw - 2px);}
-        @media print {width:calc(4vw - 2px);}
+        width:4vw;
+        text-align:center;
+        @media (min-width: 768px) and (max-width: 1024px) {width:4vw;}
+        @media (min-width: 481px) and (max-width: 767px) {width:5vw;}
+        @media (max-width: 481px) {width:6vw;}
+        @media print {width:4vw;}
       }
       .NET {
-        width:calc(5vw - 2px);
-        @media (min-width: 768px) and (max-width: 1024px) {width:calc(6vw - 2px);}
-        @media (min-width: 481px) and (max-width: 767px) {width:calc(7vw - 2px);}
-        @media (max-width: 481px) {width:calc(6vw - 2px);}
-        @media print {width:calc(5vw - 2px);}
+        width:5vw;
+        text-align:center;
+        @media (min-width: 768px) and (max-width: 1024px) {width:6vw;}
+        @media (min-width: 481px) and (max-width: 767px) {width:7vw;}
+        @media (max-width: 481px) {width:9vw;}
+        @media print {width:5vw;}
       }
       .PRV {
-        width:calc(5vw - 2px);
-        @media (min-width: 768px) and (max-width: 1024px) {width:calc(6vw - 2px);}
-        @media (min-width: 481px) and (max-width: 767px) {width:calc(7vw - 2px);}
-        @media (max-width: 481px) {width:calc(6vw - 2px);}
-        @media print {width:calc(5vw - 2px);}
+        width:5vw;
+        text-align:center;
+        @media (min-width: 768px) and (max-width: 1024px) {width:6vw;}
+        @media (min-width: 481px) and (max-width: 767px) {width:7vw;}
+        @media (max-width: 481px) {width:9vw;}
+        @media print {width:5vw;}
       }
       .SUM {
-        width:calc(5vw - 2px);
-        @media (min-width: 768px) and (max-width: 1024px) {width:calc(6vw - 2px);}
-        @media (min-width: 481px) and (max-width: 767px) {width:calc(7vw - 2px);}
-        @media (max-width: 481px) {width:calc(6vw - 2px);}
-        @media print {width:calc(5vw - 2px);}
+        width:5vw;
+        text-align:center;
+        @media (min-width: 768px) and (max-width: 1024px) {width:6vw;}
+        @media (min-width: 481px) and (max-width: 767px) {width:7vw;}
+        @media (max-width: 481px) {width:9vw;}
+        @media print {width:5vw;}
+      }
+      .EMPTY {
+        width:57vw;
+        text-align:right;
+        @media (min-width: 768px) and (max-width: 1024px) {width:51vw;}
+        @media (min-width: 481px) and (max-width: 767px) {width:44vw;}
+        @media (max-width: 481px) {width:34vw;}
+        @media print {width:57vw;}
+      }
+      .EMPTYprint {
+        width:67vw;
+        text-align:right;
+        @media (min-width: 768px) and (max-width: 1024px) {width:61vw;}
+        @media (min-width: 481px) and (max-width: 767px) {width:54vw;}
+        @media (max-width: 481px) {width:45vw;}
+        @media print {width:60vw;}
+      }
+      .TOT {
+        width:5vw;
+        min-height:3vw;
+        padding:0 1vw;
+        text-align:right;
+        background-color:#222;
+        @media (min-width: 768px) and (max-width: 1024px) {width:8vw;}
+        @media (min-width: 481px) and (max-width: 767px) {width:10vw;}
+        @media (max-width: 481px) {width:12vw;}
+        @media print {background-color:#0002;}
       }
     }
   }
