@@ -57,7 +57,7 @@ exports.getProfile = (req, res)=>{
     let IPs = []
     let traffic = []
   
-    let query = {"user.login":object.login, "IP.host":"bzdrive.com"}
+    let query = {"user":object.login, "IP.host":"bzdrive.com"}
   
     bzDB( { req, res, col:'bzStatistic', act:"FIND", query }, (data)=>{
   

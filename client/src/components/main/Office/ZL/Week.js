@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 
+import { bzUnixToYYYYMMDD } from "../../../../state/functions"
 import { DaysLine } from "./DaysLine"
 import { Orders } from "./Orders"
 
@@ -10,43 +11,29 @@ export const Week = ({ props:{mode, line, l, user, translate, ReloadFn, officeFn
   
   const [table, setTable] = useState(line.table)
 
-  const firstDayUnix = line.week[0].unix
-  const lastDayUnix = line.week[line.week.length - 1].unix
-
-  let after = firstDayUnix > Date.now()
+  const firstDay = line.week[0].YYYYMMDD
+  const lastDay = line.week[line.week.length - 1].YYYYMMDD
   
-  let query = after
-    ? {"dateTo.unix":{ $gte:firstDayUnix - 86400000 }}
+  let query = ( firstDay > bzUnixToYYYYMMDD() )
+    ? {"nr.to":{ $gte:firstDay }}
     : {
         $and: [
-          {"date.unix":{ $lte:lastDayUnix }},
-          { $or: [{"dateTo.unix":{ $gte:firstDayUnix }}, {"status":"edited"}] }
+          {"nr.from":{ $lte:lastDay }},
+          { $or: [{"nr.to":{ $gte:firstDay }}, {"status":"edited"}] }
         ]
       }
 
   useEffect(  ()=>{ !table && officeFn( {type:"GET_TABLE", mode, login:user.login, query}, (data)=>{
 
+    let to = (zl)=> 
+      ( zl.status === "edited" ) && ( zl.nr.to < bzUnixToYYYYMMDD() )
+      ? bzUnixToYYYYMMDD()
+      : zl.nr.to
+
     setTable(
-      data.map( (zl)=>{
-        return({
-          ...zl,
-          dateTo: {
-            ...zl.dateTo,
-            unix:
-              ( zl.status === "edited" ) && ( zl.dateTo.unix < Date.now() )
-              ? Date.now()
-              : zl.dateTo.unix
-          }
-        })
-      }).sort( (a, b)=>{ // sort by length
-        let A = parseInt(a.dateTo.unix - a.date.unix)
-        let B = parseInt(b.dateTo.unix - b.date.unix)
-        return (B - A)
-      }).sort( (a, b)=>{ // sort by unix
-        let A = parseInt(a.date.unix)
-        let B = parseInt(b.date.unix)
-        return (A - B)
-      })
+      data.map( (zl)=> ({ ...zl, nr:{...zl.nr, to: to(zl)} }) )
+      .sort( (a, b)=> parseInt(b.nr.to - b.nr.from) - parseInt(a.nr.to - a.nr.from) ) // sort by length
+      .sort( (a, b)=> parseInt(a.nr.from) - parseInt(b.nr.from) ) // sort by date
     )
 
   }) },[])

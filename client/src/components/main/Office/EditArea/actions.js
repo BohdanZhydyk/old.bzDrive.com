@@ -1,51 +1,123 @@
 import {
   bzPost,
-  bzGetUser,
   bzCalc,
-  bzUnixToDateTime,
+  bzUnixToYYYYMMDD,
   FirstToCapital,
   DigLen,
-  SumArray
+  getRandomColor
 } from "./../../../../state/functions"
 import axios from 'axios'
 
 
-export const emptyArt = {
-  article:"", price:"0.00", quantity:"1", VAT:"23", netto:"0.00", vat:"0.00", sum:"0.00"
+export const emptyArt = {ART:"", PRI:"0.00", QUA:"1", VAT:"23"}
+
+export const Logic = (
+  action, id, mode, cookies, user, setNoPrint, status, setStatus, nr, setNr,
+  buyer, setBuyer, car, setCar, client, setClient, articles, setArticles,
+  files, setFiles, comments, setComments, dealer, setDealer, ReloadFn, officeFn
+)=>{
+    
+  setNoPrint(true)
+  
+  switch(action.type){
+
+    case "EFFECT":          EFFECT(mode, user, setDealer, nr, setNr);             break
+
+    case "CHG_STATUS":      HEAD.CHG_STATUS(action, setStatus);                   break
+    case "CHG_NR":          HEAD.CHG_NR(action, nr, setNr);                       break
+    case "CHG_PLACE":       HEAD.CHG_PLACE(action, nr, setNr);                    break
+    case "CHG_FROM_DATE":   HEAD.CHG_FROM_DATE(action, nr, setNr);                break
+    case "CHG_TO_DATE":     HEAD.CHG_TO_DATE(action, nr, setNr);                  break
+    case "CHG_METHOD":      HEAD.CHG_METHOD(action, nr, setNr);                   break
+
+    case "CHG_BUYER_NAME":  BUYER.CHG_BUYER_NAME(action, buyer, setBuyer);        break
+    case "CHG_BUYER_ZIP":   BUYER.CHG_BUYER_ZIP(action, buyer, setBuyer);         break
+    case "CHG_BUYER_TOWN":  BUYER.CHG_BUYER_TOWN(action, buyer, setBuyer);        break
+    case "CHG_BUYER_STR":   BUYER.CHG_BUYER_STR(action, buyer, setBuyer);         break
+    case "CHG_BUYER_WWW":   BUYER.CHG_BUYER_WWW(action, buyer, setBuyer);         break
+    case "CHG_BUYER_MAIL":  BUYER.CHG_BUYER_MAIL(action, buyer, setBuyer);        break
+    case "CHG_BUYER_TEL":   BUYER.CHG_BUYER_TEL(action, buyer, setBuyer);         break
+    case "CHG_BUYER_ACC":   BUYER.CHG_BUYER_ACC(action, buyer, setBuyer);         break
+    case "CHG_BUYER_NIP":   BUYER.CHG_BUYER_NIP(action, buyer, setBuyer);         break
+
+    case "CHG_CAR_BRAND":   CAR.CHG_CAR_BRAND(action, car, setCar);               break
+    case "CHG_CAR_MODEL":   CAR.CHG_CAR_MODEL(action, car, setCar);               break
+    case "CHG_CAR_NUM":     CAR.CHG_CAR_NUM(action, car, setCar);                 break
+    case "CHG_CAR_VIN":     CAR.CHG_CAR_VIN(action, car, setCar);                 break
+    case "CHG_CAR_PROD":    CAR.CHG_CAR_PROD(action, car, setCar);                break
+    case "CHG_CAR_ODO":     CAR.CHG_CAR_ODO(action, car, setCar);                 break
+    case "CHG_CAR_ENG":     CAR.CHG_CAR_ENG(action, car, setCar);                 break
+    case "CHG_CAR_FUEL":    CAR.CHG_CAR_FUEL(action, car, setCar);                break
+    case "CHG_CAR_AGREE":   CAR.CHG_CAR_AGREE(action, car, setCar);               break
+    case "CHG_CAR_FAULTS":  CAR.CHG_CAR_FAULTS(action, car, setCar);              break
+    case "CHG_COLOR":       CAR.CHG_COLOR(action, car, setCar);                   break
+    
+    case "CHG_CLIENT_NAME": CLI.CHG_CLIENT_NAME(action, client, setClient);       break
+    case "CHG_CLIENT_ZIP":  CLI.CHG_CLIENT_ZIP(action, client, setClient);        break
+    case "CHG_CLIENT_TOWN": CLI.CHG_CLIENT_TOWN(action, client, setClient);       break
+    case "CHG_CLIENT_STR":  CLI.CHG_CLIENT_STR(action, client, setClient);        break
+    case "CHG_CLIENT_WWW":  CLI.CHG_CLIENT_WWW(action, client, setClient);        break
+    case "CHG_CLIENT_MAIL": CLI.CHG_CLIENT_MAIL(action, client, setClient);       break
+    case "CHG_CLIENT_TEL":  CLI.CHG_CLIENT_TEL(action, client, setClient);        break
+    case "CHG_CLIENT_ACC":  CLI.CHG_CLIENT_ACC(action, client, setClient);        break
+    case "CHG_CLIENT_NIP":  CLI.CHG_CLIENT_NIP(action, client, setClient);        break
+    
+    case "ART_LINE_PLUS":   ART.ART_LINE_PLUS(articles, setArticles);             break
+    case "ART_LINE_DELETE": ART.ART_LINE_DELETE(action, articles, setArticles);   break
+    case "CHG_ARTICLES":    ART.CHG_ARTICLES(action, articles, setArticles);      break
+
+    case "ADD_FILE":        FILE.ADD_FILE(id, action, setFiles);                  break
+    
+    case "CHG_COMMENTS":    FOO.CHG_COMMENTS(action, setComments);                break
+
+    case "KEYUP_IMG_BUYER_NIP": GET_CEIDG(action, setBuyer, setClient);           break
+    case "KEYUP_IMG_CAR_VIN":   GET_VIN(action, car, setCar);                     break
+
+    case "PRINT_DOC":
+      cookies.set( 'Document', JSON.stringify({mode, id}) )
+      window.open(`/document`, "_blank")
+      break
+
+    case "SAVE_DOC":
+      SAVE_DOC({
+        action, mode, id, status, user, nr, dealer, buyer, car,
+        client, articles, files, comments, ReloadFn, officeFn
+      })
+      break
+    
+    default: break
+
+  }
 }
 
-export const YYYYMMDD = {
-  year: bzUnixToDateTime().year,
-  month: bzUnixToDateTime().month,
-  day: bzUnixToDateTime().day,
-}
-
-export const EFFECT = (mode, setDealer, place, setPlace, nr, setNr)=>{
-  bzPost("/getOffice", { new:bzGetUser().login }, (data)=>{
+const EFFECT = (mode, user, setDealer, nr, setNr)=>{
+  bzPost("/getOffice", { new:user }, (data)=>{
     setDealer(data[0])
-    !place && setPlace( data[0].addr.town )
-    !nr?.year && setNr({ letter:mode, ...YYYYMMDD, sign:nr?.sign })
+    !nr && setNr({
+      mode, sign:"----", from:bzUnixToYYYYMMDD(), to:bzUnixToYYYYMMDD(),
+      place:data[0].addr.town, method:1
+    })
   })
 }
 
-export const HEAD = {
-  CHG_NR: (action, nr, setNr)=> setNr( {...nr, sign:action.sign} ),
-  CHG_PLACE:      (action, setPlace)=> setPlace( action.value ),
-  CHG_FROM_DATE:  (action, setDate, dateTo, setDateTo, pay, setPay)=>{
-    let newFrom = ( DigLen(action.value.year, 4)+DigLen(action.value.month, 2)+DigLen(action.value.day, 2) )
-    let To = ( DigLen(dateTo.year, 4)+DigLen(dateTo.month, 2)+DigLen(dateTo.day, 2) )
-    if(To >= newFrom){ setDate(action.value) }else{ setDate(action.value); setDateTo(action.value) }
-    setPay({...pay, date:action.value})
+const HEAD = {
+  CHG_STATUS: (action, setStatus)=> setStatus(action.value),
+  CHG_NR: (action, nr, setNr)=> setNr({...nr, sign:action.sign}),
+  CHG_PLACE: (action, nr, setNr)=> setNr({...nr, place:action.value}),
+  CHG_FROM_DATE: (action, nr, setNr)=>{
+    (nr.to >= action.value)
+    ? setNr({...nr, from:action.value})
+    : setNr({...nr, from:action.value, to:action.value})
   },
-  CHG_TO_DATE:    (action, date, setDate, setDateTo)=>{
-    let newTo = ( DigLen(action.value.year, 4)+DigLen(action.value.month, 2)+DigLen(action.value.day, 2) )
-    let Date = ( DigLen(date.year, 4)+DigLen(date.month, 2)+DigLen(date.day, 2) )
-    if(newTo >= Date){ setDateTo(action.value) }else{ setDate(action.value); setDateTo(action.value) }
+  CHG_TO_DATE: (action, nr, setNr)=>{
+    (action.value >= nr.from)
+    ? setNr({...nr, to:action.value})
+    : setNr({...nr, from:action.value, to:action.value})
   },
-  CHG_STATUS:     (action, setStatus)=> setStatus( action.value )
+  CHG_METHOD: (action, nr, setNr)=> setNr({...nr, method:action.value})
 }
 
-export const BUYER = {
+const BUYER = {
   CHG_BUYER_NAME: (action, buyer, setBuyer)=> setBuyer({ ...buyer, name:action.value }),
   CHG_BUYER_ZIP:  (action, buyer, setBuyer)=> setBuyer({ ...buyer, addr:{...buyer.addr, zip:action.value} }),
   CHG_BUYER_TOWN: (action, buyer, setBuyer)=> setBuyer({ ...buyer, addr:{...buyer.addr, town:action.value} }),
@@ -57,7 +129,7 @@ export const BUYER = {
   CHG_BUYER_NIP:  (action, buyer, setBuyer)=> setBuyer({ ...buyer, nip:action.value })
 }
 
-export const CAR = {
+const CAR = {
   CHG_CAR_BRAND:  (action, car, setCar)=> setCar({ ...car, brand:action.value }),
   CHG_CAR_MODEL:  (action, car, setCar)=> setCar({ ...car, model:action.value }),
   CHG_CAR_NUM:    (action, car, setCar)=> setCar({ ...car, numbers:action.value.toUpperCase() }),
@@ -67,10 +139,11 @@ export const CAR = {
   CHG_CAR_ENG:    (action, car, setCar)=> setCar({ ...car, engine:action.value }),
   CHG_CAR_FUEL:   (action, car, setCar)=> setCar({ ...car, fuel:action.value }),
   CHG_CAR_AGREE:  (action, car, setCar)=> setCar({ ...car, agree:action.value }),
-  CHG_CAR_FAULTS: (action, car, setCar)=> setCar({ ...car, faults:action.value })
+  CHG_CAR_FAULTS: (action, car, setCar)=> setCar({ ...car, faults:action.value }),
+  CHG_COLOR:      (action, car, setCar)=> setCar({ ...car, color:getRandomColor() })
 }
 
-export const CLI = {
+const CLI = {
   CHG_CLIENT_NAME:  (action, client, setClient)=> setClient({ ...client, name:action.value }),
   CHG_CLIENT_ZIP:   (action, client, setClient)=> setClient({ ...client, addr:{...client.addr, zip:action.value} }),
   CHG_CLIENT_TOWN:  (action, client, setClient)=> setClient({ ...client, addr:{...client.addr, town:action.value} }),
@@ -82,7 +155,7 @@ export const CLI = {
   CHG_CLIENT_NIP:   (action, client, setClient)=> setClient({ ...client, nip:action.value })
 }
 
-export const ART = {
+const ART = {
   
   ART_LINE_PLUS:    (articles, setArticles)=> setArticles([ ...articles, emptyArt ]),
 
@@ -93,33 +166,33 @@ export const ART = {
   CHG_ARTICLES: (action, articles, setArticles)=>{
 
     let calc = (art)=>{
-      let price = art.price
-      let quantity = art.quantity
+      let PRI = art.PRI
+      let QUA = art.QUA
       let VAT = art.VAT
-      let netto = bzCalc( '*', price, quantity )
-      let sum = bzCalc( '*', netto, bzCalc('+', '1.00', VAT/100) )
-      let vat = bzCalc( '-', sum, netto )
-      return {...art, price, quantity, VAT, netto, vat, sum}
+      let NET = bzCalc( '*', PRI, QUA )
+      let SUM = bzCalc( '*', NET, `1.${VAT}` )
+      let PRV = bzCalc( '-', SUM, NET )
+      return {...art, PRI, QUA, VAT, NET, PRV, SUM}
     }
     let calcFromSUM = (art)=>{
-      let sum = art.sum
+      let SUM = art.SUM
       let VAT = art.VAT
-      let quantity = art.quantity
-      let netto = bzCalc( '/', sum, bzCalc('+', '1.00', VAT/100) )
-      let vat = bzCalc( '-', sum, netto )
-      let price = bzCalc( '/', netto, quantity )
-      return {...art, price, quantity, VAT, netto, vat, sum}
+      let QUA = art.QUA
+      let NET = bzCalc( '/', SUM, `1.${VAT}` )
+      let PRV = bzCalc( '-', SUM, NET )
+      let PRI = bzCalc( '/', NET, QUA )
+      return {...art, PRI, QUA, VAT, NET, PRV, SUM}
     }
 
     setArticles(
       articles.map( (art, n)=>{
         if( n === (action.i) ){
-          if( action.cl === "ART" ){ return {...art, article:action.value} }
-          if( action.cl === "PRC" ){ return calc({...art, price:action.value}) }
-          if( action.cl === "QUA" ){ return calc({...art, quantity:action.value}) }
+          if( action.cl === "ART" ){ return {...art, ART:action.value} }
+          if( action.cl === "PRI" ){ return calc({...art, PRI:action.value}) }
+          if( action.cl === "QUA" ){ return calc({...art, QUA:action.value}) }
           if( action.cl === "VAT" ){ return calc({...art, VAT:action.value}) }
-          if( action.cl === "PRV" ){ return {...art, vat:action.value} }
-          if( action.cl === "SUM" ){ return calcFromSUM({...art, sum:action.value}) }
+          if( action.cl === "PRV" ){ return {...art, PRV:action.value} }
+          if( action.cl === "SUM" ){ return calcFromSUM({...art, SUM:action.value}) }
         }
         else{ return art }
       })
@@ -128,7 +201,7 @@ export const ART = {
   }
 }
 
-export const FILE = {
+const FILE = {
   ADD_FILE: (id, action, setFiles)=>{
     bzPost("/getOffice", { addFile:true, id, file:action.file }, (data)=>{
       setFiles(data.files)
@@ -136,17 +209,11 @@ export const FILE = {
   }
 }
 
-export const FOO = {
-  CHG_COMMENTS: (action, setComments)=> setComments(action.value),
-  CHG_METHOD:   (action, pay, setPay)=> setPay({ ...pay, method:action.value }),
-  CHG_PAYDATE:  (action, date, pay, setPay)=>{
-    let newPay = ( DigLen(action.value.year, 4)+DigLen(action.value.month, 2)+DigLen(action.value.day, 2) )
-    let Date = ( DigLen(date.year, 4)+DigLen(date.month, 2)+DigLen(date.day, 2) )
-    Date <= newPay && setPay({ ...pay, date:action.value })
-  }
+const FOO = {
+  CHG_COMMENTS: (action, setComments)=> setComments(action.value)
 }
 
-export const GET_CEIDG = (action, date, buyer, setBuyer, client, setClient)=>{
+const GET_CEIDG = (action, setBuyer, setClient)=>{
   
   if(action.value.length === 13 && action.key === "Enter"){
 
@@ -210,7 +277,7 @@ export const GET_CEIDG = (action, date, buyer, setBuyer, client, setClient)=>{
 
 }
 
-export const GET_VIN = (action, car, setCar)=>{
+const GET_VIN = (action, car, setCar)=>{
   
   if(action.value.length === 17 && action.key === "Enter"){
     
@@ -222,9 +289,8 @@ export const GET_VIN = (action, car, setCar)=>{
       
       // ZrQEPSkKYnp1YTgzQGdtYWlsLmNvbQ==
       // FREE = 5,000 API calls/mo
-  
-      // let link = `https://vpic.nhtsa.dot.gov/api/vehicles/decodevinvaluesextended/${vin}?format=json` //Nhtsa
       let link = `https://auto.dev/api/vin/${vin}?apikey=ZrQEPSkKYnp1YTgzQGdtYWlsLmNvbQ==`
+      // let link = `https://vpic.nhtsa.dot.gov/api/vehicles/decodevinvaluesextended/${vin}?format=json` //Nhtsa
         
       axios.get( link ).then( (res)=>{
   
@@ -264,17 +330,15 @@ export const GET_VIN = (action, car, setCar)=>{
 
 }
 
-export const SAVE_DOC = ({mode, id, action, place, date, dateTo, nr, dealer, buyer, car, client, articles, comments, pay, ReloadFn, officeFn})=>{
-
-  let net = SumArray(articles.map( el=> el.netto ))
-  let vat = SumArray(articles.map( el=> el.vat ))
-  let sum = SumArray(articles.map( el=> el.sum ))
-
-  let user = bzGetUser().login
+const SAVE_DOC = ({
+  action, mode, id, user, nr, dealer, buyer, car, client,
+  articles, files, comments, ReloadFn, officeFn
+})=>{
 
   let save = {
-    id, user, status:action.status, place, date, dateTo, nr, dealer, buyer,
-    car, client, articles, comments, netto:net, priceVAT:vat, brutto:sum, pay
+    id, user, nr, dealer, buyer, client, car, files, comments,
+    status:action.status,
+    articles: articles.map( el=>{  return {ART:el.ART, PRI:el.PRI, QUA:el.QUA, VAT:el.VAT} })
   }
   
   officeFn({type:`SAVE_DOC`, ReloadFn, mode, payload:save})

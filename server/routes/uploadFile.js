@@ -5,7 +5,7 @@ exports.uploadFile = (req, res)=>{
   const file = req.files.file
   
   const fileAddr = __dirname + "/../public/" + req.body.fileAddr
-  const fileName = req.body.fileName
+  let fileName = (req?.body?.fileName === true) ? req.body.fileName : file.name
 
   fs.mkdir( fileAddr, { recursive: true }, (err)=>{
 

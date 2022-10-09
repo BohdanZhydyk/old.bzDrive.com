@@ -62,15 +62,16 @@
     }
     
     .OrderStatusBtn {
-      width:30%;
+      width:22%;
       min-height:3vw;
-      margin:0.5vw;
+      margin:0.5vw 1%;
       color:#999;
+      font-size:80%;
       background-color:#444;
       border-radius:0.5vw;
       &:hover {
         color:#fff;
-        font-size:120%;
+        font-size:100%;
         background-image:linear-gradient(#f609, #0000 25% 75%, #f609);
       }
       @media (max-width: 768px) {min-height:5vw;}
@@ -264,7 +265,7 @@
         @media print {font-size: 10px;}
       }
 
-      .NUR {
+      .NUM {
         width:3vw;
         text-align:center;
       }
@@ -284,7 +285,7 @@
         @media (max-width: 481px) {width:35vw;}
         @media print {width:58vw;}
       }
-      .PRC {
+      .PRI {
         width:5vw;
         text-align:center;
         @media (min-width: 768px) and (max-width: 1024px) {width:6vw;}

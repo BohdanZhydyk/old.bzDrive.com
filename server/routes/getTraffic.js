@@ -7,21 +7,32 @@ const { bzDB } = require('./../bzDB')
 
 exports.getTraffic = (req, res)=>{
 
-  let query = req.body.object.query
+  let object = req.body.object
 
-  bzDB( { req, res, col:'bzStatistic', act:"FIND", query }, (data)=>{
+  object.getState &&
+  bzDB( { req, res, col:'bzStatistic', act:"FIND", query:object.query }, (data)=>{
 
-      res.send({
-        ...data,
-        object:{
-          ...data.object,
-          result:[
-            ...data.object.result
-          ]
-        }
-      })
+    let result = data.object.result.filter(el=> el.IP.host !== "localhost")
 
-    }
-  )
+    res.send({ ...data, object:{...data.object, result} })
+
+  })
+
+  // object.longPulling && console.log("longPulling")
+  // bzDB( { req, res, col:'bzStatistic', act:"FIND", query:object.query }, (data)=>{
+
+  //   console.log("longPulling")
+
+  //   // res.send({
+  //   //   ...data,
+  //   //   object:{
+  //   //     ...data.object,
+  //   //     result:[
+  //   //       ...data.object.result
+  //   //     ]
+  //   //   }
+  //   // })
+
+  // })
 
 }

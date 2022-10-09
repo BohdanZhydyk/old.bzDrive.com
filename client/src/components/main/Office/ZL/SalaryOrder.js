@@ -47,7 +47,7 @@ export const SalaryOrder = ({ props:{mode, order, obj, CHECK_ORDER, ReloadFn, of
         {obj.tel && <a href={`tel: ${obj.tel}`} rel="noreferrer">{obj.tel}</a>}
       </span>
 
-      <span className="Brutto Cell flex end" style={obj.style}>{`${obj.brutto} zł`}</span>
+      <span className="Brutto Cell flex end" style={obj.style}>{`${obj.sum} zł`}</span>
 
       {
         mode

@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 
-import { UnixToYYYYMMDD } from "../../../../state/functions"
+import { SumArray, bzCalcVatSum } from "../../../../state/functions"
 import EditArea from "./../EditArea"
 
 
@@ -10,24 +10,30 @@ export const Order = ({ props:{mode, week, zl, ReloadFn, officeFn} }) => {
 
   let CANCEL = ()=> setShow(false)
 
-  const Day = (unix)=> new Date(unix).getDay() !== 0 ? new Date(unix).getDay() : 7
+  const Day = (date)=>{
+    let D = date.toString()
+    let newDate = `${D[0]}${D[1]}${D[2]}${D[3]}.${D[4]}${D[5]}.${D[6]}${D[7]}`
+    return( new Date(newDate).getDay() !== 0 ? new Date(newDate).getDay() : 7 )
+  }
 
   let car = `${zl.car.brand} - ${zl.car.model}`
 
   let ava = `https://bzdrive.com/files/dealers/${zl?.dealer?.img}`
 
-  let day = Day(zl.date.unix)
-  let dayTo = Day(zl.dateTo.unix)
+  let day = Day(zl.nr.from)
+  let dayTo = Day(zl.nr.to)
 
-  let firstDayUnix = week[0].unix
-  let lastDayUnix = week[week.length - 1].unix
+  let firstDay = week[0].YYYYMMDD
+  let lastDay = week[week.length - 1].YYYYMMDD
 
-  if( (UnixToYYYYMMDD(zl.date.unix) <= UnixToYYYYMMDD(firstDayUnix)) ){ day = 1 }
-  if( (UnixToYYYYMMDD(zl.dateTo.unix) >= UnixToYYYYMMDD(lastDayUnix)) ){ dayTo = 7 }
+  let startDay = Day(week[0].YYYYMMDD)
+
+  if( (zl.nr.from <= firstDay) ){ day = 1 }
+  if( (zl.nr.to >= lastDay) ){ dayTo = 7 }
 
   let widthZl = (dayTo - day) + 1
 
-  let beforeStyles = {width:`calc( (100% / 7) * ${day - Day(firstDayUnix)})`}
+  let beforeStyles = {width:`calc( (100% / 7) * ${day - startDay})`}
   let carStyles = {
     opacity: zl.status === "edited" ? 1 : 0.5,
     maxWidth:"100%",
@@ -48,7 +54,7 @@ export const Order = ({ props:{mode, week, zl, ReloadFn, officeFn} }) => {
   let name = `${zl?.buyer?.name ? `klient: ${zl.buyer.name}\n` : ``}`
   let tel = `${zl?.buyer?.contacts?.tel ? `tel: ${zl.buyer.contacts.tel}\n` : ``}`
   let faults = `\n${zl?.car?.faults ? `${lines}\n${zl.car.faults}\n${lines}\n` : ``}`
-  let brutto = `\n${zl?.brutto ? `brutto: ${zl.brutto} zł` : ``}`
+  let brutto = `\n${zl?.articles ? `brutto: ${SumArray(zl.articles.map( el=> bzCalcVatSum(el).SUM ) )} zł` : ``}`
   let title = `${name}${tel}${faults}${brutto}`
 
   return(

@@ -1,5 +1,6 @@
 import React from 'react'
-import { SumArray } from "../../../../../state/functions"
+
+import { SumArray, bzCalcVatSum } from "../../../../../state/functions"
 
 
 export const ElArticles = ({ props:{mode, articles, print, AreaFn} })=>{
@@ -8,13 +9,13 @@ export const ElArticles = ({ props:{mode, articles, print, AreaFn} })=>{
 
   let Top = {
     nr: "Lp.",
-    article: "Nazwa towaru / usługi",
-    price: "Cena, zł",
-    quantity: "Ilość",
+    ART: "Nazwa towaru / usługi",
+    PRI: "Cena, zł",
+    QUA: "Ilość",
     VAT: "VAT, %",
-    netto: "Kwota netto, zł",
-    vat: "Kwota VAT, zł",
-    sum: "Wartość brutto, zł"
+    NET: "Kwota netto, zł",
+    PRV: "Kwota VAT, zł",
+    SUM: "Wartość brutto, zł"
   }
   
   let newArticles = articles.filter( (art)=> art !== {} && art)
@@ -31,14 +32,14 @@ export const ElArticles = ({ props:{mode, articles, print, AreaFn} })=>{
         return(
           <div className="line lineTop flex wrap stretch" key={`tableLine${line.nr}${i}`}>
 
-            <span className="NUR flex">{line.nr}</span>
-            <span className={`ART${print ? `print` : ``} flex start`}>{line.article}</span>
-            <span className="PRC flex">{line.price}</span>
-            <span className="QUA flex">{line.quantity}</span>
+            <span className="NUM flex">{line.nr}</span>
+            <span className={`ART${print ? `print` : ``} flex start`}>{line.ART}</span>
+            <span className="PRI flex">{line.PRI}</span>
+            <span className="QUA flex">{line.QUA}</span>
             <span className="VAT flex">{line.VAT}</span>
-            <span className="NET flex">{line.netto}</span>
-            <span className="PRV flex">{line.vat}</span>
-            <span className="SUM flex">{line.sum}</span>
+            <span className="NET flex">{line.NET}</span>
+            <span className="PRV flex">{line.PRV}</span>
+            <span className="SUM flex">{line.SUM}</span>
             
             {
               !print &&
@@ -56,33 +57,33 @@ export const ElArticles = ({ props:{mode, articles, print, AreaFn} })=>{
         return(
           <div className="line flex wrap stretch" key={`tableLine${line.nr}${i}`}>
 
-            <span className="NUR nowrapTxt flex">{`${i + 1}.`}</span>
+            <span className="NUM nowrapTxt flex">{`${i + 1}.`}</span>
             {
               !print
-              ? <Input props={{cl:"ART", val:line.article, i, CHANGE_INPUT}} />
-              : <span className={`ART${print ? `print` : ``} nowrapTxt flex start`}>{line.article}</span>
+              ? <Input props={{cl:"ART", val:line.ART, i, CHANGE_INPUT}} />
+              : <span className={`ART${print ? `print` : ``} nowrapTxt flex start`}>{line.ART}</span>
             }
             {
               !print
-              ? <Input props={{cl:"PRC", val:line.price, i, CHANGE_INPUT}} />
-              : <span className="PRC nowrapTxt flex">{line.price}</span>
+              ? <Input props={{cl:"PRI", val:line.PRI, i, CHANGE_INPUT}} />
+              : <span className="PRI nowrapTxt flex">{line.PRI}</span>
             }
             {
               !print
-              ? <Input props={{cl:"QUA", val:line.quantity, i, CHANGE_INPUT}} />
-              : <span className="QUA nowrapTxt flex">{line.quantity}</span>
+              ? <Input props={{cl:"QUA", val:line.QUA, i, CHANGE_INPUT}} />
+              : <span className="QUA nowrapTxt flex">{line.QUA}</span>
             }
             {
               !print
               ? <Input props={{cl:"VAT", val:line.VAT, i, CHANGE_INPUT}} />
               : <span className="VAT nowrapTxt flex">{line.VAT}</span>
             }
-            <span className="NET nowrapTxt flex">{line.netto}</span>
-            <span className="PRV nowrapTxt flex">{line.vat}</span>
+            <span className="NET nowrapTxt flex">{bzCalcVatSum(line).NET}</span>
+            <span className="PRV nowrapTxt flex">{bzCalcVatSum(line).PRV}</span>
             {
               !print
-              ? <Input props={{cl:"SUM", val:line.sum, i, CHANGE_INPUT}} />
-              : <span className="SUM nowrapTxt flex">{line.sum}</span>
+              ? <Input props={{cl:"SUM", val:bzCalcVatSum(line).SUM, i, CHANGE_INPUT}} />
+              : <span className="SUM nowrapTxt flex">{bzCalcVatSum(line).SUM}</span>
             }
             
             {
@@ -98,9 +99,9 @@ export const ElArticles = ({ props:{mode, articles, print, AreaFn} })=>{
     <div className="line flex wrap stretch bold" style={{marginTop:"2vw"}}>
       <span className={`EMPTY${print ? `print` : ``} nowrapTxt flex`}></span>
       <span className="TOT nowrapTxt flex end">{ `Razem:` }</span>
-      <span className="NET nowrapTxt flex">{ SumArray(newArticles.map( (el)=> el.netto)) }</span>
-      <span className="PRV nowrapTxt flex">{ SumArray(newArticles.map( (el)=> el.vat)) }</span>
-      <span className="SUM nowrapTxt flex">{ SumArray(newArticles.map( (el)=> el.sum)) }</span>
+      <span className="NET nowrapTxt flex">{ SumArray(newArticles.map( (el)=> bzCalcVatSum(el).NET )) }</span>
+      <span className="PRV nowrapTxt flex">{ SumArray(newArticles.map( (el)=> bzCalcVatSum(el).PRV )) }</span>
+      <span className="SUM nowrapTxt flex">{ SumArray(newArticles.map( (el)=> bzCalcVatSum(el).SUM )) }</span>
 
       {
         !print &&

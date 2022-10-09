@@ -1,14 +1,13 @@
 import React from "react"
 
-import { DigLen } from "../../state/functions"
+import { bzDateTo_DD_MM_YYYY, bzDateTo_YYYY_MM_DD } from "../../state/functions"
 
 
 export const Input =({ props:{input, print, Fn} })=>{
 
   let ON_CHANGE = (e)=>{
-    let arr = e.target.value.split('-')
-    let YYYYMMDD = {year:parseInt(arr[0]), month:parseInt(arr[1]), day:parseInt(arr[2])}
-    let value = input.type === "date" ? YYYYMMDD : e.target.value
+    let dateVal = parseInt( e.target.value.split("-").join("") )
+    let value = input.type === "date" ? dateVal : e.target.value
     Fn({type:`CHG_${input.form}`, value, input})
   }
 
@@ -16,15 +15,10 @@ export const Input =({ props:{input, print, Fn} })=>{
     Fn({type:`KEYUP_IMG_${input.form}`, value:e.target.value, key:e.key, input})
   }
 
-  let VAL = input.type === "date" ? input.val : false
-  let YYYY = VAL?.year && DigLen(VAL.year, 4)
-  let MM = VAL?.month && DigLen(VAL.month, 2)
-  let DD = VAL?.day && DigLen(VAL.day, 2)
+  let VAL = input.type === "date" ? ( input?.val ? input.val.toString() : false ) : false
 
-  let date = input.type === "date" ? {year:YYYY, month:MM, day:DD} : false
-
-  let InputModeVal = `${date.year}-${date.month}-${date.day}`
-  let TextModeVal = `${date.day}.${date.month}.${date.year}`
+  let InputModeVal = bzDateTo_YYYY_MM_DD(VAL)
+  let TextModeVal = bzDateTo_DD_MM_YYYY(VAL)
 
   let val = input.val
     ? input.type === "date" ? ( !print ? InputModeVal : TextModeVal ) : input.val

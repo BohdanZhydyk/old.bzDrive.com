@@ -34,12 +34,26 @@ export const DigLen = (dig, len)=>{
   return newDig
 }
 
+export const bzUnixToYYYYMMDD = ( DATE = new Date(Date.now()) )=>{
+  let YYYY = DigLen(DATE.getFullYear(), 4)
+  let MM = DigLen(DATE.getMonth()+1, 2)
+  let DD = DigLen(DATE.getDate(), 2)
+  return parseInt(`${YYYY}${MM}${DD}`)
+}
+
 export const DateToUnix = (date)=>{
   return Date.parse( `${DigLen(date.year,4)}-${DigLen(date.month,2)}-${DigLen(date.day,2)}` )
 }
 
-export const DateToYYYYMMDD = (date)=>{
+export const DateTo_YYYY_MM_DD = (date)=>{
   return `${DigLen(date.year, 4)}${DigLen(date.month, 2)}${DigLen(date.day, 2)}`
+}
+
+export const bzDateTo_DD_MM_YYYY = (date)=>{
+  return `${date[6]}${date[7]}.${date[4]}${date[5]}.${date[0]}${date[1]}${date[2]}${date[3]}`
+}
+export const bzDateTo_YYYY_MM_DD = (date)=>{
+  return `${date[0]}${date[1]}${date[2]}${date[3]}-${date[4]}${date[5]}-${date[6]}${date[7]}`
 }
 
 export const UnixToYYYYMMDD = (unix)=>{
@@ -85,6 +99,13 @@ export const bzCalc = (operation, a, b)=>{
     case "/": return( (x / y).toFixed(2) )
     default: break
   }
+}
+
+export const bzCalcVatSum = (obj)=>{
+  let NET = bzCalc("*", obj.PRI, obj.QUA)
+  let SUM = bzCalc("*", NET, `1.${obj.VAT}` )
+  let PRV = bzCalc("-", SUM, NET )
+  return {NET, PRV, SUM}
 }
 
 export const SumArray = (arr, sum = "0.00")=>{
@@ -140,11 +161,12 @@ export const bzPriceToWord = (price)=>{
 }
 
 export const NormalizeNr = (nr, short)=>{
-  let letter = nr?.letter ? nr.letter : "--"
-  let year = nr?.year ? DigLen(nr.year, 4) : "----"
-  let month = nr?.month ? DigLen(nr.month, 2) : "--"
+  let from = nr ? nr?.from.toString() : `--------`
+  let mode = nr?.mode ? nr.mode : "--"
+  let year = nr?.from ? `${from[0]}${from[1]}${from[2]}${from[3]}` : "----"
+  let month = nr?.from ? `${from[4]}${from[5]}` : "--"
   let sign = nr?.sign ? DigLen(nr.sign, 4) : "----"
-  return `${letter}/${year}/${month}/${!short ? sign : ``}`
+  return `${mode}/${year}/${month}/${!short ? sign : ``}`
 }
 
 let digits = "0123456789"
@@ -242,6 +264,26 @@ export const errBrand =   (val)=> val ? (val?.length > 1  ? false : true) : true
 export const errModel =   (val)=> val ? (val?.length > 1  ? false : true) : true
 export const errNumbers = (val)=> val ? (val?.length > 5  ? false : true) : true
 
+export const GroupArrBy = (array, key1, key2)=>{
+  const group = array.reduce((arr, el)=>{
+    let key = key2 ? el[key1][key2] : el[key1]
+    if (!arr[key]) arr[key] = [] // Group initialization
+    arr[key].push(el) // Grouping
+    return arr
+  }, {})
+  return Object.entries(group).map(([key, value]) => ({key, value}))
+}
+
+export const getRandomColor = (dark = 50, light = 200)=>{
+  const getRandomInt = (min, max)=>{
+    //The maximum is exclusive and the minimum is inclusive
+    let minimum = Math.ceil(min)
+    let maximum = Math.floor(max)
+    return ( Math.floor(Math.random() * (maximum - minimum) + minimum) ).toString()
+  }
+  return `rgb(${getRandomInt(dark, light)}, ${getRandomInt(dark, light)}, ${getRandomInt(dark, light)})`
+}
+
 export const bzUploadFile = (file, fileAddr, fileName, cb)=>{
 
   const formData = new FormData()
@@ -311,7 +353,7 @@ export const bzPost = async (link, object, callback)=>{
 
     let data = res.data
 
-    MSG("ServerData", data)
+    if(hostname === 'localhost') MSG("ServerData", data)
 
     let errors = data?.object?.errors
     errors && errors.map( (err)=> MSG("err", err) )

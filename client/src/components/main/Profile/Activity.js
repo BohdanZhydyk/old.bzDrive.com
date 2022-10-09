@@ -20,6 +20,8 @@ export const Activity = ({ props:{login, ProFn} })=>{
 
   useEffect( ()=>{ !traffic && ProFn({ type:"GET_TRAFFIC", login, cb:(data)=>setTraffic(data) }) },[])
 
+  console.log(traffic)
+
   return(
     <section className="ProfileSection">
     {

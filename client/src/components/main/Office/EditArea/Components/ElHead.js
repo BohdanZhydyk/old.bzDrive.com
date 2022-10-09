@@ -4,11 +4,11 @@ import { NormalizeNr, DigLen } from "../../../../../state/functions"
 import { Input } from "./../../../../All/Input"
 
 
-export const ElHead = ({ props:{mode, dealer, place, date, dateTo, nr, print, AreaFn} })=>{
+export const ElHead = ({ props:{mode, dealer, nr, print, AreaFn} })=>{
 
-  let placeInput = {form:"PLACE", type:"text", legend:"Miejscowość", val:place, style:" end"}
-  let fromInput = {form:"FROM_DATE", type:"date", legend:"Data wystawienia", val:date, style:" end"}
-  let toInput = {form:"TO_DATE", type:"date", legend:"Naprawic do", val:dateTo, style:" end"}
+  let placeInput = {form:"PLACE", type:"text", legend:"Miejscowość", val:nr.place, style:" end"}
+  let fromInput = {form:"FROM_DATE", type:"date", legend:"Data wystawienia", val:nr.from, style:" end"}
+  let toInput = {form:"TO_DATE", type:"date", legend:"Naprawic do", val:nr.to, style:" end"}
 
   let logo = dealer?.img
     ? `https://bzdrive.com/files/dealers/${dealer.img}`

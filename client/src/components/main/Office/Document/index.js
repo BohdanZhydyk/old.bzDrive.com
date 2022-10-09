@@ -3,7 +3,7 @@ import { useReactToPrint } from 'react-to-print';
 import cookies from 'js-cookie'
 
 import "./Document.scss"
-import { DigLen, bzPost } from "../../../../state/functions";
+import { DigLen, bzPost, NormalizeNr } from "../../../../state/functions";
 import { ScreenSaver } from "./../../../All/ScreenSaver"
 import EditArea from "./../EditArea"
 
@@ -36,7 +36,8 @@ const Document = ()=>{
       let YYYY = DigLen(doc.nr.year, 4)
       let MM = DigLen(doc.nr.month, 2)
       let DD = DigLen(doc.nr.sign, 4)
-      document.title = `${letter}/${YYYY}/${MM}/${DD}`
+      // document.title = `${letter}/${YYYY}/${MM}/${DD}`
+      document.title = NormalizeNr(doc.nr)
     }
   })
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 
 import "./../Office.scss"
 import "./FS.scss"
-import { bzUnixToDateTime, bzGetUser, DateToUnix } from "./../../../../state/functions"
+import { bzGetUser, bzUnixToYYYYMMDD } from "./../../../../state/functions"
 import { officeFn } from "../actions"
 import Settings from "../Settings"
 import { Title } from "./Title"
@@ -22,23 +22,11 @@ const FS = ()=>{
   const lang = user.lang
 
   const [invoices, setInvoices] = useState( false )
-
   const [nip, setNIP] = useState("")
-
   const [client, setClient] = useState("")
+  const [from, setFrom] = useState( bzUnixToYYYYMMDD() )
+  const [to, setTo] = useState( bzUnixToYYYYMMDD() )
 
-  const [from, setFrom] = useState({
-    year:bzUnixToDateTime().year,
-    month:bzUnixToDateTime().month,
-    day:1
-  })
-
-  const [to, setTo] = useState({
-    year:bzUnixToDateTime().year,
-    month:bzUnixToDateTime().month,
-    day:bzUnixToDateTime().lastDay
-  })
-  
   const GET_FS_TABLE = (query, cb)=> officeFn(
     {
       type:"GET_TABLE",
@@ -69,7 +57,7 @@ const FS = ()=>{
         }
       : {}
     let query2 = (nip) ? { "buyer.nip":{$regex:nip} } : {}
-    let query3 = (from && to) ? { "date.unix":{$gte:DateToUnix(from), $lte:DateToUnix(to)} } : {}
+    let query3 = !(from && to) ? {} : { "nr.from":{$gte:from, $lte:to} }
 
     switch(action.type){
       case "CHG_FROM":
@@ -87,7 +75,7 @@ const FS = ()=>{
         )
         return
       case "SEARCH":
-        setFrom({...action.from}); setTo({...action.to}); setSearchSt( true )
+        setFrom(parseInt(action.from)); setTo(action.to); setSearchSt( true )
         GET_FS_TABLE(
           { $and: [query1, query2, query3] },
           (data)=> setInvoices(data)
@@ -100,12 +88,7 @@ const FS = ()=>{
   useEffect( ()=>{
     !invoices &&
     GET_FS_TABLE(
-      {
-        $and:[
-          {"nr.year":bzUnixToDateTime().year},
-          {"nr.month":bzUnixToDateTime().month}
-        ]
-      },
+      { $and: [{}, {}, { "nr.from":{$gte:from, $lte:to} }] },
       (data)=> setInvoices(data)
     )
   },[])
@@ -113,12 +96,7 @@ const FS = ()=>{
   let ReloadFn = ()=>{
     setInvoices(false);
     GET_FS_TABLE(
-      {
-        $and:[
-          {"nr.year":bzUnixToDateTime().year},
-          {"nr.month":bzUnixToDateTime().month}
-        ]
-      },
+      { $and: [{}, {}, { "nr.from":{$gte:from, $lte:to} }] },
       (data)=> setInvoices(data)
     )
   }

@@ -10,6 +10,7 @@ export const ElFiles = ({ props:{nr, files, print, AreaFn} })=>{
   let icoDelete = "https://bzdrive.com/files/ico/icoDelete.png"
   let icoDownload = "https://bzdrive.com/files/ico/icoDownload.png"
   let icoPlus = "https://bzdrive.com/files/ico/icoPlus.png"
+  let newTab = "https://bzdrive.com/files/ico/newTab.png"
 
   let FileTypeToIco = (type)=>{
     switch(type){
@@ -21,7 +22,7 @@ export const ElFiles = ({ props:{nr, files, print, AreaFn} })=>{
     }
   }
 
-  let fileAddr = `files/ZL/${DigLen(nr.year, 4)}${DigLen(nr.month, 2)}${DigLen(nr.sign, 4)}/`
+  let fileAddr = `files/ZL/${nr.from}_${DigLen(nr.sign, 4)}/`
 
   let props = {
     txt:`dodać plik...`,
@@ -66,14 +67,14 @@ export const ElFiles = ({ props:{nr, files, print, AreaFn} })=>{
           files.map( (file, n)=>{
 
             let key = `FileLine${n}`
-            let href = `${window.location.origin}/${file.fileAddr}${file.fileName}`
+            let href = `https://bzdrive.com/${file.fileAddr}${file.fileName}`
             
             return(
               <div className="File FileActive flex" key={key}>
-                <div className="FileName flex start">
+                <a className="FileName flex start" href={href} target="_blank" rel="noreferrer" >
                   <img src={FileTypeToIco(file.fileType).ico} alt={FileTypeToIco(file.fileType).type} />
                   <span>{file.fileName}</span>
-                </div>
+                </a>
                 <div className="FileSize flex start">{bzBytesCalc(file.fileSize)}</div>
                 <div className="FileBtns flex end">
 

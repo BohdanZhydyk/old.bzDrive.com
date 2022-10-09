@@ -1,15 +1,14 @@
-import { bzUnixToDateTime } from "../../../../state/functions"
+import { bzUnixToDateTime, DigLen } from "../../../../state/functions"
 
 
 export const GetDay = ( unix = Date.now() )=>{
   let NewDate = bzUnixToDateTime( new Date(unix) )
-  return {
-    unix:     unix,
-    weekday:  NewDate.weekday,
-    year:     NewDate.year.toString(),
-    month:    NewDate.month.toString(),
-    day:      NewDate.day < 10 ? `0${NewDate.day}` : `${NewDate.day}`
-  }
+  let weekday = NewDate.weekday
+  let year = DigLen(NewDate.year, 4)
+  let month = DigLen(NewDate.month, 2)
+  let day = DigLen(NewDate.day, 2)
+  let YYYYMMDD = parseInt(`${year}${month}${day}`)
+  return {unix, YYYYMMDD, weekday, year, month, day}
 }
 
 const MinusDay = (days)=>{

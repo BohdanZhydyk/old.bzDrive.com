@@ -28,8 +28,8 @@ const SearchPannel = ({ props:{mode, calendar, nip, client, from, to, Fn} })=>{
   let fromInput =   {form:"FROM", type:"date", legend:"Od", val:fromS}
   let toInput =     {form:"TO", type:"date", legend:"Do", val:toS}
 
-  let IsFromOk = (to, val)=> to ? DateToYYYYMMDD(to) >= DateToYYYYMMDD(val) : true
-  let IsToOk = (from, val)=> from ? DateToYYYYMMDD(from) <= DateToYYYYMMDD(val) : true
+  let IsFromOk = (to, val)=> to ? (to >= val) : true
+  let IsToOk = (from, val)=> from ? (from <= val) : true
 
   const SearchFn = (action)=>{
 
@@ -41,10 +41,6 @@ const SearchPannel = ({ props:{mode, calendar, nip, client, from, to, Fn} })=>{
       case "CHG_CAR":     setCar(val);      break
       case "CHG_TEL":     setTel(val);      break
       case "CHG_FROM":
-        if(isNaN(val.year) || isNaN(val.month) || isNaN(val.day)){
-          setFrom(false)
-          setTo(false)
-        }
         IsFromOk(toS, val) && setFrom(val)
         toS && val &&
         Fn({
@@ -53,10 +49,6 @@ const SearchPannel = ({ props:{mode, calendar, nip, client, from, to, Fn} })=>{
         })
         break
       case "CHG_TO":
-        if(isNaN(val.year) || isNaN(val.month) || isNaN(val.day)){
-          setFrom(false)
-          setTo(false)
-        }
         IsToOk(fromS, val) && setTo(val)
         fromS && val &&
         Fn({

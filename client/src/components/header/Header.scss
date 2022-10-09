@@ -88,6 +88,21 @@ header {
   .siteAuth {
     max-width:10%;
 
+    .widthAni-enter {
+      opacity:0;
+    }
+    .widthAni-enter.widthAni-enter-active {
+      opacity:1;
+      transition: opacity 2s ease;
+    }
+    .widthAni-exit {
+      opacity:1;
+    }
+    .widthAni-exit.widthAni-exit-active {
+      opacity:0;
+      transition: opacity 2s ease;
+    }
+
     .mainMenu {
       display:none;
       @media (min-width: 768px) and (max-width: 1024px) {display:none;}
@@ -312,6 +327,17 @@ header {
         }
       }
     
+    }
+
+    .sidePannel-close {
+      background-color:#f609;
+      margin:-100vh 0 0 0;
+      transition:background-color 0.25s, margin 0.25s ease-out;
+    }
+
+    .sidePannel-open {
+      margin:0;
+      transition:background-color 1s, margin 0.5s ease-out;
     }
 
     .menuPannel {

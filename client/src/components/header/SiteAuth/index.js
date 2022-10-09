@@ -14,6 +14,8 @@ export const SiteAuth = ({ props:{user, side, nav, appFn} })=>{
 	let avaImg = `https://bzdrive.com/files/users/${user.ava ? user.ava : `male.png`}`
 	let menuImg = "https://bzdrive.com/files/ico/icoMore.png"
 
+	let sidePannelClasses = `sidePannel sidePannel-${(side.ava || side.menu) ? `open` : `close`} flex column start`
+
 	return(
 		<>
 
@@ -21,23 +23,23 @@ export const SiteAuth = ({ props:{user, side, nav, appFn} })=>{
 				<MenuPannel props={{user:false, avaImg, menuImg, AvaClick, MenuClick, appFn}} />
 			</div>
 
-			{
-				(side.ava || side.menu) &&
-				<div className="sidePannel flex column start">
+			<div className={sidePannelClasses}>
 
+				{
+					(side.ava || side.menu) &&
 					<MenuPannel props={{user, avaImg, menuImg, AvaClick, MenuClick, appFn}} />
+				}
 
-					{ side.ava && <AuthPannel props={{user, appFn}} />}
+				{ side.ava && <AuthPannel props={{user, appFn}} />}
 
-					{
-						side.menu &&
-						<div className="siteNavigationWide flex column">
-							<SiteNavigation props={{nav, user, appFn}}/>
-						</div>
-					}
+				{
+					side.menu &&
+					<div className="siteNavigationWide flex column">
+						<SiteNavigation props={{nav, user, appFn}}/>
+					</div>
+				}
 
-				</div>
-			}
+			</div>
 
 		</>
 	)

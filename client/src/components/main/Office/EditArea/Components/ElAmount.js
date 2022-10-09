@@ -1,20 +1,20 @@
 import React from 'react'
-import { SumArray, bzPriceToWord, DigLen } from "../../../../../state/functions"
+import { SumArray, bzPriceToWord, bzCalcVatSum, bzDateTo_DD_MM_YYYY } from "../../../../../state/functions"
 import { Input } from "./../../../../All/Input"
 
 
-export const ElAmount = ({ props:{mode, pay, articles, print, AreaFn} })=>{
+export const ElAmount = ({ props:{mode, nr, articles, print, AreaFn} })=>{
 
-  let payDateEdit = {form:"PAYDATE", type:"date", legend:`Data`, val:pay.date}
-  let payDate = `${DigLen(pay.date.day, 2)}.${DigLen(pay.date.month, 2)}.${DigLen(pay.date.year, 4)}`
-
-  let sum = SumArray(articles.map( (el)=> el.sum) )
+  let payDateEdit = {form:"TO_DATE", type:"date", legend:`Data`, val:nr.to}
+  let payDate = bzDateTo_DD_MM_YYYY( nr ? nr.to.toString() : `--------` )
+  let payMethod = nr.method === 0 ? 'gotówka' : 'przelew'
+  let sum = SumArray(articles.map( (el)=> bzCalcVatSum(el).SUM ) )
 
   let amount = (mode === "FS")
   ? [
       { txt: `Do zapłaty`, content: `${sum} zł` },
       { txt: `Kwota słownie`, content: bzPriceToWord(sum) },
-      { txt: `Sposób płatności`, content: print ? pay.method : <Method props={{ method:(pay.method === `gotówka`), AreaFn }} /> },
+      { txt: `Sposób płatności`, content: print ? payMethod : <Method props={{ method:(nr.method), AreaFn }} /> },
       { txt: `Termin płatności`, content: print ? payDate : <Input props={{ input:payDateEdit, print, Fn:AreaFn }} /> }
     ]
   : [
@@ -47,26 +47,29 @@ const Method = ({ props:{method, AreaFn} })=>{
 
   let CHANGE_INPUT = (method)=> AreaFn({type:"CHG_METHOD", value:method})
 
+  let MethodZero = 'gotówka'
+  let MethodOne = 'przelew'
+
   return(
     <form className="flex">
 
       <div className="radio">
 
         <input type="radio" id="html1" name="fav_language"
-          value={'gotówka'} checked={method} onChange={ ()=> CHANGE_INPUT('gotówka') }
+          value={MethodZero} checked={method === 0} onChange={ ()=> CHANGE_INPUT(0) }
         />
 
-        <label htmlFor="html1">{'gotówka'}</label>
+        <label htmlFor="html1">{MethodZero}</label>
 
       </div>
 
       <div className="radio">
 
         <input type="radio" id="html2" name="fav_language"
-          value={'przelew'} checked={!method} onChange={ ()=> CHANGE_INPUT('przelew') }
+          value={MethodOne} checked={method !== 0} onChange={ ()=> CHANGE_INPUT(1) }
         />
 
-        <label htmlFor="html2">{'przelew'}</label>
+        <label htmlFor="html2">{MethodOne}</label>
 
       </div>
       

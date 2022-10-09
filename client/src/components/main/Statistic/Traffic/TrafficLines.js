@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
 
+import { GroupArrBy } from '../../../../state/functions'
+import { UserStat } from './UserStat'
+
 
 export const TrafficLines = ({ props:{traffic} })=>{
 
-  let lines = [{
+  let topLine = {
     count:"count",
-    login:"User",
+    user:"User",
     IP:{
       country_name:"Country",
       region:"Region",
@@ -14,58 +17,65 @@ export const TrafficLines = ({ props:{traffic} })=>{
       asn_org:"Provider"
     },
     date:{year:"YYYY", month:"MM", day:"DD"}
-  }]
-
-  let isUser = (login, IP, date)=>{
-
-    if(IP.host === "localhost") return
-
-    let newIsUser = lines.filter( el=> el.login === login)
-
-    newIsUser.length < 1
-    ? lines.push( {login, count:1, IP, date} )
-    : lines.map( el=> el.login === login ? el.count = (el.count + 1) : el )
-
   }
 
-  for(let i=0; i<traffic.length; i++){
-    traffic[i]?.user?.login
-    ? traffic[i]?.user?.login && isUser(traffic[i].user.login, traffic[i].IP, traffic[i].date.dateTime)
-    : traffic[i]?.IP?.ip && isUser(traffic[i].IP.ip, traffic[i].IP, traffic[i].date.dateTime)
-  }
+  let newTraffic = traffic.map( el=> el.user ? {...el, user:el.user} : {...el, user:el.IP.ip} )
+
+  let lines = GroupArrBy(newTraffic, "user")
+    .map( el=>{
+      let IP, date = false
+      el.value.map( val=>{
+        if(!IP && val?.IP?.ip){
+          IP = val.IP
+          date = val.date.dateTime
+        }
+      })
+      return {count: el.value.length, user: el.key, IP, date}
+    })
 
   return(
     <section className="trafficLines flex column">
     {
-      lines.map( (line, n)=>{
-
-        const key = `TrafficLine${n}`
-
-        const IP = line?.IP
-        let addr = `
-          ${IP?.country_code ? `[${IP.country_code}], ` : ``}
-          ${IP?.country_name ? `${IP.country_name}, ` : ``}
-          ${IP?.region ? `${IP.region}, ` : ``}
-          ${IP?.postal_code ? `${IP.postal_code}, ` : ``}
-          ${IP?.city ? `${IP.city}, ` : ``}
-          ${IP?.asn_org ? `${IP.asn_org}` : ``}
-        `
-
-        let dateTime = `${line.date.year}.${line.date.month}.${line.date.day}`
-
-        let colorCell = n === 0 ? `colorTop` : (line.count > 9 ? `colorCell` : ``)
-
+      [topLine, ...lines].map( (line, n)=>{
+        let key = `TrafficLine${n}`
         return(
-          <div className={`trafficLine ${n === 0 ? `` : `LineCells`} flex`} key={key}>
-            <span className={`cell cellCount flex ${colorCell}`}>{line.count}</span>
-            <span className={`cell cellDateTime flex ${colorCell}`}>{dateTime}</span>
-            <span className={`cell cellLogin flex start ${colorCell}`}>{line.login}</span>
-            <span className={`cell cellAddr flex start ${colorCell}`}>{addr}</span>
-          </div>
+          <TrafficLine props={{newTraffic, line, n}} key={key} />
         )
-
       })
     }
     </section>
+  )
+}
+
+const TrafficLine = ({ props:{newTraffic, line, n} })=>{
+
+  const [show, setShow] = useState(false)
+
+  let classes = `trafficLine ${n === 0 ? `` : `LineCells`} flex wrap`
+
+  let colorCell = n === 0 ? `colorTop` : (line.count > 9 ? `colorCell` : ``)
+  
+  let dateTime = `${line.date.year}.${line.date.month}.${line.date.day}`
+
+  let IP = line?.IP
+  let addr = `
+    ${IP?.country_code ? `[${IP.country_code}], ` : ``}
+    ${IP?.country_name ? `${IP.country_name}, ` : ``}
+    ${IP?.region ? `${IP.region}, ` : ``}
+    ${IP?.postal_code ? `${IP.postal_code}, ` : ``}
+    ${IP?.city ? `${IP.city}, ` : ``}
+    ${IP?.asn_org ? `${IP.asn_org}` : ``}
+  `
+  
+  let userTraffic = newTraffic.filter( el=> (el?.user ? el.user : el.IP.ip) === line.user )
+
+  return(
+    <div className={classes}>
+      <span className={`cell cellCount flex ${colorCell}`}>{line.count}</span>
+      <span className={`cell cellDateTime flex ${colorCell}`}>{dateTime}</span>
+      <span className={`cell cellLogin flex start ${colorCell}`}>{line.user}</span>
+      <span className={`cell cellAddr flex start ${colorCell}`} onClick={ ()=>setShow(!show) }>{addr}</span>
+      { n !== 0 && show && <UserStat props={{userTraffic}}/> }
+    </div>
   )
 }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
 import './Traffic.scss'
-import { GET_STATE, SELECT_INT } from './actions'
+import { GET_STATE, LONG_PULLING, SELECT_INT } from './actions'
 import { IntBtns } from './IntBtns'
 import { TrafficLines } from './TrafficLines'
 import { ScreenSaver } from './../../../All/ScreenSaver'
@@ -11,14 +11,7 @@ const Traffic = ()=>{
 
   let qqq = {
     "_id": "6212a8b3edf6010a800316ae",
-    "user": {
-        "login": "bz83",
-        "role": "admin",
-        "email": "biuro@bzdrive.com",
-        "lang": "pl",
-        "sex": "male",
-        "ava": true
-    },
+    "user": "bz83",
     "IP": {
         "host": "bzdrive.com",
         "from": "/getState",
@@ -56,17 +49,20 @@ const Traffic = ()=>{
 
   const [traffic, setTraffic] = useState(false)
 
-  // const trafficFn = (action)=> actions(action, intervals, setIntervals, traffic, setTraffic)
-
   const trafficFn = (action)=>{
     switch(action.type){
       case "GET_STATE":     GET_STATE(action, setTraffic);                               break
+      case "LONG_PULLING":  LONG_PULLING(action, setTraffic);                            break
       case "SELECT_INT":    SELECT_INT(action, setTraffic, intervals, setIntervals);     break
       default: break
     }
   }
 
   useEffect( ()=>{ !traffic && trafficFn({ type:"GET_STATE", int }) },[])
+
+  // traffic && trafficFn({ type:"LONG_PULLING", int })
+
+  // console.log("traffic", traffic)
 
   return(
     <div className="Traffic">

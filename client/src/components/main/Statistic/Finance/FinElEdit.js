@@ -94,11 +94,11 @@ export const FinElEdit = ({ props:{fin, el, i, ok, finFn} })=>{
             <p className="txtYlw">
               Wypełnij formularz wykorzystowując informacje wziętą z Podatkowej Księgi Przychodów i rozchodów:
             </p>
-            <p>- Bieżący miesiąc i rok</p>
-            <p>- Razem przychód netto (kolumna 9)</p>
-            <p>- Zakup towarów netto (kolumna 10)</p>
-            <p>- Razem wydatki netto (kolumna 14)</p>
-            <p>- Kwota składki ZUS za bieżący miesiąc</p>
+            <p><span className="txtOrg">Miesiąc, Rok</span> - Bieżący miesiąc i rok</p>
+            <p><span className="txtOrg">Składka ZUS</span> - Kwota składki ZUS za bieżący miesiąc</p>
+            <p><span className="txtOrg">Razem przychod netto (9)</span> - Razem przychód netto (kolumna 9)</p>
+            <p><span className="txtOrg">Zakup towarow netto (10)</span> - Zakup towarów netto (kolumna 10)</p>
+            <p><span className="txtOrg">Razem wydatki netto (14)</span> - Razem wydatki netto (kolumna 14)</p>
           </div>
         }
 
