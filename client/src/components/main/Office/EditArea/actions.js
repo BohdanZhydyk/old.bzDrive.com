@@ -6,15 +6,16 @@ import {
   DigLen,
   getRandomColor
 } from "./../../../../state/functions"
+import { officeFn } from "../actions"
 import axios from 'axios'
 
 
-export const emptyArt = {ART:"", PRI:"0.00", QUA:"1", VAT:"23"}
+export const emptyArt = {ART:"", PRI:"0.00", QUA:"1", VAT:"23", NET:"0.00", PRV:"0.00", SUM:"0.00"}
 
 export const Logic = (
   action, id, mode, cookies, user, setNoPrint, status, setStatus, nr, setNr,
   buyer, setBuyer, car, setCar, client, setClient, articles, setArticles,
-  files, setFiles, comments, setComments, dealer, setDealer, ReloadFn, officeFn
+  files, setFiles, comments, setComments, dealer, setDealer, ReloadFn
 )=>{
     
   setNoPrint(true)
@@ -335,10 +336,14 @@ const SAVE_DOC = ({
   articles, files, comments, ReloadFn, officeFn
 })=>{
 
+  console.log(articles)
+
   let save = {
     id, user, nr, dealer, buyer, client, car, files, comments,
     status:action.status,
-    articles: articles.map( el=>{  return {ART:el.ART, PRI:el.PRI, QUA:el.QUA, VAT:el.VAT} })
+    articles: articles.map( el=>{
+      return {ART:el.ART, PRI:el.PRI, QUA:el.QUA, VAT:el.VAT, NET:el.NET, PRV:el.PRV, SUM:el.SUM}
+    })
   }
   
   officeFn({type:`SAVE_DOC`, ReloadFn, mode, payload:save})

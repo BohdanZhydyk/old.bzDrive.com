@@ -120,7 +120,7 @@ const FS = ()=>{
         {
           [ {}, ...invoices ].map( (line, n)=>
 
-            <Invoice props={{mode, line, n, ReloadFn, officeFn}} key={`FS_Line${n}${line._id}`}/>
+            <Invoice props={{mode, line, n, ReloadFn}} key={`FS_Line${n}${line._id}`}/>
 
           )
         }

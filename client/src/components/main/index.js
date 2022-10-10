@@ -8,6 +8,7 @@ import Error from './Error'
 import Workshop from "./Workshop"
 import News from "./News"
 
+import FI from "./Office/FI"
 import ZL from "./Office/ZL"
 import FS from "./Office/FS"
 import FZ from './Error'
@@ -49,6 +50,7 @@ const Main = ({ props:{state, user, side, appFn} })=>{
       case "/apps/unsplash":        return <Unsplash />
       case "/apps/pass":            return <Pass />
       // Office
+      case "/office/fi":            return <FI />
       case "/office/zl":            return <ZL />
       case "/office/fs":            return <FS />
       case "/office/fz":            return <FZ />

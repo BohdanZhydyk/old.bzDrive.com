@@ -44,9 +44,9 @@ export const Week = ({ props:{mode, line, l, user, translate, ReloadFn, officeFn
   return(
     <div className="Week flex stretch wrap">
     
-      {line && <DaysLine props={{mode, week, user, translate, ReloadFn, officeFn}}/>}
+      {line && <DaysLine props={{mode, week, user, translate, ReloadFn}}/>}
       
-      {table && <Orders props={{mode, week, table, ReloadFn, officeFn}}/>}
+      {table && <Orders props={{mode, week, table, ReloadFn}}/>}
 
     </div>
   )

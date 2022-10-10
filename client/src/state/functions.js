@@ -101,13 +101,6 @@ export const bzCalc = (operation, a, b)=>{
   }
 }
 
-export const bzCalcVatSum = (obj)=>{
-  let NET = bzCalc("*", obj.PRI, obj.QUA)
-  let SUM = bzCalc("*", NET, `1.${obj.VAT}` )
-  let PRV = bzCalc("-", SUM, NET )
-  return {NET, PRV, SUM}
-}
-
 export const SumArray = (arr, sum = "0.00")=>{
   for(let i=0; i<arr?.length; i++) sum = bzCalc( "+", sum, arr[i] )
   return sum

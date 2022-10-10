@@ -1,10 +1,10 @@
 import React, { useState } from "react"
 
-import { SumArray, bzCalcVatSum } from "../../../../state/functions"
+import { SumArray } from "../../../../state/functions"
 import EditArea from "./../EditArea"
 
 
-export const Order = ({ props:{mode, week, zl, ReloadFn, officeFn} }) => {
+export const Order = ({ props:{mode, week, zl, ReloadFn} }) => {
 
   const [show, setShow] = useState(false)
 
@@ -54,7 +54,7 @@ export const Order = ({ props:{mode, week, zl, ReloadFn, officeFn} }) => {
   let name = `${zl?.buyer?.name ? `klient: ${zl.buyer.name}\n` : ``}`
   let tel = `${zl?.buyer?.contacts?.tel ? `tel: ${zl.buyer.contacts.tel}\n` : ``}`
   let faults = `\n${zl?.car?.faults ? `${lines}\n${zl.car.faults}\n${lines}\n` : ``}`
-  let brutto = `\n${zl?.articles ? `brutto: ${SumArray(zl.articles.map( el=> bzCalcVatSum(el).SUM ) )} zł` : ``}`
+  let brutto = `\n${zl?.articles ? `brutto: ${SumArray(zl.articles.map( el=> el.SUM ) )} zł` : ``}`
   let title = `${name}${tel}${faults}${brutto}`
 
   return(
@@ -73,7 +73,7 @@ export const Order = ({ props:{mode, week, zl, ReloadFn, officeFn} }) => {
         
       </div>
 
-      { show && <EditArea props={{mode, line:zl, CANCEL, ReloadFn, officeFn}}/> }
+      { show && <EditArea props={{mode, line:zl, CANCEL, ReloadFn}}/> }
 
     </div>
   )

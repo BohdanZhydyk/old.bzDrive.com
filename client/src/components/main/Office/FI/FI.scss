@@ -1,0 +1,105 @@
+
+.FI {
+  width:100%;
+
+  .FiMonth {
+    width:100%;
+
+    .FiLine {
+      width:98%;
+      border-bottom:1px solid #999;
+      
+      .El {
+        padding:0 1%;
+        white-space: nowrap;      /*keep text on one line */
+        overflow: hidden;         /*prevent text from being shown outside the border */
+        text-overflow: ellipsis;  /*cut off text with an ellipsis*/
+      }
+      .nr {width:5%;}
+      .doc {width:12%;}
+      .info {width:60%;}
+      .sum {width:8%;}
+      .btns {width:10%;}
+
+      .EditSection {
+        width:100%;
+        padding:1vw 0;
+        color:#fff;
+        background-color:#333;
+  
+        .NewDocBtn {
+          width:20%;
+          min-height:3vw;
+          margin:0 2%;
+          background-color:#465;
+          border-radius:0.5vw;
+          &:hover {
+            font-size:120%;
+            font-weight:bold;
+          }
+        }
+      }
+    }
+    
+    .ModeTop {
+      color:#f60;
+      font-weight:bold;
+      padding:0.5vw 0 0.2vw 0;
+      background-color:#222;
+    }
+    .ModeFS {background-color:#0f01;}
+    .ModeZL {background-color:#00f1;}
+
+    .Chart {
+      width:98%;
+      margin:1vw 0;
+      padding:1vw 0;
+      background-color:#222;
+      border-radius:0.5vw;
+
+      .ChartLine {
+        width:100%;
+
+        .Left {
+          width:20%;
+          border-right:1px solid #999;
+        }
+        .Right {
+          width:75%;
+  
+          .mark {
+            padding:0 0.25vw;
+            height:1vw;
+            margin:1vw 0 0 0;
+            font-size:80%;
+            border-right:1px solid #999;
+          }
+  
+          .markL {
+            width:calc(25% - 0.5vw - 2px);
+            border-left:1px solid #999;
+          }
+          .markR {
+            width:calc(25% - 0.5vw - 1px);
+          }
+  
+          .ProgBar {
+            min-height:1.5vw;
+            border-radius:0 0.5vw 0.5vw 0;
+          }
+        }
+  
+        .Top {
+          min-height:2vw;
+          padding:0 1%;
+          border-bottom:1px dashed #999;
+        }
+  
+        .Line {
+          min-height:2vw;
+          padding:0 1%;
+        }
+      }
+    }
+  }
+}

@@ -16,7 +16,7 @@ import { ElAmount } from "./Components/ElAmount"
 import { ElSignatures } from "./Components/ElSignatures"
 
 
-const EditArea = ({ props:{mode, line, CANCEL, PRINTFUNC, ReloadFn, officeFn} })=>{
+const EditArea = ({ props:{mode, line, CANCEL, PRINTFUNC, ReloadFn} })=>{
 
   const id = line?._id ? line._id : false
   const author = line.user
@@ -40,7 +40,7 @@ const EditArea = ({ props:{mode, line, CANCEL, PRINTFUNC, ReloadFn, officeFn} })
   let AreaFn = (action)=> Logic(
     action, id, mode, cookies, user, setNoPrint, status, setStatus, nr, setNr,
     buyer, setBuyer, car, setCar, client, setClient, articles, setArticles,
-    files, setFiles, comments, setComments, dealer, setDealer, ReloadFn, officeFn
+    files, setFiles, comments, setComments, dealer, setDealer, ReloadFn
   )
   
   useEffect( ()=>{ !dealer && AreaFn({type:"EFFECT"}) },[])
@@ -56,27 +56,27 @@ const EditArea = ({ props:{mode, line, CANCEL, PRINTFUNC, ReloadFn, officeFn} })
         <EditAreaBtns props={{mode, status, author, id, AreaFn, CANCEL, print, noPrint, DO}}/>
 
         {
-          (mode === "FS" || mode === "ZL") &&
+          (mode === "FS" || mode === "ZL" || mode === "FZ" || mode === "ZU") &&
           <ElHead props={{mode, dealer, nr, print, AreaFn}} />
         }
 
         {
-          (mode === "FS" || mode === "ZL" || mode === "KL") &&
+          (mode === "FS" || mode === "ZL" || mode === "KL" || mode === "FZ") &&
           <ElInfo props={{mode, car, client, dealer, buyer, print, AreaFn}} />
         }
 
         {
-          mode === "ZL" &&
+          (mode === "ZL") &&
           <ElFaults props={{car, print, AreaFn}} />
         }
 
         {
-          (mode === "FS" || mode === "ZL") &&
+          (mode === "FS" || mode === "ZL" || mode === "FZ") &&
           <ElArticles props={{mode, articles, print, AreaFn}} />
         }
 
         {
-          (mode === "ZL" && nr?.sign) &&
+          ((mode === "ZL" || mode === "FZ") && nr?.sign) &&
           <ElFiles props={{nr, files, print, AreaFn}} />
         }
 
@@ -86,7 +86,7 @@ const EditArea = ({ props:{mode, line, CANCEL, PRINTFUNC, ReloadFn, officeFn} })
         }
         
         {
-          (mode === "FS") &&
+          (mode === "FS" || mode === "FZ") &&
           <ElAmount props={{mode, nr, articles, print, AreaFn}} />
         }
 

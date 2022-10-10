@@ -157,6 +157,12 @@ export const translate = (lang = 'en', txt)=>{
       if(lang === 'pl'){ return `Biuro` }
       if(lang === 'ru'){ return `Офис` }
       break
+    case "FI":
+      if(lang === 'en'){ return `Finances` }
+      if(lang === 'ua'){ return `Фінанси` }
+      if(lang === 'pl'){ return `Finanse` }
+      if(lang === 'ru'){ return `Финансы` }
+      break
     case "ZL":
       if(lang === 'en'){ return `Orders` }
       if(lang === 'ua'){ return `Замовлення` }

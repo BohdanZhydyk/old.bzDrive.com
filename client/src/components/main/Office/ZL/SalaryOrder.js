@@ -3,7 +3,7 @@ import React, { useState } from "react"
 import EditArea from "../EditArea"
 
 
-export const SalaryOrder = ({ props:{mode, order, obj, CHECK_ORDER, ReloadFn, officeFn} })=>{
+export const SalaryOrder = ({ props:{mode, order, obj, CHECK_ORDER, ReloadFn} })=>{
 
   const [show, setShow] = useState(false)
 
@@ -55,7 +55,7 @@ export const SalaryOrder = ({ props:{mode, order, obj, CHECK_ORDER, ReloadFn, of
         : <div className="imgBtn flex"></div>
       }
 
-      { mode && order && show && <EditArea props={{mode, line:order, CANCEL, ReloadFn, officeFn}}/> }
+      { mode && order && show && <EditArea props={{mode, line:order, CANCEL, ReloadFn}}/> }
 
     </div>
   )

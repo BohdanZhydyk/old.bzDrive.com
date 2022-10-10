@@ -49,7 +49,7 @@ export const Salary = ({ props:{mode, lang, role, calendar, ReloadFn, officeFn} 
           }
           
           let props = {
-            mode, order, obj:{status, nr, car, name, sum, tel, style}, CHECK_ORDER, ReloadFn, officeFn
+            mode, order, obj:{status, nr, car, name, sum, tel, style}, CHECK_ORDER, ReloadFn
           }
 
           let key = `SalaryOrder${i}`

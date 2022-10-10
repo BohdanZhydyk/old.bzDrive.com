@@ -1,5 +1,5 @@
 import React from 'react'
-import { SumArray, bzPriceToWord, bzCalcVatSum, bzDateTo_DD_MM_YYYY } from "../../../../../state/functions"
+import { SumArray, bzPriceToWord, bzDateTo_DD_MM_YYYY } from "../../../../../state/functions"
 import { Input } from "./../../../../All/Input"
 
 
@@ -8,7 +8,7 @@ export const ElAmount = ({ props:{mode, nr, articles, print, AreaFn} })=>{
   let payDateEdit = {form:"TO_DATE", type:"date", legend:`Data`, val:nr.to}
   let payDate = bzDateTo_DD_MM_YYYY( nr ? nr.to.toString() : `--------` )
   let payMethod = nr.method === 0 ? 'gotówka' : 'przelew'
-  let sum = SumArray(articles.map( (el)=> bzCalcVatSum(el).SUM ) )
+  let sum = SumArray(articles.map( (el)=> el.SUM ) )
 
   let amount = (mode === "FS")
   ? [

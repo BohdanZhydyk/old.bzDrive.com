@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { SumArray, bzCalcVatSum } from "../../../../../state/functions"
+import { SumArray } from "../../../../../state/functions"
 
 
 export const ElArticles = ({ props:{mode, articles, print, AreaFn} })=>{
@@ -78,12 +78,12 @@ export const ElArticles = ({ props:{mode, articles, print, AreaFn} })=>{
               ? <Input props={{cl:"VAT", val:line.VAT, i, CHANGE_INPUT}} />
               : <span className="VAT nowrapTxt flex">{line.VAT}</span>
             }
-            <span className="NET nowrapTxt flex">{bzCalcVatSum(line).NET}</span>
-            <span className="PRV nowrapTxt flex">{bzCalcVatSum(line).PRV}</span>
+            <span className="NET nowrapTxt flex">{line.NET}</span>
+            <span className="PRV nowrapTxt flex">{line.PRV}</span>
             {
               !print
-              ? <Input props={{cl:"SUM", val:bzCalcVatSum(line).SUM, i, CHANGE_INPUT}} />
-              : <span className="SUM nowrapTxt flex">{bzCalcVatSum(line).SUM}</span>
+              ? <Input props={{cl:"SUM", val:line.SUM, i, CHANGE_INPUT}} />
+              : <span className="SUM nowrapTxt flex">{line.SUM}</span>
             }
             
             {
@@ -99,9 +99,9 @@ export const ElArticles = ({ props:{mode, articles, print, AreaFn} })=>{
     <div className="line flex wrap stretch bold" style={{marginTop:"2vw"}}>
       <span className={`EMPTY${print ? `print` : ``} nowrapTxt flex`}></span>
       <span className="TOT nowrapTxt flex end">{ `Razem:` }</span>
-      <span className="NET nowrapTxt flex">{ SumArray(newArticles.map( (el)=> bzCalcVatSum(el).NET )) }</span>
-      <span className="PRV nowrapTxt flex">{ SumArray(newArticles.map( (el)=> bzCalcVatSum(el).PRV )) }</span>
-      <span className="SUM nowrapTxt flex">{ SumArray(newArticles.map( (el)=> bzCalcVatSum(el).SUM )) }</span>
+      <span className="NET nowrapTxt flex">{ SumArray(newArticles.map( (el)=> el.NET )) }</span>
+      <span className="PRV nowrapTxt flex">{ SumArray(newArticles.map( (el)=> el.PRV )) }</span>
+      <span className="SUM nowrapTxt flex">{ SumArray(newArticles.map( (el)=> el.SUM )) }</span>
 
       {
         !print &&

@@ -4,7 +4,7 @@ import { DigLen, IsSameDay, IsSameMonth } from "../../../../state/functions"
 import EditArea from "./../EditArea"
 
 
-export const DaysLine = ({ props:{mode, week, user, translate, ReloadFn, officeFn} })=>{
+export const DaysLine = ({ props:{mode, week, user, translate, ReloadFn} })=>{
 
   const MonthNames = translate(user.lang, "MonthNames")
 
@@ -42,7 +42,7 @@ export const DaysLine = ({ props:{mode, week, user, translate, ReloadFn, officeF
     {
       showNew &&
       <div className="Order flex">
-        <EditArea props={{mode, line:false, CANCEL, ReloadFn, officeFn}}/>
+        <EditArea props={{mode, line:false, CANCEL, ReloadFn}}/>
       </div>
     }
 

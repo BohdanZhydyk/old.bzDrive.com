@@ -1,12 +1,17 @@
 
-import { SumArray, bzCalcVatSum } from "../../../../state/functions"
+import { SumArray, bzUnixToYYYYMMDD } from "../../../../state/functions"
 
 
 export const Logic = (action, mode, officeFn, setSearchSt, setSalary)=>{
 
-  let GET_TABLE = (query, cb)=> officeFn( {type:"GET_TABLE", mode, query}, (data)=> cb(data) )
-
-  let SortByDate = (data)=> data.sort( (a, b)=> (parseInt(a.nr.from) - parseInt(b.nr.from)) )
+  let GET_TABLE = (query, cb)=> officeFn( {type:"GET_TABLE", mode, query}, (data)=>{
+    setSalary(
+      data.map( el=>{
+        let rule = (el.status === "edited" && el.nr.to < bzUnixToYYYYMMDD())
+        return {...el, nr:{ ...el.nr, to: rule ? bzUnixToYYYYMMDD() : el.nr.to }}
+      }).sort( (a, b)=> (parseInt(a.nr.from) - parseInt(b.nr.from)) )
+    )
+  })
   
   const query1 = (car)=>{
     return(
@@ -50,7 +55,7 @@ export const Logic = (action, mode, officeFn, setSearchSt, setSalary)=>{
 
   switch(action.type){
     case "GET_TABLE":
-      GET_TABLE( {"status":"edited"}, (data)=> setSalary(SortByDate(data)) )
+      GET_TABLE( {"status":"edited"} )
       return
     case "SEARCH":
       setSearchSt( true )
@@ -60,14 +65,14 @@ export const Logic = (action, mode, officeFn, setSearchSt, setSalary)=>{
       let from = action.from
       let to = action.to
       let queryes = [query1(car), query2(tel), query3(from, to), query4(from, to)]
-      GET_TABLE( { $and:queryes }, (data)=> setSalary(SortByDate(data)) )
+      GET_TABLE( { $and:queryes } )
       return
     default: return
   }
 }
 
 export const SumObj = (name, color, salary, order)=>{
-  let ARR = (order)=> SumArray(order.articles.map(el=> bzCalcVatSum(el).SUM))
+  let ARR = (order)=> SumArray(order.articles.map(el=> el.SUM))
   let SUM = (salary)=> SumArray( salary.map( order=> ARR(order) ) )
   if(order){ return ARR(order) }
   return { obj:{ name, sum:SUM(salary), style:{color, fontWeight:"bold", fontSize:"120%"} } }
