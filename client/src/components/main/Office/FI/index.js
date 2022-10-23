@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react"
 
 import "./FI.scss"
-import { bzUnixToYYYYMMDD } from "../../../../state/functions"
 import { Fn } from "./FiLogic"
 import { ScreenSaver } from "./../../../All/ScreenSaver"
 import { FiMonth } from "./FiMonth"
@@ -9,18 +8,11 @@ import { FiMonth } from "./FiMonth"
 
 const FI = ()=>{
 
-  const [fi, setFi] = useState([])
-
-  const YYYYMM = parseInt( bzUnixToYYYYMMDD() / 100 )
-
-  const dates = {
-    $gte: parseInt( YYYYMM + `01` ),
-    $lte: parseInt( YYYYMM + `31` )
-  }
+  const [fi, setFi] = useState(false)
 
   const FiLogic = (action)=> Fn(action, fi, setFi)
 
-  useEffect( ()=>{ FiLogic({ type:"GET_FINANCES", dates }) },[])
+  useEffect( ()=>{ !fi && FiLogic({ type:"GET_FI" }) },[])
 
   // console.log("fi", fi)
 
@@ -28,7 +20,7 @@ const FI = ()=>{
     <div className="FI flex column">
 
     {
-      fi.length === 0
+      !fi
       ? <ScreenSaver />
       : fi?.map( (month, m)=> <FiMonth props={{month, m, FiLogic}} key={`FiMonth${m}`} /> )
     }

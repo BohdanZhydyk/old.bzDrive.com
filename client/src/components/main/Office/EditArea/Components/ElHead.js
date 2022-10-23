@@ -40,7 +40,10 @@ export const ElHead = ({ props:{mode, dealer, nr, print, AreaFn} })=>{
 
           <Input props={{input:fromInput, print, Fn:AreaFn}} />
 
-          { mode === "ZL" && <Input props={{input:toInput, print, Fn:AreaFn}} /> }
+          {
+            (mode === "ZL" || mode === "PZ" || mode === "PS" || mode === "ZU") &&
+            <Input props={{input:toInput, print, Fn:AreaFn}} />
+          }
 
         </div>
 

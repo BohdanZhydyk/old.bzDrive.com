@@ -336,8 +336,6 @@ const SAVE_DOC = ({
   articles, files, comments, ReloadFn, officeFn
 })=>{
 
-  console.log(articles)
-
   let save = {
     id, user, nr, dealer, buyer, client, car, files, comments,
     status:action.status,

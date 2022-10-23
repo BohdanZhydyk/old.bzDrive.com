@@ -56,12 +56,12 @@ const EditArea = ({ props:{mode, line, CANCEL, PRINTFUNC, ReloadFn} })=>{
         <EditAreaBtns props={{mode, status, author, id, AreaFn, CANCEL, print, noPrint, DO}}/>
 
         {
-          (mode === "FS" || mode === "ZL" || mode === "FZ" || mode === "ZU") &&
+          (mode === "FS" || mode === "ZL" || mode === "FZ" || mode === "ZU" || mode === "PZ" || mode === "PS") &&
           <ElHead props={{mode, dealer, nr, print, AreaFn}} />
         }
 
         {
-          (mode === "FS" || mode === "ZL" || mode === "KL" || mode === "FZ") &&
+          (mode === "FS" || mode === "ZL" || mode === "KL" || mode === "FZ" || mode === "ZU" || mode === "PZ" || mode === "PS") &&
           <ElInfo props={{mode, car, client, dealer, buyer, print, AreaFn}} />
         }
 
@@ -71,12 +71,12 @@ const EditArea = ({ props:{mode, line, CANCEL, PRINTFUNC, ReloadFn} })=>{
         }
 
         {
-          (mode === "FS" || mode === "ZL" || mode === "FZ") &&
+          (mode === "FS" || mode === "ZL" || mode === "FZ" || mode === "ZU" || mode === "PZ" || mode === "PS") &&
           <ElArticles props={{mode, articles, print, AreaFn}} />
         }
 
         {
-          ((mode === "ZL" || mode === "FZ") && nr?.sign) &&
+          ((mode === "ZL" || mode === "FZ" || mode === "ZU" || mode === "PZ" || mode === "PS") && nr?.sign) &&
           <ElFiles props={{nr, files, print, AreaFn}} />
         }
 
@@ -86,7 +86,7 @@ const EditArea = ({ props:{mode, line, CANCEL, PRINTFUNC, ReloadFn} })=>{
         }
         
         {
-          (mode === "FS" || mode === "FZ") &&
+          (mode === "FS" || mode === "FZ" || mode === "ZU" || mode === "PZ" || mode === "PS") &&
           <ElAmount props={{mode, nr, articles, print, AreaFn}} />
         }
 

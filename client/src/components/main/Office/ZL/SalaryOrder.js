@@ -3,11 +3,15 @@ import React, { useState } from "react"
 import EditArea from "../EditArea"
 
 
-export const SalaryOrder = ({ props:{mode, order, obj, CHECK_ORDER, ReloadFn} })=>{
+export const SalaryOrder = ({ props:{mode, order, obj, rule, CHECK_ORDER, ReloadFn} })=>{
 
   const [show, setShow] = useState(false)
 
   let CANCEL = ()=> setShow(false)
+
+  let ORDER_CLICK = ()=>{
+    rule(order) && setShow(!show)
+  }
 
   let check = ()=> CHECK_ORDER(order._id)
 
@@ -35,7 +39,7 @@ export const SalaryOrder = ({ props:{mode, order, obj, CHECK_ORDER, ReloadFn} })
         <span>{obj.nr}</span>
       </span>
 
-      <span className="Car Cell flex start" style={emptyStyle} onClick={ ()=>setShow(!show) }>{obj.car}</span>
+      <span className="Car Cell flex start" style={emptyStyle} onClick={ ()=> ORDER_CLICK() }>{obj.car}</span>
 
       <span className="Tel Cell flex column" style={obj.style}>
         {

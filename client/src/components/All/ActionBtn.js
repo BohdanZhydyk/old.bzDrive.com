@@ -11,6 +11,7 @@ let Title = (name)=>{
     case "Att":  return `uwaga!`
     case "More":  return `więcej`
     case "Plus":  return `dodać`
+    case "Show":  return `pokazać`
     default: return
   }
 }
@@ -23,6 +24,7 @@ let Title = (name)=>{
 // let attImg = "https://bzdrive.com/files/ico/icoAtt.png"
 // let moreImg = "https://bzdrive.com/files/ico/icoMore.png"
 // let plusImg = "https://bzdrive.com/files/ico/icoPlus.png"
+// let showImg = "https://bzdrive.com/files/ico/icoShow.png"
 
 const ActionBtn = ({ props:{name, title = Title(name), click} })=>{
 

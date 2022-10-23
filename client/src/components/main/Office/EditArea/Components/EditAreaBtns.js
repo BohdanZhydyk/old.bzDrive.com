@@ -11,7 +11,7 @@ export const EditAreaBtns = ({ props:{mode, status, author, id, AreaFn, CANCEL, 
   let roleOk = ()=> (bzGetUser().role === "admin")
   let userOk = ()=> author ? (bzGetUser().login === author) : true
 
-  let SAVE =    ()=> AreaFn({ type:"SAVE_DOC", status:Status })
+  let SAVE =    ()=>{ CANCEL(); AreaFn({ type:"SAVE_DOC", status:Status }) }
   let DELETE =  ()=> AreaFn({ type:"SAVE_DOC", status:`deleted` })
   let PRINT =   ()=> AreaFn({ type:"PRINT_DOC" })
 

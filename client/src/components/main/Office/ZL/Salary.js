@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 
-import { NormalizeNr } from "../../../../state/functions"
+import { NormalizeNr, bzGetUser } from "../../../../state/functions"
 import { Logic, SumObj } from "./SalaryLogic"
 import { translate } from "../../../../state/translate"
 import { EmptyList } from "./EmptyList"
@@ -17,6 +17,14 @@ export const Salary = ({ props:{mode, lang, role, calendar, ReloadFn, officeFn} 
   let CHECK_ORDER = (id)=> setSalary(
     salary.map( order=> (order._id === id) ? {...order, chk:!order.chk} : order )
   )
+
+  let rule = (el)=>{
+    return(
+      bzGetUser().role === "admin" ||
+      el?.buyer?.name === "AG" ||
+      el?.user === bzGetUser().login
+    )
+  }
 
   let SalaryFn = (action)=> Logic(action, mode, officeFn, setSearchSt, setSalary)
 
@@ -41,7 +49,7 @@ export const Salary = ({ props:{mode, lang, role, calendar, ReloadFn, officeFn} 
           let car = `${order.car.brand} - ${order.car.model}`
           let name = `${order?.buyer?.name ? order.buyer.name : ``}`
           let tel = `${order?.buyer?.contacts?.tel ? order.buyer.contacts.tel : ``}`
-          let sum = order?.articles ? SumObj(false, false, false, order) : `0.00`
+          let sum = (rule(order) && order?.articles) ? SumObj(false, false, false, order) : `0.00`
 
           let style = {
             backgroundColor: order.car.color,
@@ -49,7 +57,7 @@ export const Salary = ({ props:{mode, lang, role, calendar, ReloadFn, officeFn} 
           }
           
           let props = {
-            mode, order, obj:{status, nr, car, name, sum, tel, style}, CHECK_ORDER, ReloadFn
+            mode, order, obj:{status, nr, car, name, sum, tel, style}, rule, CHECK_ORDER, ReloadFn
           }
 
           let key = `SalaryOrder${i}`
@@ -63,12 +71,12 @@ export const Salary = ({ props:{mode, lang, role, calendar, ReloadFn, officeFn} 
 
       {
         salary.length > 0 &&
-        <SalaryOrder props={ SumObj("Suma razem", "#f60", salary) } key={`SalaryOrderSum`} />
+        <SalaryOrder props={ SumObj("Suma razem", "#f60", salary.filter(el=>rule(el))) } key={`SalaryOrderSum`} />
       }
 
       {
         (isChk.length > 0) &&
-        <SalaryOrder props={ SumObj("Suma zaznaczonych", "#fd0", salary.filter(el=>el.chk)) } key={`SalaryOrderChecked`} />
+        <SalaryOrder props={ SumObj("Suma zaznaczonych", "#fd0", salary.filter(el=>rule(el) && el.chk)) } key={`SalaryOrderChecked`} />
       }
       
       {

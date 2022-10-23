@@ -24,7 +24,7 @@ const FS = ()=>{
   const [invoices, setInvoices] = useState( false )
   const [nip, setNIP] = useState("")
   const [client, setClient] = useState("")
-  const [from, setFrom] = useState( bzUnixToYYYYMMDD() )
+  const [from, setFrom] = useState( parseInt(`${parseInt( bzUnixToYYYYMMDD() / 100 )}01`) )
   const [to, setTo] = useState( bzUnixToYYYYMMDD() )
 
   const GET_FS_TABLE = (query, cb)=> officeFn(

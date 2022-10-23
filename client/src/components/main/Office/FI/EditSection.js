@@ -4,7 +4,7 @@ import { bzGetUser } from "../../../../state/functions"
 import EditArea from "./../EditArea"
 
 
-export const EditSection = ({ props:{} })=>{
+export const EditSection = ({ props:{el, ReloadFn} })=>{
 
   const [mode, setMode] = useState(false)
 
@@ -14,16 +14,16 @@ export const EditSection = ({ props:{} })=>{
 
   let btns = [
     {mode:"ZU", txt:"Oplata ZUS"},
-    {mode:"PG", txt:"Paragon"},
-    {mode:"FZ", txt:"Faktura Zakupu"},
-    {mode:"ZA", txt:"Zakup bez faktury"},
+    {mode:"PS", txt:"Paragon Sprzedazy"},
+    {mode:"PZ", txt:"Paragon Zakupu"},
+    {mode:"FZ", txt:"Faktura Zakupu"}
   ]
 
   let props = {
     mode,
     line:{user:bzGetUser().login},
     CANCEL,
-    ReloadFn:()=>{}
+    ReloadFn
   }
 
   return(
@@ -31,9 +31,9 @@ export const EditSection = ({ props:{} })=>{
 
       {
         btns.map( (btn, i)=>{
-          let CLICK = ()=>NEW_DOC(btn.mode)
+          let CLICK = ()=> NEW_DOC(mode ? false : btn.mode)
           let key = `NewDocBtn${i}`
-          return( <div className="NewDocBtn flex" onClick={CLICK} key={key}>{btn.txt}</div> )
+          return( <div className={`NewDocBtn Mode${btn.mode} flex`} onClick={CLICK} key={key}>{btn.txt}</div> )
         })
       }
 

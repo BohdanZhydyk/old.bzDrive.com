@@ -10,7 +10,7 @@ export const ElAmount = ({ props:{mode, nr, articles, print, AreaFn} })=>{
   let payMethod = nr.method === 0 ? 'gotówka' : 'przelew'
   let sum = SumArray(articles.map( (el)=> el.SUM ) )
 
-  let amount = (mode === "FS")
+  let amount = (mode === "FS" || mode === "FZ")
   ? [
       { txt: `Do zapłaty`, content: `${sum} zł` },
       { txt: `Kwota słownie`, content: bzPriceToWord(sum) },

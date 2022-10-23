@@ -1,13 +1,12 @@
 
-import { bzGetUser, NormalizeNr, SumArray } from "../../../../state/functions"
+import { bzPost, bzGetUser, bzUnixToYYYYMMDD } from "../../../../state/functions"
 import { officeFn } from "./../actions"
 
 
 export const Fn = (action, fi, setFi)=>{
 
-  switch(action.type){}
-
   switch(action.type){
+    case "GET_FI":        GET_FI(action, fi, setFi);          break
     case "GET_FINANCES":  GET_FINANCES(action, fi, setFi);    break
     case "BTN_CLICK":     BTN_CLICK(action, fi, setFi);       break
     default: break
@@ -15,64 +14,110 @@ export const Fn = (action, fi, setFi)=>{
 
 }
 
+const GET_FI = (action, fi, setFi)=>{
+  bzPost( "/getOffice", { getFI:true }, (data)=>{
+    let monthNow = {"date": parseInt( bzUnixToYYYYMMDD() / 100 )}
+    setFi( monthNow === data[0].date ? data : [monthNow, ...data] )
+  })
+}
+
 const GET_FINANCES = (action, fi, setFi)=>{
 
-  let top = {
-    mode: "Top",
-    date: parseInt( action.dates.$gte / 100 ),
-    nr: "Nr",
-    doc: "Dokument",
-    info: "Informacja",
-    sum: "Summa",
-    btns: ["Plus"]
-  }
+  setFi(  fi.map( (el, i)=> i === action.nr ? {...el, base:false} : el ) )
 
   officeFn(
     {
       type:"GET_TABLE",
-      mode:"FS",
+      mode:"ZU",
       query: {"nr.from":action.dates, user:bzGetUser().login}
     },
     (data)=>{
 
-      let FSdata = data.map( el=>{
-
-        let FSsum = SumArray(el.articles.map(art=>art.SUM))
-        let FSnet = SumArray(el.articles.map(art=>art.NET))
-
-        return {mode:el.nr.mode, doc:NormalizeNr(el.nr), info:el.buyer.name, net:FSnet, sum:FSsum}
-
-      })
+      let ZUdata = data.reverse()
 
       officeFn(
         {
           type:"GET_TABLE",
-          mode:"ZL",
-          query: {"nr.to":action.dates}
+          mode:"FS",
+          query: {"nr.from":action.dates, user:bzGetUser().login}
         },
         (data)=>{
-  
-          let ZLdata = data.filter(el=>el.status !== "edited").map( el=>{
+    
+          let FSdata = data.reverse()
 
-            let ZLsum = SumArray(el.articles.map(art=>art.SUM))
-            let ZLnet = SumArray(el.articles.map(art=>art.NET))
-            let info = `${el?.car?.brand ? el.car.brand : ``
-              }${(el?.car?.brand && el?.car?.model) ? ` - ` : ``
-              }${el?.car?.model ? el.car.model : ``
-              }${(el?.buyer?.name || el?.buyer?.contacts?.tel) ? ` [ ` : ``
-              }${el?.buyer?.name ? el.buyer.name : ``
-              }${(el?.buyer?.name && el?.buyer?.contacts?.tel) ? `,` : ``
-              }${el?.buyer?.contacts?.tel ? ` tel: ${el.buyer.contacts.tel}` : ``
-              }${(el?.buyer?.name || el?.buyer?.contacts?.tel) ? ` ]` : ``}`
+          officeFn(
+            {
+              type:"GET_TABLE",
+              mode:"FZ",
+              query: {"nr.from":action.dates, user:bzGetUser().login}
+            },
+            (data)=>{
+        
+              let FZdata = data.reverse()
 
-            return {mode:el.nr.mode, doc:NormalizeNr(el.nr), info, net:ZLnet, sum:ZLsum}
-            
-          })
+              officeFn(
+                {
+                  type:"GET_TABLE",
+                  mode:"ZL",
+                  query: {"nr.to":action.dates}
+                },
+                (data)=>{
           
-          setFi([...fi, [top, ...FSdata, ...ZLdata]])
+                  let ZLdata = data.reverse()
+
+                  officeFn(
+                    {
+                      type:"GET_TABLE",
+                      mode:"PS",
+                      query: {"nr.from":action.dates}
+                    },
+                    (data)=>{
+              
+                      let PSdata = data.reverse()
+
+                      officeFn(
+                        {
+                          type:"GET_TABLE",
+                          mode:"PZ",
+                          query: {"nr.from":action.dates}
+                        },
+                        (data)=>{
+                  
+                          let PZdata = data.reverse()
+          
+                          setFi(
+                            fi.map( (el, i)=>
+                              i === action.nr
+                              ? {
+                                  ...el,
+                                  base:[
+                                    ...ZUdata,
+                                    ...FSdata,
+                                    ...PSdata,
+                                    ...PZdata,
+                                    ...FZdata,
+                                    ...ZLdata
+                                  ]
+                                }
+                              : el
+                            )
+                          )
+
+                        }
+                      )
+
+                    }
+                  )
+
+                }
+              )
+
+            }
+          )
 
         }
       )
+
     }
   )
 
@@ -85,9 +130,26 @@ const BTN_CLICK = (action, fi, setFi)=>{
       setFi(
         fi.map( (month, m)=>
           m === action.month
-          ? month.map(
-            (line, l)=> l === action.nr ? {...line, edit:!line.edit} : {...line, edit:false}
-          )
+          ? {
+              ...month,
+              base: month.base.map(
+                (line, l)=> l === action.nr ? {...line, edit:!line.edit} : {...line, edit:false}
+              )
+            }
+          : month
+        )
+      )
+      break
+    case "Edit":
+      setFi(
+        fi.map( (month, m)=>
+          m === action.month
+          ? {
+              ...month,
+              base: month.base.map(
+                (line, l)=> l === action.nr ? {...line, edit:!line.edit} : {...line, edit:false}
+              )
+            }
           : month
         )
       )

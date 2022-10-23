@@ -27,6 +27,13 @@ exports.getOffice = (req, res)=>{
       })
       res.send({ ...data, object:{...data.object, result} })
     })
+
+    // GET FINANCES
+    object.getFI &&
+    bzDB( { req, res, col:`baseFI`, act:"FIND", query:{} }, (data)=>{
+      const result = data.object.result
+      res.send({ ...data, object:{...data.object, result} })
+    })
     
     // GET DOCUMENT
     object.getDoc &&
@@ -120,6 +127,33 @@ exports.getOffice = (req, res)=>{
             articles: object.save.articles,
             comments: object.save.comments
           }
+        case "FZ":
+          return {
+            user: object.save.user,
+            status: object.save.status,
+            nr: object.save.nr,
+            buyer: object.save.buyer,
+            articles: object.save.articles,
+            comments: object.save.comments
+          }
+        case "PS":
+          return {
+            user: object.save.user,
+            status: object.save.status,
+            nr: object.save.nr,
+            buyer: object.save.buyer,
+            articles: object.save.articles,
+            comments: object.save.comments
+          }
+        case "PZ":
+          return {
+            user: object.save.user,
+            status: object.save.status,
+            nr: object.save.nr,
+            buyer: object.save.buyer,
+            articles: object.save.articles,
+            comments: object.save.comments
+          }
         case "ZL":
           return {
             user: object.save.user,
@@ -128,6 +162,15 @@ exports.getOffice = (req, res)=>{
             buyer: object.save.buyer,
             articles: object.save.articles,
             car: object.save.car
+          }
+        case "ZU":
+          return {
+            user: object.save.user,
+            status: object.save.status,
+            nr: object.save.nr,
+            buyer: object.save.buyer,
+            articles: object.save.articles,
+            comments: object.save.comments
           }
         case "KL": return {
           user: object.save.user,

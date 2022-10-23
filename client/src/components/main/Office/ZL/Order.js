@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 
-import { SumArray } from "../../../../state/functions"
+import { SumArray, bzGetUser } from "../../../../state/functions"
 import EditArea from "./../EditArea"
 
 
@@ -10,9 +10,21 @@ export const Order = ({ props:{mode, week, zl, ReloadFn} }) => {
 
   let CANCEL = ()=> setShow(false)
 
+  let rule = (el)=>{
+    return(
+      bzGetUser().role === "admin" ||
+      el?.buyer?.name === "AG" ||
+      el?.user === bzGetUser().login
+    )
+  }
+
+  let ORDER_CLICK = ()=>{
+    rule(zl) && setShow(!show)
+  }
+
   const Day = (date)=>{
     let D = date.toString()
-    let newDate = `${D[0]}${D[1]}${D[2]}${D[3]}.${D[4]}${D[5]}.${D[6]}${D[7]}`
+    let newDate = `${D[0]}${D[1]}${D[2]}${D[3]}-${D[4]}${D[5]}-${D[6]}${D[7]}T00:00:00.000Z`
     return( new Date(newDate).getDay() !== 0 ? new Date(newDate).getDay() : 7 )
   }
 
@@ -55,14 +67,14 @@ export const Order = ({ props:{mode, week, zl, ReloadFn} }) => {
   let tel = `${zl?.buyer?.contacts?.tel ? `tel: ${zl.buyer.contacts.tel}\n` : ``}`
   let faults = `\n${zl?.car?.faults ? `${lines}\n${zl.car.faults}\n${lines}\n` : ``}`
   let brutto = `\n${zl?.articles ? `brutto: ${SumArray(zl.articles.map( el=> el.SUM ) )} zł` : ``}`
-  let title = `${name}${tel}${faults}${brutto}`
+  let title = `${name}${tel}${faults}${rule(zl) ? brutto : ``}`
 
   return(
     <div className="Order flex start wrap">
 
       <div style={beforeStyles}></div>
 
-      <div className="Car flex start" style={carStyles} title={title} onClick={ ()=>setShow(!show) }>
+      <div className="Car flex start" style={carStyles} title={title} onClick={ ()=> ORDER_CLICK() }>
 
         <div className="StatusLine flex" style={{backgroundColor:statusStiles(zl.status)}}></div>
 
